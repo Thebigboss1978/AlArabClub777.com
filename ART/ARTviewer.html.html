@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>🖼️ AlArabClub777 – ART Viewer</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: black;
+      color: white;
+      margin: 0;
+      padding: 2rem;
+      text-align: center;
+    }
+    select, iframe {
+      width: 90%;
+      max-width: 800px;
+      margin-top: 1rem;
+    }
+    iframe {
+      height: 500px;
+      border: 2px solid #fff;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎨 AlArabClub777: ART Files Viewer</h1>
+  <select id="fileSelector">
+    <option value="">اختر ملفًا لعرضه...</option>
+    <option value="ART/intro.html">intro.html</option>
+    <option value="ART/matrix_effect.js">matrix_effect.js</option>
+    <option value="ART/pharaoh_symbols.css">pharaoh_symbols.css</option>
+    <option value="ART/star_background.svg">star_background.svg</option>
+    <option value="ART/interactions.js">interactions.js</option>
+    <option value="ART/touch_response.mp3">touch_response.mp3</option>
+    <option value="ART/README.md">README.md</option>
+  </select>
+  <iframe id="viewer" src=""></iframe>
+
+  <script>
+    const selector = document.getElementById('fileSelector');
+    const viewer = document.getElementById('viewer');
+    const BASE_URL = 'https://thebigboss1978.github.io/AlArabClub777/';
+
+    selector.addEventListener('change', () => {
+      const file = selector.value;
+      if (file.endsWith('.mp3') || file.endsWith('.svg') || file.endsWith('.md')) {
+        viewer.src = BASE_URL + file;
+      } else {
+        viewer.src = BASE_URL + file;
+      }
+    });
+  </script>
+</body>
+</html>
