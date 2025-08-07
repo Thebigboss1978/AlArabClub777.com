@@ -2,53 +2,55 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>🖼️ AlArabClub777 – ART Viewer</title>
+  <title>📁 ART Folder Viewer</title>
   <style>
     body {
-      font-family: sans-serif;
-      background: black;
-      color: white;
-      margin: 0;
-      padding: 2rem;
+      background: #000;
+      color: #0f0;
+      font-family: monospace;
       text-align: center;
+      padding: 2rem;
     }
     select, iframe {
       width: 90%;
-      max-width: 800px;
+      max-width: 900px;
       margin-top: 1rem;
     }
     iframe {
-      height: 500px;
-      border: 2px solid #fff;
+      height: 600px;
+      border: 1px solid #0f0;
     }
   </style>
 </head>
 <body>
-  <h1>🎨 AlArabClub777: ART Files Viewer</h1>
-  <select id="fileSelector">
-    <option value="">اختر ملفًا لعرضه...</option>
-    <option value="ART/intro.html">intro.html</option>
-    <option value="ART/matrix_effect.js">matrix_effect.js</option>
-    <option value="ART/pharaoh_symbols.css">pharaoh_symbols.css</option>
-    <option value="ART/star_background.svg">star_background.svg</option>
-    <option value="ART/interactions.js">interactions.js</option>
-    <option value="ART/touch_response.mp3">touch_response.mp3</option>
-    <option value="ART/README.md">README.md</option>
+  <h1>📂 AlArabClub777 / ART Viewer</h1>
+  <select id="fileList">
+    <option value="">⏬ اختر ملفاً من مجلد ART</option>
   </select>
   <iframe id="viewer" src=""></iframe>
 
   <script>
-    const selector = document.getElementById('fileSelector');
-    const viewer = document.getElementById('viewer');
-    const BASE_URL = 'https://thebigboss1978.github.io/AlArabClub777/';
+    const owner = "Thebigboss1978";
+    const repo = "AlArabClub777";
+    const path = "ART";
+    const fileList = document.getElementById("fileList");
+    const viewer = document.getElementById("viewer");
 
-    selector.addEventListener('change', () => {
-      const file = selector.value;
-      if (file.endsWith('.mp3') || file.endsWith('.svg') || file.endsWith('.md')) {
-        viewer.src = BASE_URL + file;
-      } else {
-        viewer.src = BASE_URL + file;
-      }
+    // Load files dynamically from GitHub API
+    fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`)
+      .then(res => res.json())
+      .then(data => {
+        data.forEach(file => {
+          const option = document.createElement("option");
+          option.value = `https://${owner.toLowerCase()}.github.io/${repo}/${path}/${file.name}`;
+          option.textContent = file.name;
+          fileList.appendChild(option);
+        });
+      });
+
+    fileList.addEventListener("change", () => {
+      const url = fileList.value;
+      if (url) viewer.src = url;
     });
   </script>
 </body>
