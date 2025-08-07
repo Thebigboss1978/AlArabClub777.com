@@ -1,0 +1,829 @@
+Page Path,HTML Code
+01_safari_𓃰/desert_safari.html,"<!DOCTYPE html>
+<html lang=""en"">
+<head>
+    <meta charset=""UTF-8"">
+    <title>Desert Safari</title>
+    <style>
+        body {
+            background-color: black;
+            color: #00FF99;
+            font-family: monospace;
+            padding: 40px;
+        }
+        h1 {
+            text-align: center;
+            color: #00DDFF;
+        }
+    </style>
+</head>
+<body>
+    <h1>Desert Safari</h1>
+    <p>Welcome to the sacred page of <strong>Desert Safari</strong>.</p>
+</body>
+</html>"
+01_safari_𓃰/camel_ride.html,"<!DOCTYPE html>
+<html lang=""en"">
+<head>
+    <meta charset=""UTF-8"">
+    <title>Camel Ride</title>
+    <style>
+        body {
+            background-color: black;
+            color: #00FF99;
+            font-family: monospace;
+            padding: 40px;
+        }
+        h1 {
+            text-align: center;
+            color: #00DDFF;
+        }
+    </style>
+</head>
+<body>
+    <h1>Camel Ride</h1>
+    <p>Welcome to the sacred page of <strong>Camel Ride</strong>.</p>
+</body>
+</html>"
+01_safari_𓃰/quad_bike.html,"<!DOCTYPE html>
+<html lang=""en"">
+<head>
+    <meta charset=""UTF-8"">
+    <title>Quad Bike</title>
+    <style>
+        body {
+            background-color: black;
+            color: #00FF99;
+            font-family: monospace;
+            padding: 40px;
+        }
+        h1 {
+            text-align: center;
+            color: #00DDFF;
+        }
+    </style>
+</head>
+<body>
+    <h1>Quad Bike</h1>
+    <p>Welcome to the sacred page of <strong>Quad Bike</strong>.</p>
+</body>
+</html>"
+02_pyramids_𓂀/day_tour.html,"<!DOCTYPE html>
+<html lang=""en"">
+<head>
+    <meta charset=""UTF-8"">
+    <title>Day Tour</title>
+    <style>
+        body {
+            background-color: black;
+            color: #00FF99;
+            font-family: monospace;
+            padding: 40px;
+        }
+        h1 {
+            text-align: center;
+            color: #00DDFF;
+        }
+    </style>
+</head>
+<body>
+    <h1>Day Tour</h1>
+    <p>Welcome to the sacred page of <strong>Day Tour</strong>.</p>
+</body>
+</html>"
+02_pyramids_𓂀/night_experience.html,"<!DOCTYPE html>
+<html lang=""en"">
+<head>
+    <meta charset=""UTF-8"">
+    <title>Night Experience</title>
+    <style>
+        body {
+            background-color: black;
+            color: #00FF99;
+            font-family: monospace;
+            padding: 40px;
+        }
+        h1 {
+            text-align: center;
+            color: #00DDFF;
+        }
+    </style>
+</head>
+<body>
+    <h1>Night Experience</h1>
+    <p>Welcome to the sacred page of <strong>Night Experience</strong>.</p>
+</body>
+</html>"
+02_pyramids_𓂀/hidden_spots.html,"<!DOCTYPE html>
+<html lang=""en"">
+<head>
+    <meta charset=""UTF-8"">
+    <title>Hidden Spots</title>
+    <style>
+        body {
+            background-color: black;
+            color: #00FF99;
+            font-family: monospace;
+            padding: 40px;
+        }
+        h1 {
+            text-align: center;
+            color: #00DDFF;
+        }
+    </style>
+</head>
+<body>
+    <h1>Hidden Spots</h1>
+    <p>Welcome to the sacred page of <strong>Hidden Spots</strong>.</p>
+</body>
+</html>"
+03_spirit_portal_𓋹/dendera_temple.html,"<!DOCTYPE html>
+<html lang=""en"">
+<head>
+    <meta charset=""UTF-8"">
+    <title>Dendera Temple</title>
+    <style>
+        body {
+            background-color: black;
+            color: #00FF99;
+            font-family: monospace;
+            padding: 40px;
+        }
+        h1 {
+            text-align: center;
+            color: #00DDFF;
+        }
+    </style>
+</head>
+<body>
+    <h1>Dendera Temple</h1>
+    <p>Welcome to the sacred page of <strong>Dendera Temple</strong>.</p>
+</body>
+</html>"
+03_spirit_portal_𓋹/sound_healing.html,"<!DOCTYPE html>
+<html lang=""en"">
+<head>
+    <meta charset=""UTF-8"">
+    <title>Sound Healing</title>
+    <style>
+        body {
+            background-color: black;
+            color: #00FF99;
+            font-family: monospace;
+            padding: 40px;
+        }
+        h1 {
+            text-align: center;
+            color: #00DDFF;
+        }
+    </style>
+</head>
+<body>
+    <h1>Sound Healing</h1>
+    <p>Welcome to the sacred page of <strong>Sound Healing</strong>.</p>
+</body>
+</html>"
+03_spirit_portal_𓋹/portals_energy.html,"<!DOCTYPE html>
+<html lang=""en"">
+<head>
+    <meta charset=""UTF-8"">
+    <title>Portals Energy</title>
+    <style>
+        body {
+            background-color: black;
+            color: #00FF99;
+            font-family: monospace;
+            padding: 40px;
+        }
+        h1 {
+            text-align: center;
+            color: #00DDFF;
+        }
+    </style>
+</head>
+<body>
+    <h1>Portals Energy</h1>
+    <p>Welcome to the sacred page of <strong>Portals Energy</strong>.</p>
+</body>
+</html>"
+03_spirit_portal_𓋹/soaul_scripts.html,"<!DOCTYPE html>
+<html lang=""en"">
+<head>
+    <meta charset=""UTF-8"">
+    <title>Soaul Scripts</title>
+    <style>
+        body {
+            background-color: black;
+            color: #00FF99;
+            font-family: monospace;
+            padding: 40px;
+        }
+        h1 {
+            text-align: center;
+            color: #00DDFF;
+        }
+    </style>
+</head>
+<body>
+    <h1>Soaul Scripts</h1>
+    <p>Welcome to the sacred page of <strong>Soaul Scripts</strong>.</p>
+</body>
+</html>"
+03_spirit_portal_𓋹/bat_seal.html,"<!DOCTYPE html>
+<html lang=""en"">
+<head>
+    <meta charset=""UTF-8"">
+    <title>Bat Seal</title>
+    <style>
+        body {
+            background-color: black;
+            color: #00FF99;
+            font-family: monospace;
+            padding: 40px;
+        }
+        h1 {
+            text-align: center;
+            color: #00DDFF;
+        }
+    </style>
+</head>
+<body>
+    <h1>Bat Seal</h1>
+    <p>Welcome to the sacred page of <strong>Bat Seal</strong>.</p>
+</body>
+</html>"
+04_booking_𓃠/offer_777_discount.html,"<!DOCTYPE html>
+<html lang=""en"">
+<head>
+    <meta charset=""UTF-8"">
+    <title>Offer 777 Discount</title>
+    <style>
+        body {
+            background-color: black;
+            color: #00FF99;
+            font-family: monospace;
+            padding: 40px;
+        }
+        h1 {
+            text-align: center;
+            color: #00DDFF;
+        }
+    </style>
+</head>
+<body>
+    <h1>Offer 777 Discount</h1>
+    <p>Welcome to the sacred page of <strong>Offer 777 Discount</strong>.</p>
+</body>
+</html>"
+04_booking_𓃠/whatsapp_form.html,"<!DOCTYPE html>
+<html lang=""en"">
+<head>
+    <meta charset=""UTF-8"">
+    <title>Whatsapp Form</title>
+    <style>
+        body {
+            background-color: black;
+            color: #00FF99;
+            font-family: monospace;
+            padding: 40px;
+        }
+        h1 {
+            text-align: center;
+            color: #00DDFF;
+        }
+    </style>
+</head>
+<body>
+    <h1>Whatsapp Form</h1>
+    <p>Welcome to the sacred page of <strong>Whatsapp Form</strong>.</p>
+</body>
+</html>"
+05_partners_𓎛/bazars.html,"<!DOCTYPE html>
+<html lang=""en"">
+<head>
+    <meta charset=""UTF-8"">
+    <title>Bazars</title>
+    <style>
+        body {
+            background-color: black;
+            color: #00FF99;
+            font-family: monospace;
+            padding: 40px;
+        }
+        h1 {
+            text-align: center;
+            color: #00DDFF;
+        }
+    </style>
+</head>
+<body>
+    <h1>Bazars</h1>
+    <p>Welcome to the sacred page of <strong>Bazars</strong>.</p>
+</body>
+</html>"
+05_partners_𓎛/restaurants.html,"<!DOCTYPE html>
+<html lang=""en"">
+<head>
+    <meta charset=""UTF-8"">
+    <title>Restaurants</title>
+    <style>
+        body {
+            background-color: black;
+            color: #00FF99;
+            font-family: monospace;
+            padding: 40px;
+        }
+        h1 {
+            text-align: center;
+            color: #00DDFF;
+        }
+    </style>
+</head>
+<body>
+    <h1>Restaurants</h1>
+    <p>Welcome to the sacred page of <strong>Restaurants</strong>.</p>
+</body>
+</html>"
+05_partners_𓎛/guest_houses.html,"<!DOCTYPE html>
+<html lang=""en"">
+<head>
+    <meta charset=""UTF-8"">
+    <title>Guest Houses</title>
+    <style>
+        body {
+            background-color: black;
+            color: #00FF99;
+            font-family: monospace;
+            padding: 40px;
+        }
+        h1 {
+            text-align: center;
+            color: #00DDFF;
+        }
+    </style>
+</head>
+<body>
+    <h1>Guest Houses</h1>
+    <p>Welcome to the sacred page of <strong>Guest Houses</strong>.</p>
+</body>
+</html>"
+06_media_center_𓊽/photos_hd.html,"<!DOCTYPE html>
+<html lang=""en"">
+<head>
+    <meta charset=""UTF-8"">
+    <title>Photos Hd</title>
+    <style>
+        body {
+            background-color: black;
+            color: #00FF99;
+            font-family: monospace;
+            padding: 40px;
+        }
+        h1 {
+            text-align: center;
+            color: #00DDFF;
+        }
+    </style>
+</head>
+<body>
+    <h1>Photos Hd</h1>
+    <p>Welcome to the sacred page of <strong>Photos Hd</strong>.</p>
+</body>
+</html>"
+06_media_center_𓊽/videos.html,"<!DOCTYPE html>
+<html lang=""en"">
+<head>
+    <meta charset=""UTF-8"">
+    <title>Videos</title>
+    <style>
+        body {
+            background-color: black;
+            color: #00FF99;
+            font-family: monospace;
+            padding: 40px;
+        }
+        h1 {
+            text-align: center;
+            color: #00DDFF;
+        }
+    </style>
+</head>
+<body>
+    <h1>Videos</h1>
+    <p>Welcome to the sacred page of <strong>Videos</strong>.</p>
+</body>
+</html>"
+06_media_center_𓊽/voiceovers.html,"<!DOCTYPE html>
+<html lang=""en"">
+<head>
+    <meta charset=""UTF-8"">
+    <title>Voiceovers</title>
+    <style>
+        body {
+            background-color: black;
+            color: #00FF99;
+            font-family: monospace;
+            padding: 40px;
+        }
+        h1 {
+            text-align: center;
+            color: #00DDFF;
+        }
+    </style>
+</head>
+<body>
+    <h1>Voiceovers</h1>
+    <p>Welcome to the sacred page of <strong>Voiceovers</strong>.</p>
+</body>
+</html>"
+07_family_portal_𓇌/layer_1.html,"<!DOCTYPE html>
+<html lang=""en"">
+<head>
+    <meta charset=""UTF-8"">
+    <title>Layer 1</title>
+    <style>
+        body {
+            background-color: black;
+            color: #00FF99;
+            font-family: monospace;
+            padding: 40px;
+        }
+        h1 {
+            text-align: center;
+            color: #00DDFF;
+        }
+    </style>
+</head>
+<body>
+    <h1>Layer 1</h1>
+    <p>Welcome to the sacred page of <strong>Layer 1</strong>.</p>
+</body>
+</html>"
+07_family_portal_𓇌/layer_2.html,"<!DOCTYPE html>
+<html lang=""en"">
+<head>
+    <meta charset=""UTF-8"">
+    <title>Layer 2</title>
+    <style>
+        body {
+            background-color: black;
+            color: #00FF99;
+            font-family: monospace;
+            padding: 40px;
+        }
+        h1 {
+            text-align: center;
+            color: #00DDFF;
+        }
+    </style>
+</head>
+<body>
+    <h1>Layer 2</h1>
+    <p>Welcome to the sacred page of <strong>Layer 2</strong>.</p>
+</body>
+</html>"
+07_family_portal_𓇌/background_assets.html,"<!DOCTYPE html>
+<html lang=""en"">
+<head>
+    <meta charset=""UTF-8"">
+    <title>Background Assets</title>
+    <style>
+        body {
+            background-color: black;
+            color: #00FF99;
+            font-family: monospace;
+            padding: 40px;
+        }
+        h1 {
+            text-align: center;
+            color: #00DDFF;
+        }
+    </style>
+</head>
+<body>
+    <h1>Background Assets</h1>
+    <p>Welcome to the sacred page of <strong>Background Assets</strong>.</p>
+</body>
+</html>"
+07_family_portal_𓇌/final_mp3.html,"<!DOCTYPE html>
+<html lang=""en"">
+<head>
+    <meta charset=""UTF-8"">
+    <title>Final Mp3</title>
+    <style>
+        body {
+            background-color: black;
+            color: #00FF99;
+            font-family: monospace;
+            padding: 40px;
+        }
+        h1 {
+            text-align: center;
+            color: #00DDFF;
+        }
+    </style>
+</head>
+<body>
+    <h1>Final Mp3</h1>
+    <p>Welcome to the sacred page of <strong>Final Mp3</strong>.</p>
+</body>
+</html>"
+08_arabnetwork_ai_𓆃/strategy_docs.html,"<!DOCTYPE html>
+<html lang=""en"">
+<head>
+    <meta charset=""UTF-8"">
+    <title>Strategy Docs</title>
+    <style>
+        body {
+            background-color: black;
+            color: #00FF99;
+            font-family: monospace;
+            padding: 40px;
+        }
+        h1 {
+            text-align: center;
+            color: #00DDFF;
+        }
+    </style>
+</head>
+<body>
+    <h1>Strategy Docs</h1>
+    <p>Welcome to the sacred page of <strong>Strategy Docs</strong>.</p>
+</body>
+</html>"
+08_arabnetwork_ai_𓆃/trend_tracking.html,"<!DOCTYPE html>
+<html lang=""en"">
+<head>
+    <meta charset=""UTF-8"">
+    <title>Trend Tracking</title>
+    <style>
+        body {
+            background-color: black;
+            color: #00FF99;
+            font-family: monospace;
+            padding: 40px;
+        }
+        h1 {
+            text-align: center;
+            color: #00DDFF;
+        }
+    </style>
+</head>
+<body>
+    <h1>Trend Tracking</h1>
+    <p>Welcome to the sacred page of <strong>Trend Tracking</strong>.</p>
+</body>
+</html>"
+08_arabnetwork_ai_𓆃/press_kits.html,"<!DOCTYPE html>
+<html lang=""en"">
+<head>
+    <meta charset=""UTF-8"">
+    <title>Press Kits</title>
+    <style>
+        body {
+            background-color: black;
+            color: #00FF99;
+            font-family: monospace;
+            padding: 40px;
+        }
+        h1 {
+            text-align: center;
+            color: #00DDFF;
+        }
+    </style>
+</head>
+<body>
+    <h1>Press Kits</h1>
+    <p>Welcome to the sacred page of <strong>Press Kits</strong>.</p>
+</body>
+</html>"
+09_moral_ai_𓆑/awareness_design.html,"<!DOCTYPE html>
+<html lang=""en"">
+<head>
+    <meta charset=""UTF-8"">
+    <title>Awareness Design</title>
+    <style>
+        body {
+            background-color: black;
+            color: #00FF99;
+            font-family: monospace;
+            padding: 40px;
+        }
+        h1 {
+            text-align: center;
+            color: #00DDFF;
+        }
+    </style>
+</head>
+<body>
+    <h1>Awareness Design</h1>
+    <p>Welcome to the sacred page of <strong>Awareness Design</strong>.</p>
+</body>
+</html>"
+09_moral_ai_𓆑/social_fixes.html,"<!DOCTYPE html>
+<html lang=""en"">
+<head>
+    <meta charset=""UTF-8"">
+    <title>Social Fixes</title>
+    <style>
+        body {
+            background-color: black;
+            color: #00FF99;
+            font-family: monospace;
+            padding: 40px;
+        }
+        h1 {
+            text-align: center;
+            color: #00DDFF;
+        }
+    </style>
+</head>
+<body>
+    <h1>Social Fixes</h1>
+    <p>Welcome to the sacred page of <strong>Social Fixes</strong>.</p>
+</body>
+</html>"
+09_moral_ai_𓆑/ethical_protocols.html,"<!DOCTYPE html>
+<html lang=""en"">
+<head>
+    <meta charset=""UTF-8"">
+    <title>Ethical Protocols</title>
+    <style>
+        body {
+            background-color: black;
+            color: #00FF99;
+            font-family: monospace;
+            padding: 40px;
+        }
+        h1 {
+            text-align: center;
+            color: #00DDFF;
+        }
+    </style>
+</head>
+<body>
+    <h1>Ethical Protocols</h1>
+    <p>Welcome to the sacred page of <strong>Ethical Protocols</strong>.</p>
+</body>
+</html>"
+10_matrix777_𓊉/inner_portals.html,"<!DOCTYPE html>
+<html lang=""en"">
+<head>
+    <meta charset=""UTF-8"">
+    <title>Inner Portals</title>
+    <style>
+        body {
+            background-color: black;
+            color: #00FF99;
+            font-family: monospace;
+            padding: 40px;
+        }
+        h1 {
+            text-align: center;
+            color: #00DDFF;
+        }
+    </style>
+</head>
+<body>
+    <h1>Inner Portals</h1>
+    <p>Welcome to the sacred page of <strong>Inner Portals</strong>.</p>
+</body>
+</html>"
+10_matrix777_𓊉/encrypted_html.html,"<!DOCTYPE html>
+<html lang=""en"">
+<head>
+    <meta charset=""UTF-8"">
+    <title>Encrypted Html</title>
+    <style>
+        body {
+            background-color: black;
+            color: #00FF99;
+            font-family: monospace;
+            padding: 40px;
+        }
+        h1 {
+            text-align: center;
+            color: #00DDFF;
+        }
+    </style>
+</head>
+<body>
+    <h1>Encrypted Html</h1>
+    <p>Welcome to the sacred page of <strong>Encrypted Html</strong>.</p>
+</body>
+</html>"
+10_matrix777_𓊉/guardian_signs.html,"<!DOCTYPE html>
+<html lang=""en"">
+<head>
+    <meta charset=""UTF-8"">
+    <title>Guardian Signs</title>
+    <style>
+        body {
+            background-color: black;
+            color: #00FF99;
+            font-family: monospace;
+            padding: 40px;
+        }
+        h1 {
+            text-align: center;
+            color: #00DDFF;
+        }
+    </style>
+</head>
+<body>
+    <h1>Guardian Signs</h1>
+    <p>Welcome to the sacred page of <strong>Guardian Signs</strong>.</p>
+</body>
+</html>"
+10_matrix777_𓊉/prophecies.html,"<!DOCTYPE html>
+<html lang=""en"">
+<head>
+    <meta charset=""UTF-8"">
+    <title>Prophecies</title>
+    <style>
+        body {
+            background-color: black;
+            color: #00FF99;
+            font-family: monospace;
+            padding: 40px;
+        }
+        h1 {
+            text-align: center;
+            color: #00DDFF;
+        }
+    </style>
+</head>
+<body>
+    <h1>Prophecies</h1>
+    <p>Welcome to the sacred page of <strong>Prophecies</strong>.</p>
+</body>
+</html>"
+meta_𓍯/structure_docs.html,"<!DOCTYPE html>
+<html lang=""en"">
+<head>
+    <meta charset=""UTF-8"">
+    <title>Structure Docs</title>
+    <style>
+        body {
+            background-color: black;
+            color: #00FF99;
+            font-family: monospace;
+            padding: 40px;
+        }
+        h1 {
+            text-align: center;
+            color: #00DDFF;
+        }
+    </style>
+</head>
+<body>
+    <h1>Structure Docs</h1>
+    <p>Welcome to the sacred page of <strong>Structure Docs</strong>.</p>
+</body>
+</html>"
+meta_𓍯/api_scripts.html,"<!DOCTYPE html>
+<html lang=""en"">
+<head>
+    <meta charset=""UTF-8"">
+    <title>Api Scripts</title>
+    <style>
+        body {
+            background-color: black;
+            color: #00FF99;
+            font-family: monospace;
+            padding: 40px;
+        }
+        h1 {
+            text-align: center;
+            color: #00DDFF;
+        }
+    </style>
+</head>
+<body>
+    <h1>Api Scripts</h1>
+    <p>Welcome to the sacred page of <strong>Api Scripts</strong>.</p>
+</body>
+</html>"
+meta_𓍯/versions.html,"<!DOCTYPE html>
+<html lang=""en"">
+<head>
+    <meta charset=""UTF-8"">
+    <title>Versions</title>
+    <style>
+        body {
+            background-color: black;
+            color: #00FF99;
+            font-family: monospace;
+            padding: 40px;
+        }
+        h1 {
+            text-align: center;
+            color: #00DDFF;
+        }
+    </style>
+</head>
+<body>
+    <h1>Versions</h1>
+    <p>Welcome to the sacred page of <strong>Versions</strong>.</p>
+</body>
+</html>"

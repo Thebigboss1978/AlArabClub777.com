@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>DotBall Component</title>
+  <style>
+    #dotball-container {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 9999;
+      animation: pulseDotball 6s infinite ease-in-out;
+    }
+    @keyframes pulseDotball {
+      0%, 100% { transform: translate(-50%, -50%) scale(1); }
+      50% { transform: translate(-50%, -50%) scale(1.2); }
+    }
+  </style>
+</head>
+<body>
+  <!-- DotBall Component | عنصر الطابة المنقطة -->
+  <div id="dotball-container">
+    <svg width="120" height="120" viewBox="0 0 120 120">
+      <circle cx="60" cy="60" r="55" fill="black" stroke="white" stroke-width="2"/>
+      <circle cx="60" cy="60" r="4" fill="white">
+        <animate attributeName="r" values="4;8;4" dur="2s" repeatCount="indefinite" />
+      </circle>
+    </svg>
+  </div>
+</body>
+</html>
