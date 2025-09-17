@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en" dir="rtl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Pyramid Portal — Final Experience</title>
+<meta name="description" content="Pyramid Portal — spiritual & adventure Safari bookings (Camel / Horse / Buggy) — 'رحلات سفاري' in Giza." />
+<style>
+  :root{
+    --bg:#06070a; --gold:#ffd66b; --muted:#9aa3b2; --accent:#4aa3ff;
+    --ui-z:9000;
+  }
+  html,body{height:100%;margin:0;font-family:Inter, system-ui, 'Segoe UI', Roboto, 'Noto Sans', Arial, 'Courier New', monospace;background:var(--bg);color:var(--gold);-webkit-font-smoothing:antialiased;overflow:hidden}
+  /* layers */
+  .matte{position:fixed;inset:0;z-index:1;background:
+    radial-gradient(1000px 600px at 12% 20%, rgba(90,209,255,.02), transparent 12%),
+    radial-gradient(900px 500px at 92% 82%, rgba(255,90,158,.01), transparent 12%),
+    linear-gradient(180deg, rgba(0,0,0,.24), rgba(0,0,0,.68));}
+  .grain{position:fixed;inset:0;z-index:2;pointer-events:none;background-image:radial-gradient(rgba(255,255,255,0.018) 1px, transparent 1px);background-size:6px 6px;opacity:.09}
+  .dot-pattern{position:fixed;inset:0;z-index:3;pointer-events:none;background-image:radial-gradient(rgba(255,255,255,0.03) 1px, transparent 1px);background-size:36px 36px;opacity:.06}
+  /* canvas pyramid */
+  canvas#scene{position:fixed;inset:0;z-index:4;display:block}
+  /* floating safari words (transparent 20%) */
+  .safari-words{position:fixed;inset:0;z-index:5;pointer-events:none;mix-blend-mode:screen}
+  .safari-words .word{position:absolute;font-family: 'Courier New', monospace;color:rgba(255,215,107,0.16);font-weight:700;letter-spacing:1px;white-space:nowrap;transform-origin:center}
+  /* calf/ui top */
+  #ui{position:fixed;inset:0;z-index:var(--ui-z);display:flex;flex-direction:column;align-items:center;pointer-events:none}
+  .orb-wrap{position:fixed;top:18px;left:50%;transform:translateX(-50%);pointer-events:auto;z-index:var(--ui-z)}
+  .orb{width:86px;height:86px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(160deg,#071019,#08121a);border:1px solid rgba(255,255,255,.06);box-shadow:0 12px 60px rgba(255,214,107,.04);cursor:pointer;transition:transform .14s;pointer-events:auto}
+  .orb.pulse{animation:orbPulse 1600ms infinite ease-in-out}
+  @keyframes orbPulse{0%{transform:scale(1)}50%{transform:scale(1.06)}100%{transform:scale(1)}}
+  .orb .dots{width:60px;height:60px;border-radius:50%;background:
+    radial-gradient(circle at 70% 30%, #fff 0 1.8px, transparent 2px) 0 0/6px 6px,
+    radial-gradient(circle at 20% 80%, #9df 0 1.8px, transparent 2px) 3px 3px/6px 6px,
+    radial-gradient(circle at 40% 40%, #f9c 0 1.8px, transparent 2px) 1px 5px/6px 6px,#071019}
+  header{margin-top:120px;padding:10px 18px;border-radius:12px;background:rgba(0,0,0,.28);box-shadow:0 10px 30px rgba(0,0,0,.6);pointer-events:auto;color:var(--gold);font-weight:800}
+  /* offers / cards */
+  .panel{width:100%;max-width:1200px;margin:28px auto 100px;display:grid;grid-template-columns:repeat(4,1fr);gap:18px;padding:0 18px;pointer-events:auto}
+  .card{background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));padding:18px;border-radius:14px;border:1px solid rgba(255,215,0,.06);backdrop-filter:blur(6px);box-shadow:0 8px 40px rgba(0,0,0,.6);transition:transform .28s ease}
+  .card:hover{transform:translateY(-8px) scale(1.02)}
+  .card h3{margin:0;color:var(--gold)}
+  .card p{color:var(--muted);margin:8px 0}
+  .price{color:var(--accent);font-weight:800}
+  .btn{display:inline-block;margin-top:12px;padding:8px 12px;border-radius:10px;background:linear-gradient(90deg,var(--gold),#ffb84d);color:#051423;text-decoration:none;font-weight:700;cursor:pointer}
+  .footer{position:fixed;left:0;right:0;bottom:8px;text-align:center;color:var(--muted);pointer-events:none}
+  /* chat orb + window */
+  .chat-toggle{position:fixed;right:24px;bottom:24px;z-index:var(--ui-z);width:64px;height:64px;border-radius:50%;background:linear-gradient(180deg,var(--gold),#ffb84d);display:grid;place-items:center;cursor:pointer;box-shadow:0 18px 60px rgba(0,0,0,.6);border:1px solid rgba(255,255,255,.08);pointer-events:auto}
+  .chat-window{position:fixed;right:22px;bottom:96px;width:380px;height:520px;background:rgba(6,10,14,0.98);color:#fff;border-radius:12px;box-shadow:0 30px 120px rgba(0,0,0,.6);z-index:var(--ui-z);display:none;flex-direction:column;pointer-events:auto}
+  .chat-header{padding:12px;border-bottom:1px solid rgba(255,255,255,.03);font-weight:700}
+  .chat-body{flex:1;padding:12px;overflow:auto;display:flex;flex-direction:column;gap:8px}
+  .chat-input{display:flex;padding:10px;border-top:1px solid rgba(255,255,255,.03)}
+  .chat-input input{flex:1;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,.04);background:rgba(255,255,255,.02);color:#fff}
+  .chat-input button{margin-left:8px;padding:8px 10px;border-radius:8px;background:var(--gold);border:0;color:#051423;font-weight:700}
+  .msg{max-width:80%;padding:8px 10px;border-radius:10px;font-size:14px}
+  .msg.agent{background:rgba(255,215,107,.08);align-self:flex-start;color:var(--gold)}
+  .msg.user{background:rgba(255,255,255,.04);align-self:flex-end;color:#fff}
+  /* mouse follower */
+  .mouse-dot{position:fixed;width:14px;height:14px;border-radius:50%;pointer-events:none;z-index:var(--ui-z);transform:translate(-50%,-50%);box-shadow:0 0 26px rgba(255,214,80,.2)}
+  /* camel/horse player layer */
+  .creatures{position:fixed;inset:auto 6% 14% 6%;height:220px;z-index:6;pointer-events:none;display:flex;gap:18px;align-items:end}
+  .creature{width:220px;height:160px;opacity:.96;filter:drop-shadow(0 12px 30px rgba(0,0,0,.6));transition:transform .12s linear}
+  /* ritual start button */
+  .start-btn{margin-top:8px;padding:12px 20px;border-radius:999px;background:transparent;border:2px solid var(--gold);color:var(--gold);font-weight:800;cursor:pointer;pointer-events:auto}
+  .muted{color:var(--muted);font-size:13px}
+  @media (max-width:980px){ .panel{grid-template-columns:repeat(2,1fr)} .creatures{display:none} .chat-window{right:6px} }
+  @media (max-width:520px){ .panel{grid-template-columns:1fr} header{margin-top:90px} .orb{width:72px;height:72px} }
+</style>
+</head>
+<body>
+
+<!-- decorative layers -->
+<div class="matte" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+<div class="dot-pattern" aria-hidden="true"></div>
+
+<!-- pyramid canvas -->
+<canvas id="scene"></canvas>
+
+<!-- safari floating words -->
+<div class="safari-words" id="safariWords" aria-hidden="true"></div>
+
+<!-- creatures (camel & horse player) - svg placeholders (replace with art if desired) -->
+<div class="creatures" aria-hidden="true">
+  <svg class="creature" id="camel" viewBox="0 0 200 140">
+    <!-- simplified camel silhouette -->
+    <g fill="none" stroke="none">
+      <path d="M10 95 C20 40, 60 30, 90 50 C110 62, 140 60, 160 50 C170 44, 190 34, 195 28 L190 20 L170 18 L150 30 L130 20 L110 30 L100 20 L80 22 L60 36 L40 48 L20 88 Z" fill="rgba(255,214,107,0.92)"/>
+    </g>
+  </svg>
+  <svg class="creature" id="horse" viewBox="0 0 200 140">
+    <!-- simplified horse silhouette -->
+    <g fill="none" stroke="none">
+      <path d="M12 100 C22 60, 56 46, 90 56 C110 62, 140 64, 162 54 C176 48, 188 34, 190 30 L185 20 L165 18 L150 28 L132 22 L110 36 L95 28 L78 32 L60 46 L42 72 L22 94 Z" fill="rgba(180,220,255,0.92)"/>
+    </g>
+  </svg>
+</div>
+
+<!-- UI -->
+<div id="ui" aria-hidden="false">
+  <div class="orb-wrap"><div class="orb pulse" id="orb" title="Enter the Portal"><div class="dots"></div></div></div>
+  <header>موقع سياحي للحجز — Pyramid Portal</header>
+
+  <!-- Offers panel -->
+  <section class="panel" id="panel" aria-hidden="true">
+    <div class="card" data-pack="camel">
+      <h3>Camel Journey — Pharaohs' Pilgrimage</h3>
+      <p class="muted">رحلات سفاري — Walk like Pharaohs… رحلة الفراعنة نحو الصحراء المقدسة.</p>
+      <div class="price">≈ 15–35 USD</div>
+      <button class="btn start" data-action="start">Start your spiritual journey</button>
+    </div>
+    <div class="card" data-pack="horse">
+      <h3>Horse Adventure — Ride of the Divine Steed</h3>
+      <p class="muted">رحلات سفاري — Mount like an ancient knight; follow the horizon into temples and tombs.</p>
+      <div class="price">≈ 13–30 USD</div>
+      <button class="btn start" data-action="start">Start your spiritual journey</button>
+    </div>
+    <div class="card" data-pack="buggy">
+      <h3>Buggy Safari — Modern Chariot</h3>
+      <p class="muted">رحلات سفاري — Feel the wind of Ra — fast, loud, and free across the dunes.</p>
+      <div class="price">≈ 35–65 USD</div>
+      <button class="btn start" data-action="start">Start your spiritual journey</button>
+    </div>
+    <div class="card" data-pack="full">
+      <h3>Full Journey — Gate of Awareness</h3>
+      <p class="muted">رحلات سفاري — All rituals combined; a path that begins at the desert and ends with a story you carry forever.</p>
+      <div class="price">≈ 90–220 USD</div>
+      <button class="btn start" data-action="start">Start your spiritual journey</button>
+    </div>
+  </section>
+
+  <div class="footer">Nazlet El-Samman — Giza · On the edge of history we meet.</div>
+</div>
+
+<!-- Chat -->
+<div class="chat-toggle" id="chatToggle" title="Talk to the Portal">☥</div>
+<div class="chat-window" id="chatWindow" aria-hidden="true">
+  <div class="chat-header">Portal Agent — Spiritual Guide</div>
+  <div class="chat-body" id="chatBody"></div>
+  <div class="chat-input">
+    <input id="chatInput" placeholder="Ask about Camel / Horse / Buggy / Full Journey or say 'book'"/>
+    <button id="chatSend">Send</button>
+  </div>
+</div>
+
+<!-- mouse dot -->
+<div class="mouse-dot" id="mouseDot" aria-hidden="true"></div>
+
+<!-- audio placeholder -->
+<audio id="bgMusic" src="" preload="auto" loop></audio>
+
+<script>
+/* ===========================
+   CONFIG & HELPERS
+   =========================== */
+window.PortalConfig = {
+  API_URL: "YOUR_API_ENDPOINT", // e.g. https://your-proxy.example.com/ai
+  API_KEY: "YOUR_API_KEY",      // optional
+  WHATSAPP_NUMBER: "201000000000", // put your number in international format
+  WHATSAPP_TEMPLATE: (pack)=> `Hello, I want to book: ${pack} — Pyramid Portal. Please help with booking.`
+};
+
+const useSpeech = true; // enable speech features (TTS + STT) if browser supports
+
+/* ===========================
+   Pyramid canvas module
+   - pyramidParticles: the main glyph pyramid
+   - particles: background dot glyph grid
+   - rain: floating glyph rain
+   - ripples: click ripples
+   - creatures: camel & horse are separate and react to cursor (not affected by burst)
+   =========================== */
+(function(){
+  const canvas = document.getElementById('scene');
+  const ctx = canvas.getContext('2d', {alpha:true});
+  let DPR = Math.min(2, devicePixelRatio || 1);
+  let W=0,H=0,CX=0,CY=0;
+  let gridParticles = [], pyramidParticles = [], rain = [], ripples = [];
+  let exploded=false, autoTimer=0, pyramidAngle=0;
+
+  const GLYPHS = ['𓂀','𓆣','𓋹','𓊹','𓏏','𓎛','𓃭','𓇳','𓈖','▲','△','◈','•','·','✦','✧'];
+
+  function fit(){
+    DPR = Math.min(2, devicePixelRatio || 1);
+    W = canvas.width = Math.floor(innerWidth * DPR);
+    H = canvas.height = Math.floor(innerHeight * DPR);
+    canvas.style.width = innerWidth + 'px';
+    canvas.style.height = innerHeight + 'px';
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+    CX = innerWidth/2; CY = innerHeight*0.58;
+    buildGrid();
+    buildPyramid();
+  }
+  window.addEventListener('resize', fit);
+
+  function buildGrid(){
+    gridParticles.length=0;
+    const cols = Math.max(20, Math.floor(innerWidth/32));
+    const rows = Math.max(12, Math.floor(innerHeight/28));
+    for(let y=0;y<rows;y++){
+      for(let x=0;x<cols;x++){
+        const px = x*(innerWidth/cols) + (Math.random()-0.5)*6;
+        const py = y*(innerHeight/rows) + (Math.random()-0.5)*6;
+        gridParticles.push({x:px,y:py,bx:px,by:py,vx:0,vy:0,ch:GLYPHS[(x+y)%GLYPHS.length],shade:((x+y)%3===0?0.56:0.95)});
+      }
+    }
+  }
+
+  function buildPyramid(){
+    pyramidParticles.length=0;
+    const baseSize = Math.max(10, Math.min(28, Math.floor(Math.cbrt((innerWidth*innerHeight)/120))));
+    const spacing = Math.min(34, Math.max(12, Math.floor(Math.min(innerWidth, innerHeight)/42)));
+    let idx=0;
+    for(let layer=0; layer<baseSize; layer++){
+      const n = baseSize - layer;
+      const y = CY - layer*spacing*0.82;
+      for(let i=0;i<n;i++){
+        for(let j=0;j<n;j++){
+          const ox = CX + (i - n/2) * spacing + (j - n/2) * spacing*0.48;
+          const oz = (j - n/2) * spacing * 0.6;
+          const ch = GLYPHS[(idx++)%GLYPHS.length];
+          const shade = (i+j+layer)%2 ? 0.6 : 0.92;
+          pyramidParticles.push({ox,oy:y+ (j-n/2)*spacing*0.18,oz, x:ox+(Math.random()-0.5)*6,y:y+(Math.random()-0.5)*6,z:oz, vx:0,vy:0,vz:0, ch, shade, spin:Math.random()*0.02, scale:1+Math.random()*0.18, alpha:0.8+Math.random()*0.2});
+        }
+      }
+    }
+  }
+
+  // spawn rain glyphs
+  function spawnRain(){
+    if(rain.length>420) rain.shift();
+    const x = Math.random()*innerWidth;
+    rain.push({x,y:-20,ch:GLYPHS[(Math.random()*GLYPHS.length)|0],vy:1+Math.random()*2,alpha:0.92});
+  }
+  setInterval(spawnRain,100);
+
+  // mouse
+  const mouse = {x:CX,y:CY,down:false};
+  const mouseDot = document.getElementById('mouseDot');
+
+  window.addEventListener('mousemove', e=>{
+    mouse.x = e.clientX; mouse.y = e.clientY;
+    if(mouseDot) { mouseDot.style.left = e.clientX+'px'; mouseDot.style.top = e.clientY+'px'; }
+  });
+  window.addEventListener('pointerdown', e=>{ mouse.down=true; ripple(e.clientX,e.clientY,1); burst(e.clientX,e.clientY,1.4); });
+  window.addEventListener('pointerup', ()=>{ mouse.down=false; });
+  window.addEventListener('dblclick', ()=>toggleExplode());
+
+  function ripple(x,y,k=1){ ripples.push({x,y,r:8*k,life:1}); }
+  function burst(cx,cy,power=1){
+    for(const p of pyramidParticles){
+      const dx = p.x - cx, dy = p.y - cy; const d = Math.hypot(dx,dy)+1e-4;
+      const f = (power*1.2)*(120/(d));
+      p.vx += (dx/d)*(f*(0.6+Math.random()*0.9));
+      p.vy += (dy/d)*(f*(0.6+Math.random()*0.9));
+      p.vz += (Math.random()-0.5)*(f*0.2);
+    }
+    for(const g of gridParticles){
+      const dx = g.x-cx, dy=g.y-cy, d=Math.hypot(dx,dy)+1e-4;
+      const f=(power*0.9)*(90/(d));
+      g.vx += (dx/d) * f*(0.3+Math.random()*0.6);
+      g.vy += (dy/d) * f*(0.3+Math.random()*0.6);
+    }
+  }
+  function toggleExplode(){ exploded = !exploded; if(exploded) burst(CX,CY,1.6); else burst(CX,CY,0.9); }
+
+  // creatures movement - responsive to mouse but NOT affected by burst or pyramid physics
+  const camelEl = document.getElementById('camel');
+  const horseEl = document.getElementById('horse');
+  const creatures = [
+    {el: camelEl, baseX: innerWidth*0.25, baseY: innerHeight*0.78, wobble:0},
+    {el: horseEl, baseX: innerWidth*0.72, baseY: innerHeight*0.78, wobble:0}
+  ];
+  function updateCreatures(){
+    creatures.forEach(c=>{
+      // compute attraction to mouse (small)
+      const dx = mouse.x - (c.baseX), dy = mouse.y - (c.baseY), d=Math.hypot(dx,dy)+1;
+      const m = Math.max(0, Math.min(1, 160/d));
+      const tx = c.baseX + (dx*0.06*m);
+      const ty = c.baseY + (dy*0.02*m);
+      c.wobble += 0.02 + m*0.06;
+      const s = 1 + Math.sin(c.wobble)*0.02 + (m*0.06);
+      if(c.el){
+        c.el.style.transform = `translate(${tx - (c.baseX)}px, ${ty - (c.baseY)}px) scale(${s})`;
+      }
+    });
+  }
+
+  // palette
+  function palette(t){ const hue = (40 + 220*t)%360; const sat = 70 - 20*Math.sin(t*Math.PI*2); const lig = 60 + 6*Math.sin(t*Math.PI*2 + 0.7); return `hsl(${hue} ${sat}% ${lig}%)`; }
+
+  // animation
+  let last = performance.now();
+  function tick(now){
+    requestAnimationFrame(tick);
+    const dt = Math.min(56, now-last); last=now; autoTimer += dt;
+    // physics pyramid
+    for(const p of pyramidParticles){
+      // spring to base
+      const dx = p.ox - p.x, dy = p.oy - p.y;
+      p.vx += dx * (exploded? 0.006 : 0.035);
+      p.vy += dy * (exploded? 0.006 : 0.035);
+      // mouse influence
+      const mx = p.x - mouse.x, my = p.y - mouse.y, md = Math.hypot(mx,my);
+      if(md < 160){
+        const f = (1 - md/160) * (mouse.down ? 2.6 : -2.6);
+        p.vx += (mx/md||0.001)*f;
+        p.vy += (my/md||0.001)*f;
+      }
+      // add tiny randomized spin/scale behavior
+      p.vx += (Math.cos(p.spin*now*0.001) - 0.5)*0.001;
+      p.vy += (Math.sin(p.spin*now*0.001) - 0.5)*0.001;
+      // damping & integrate
+      p.vx *= 0.94; p.vy *= 0.94; p.vz *= 0.95;
+      p.x += p.vx * (dt*0.016); p.y += p.vy * (dt*0.016); p.z += p.vz * (dt*0.016);
+    }
+
+    // grid spring
+    for(const g of gridParticles){
+      const dx = g.bx - g.x, dy = g.by - g.y;
+      g.vx += dx * 0.02; g.vy += dy * 0.02;
+      const mdx = g.x - mouse.x, mdy = g.y - mouse.y, md = Math.hypot(mdx,mdy);
+      if(md < 120){
+        const m = (1 - md/120);
+        const sgn = mouse.down ? 1 : -1;
+        g.vx += sgn * (mdx/md||0.001) * m * 2.2;
+        g.vy += sgn * (mdy/md||0.001) * m * 2.2;
+      }
+      g.vx *= 0.92; g.vy *= 0.92;
+      g.x += g.vx * (dt*0.016); g.y += g.vy * (dt*0.016);
+    }
+
+    // rain and ripples
+    for(const r of rain){ r.y += r.vy; r.vy += 0.02; r.alpha *= 0.999; }
+    while(rain.length && rain[0].y > innerHeight + 80) rain.shift();
+    for(let i=ripples.length-1;i>=0;i--){ const R=ripples[i]; R.r += 3.6; R.life -= 0.02; if(R.life<=0) ripples.splice(i,1); }
+
+    // auto toggle
+    if(autoTimer > 8000){ autoTimer = 0; toggleExplode(); }
+
+    // render
+    ctx.clearRect(0,0,innerWidth,innerHeight);
+    const T = (now*0.00016)%1;
+    // backdrop
+    const g = ctx.createLinearGradient(0,0,0,innerHeight); g.addColorStop(0,'rgba(6,8,10,0.0)'); g.addColorStop(1,'rgba(0,0,0,0.66)');
+    ctx.fillStyle = g; ctx.fillRect(0,0,innerWidth,innerHeight);
+
+    // ripples
+    for(const R of ripples){
+      ctx.save(); ctx.globalAlpha = 0.32 * R.life; ctx.lineWidth=2; ctx.strokeStyle='rgba(255,214,107,0.9)';
+      ctx.beginPath(); ctx.arc(R.x,R.y,R.r,0,Math.PI*2); ctx.stroke(); ctx.restore();
+    }
+
+    // draw grid subtle glyphs
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    for(const g of gridParticles){
+      ctx.globalAlpha = Math.max(0.06, Math.min(0.96, g.shade));
+      ctx.fillStyle = palette((T + (g.x%200)/600) % 1);
+      ctx.font = '13px monospace';
+      ctx.fillText(g.ch, g.x, g.y);
+    }
+
+    // rain glyphs
+    ctx.font = '18px serif';
+    for(const R of rain){ ctx.globalAlpha = Math.max(0.06, Math.min(1, R.alpha)); ctx.fillStyle='rgba(255,214,107,0.98)'; ctx.fillText(R.ch, R.x, R.y); }
+
+    // pyramid (3D-ish)
+    const cx = innerWidth/2, cy = innerHeight*0.46;
+    if(pyramidParticles.length){
+      if(exploded) pyramidAngle += 0.012; else pyramidAngle += 0.004;
+      for(const p of pyramidParticles){
+        const rx = p.ox * Math.cos(pyramidAngle*0.6) - p.oz * Math.sin(pyramidAngle*0.6);
+        const rz = p.ox * Math.sin(pyramidAngle*0.6) + p.oz * Math.cos(pyramidAngle*0.6);
+        const sx = cx + (rx) * 1.02 + p.x - p.ox;
+        const sy = cy + (p.oy) - rz*0.06 + p.y - p.oy;
+        const depth = 1 - (rz / 1500);
+        const alpha = Math.max(0.06, Math.min(1, (p.shade * depth)));
+        ctx.globalAlpha = alpha;
+        ctx.fillStyle = palette((T + (rz%300)/500) % 1);
+        ctx.font = `${16 * (p.scale||1)}px monospace`;
+        // shadow pass
+        ctx.fillText(p.ch, sx+0.9, sy+0.9);
+        ctx.fillText(p.ch, sx, sy);
+      }
+    }
+
+    updateCreatures(); // move camel/horse visually (DOM transforms)
+  }
+  fit(); requestAnimationFrame(tick);
+
+  // small entrance bursts
+  setTimeout(()=>burst(CX,CY,1.0), 500);
+  setTimeout(()=>burst(CX-120,CY-60,1.1), 1100);
+
+  // expose rebuild & portal open
+  window.Portal = {
+    rebuild: ()=>{ buildGrid(); buildPyramid(); },
+    openPortal: ()=>{ document.getElementById('panel').setAttribute('aria-hidden','false'); document.getElementById('panel').classList.add('visible'); burst(CX,CY,1.6); }
+  };
+})(); // end canvas module
+
+/* ===========================
+   Floating Safari Words (رحلات سفاري) - gentle random movement
+   =========================== */
+(function(){
+  const cont = document.getElementById('safariWords');
+  const texts = [];
+  const phrases = ['رحلات سفاري','رحلات سفاري','رحلات سفاري'];
+  // create a few
+  for(let i=0;i<8;i++){
+    const el = document.createElement('div');
+    el.className='word';
+    el.style.left = (10 + Math.random()*80)+'%';
+    el.style.top = (10 + Math.random()*70)+'%';
+    el.style.fontSize = (10 + Math.random()*28)+'px';
+    el.style.opacity = 0.12 + Math.random()*0.12;
+    el.textContent = phrases[i % phrases.length];
+    cont.appendChild(el);
+    texts.push({el, vx:(Math.random()-0.5)*0.04, vy:(Math.random()-0.5)*0.03});
+  }
+  function tick(){
+    for(const t of texts){
+      const rect = t.el.getBoundingClientRect();
+      let left = parseFloat(t.el.style.left);
+      let top = parseFloat(t.el.style.top);
+      left += t.vx;
+      top += t.vy;
+      if(left < 0) left = 98; if(left>98) left=1;
+      if(top < 0) top = 98; if(top>98) top=1;
+      t.el.style.left = left+'%'; t.el.style.top = top+'%';
+    }
+    requestAnimationFrame(tick);
+  }
+  tick();
+})();
+
+/* ===========================
+   Creatures are interactive but independent
+   =========================== */
+// covered by canvas module updating DOM transforms
+
+/* ===========================
+   Chat Agent — local fallback + API hook + speech controls
+   =========================== */
+(function(){
+  const chatToggle = document.getElementById('chatToggle');
+  const chatWindow = document.getElementById('chatWindow');
+  const chatBody = document.getElementById('chatBody');
+  const chatInput = document.getElementById('chatInput');
+  const chatSend = document.getElementById('chatSend');
+
+  let openCount = 0;
+  chatToggle.addEventListener('click', ()=>{ openChat(); });
+
+  function openChat(){
+    chatWindow.style.display = 'flex';
+    chatWindow.setAttribute('aria-hidden','false');
+    chatInput.focus();
+    if(openCount===0) appendAgent("Welcome — I am the Portal Agent. Speak to me or type. Say 'book' to start booking.");
+    openCount++;
+  }
+  function appendAgent(txt){ const d=document.createElement('div'); d.className='msg agent'; d.textContent=txt; chatBody.appendChild(d); chatBody.scrollTop=chatBody.scrollHeight; }
+  function appendUser(txt){ const d=document.createElement('div'); d.className='msg user'; d.textContent=txt; chatBody.appendChild(d); chatBody.scrollTop=chatBody.scrollHeight; }
+
+  // simple intent
+  function detectIntent(s){
+    s = s.toLowerCase();
+    const out={pack:null,tone:'calm'};
+    if(/camel|جمل|pharaoh|pilgrim|سفاري/.test(s)) out.pack='camel';
+    if(/horse|حصان|steed/.test(s)) out.pack='horse';
+    if(/buggy|باجي|chariot/.test(s)) out.pack='buggy';
+    if(/full|all|complete|journey|كامل/.test(s)) out.pack='full';
+    if(/spirit|spiritual|روح|soul/.test(s)) out.tone='spiritual';
+    if(/adventur|thrill|fast|excite/.test(s)) out.tone='adventure';
+    return out;
+  }
+
+  async function callRemoteAI(message){
+    if(!window.PortalConfig.API_URL) throw new Error('No API configured');
+    const payload = {message, meta:{site:'PharaohsPortal'}};
+    const headers = {'Content-Type':'application/json'};
+    if(window.PortalConfig.API_KEY) headers['Authorization']='Bearer '+window.PortalConfig.API_KEY;
+    const res = await fetch(window.PortalConfig.API_URL, {method:'POST',headers,body:JSON.stringify(payload)});
+    if(!res.ok) throw new Error('AI error');
+    const j = await res.json();
+    return j.reply || j.result || JSON.stringify(j);
+  }
+
+  async function sendToAgent(msg){
+    appendUser(msg);
+    appendAgent('Thinking...');
+    // try remote first
+    if(window.PortalConfig.API_URL){
+      try{
+        const reply = await callRemoteAI(msg);
+        // remove 'Thinking...'
+        if(chatBody.lastElementChild && chatBody.lastElementChild.textContent==='Thinking...') chatBody.lastElementChild.remove();
+        appendAgent(reply);
+        speak(reply);
+        return;
+      }catch(e){
+        // fallthrough to local
+        if(chatBody.lastElementChild && chatBody.lastElementChild.textContent==='Thinking...') chatBody.lastElementChild.remove();
+      }
+    }
+    // local fallback
+    const intent = detectIntent(msg);
+    const map = {
+      camel: "Camel Ride — a sacred slow ritual. Sunrise or twilight? We can arrange pick-up and prayer stop near the plateau.",
+      horse: "Horse Ride — noble and swift. Choose heritage guide or open gallop.",
+      buggy: "Buggy Adventure — for thrill lovers. Helmets provided; respect the dunes.",
+      full:  "Full Journey — combines all. We craft a ceremonial day with guides, photos, and restful shade."
+    };
+    const intro = intent.tone==='spiritual' ? "The sands whisper — come with heart open. " : (intent.tone==='adventure' ? "Feel the wind calling. " : "Welcome, traveler. ");
+    const reply = intro + (intent.pack ? map[intent.pack] : "Tell me which experience you want: Camel, Horse, Buggy, or Full Journey.") + " — Say 'book' to continue.";
+    if(chatBody.lastElementChild && chatBody.lastElementChild.textContent==='Thinking...') chatBody.lastElementChild.remove();
+    appendAgent(reply); speak(reply);
+  }
+
+  chatSend.addEventListener('click', ()=>{ const v = chatInput.value.trim(); if(!v) return; chatInput.value=''; sendToAgent(v); });
+  chatInput.addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); chatSend.click(); }});
+
+  // speech-to-text (if supported)
+  let recognition=null;
+  if(useSpeech && 'webkitSpeechRecognition' in window){
+    recognition = new webkitSpeechRecognition();
+    recognition.lang = 'en-US';
+    recognition.interimResults = false;
+    recognition.onresult = (e)=>{ const txt = e.results[0][0].transcript; chatInput.value = txt; sendToAgent(txt); };
+    recognition.onerror = ()=>{};
+  }
+  // quick mic hotkey: press 'm' to speak
+  window.addEventListener('keydown', e=>{ if(e.key==='m' || e.key==='M'){ if(recognition) recognition.start(); else appendAgent('Speech recognition not supported.'); } });
+
+  // speech synthesis (TTS)
+  function speak(text){
+    if(!useSpeech || !('speechSynthesis' in window)) return;
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'en-US';
+    u.rate = 1.0;
+    u.pitch = 1.0;
+    speechSynthesis.speak(u);
+  }
+
+})(); // end chat
+
+/* ===========================
+   Booking / WhatsApp integration + Start-button ritual logic
+   =========================== */
+(function(){
+  // ritual start button: first click -> reject, second -> warn, third -> require refresh or circular gesture; alternatively: two clicks then accept
+  const startButtons = document.querySelectorAll('.start');
+  // store attempts in session so navigation persists
+  const ATT_KEY = 'portal_start_attempts';
+  function getAttempts(){ return parseInt(sessionStorage.getItem(ATT_KEY) || '0',10); }
+  function incAttempts(){ const v = getAttempts()+1; sessionStorage.setItem(ATT_KEY, v); return v; }
+
+  async function doBooking(pack){
+    // placeholder flow: collect minimal info, call API if exists, or open WhatsApp
+    const name = prompt("Your name for booking:");
+    if(!name) return alert("Booking cancelled.");
+    const phone = prompt("Phone (with country code):");
+    if(!phone) return alert("Booking cancelled.");
+    // try remote booking API
+    if(window.PortalConfig.API_URL){
+      try{
+        const res = await fetch(window.PortalConfig.API_URL+'/book', {method:'POST',headers:{'Content-Type':'application/json','Authorization': window.PortalConfig.API_KEY? 'Bearer '+window.PortalConfig.API_KEY : undefined},body:JSON.stringify({pack,name,phone,source:'portal'})});
+        const j = await res.json();
+        if(j && j.status==='ok'){ alert('Booking received — we will contact you soon.'); return; }
+      }catch(e){ /* fallback to whatsapp */ }
+    }
+    // fallback to WhatsApp
+    const msg = window.PortalConfig.WHATSAPP_TEMPLATE(pack);
+    const num = window.PortalConfig.WHATSAPP_NUMBER;
+    const url = `https://wa.me/${num}?text=${encodeURIComponent(msg)}`;
+    window.open(url,'_blank');
+  }
+
+  document.querySelectorAll('.start').forEach(btn=>{
+    btn.addEventListener('click', async (e)=>{
+      e.preventDefault();
+      const pack = e.target.closest('.card')?.dataset?.pack || 'journey';
+      const attempts = incAttempts();
+      if(attempts === 1){
+        alert('✋ You are not ready yet. The portal senses imbalance. Try again.');
+        return;
+      } else if(attempts === 2){
+        alert('🔮 Close... but you still need a small ritual. Move your mouse in a circle around the orb, then try again.');
+        return;
+      } else {
+        // check if user did the circular ritual by simple heuristic (mousePath length stored)
+        // For simplicity: if user pressed >2 and not reloaded, allow but advise refresh requirement
+        if(confirm('🌟 The portal accepts you now. Proceed to booking?')){
+          doBooking(pack);
+        } else {
+          alert('Return when your heart says "yes".');
+        }
+      }
+    });
+  });
+
+  // optional: reset attempts on reload (user requested that refresh restarts)
+  window.addEventListener('beforeunload', ()=>{ /* keep attempts persisted or clear? choose to clear to require ritual again */ /* sessionStorage.removeItem(ATT_KEY); */ });
+
+})(); // booking
+
+/* ===========================
+   Small UX polish: reveal panel when orb clicked
+   =========================== */
+(function(){
+  const orb = document.getElementById('orb');
+  orb.addEventListener('click', ()=>{ // open offers
+    document.getElementById('panel').classList.add('visible');
+    // small portal burst
+    if(window.Portal && typeof window.Portal.openPortal==='function') window.Portal.openPortal();
+  });
+})();
+
+/* ===========================
+   Final: small instructions overlay in console
+   =========================== */
+console.log("Pharaohs' Portal — Final: speech hotkey 'm' (if supported), start-button ritual uses session attempts. To add AI/booking backend, set PortalConfig.API_URL & API_KEY.");
+</script>
+</body>
+</html>
