@@ -1,294 +1,99 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <title>⟁AlArab⟁777 — Vision Gate (Hardened)</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <style>
-    :root{--gold:#ffd97a}
-    html,body{height:100%;margin:0;background:linear-gradient(180deg,#0b0810,#000);font-family:monospace;color:#fff;-webkit-font-smoothing:antialiased}
-    canvas{position:fixed;inset:0;z-index:0}
-    .matrix-background{position:fixed;inset:0;background:#000;z-index:-2}
-    .glyphs{position:fixed;inset:0;pointer-events:none;z-index:-1;color:rgba(255,255,255,0.06);font-family:monospace}
-
-    .circle{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);width:150px;height:150px;border-radius:50%;background:radial-gradient(circle, rgba(255,215,120,0.06), transparent 75%);z-index:6;pointer-events:none;transition:transform .18s ease-out, opacity .25s}
-    .cube{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);width:140px;height:140px;z-index:8;pointer-events:none;display:flex;align-items:center;justify-content:center}
-    .cube-inner{width:120px;height:120px;border-radius:14px;background:linear-gradient(180deg,rgba(255,215,120,0.06),rgba(255,180,70,0.02));display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,200,80,0.06);box-shadow:0 10px 30px rgba(0,0,0,0.6);transition:transform .18s cubic-bezier(.2,.8,.2,1)}
-    .center-eye{font-size:46px;color:var(--gold);text-shadow:0 0 6px rgba(255,210,80,.9);pointer-events:none;transition:transform .2s ease-out, text-shadow .25s}
-
-    .ui{position:fixed;left:12px;top:12px;z-index:9999;display:flex;gap:8px}
-    .ui button{background:rgba(255,255,255,0.04);border:0;color:var(--gold);padding:8px 10px;border-radius:8px;cursor:pointer}
-    .info{position:fixed;right:12px;top:12px;z-index:9999;color:#cbbfa8;background:rgba(0,0,0,0.45);padding:8px;border-radius:8px}
-
-    /* debug panel */
-    #debug{position:fixed;right:12px;bottom:12px;z-index:10000;max-width:340px;max-height:280px;overflow:auto;background:rgba(0,0,0,0.6);padding:8px;border-radius:10px;border:1px solid rgba(255,215,0,0.06);font-size:12px;color:#ffd}
-    #debug .line{padding:6px;border-bottom:1px dashed rgba(255,255,255,0.02)}
-
-    .trail{position:fixed;width:18px;height:18px;border-radius:50%;background:radial-gradient(circle,#ffd97a,#ffb347);pointer-events:none;transform:translate(-50%,-50%);mix-blend-mode:screen;z-index:9998}
-    .ripple{position:fixed;border-radius:50%;pointer-events:none;border:1px solid rgba(255,215,0,0.12);box-shadow:0 0 20px rgba(255,180,60,0.08);z-index:9997;transform:translate(-50%,-50%)}
-
-    @media (max-width:700px){ .center-eye{font-size:36px} }
-  </style>
-
-  <!-- EARLY: Global error handlers + safe ethereum stub (run as early as possible) -->
-  <script>
-    (function(){
-      // lightweight pending log buffer before DOM ready
-      window.__pendingLogs = [];
-      window.__appendLog = function(msg, level){ try{ if(document && document.getElementById('debug')){ const d = document.getElementById('debug'); const el = document.createElement('div'); el.className = 'line'; el.innerText = (new Date()).toLocaleTimeString() + ' • ' + (level||'info') + ' — ' + msg; d.prepend(el); while(d.children.length>80) d.removeChild(d.lastChild); } else { window.__pendingLogs.push([msg,level]); } }catch(e){ try{ console.log('log',msg); }catch(_){} } };
-
-      // global error interception
-      window.addEventListener('error', function(ev){ try{
-        const m = (ev && ev.message) || (ev && ev.error && ev.error.message) || String(ev);
-        window.__appendLog('window.onerror: ' + m, 'error');
-        // swallow known metamask/connect noise so UI won't break
-        const low = String(m).toLowerCase();
-        if(low.includes('metamask') || low.includes('failed to connect')){
-          window.__appendLog('Intercepted MetaMask-related error and prevented default.', 'warn');
-          ev.preventDefault && ev.preventDefault();
-        }
-      }catch(e){}
-      }, true);
-
-      window.addEventListener('unhandledrejection', function(ev){ try{
-        const reason = ev && ev.reason ? (ev.reason.message || String(ev.reason)) : String(ev);
-        window.__appendLog('unhandledrejection: ' + reason, 'error');
-        if(String(reason).toLowerCase().includes('metamask') || String(reason).toLowerCase().includes('failed to connect')){
-          window.__appendLog('Intercepted MetaMask unhandled rejection and prevented default.', 'warn');
-          ev.preventDefault && ev.preventDefault();
-        }
-      }catch(e){}
-      }, true);
-
-      // Install robust ethereum stub/wrapper
-      try{
-        function makeStub(){
-          const events = {};
-          return {
-            isMetaMask: false,
-            request: async function(payload){ try{ const method = payload && payload.method ? payload.method : payload; window.__appendLog('ethereum.request stub called: '+JSON.stringify(method)); if(method === 'eth_requestAccounts') return []; return null; }catch(e){ return null; } },
-            enable: async function(){ window.__appendLog('ethereum.enable() called on stub'); return []; },
-            on: function(ev, h){ events[ev] = events[ev] || []; events[ev].push(h); },
-            removeListener: function(ev, h){ if(events[ev]) events[ev] = events[ev].filter(x=>x!==h); },
-            send: function(){ return null; },
-            sendAsync: function(payload, cb){ if(cb) cb(null, {result:null}); }
-          };
-        }
-        if(!window.ethereum){
-          window.ethereum = makeStub();
-          window.__appendLog('Installed ethereum safe stub', 'warn');
-        } else {
-          // wrap request & enable to prevent crashes
-          try{
-            const eth = window.ethereum;
-            if(!eth.__wrapped){
-              const origReq = eth.request && eth.request.bind(eth);
-              if(origReq){ eth.request = async function(args){ try{ return await origReq(args); }catch(err){ window.__appendLog('Wrapped ethereum.request caught error: '+(err&&err.message), 'warn'); if(args && args.method === 'eth_requestAccounts') return []; return []; } }; }
-              if(!eth.enable){ eth.enable = async ()=>{ try{ return origReq ? await origReq({method:'eth_requestAccounts'}) : []; }catch(e){ return []; } } }
-              if(!eth.sendAsync){ eth.sendAsync = function(payload, cb){ try{ if(eth.send) return cb(null, {result: eth.send(payload)}); cb(null,{result:null}); }catch(e){ cb(e); } } }
-              eth.__wrapped = true;
-              window.__appendLog('Wrapped existing ethereum object to be safe', 'info');
-            }
-          }catch(e){ window.__appendLog('Error wrapping ethereum: '+(e&&e.message), 'error'); }
-        }
-      }catch(e){ window.__appendLog('ethereum stub install failed: '+(e&&e.message), 'error'); }
-
-    })();
-  </script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Project Manager Portal — AlArabClub777</title>
+<style>
+:root {
+  --bg:#0b0f14; --panel:#11161d; --muted:#9aa4b2;
+  --gold:#FFD166; --accent:#00D4FF;
+}
+body{margin:0;font-family:'Segoe UI',sans-serif;background:var(--bg);color:#fff;display:flex;flex-direction:column;min-height:100vh;}
+header{display:flex;align-items:center;justify-content:space-between;padding:12px 20px;background:rgba(255,255,255,.05);backdrop-filter:blur(10px);}
+header h1{font-size:1.1rem;color:var(--gold);}
+.toolbar{display:flex;gap:8px;align-items:center;}
+.toolbar button,.toolbar select,.toolbar input{padding:6px 10px;border-radius:8px;border:none;background:rgba(255,255,255,.1);color:#fff;}
+#files{flex:1;display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));padding:20px;overflow:auto;}
+.card{background:var(--panel);padding:10px;border-radius:12px;cursor:pointer;transition:.2s;}
+.card:hover{transform:translateY(-4px);box-shadow:0 8px 18px rgba(0,0,0,.4);}
+.thumb{height:120px;display:flex;align-items:center;justify-content:center;background:#000;border-radius:8px;margin-bottom:6px;}
+.thumb img,.thumb video{max-width:100%;max-height:100%;border-radius:8px;}
+.fname{font-weight:bold;color:var(--gold);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.fmeta{font-size:.8rem;color:var(--muted);}
+#preview{position:fixed;right:0;top:60px;width:320px;height:calc(100% - 60px);background:rgba(0,0,0,.8);backdrop-filter:blur(12px);padding:12px;overflow:auto;display:none;flex-direction:column;z-index:20;}
+#viewer iframe,#viewer img,#viewer video{width:100%;border-radius:8px;}
+footer{padding:10px;text-align:center;font-size:.8rem;background:rgba(255,255,255,.05);}
+</style>
 </head>
 <body>
-
-  <canvas id="canvas"></canvas>
-
-  <div class="matrix-background"></div>
-  <div class="glyphs" id="glyphs"></div>
-
-  <!-- Visual elements (kept above the canvas) -->
-  <div class="circle" id="circleEl" aria-hidden="true"></div>
-  <div class="cube" id="cubeEl" aria-hidden="true">
-    <div class="cube-inner" id="cubeInner">
-      <div class="center-eye" id="centerEye">𓁹</div>
-    </div>
+<header>
+  <h1>📂 Project Manager Portal — CLUB777</h1>
+  <div class="toolbar">
+    <button id="pick">اختر مجلد</button>
+    <input id="search" placeholder="🔎 بحث أو أوامر...">
+    <select id="viewMode"><option value="grid">Grid</option><option value="card">Card</option><option value="list">List</option></select>
+    <select id="theme"><option value="dark">Dark</option><option value="light">Light</option><option value="glassy">Glassy</option></select>
   </div>
-  <div id="eye" style="position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);font-size:160px;color:rgba(255,255,255,0.06);pointer-events:none;z-index:-1">𓂀</div>
+</header>
 
-  <!-- Controls -->
-  <div class="ui">
-    <button id="simulateErr">Simulate MetaMask Err</button>
-    <button id="testConnect">Test MetaMask Connect</button>
-    <button id="explodeBtn">Force Explode</button>
-    <button id="regenBtn">Rebuild Particles</button>
-    <button id="modeBtn">وضع: تفاعل</button>
-    <button id="micBtn">Mic: off</button>
-  </div>
-  <div class="info">المس الشاشة — اسحب — قرّب بـ إبهامين — اضغط مطوّل لتفعيل الختم</div>
+<div id="files"></div>
 
-  <!-- Debug panel -->
-  <div id="debug"></div>
+<div id="preview">
+  <h3 id="pname"></h3>
+  <div id="pmeta"></div>
+  <div id="viewer"></div>
+</div>
 
-  <script>
-    // When DOM ready, flush pending logs (from head) into debug panel
-    document.addEventListener('DOMContentLoaded', function(){ try{
-      const dbg = document.getElementById('debug'); if(window.__pendingLogs && window.__pendingLogs.length){ for(const it of window.__pendingLogs){ const el=document.createElement('div'); el.className='line'; el.innerText = (new Date()).toLocaleTimeString() + ' • ' + (it[1]||'') + ' — ' + it[0]; dbg.prepend(el); } window.__pendingLogs=[]; }
-      // Provide a nicer helper API
-      window.__appendLog = function(msg, level){ try{ const el=document.createElement('div'); el.className='line'; el.innerText = (new Date()).toLocaleTimeString() + ' • ' + (level||'info') + ' — ' + msg; dbg.prepend(el); while(dbg.children.length>80) dbg.removeChild(dbg.lastChild); }catch(e){ console.log(msg); } };
-      window.__appendLog('Debug panel ready', 'info');
-    }catch(e){}
-    });
+<footer>🌐 Project by | <b>AlArabClub777 العرّاب © 2025</b></footer>
 
-    /* ---------- MAIN: interactive blackhole with robust guards ---------- */
-    (function(){
-      try{
-        const canvas = document.getElementById('canvas');
-        const ctx = canvas.getContext('2d');
-        if(!ctx){ window.__appendLog('Canvas context not available', 'error'); return; }
+<script>
+let filesData=[]; let mode='grid';
+const filesDiv=document.getElementById('files');
+const preview=document.getElementById('preview'), pname=document.getElementById('pname'),
+      pmeta=document.getElementById('pmeta'), viewer=document.getElementById('viewer');
 
-        // UI elements
-        const circleEl = document.getElementById('circleEl');
-        const cubeEl = document.getElementById('cubeEl');
-        const cubeInner = document.getElementById('cubeInner');
-        const centerEye = document.getElementById('centerEye');
+async function pickFolder(){
+  const dir=await window.showDirectoryPicker();
+  filesData=[];
+  for await(const entry of dir.values()){
+    if(entry.kind==="file"){
+      const f=await entry.getFile();
+      filesData.push({name:f.name,size:f.size,type:f.type,last:f.lastModified,file:f});
+    }
+  }
+  render();
+}
 
-        // state
-        let W = window.innerWidth, H = window.innerHeight; let cx = W/2, cy = H/2; let radius = 150;
-        const glyphChars = ['.', '·', ':', '7', '•', '*', '𓂀', '𓆣', 'ا','ل','ع','ر','ب'];
-        let spacing = 7, fontSize = 12; let particles = [];
-        const pointers = new Map();
-        let isExploded=false; let nextCycle = Date.now()+((Math.floor(Math.random()*30)+7)*1000);
-        let audioCtx=null, analyser=null, micStream=null, micEnabled=false;
-        let gravity={x:0,y:0.12};
-        let mode='interactive';
+function render(){
+  filesDiv.innerHTML="";
+  filesData.forEach(f=>{
+    const card=document.createElement('div'); card.className='card';
+    const t=document.createElement('div'); t.className='thumb';
+    if(f.type.startsWith('image/')){ let img=document.createElement('img'); img.src=URL.createObjectURL(f.file); t.appendChild(img);}
+    else if(f.type.startsWith('video/')){ let v=document.createElement('video'); v.src=URL.createObjectURL(f.file); v.muted=true; v.loop=true; v.play(); t.appendChild(v);}
+    else{t.textContent=f.name.split('.').pop().toUpperCase();}
+    const n=document.createElement('div'); n.className='fname'; n.textContent=f.name;
+    const m=document.createElement('div'); m.className='fmeta'; m.textContent=(f.size/1024).toFixed(1)+" KB";
+    card.appendChild(t); card.appendChild(n); card.appendChild(m);
+    card.onclick=()=>showPreview(f);
+    filesDiv.appendChild(card);
+  });
+}
 
-        // helpers
-        function clamp(v,a,b){ return Math.max(a, Math.min(b, v)); }
-        function getRandomDelay(){ return (Math.floor(Math.random()*30)+7) * 1000; }
+function showPreview(f){
+  preview.style.display="flex";
+  pname.textContent=f.name;
+  pmeta.textContent=(f.size/1024).toFixed(1)+" KB — "+f.type;
+  viewer.innerHTML="";
+  if(f.type.startsWith('image/')){let i=document.createElement('img');i.src=URL.createObjectURL(f.file);viewer.appendChild(i);}
+  else if(f.type.startsWith('video/')){let v=document.createElement('video');v.controls=true;v.src=URL.createObjectURL(f.file);viewer.appendChild(v);}
+  else if(f.type==="application/pdf"){let ifr=document.createElement('iframe');ifr.src=URL.createObjectURL(f.file);viewer.appendChild(ifr);}
+  else if(f.name.endsWith(".html")){let ifr=document.createElement('iframe');ifr.src=URL.createObjectURL(f.file);viewer.appendChild(ifr);}
+  else{let pre=document.createElement('pre');pre.textContent="لا توجد معاينة";viewer.appendChild(pre);}
+}
 
-        function resize(){ W=window.innerWidth; H=window.innerHeight; canvas.width=W; canvas.height=H; cx=W/2; cy=H/2; buildParticles(); }
-        window.addEventListener('resize', resize); resize();
-
-        function buildParticles(){ particles=[]; const off=document.createElement('canvas'); off.width=W; off.height=H; const offCtx = off.getContext('2d'); offCtx.clearRect(0,0,W,H); offCtx.fillStyle='white'; offCtx.beginPath(); offCtx.arc(cx,cy,radius,0,Math.PI*2); offCtx.fill();
-          try{ const imageData = offCtx.getImageData(0,0,W,H); for(let y=0;y<H;y+=spacing){ for(let x=0;x<W;x+=spacing){ const i=(y*W+x)*4; if(i < imageData.data.length && imageData.data[i+3] > 128){ particles.push({ x, y, baseX:x, baseY:y, char: glyphChars[Math.floor(Math.random()*glyphChars.length)], vx:0, vy:0, mass:1+Math.random()*0.6, grabbed:false }); } } } window.__appendLog('Particles built: '+particles.length, 'info'); } catch(e){ window.__appendLog('buildParticles fallback: '+(e&&e.message), 'warn'); for(let y=cy-radius;y<cy+radius;y+=spacing*2){ for(let x=cx-radius;x<cx+radius;x+=spacing*2){ particles.push({ x,y,baseX:x,baseY:y,char:glyphChars[Math.floor(Math.random()*glyphChars.length)],vx:0,vy:0,mass:1 }); } } }
-        }
-
-        // comet
-        let comet = { x:-300, y:0, vx:1.5, vy:0.3, active:false, timer: 1500 + Math.random()*3000 };
-        function triggerComet(){ comet.active=true; comet.x=-200; comet.y=Math.random()*H*0.5; comet.vx=3+Math.random()*1.5; comet.vy=0.2+Math.random()*0.6; window.__appendLog('Comet triggered', 'info'); }
-        function updateComet(){ if(!comet.active){ comet.timer -= 16; if(comet.timer <= 0) triggerComet(); } else { comet.x += comet.vx; comet.y += comet.vy; if(comet.x > W + 200){ comet.active = false; comet.timer = 4000 + Math.random()*4000; } } }
-        function drawComet(){ if(!comet.active) return; const L=120; const g = ctx.createLinearGradient(comet.x, comet.y, comet.x-comet.vx*L, comet.y-comet.vy*L); g.addColorStop(0,'rgba(255,230,160,1)'); g.addColorStop(1,'rgba(255,230,160,0)'); ctx.beginPath(); ctx.moveTo(comet.x,comet.y); ctx.lineTo(comet.x-comet.vx*L, comet.y-comet.vy*L); ctx.strokeStyle=g; ctx.lineWidth=2.5; ctx.stroke(); ctx.beginPath(); ctx.fillStyle='rgba(255,240,200,1)'; ctx.arc(comet.x,comet.y,4,0,Math.PI*2); ctx.fill(); }
-
-        // animate
-        function animate(){ ctx.clearRect(0,0,W,H); updateComet(); drawComet(); if(Date.now() > nextCycle){ if(!isExploded) explodeParticles(); else regroupParticles(); nextCycle = Date.now() + getRandomDelay(); }
-
-          // audio influence
-          let audioFactor = 1;
-          if(analyser && micEnabled){ const data = new Uint8Array(analyser.frequencyBinCount); analyser.getByteTimeDomainData(data); let sum = 0; for(let i=0;i<data.length;i++){ const v=(data[i]-128)/128; sum += v*v; } const rms = Math.sqrt(sum/data.length); audioFactor = 1 + Math.min(3, rms*8); }
-
-          ctx.textBaseline='middle'; ctx.textAlign='center'; ctx.font = fontSize + 'px monospace';
-
-          // compute pointer average for visuals
-          let avgX = cx, avgY = cy, count=0; for(const v of pointers.values()){ avgX += v.x; avgY += v.y; count++; } if(count>0){ avgX /= (count+0); avgY /= (count+0); }
-
-          // update visual elements (circle, cubeInner, centerEye)
-          try{
-            const dx = avgX - cx, dy = avgY - cy; const dist = Math.hypot(dx,dy); const rx = clamp(-dy/8, -25,25); const ry = clamp(dx/8, -25,25); const scale = clamp(1 + (dist / Math.max(W,H))*0.6, 1, 1.5);
-            if(pointers.size>0){ cubeInner.style.transform = `translate(-50%,-50%) rotateX(${rx}deg) rotateY(${ry}deg) scale(${1})`; circleEl.style.transform = `translate(-50%,-50%) scale(${1 + (dist/Math.max(W,H))*0.22})`; centerEye.style.transform = `translate(-50%,-50%) scale(${1 + (dist/Math.max(W,H))*0.08})`; }
-            else { cubeInner.style.transform = `translate(-50%,-50%) rotateX(0deg) rotateY(0deg) scale(1)`; circleEl.style.transform = `translate(-50%,-50%) scale(1)`; centerEye.style.transform = `translate(-50%,-50%) scale(1)`; }
-          }catch(e){}
-
-          for(const p of particles){ if(p.grabbed){ // follow grab avg
-              let gx=0,gy=0,cnt=0; for(const v of pointers.values()){ gx+=v.x; gy+=v.y; cnt++; } if(cnt){ gx/=cnt; gy/=cnt; p.x += (gx - p.x) * 0.32; p.y += (gy - p.y) * 0.32; p.vx = 0; p.vy = 0; }
-            } else if(isExploded){ p.x += p.vx * audioFactor; p.y += p.vy * audioFactor; p.vx *= 0.985; p.vy *= 0.985; p.vy += gravity.y * p.mass; p.vx += gravity.x * p.mass; }
-            else { p.x -= (p.x - p.baseX) * 0.06; p.y -= (p.y - p.baseY) * 0.06; p.vy += gravity.y * 0.02; p.vx += gravity.x * 0.02; p.x += p.vx; p.y += p.vy; p.vx*=0.97; p.vy*=0.97; }
-
-            // pointer influence
-            if(pointers.size>0 && !p.grabbed){ let gx=0,gy=0,c=0; for(const v of pointers.values()){ gx+=v.x; gy+=v.y; c++; } if(c){ gx/=c; gy/=c; const dx=gx-p.x, dy=gy-p.y; const dist=Math.hypot(dx,dy)||0.0001; const force = Math.max(0, radius - dist)/radius; p.x -= (p.x - p.baseX - (dx/dist)*force*10) * 0.12; p.y -= (p.y - p.baseY - (dy/dist)*force*10) * 0.12; } }
-
-            // bounds
-            if(p.x < -200 || p.x > W+200 || p.y < -200 || p.y > H+200){ p.x = p.baseX; p.y = p.baseY; p.vx = 0; p.vy = 0; }
-
-            const flick = Math.max(0.04, Math.sin(Date.now()*0.005 + p.x*0.01)*0.35 + 0.65);
-            ctx.fillStyle = `rgba(255,215,0,${flick})`;
-            ctx.fillText(p.char, p.x, p.y);
-          }
-
-          requestAnimationFrame(animate);
-        }
-        requestAnimationFrame(animate);
-
-        // Pointer handling (unified)
-        const trails = new Map(); const grabs = new Map();
-        function createTrail(id,x,y){ try{ const el = document.createElement('div'); el.className='trail'; el.style.left = x+'px'; el.style.top = y+'px'; el.dataset.tid = id; document.body.appendChild(el); trails.set(id,el); }catch(e){} }
-        function moveTrail(id,x,y){ const el = trails.get(id); if(el){ el.style.left = x+'px'; el.style.top = y+'px'; } }
-        function removeTrail(id){ const el = trails.get(id); if(el){ el.style.transition = 'opacity .36s'; el.style.opacity = 0; setTimeout(()=>el.remove(),420); trails.delete(id); } }
-
-        function tryGrabNearby(x,y,id){ const grabRadius = 48; const grabbed = []; for(const p of particles){ const d = Math.hypot(p.x - x, p.y - y); if(d < grabRadius){ p.grabbed = true; grabbed.push(p); } } if(grabbed.length) grabs.set(id, grabbed); }
-        function updateGrab(id,x,y){ const g = grabs.get(id); if(!g) return; for(const p of g){ p.x += (x - p.x) * 0.25; p.y += (y - p.y) * 0.25; p.vx = 0; p.vy = 0; } }
-        function releaseGrabs(id,x,y,speed){ const g = grabs.get(id); if(!g) return; for(const p of g){ p.grabbed = false; p.vx += (p.x - x) * 0.02 + (Math.random()-0.5)*1.2; p.vy += (p.y - y) * 0.02 + (Math.random()-0.5)*1.2; } grabs.delete(id); }
-
-        function onPointerDown(e){ try{ const id = e.pointerId || 'm'; pointers.set(id, { x:e.clientX, y:e.clientY, downAt: Date.now(), startX:e.clientX, startY:e.clientY }); createTrail(id, e.clientX, e.clientY); const lp = setTimeout(()=>{ activateBatSeal(e.clientX, e.clientY); playChime(660,0.12); navigator.vibrate&&navigator.vibrate(40); }, 650); pointers.get(id).longpress = lp; tryGrabNearby(e.clientX, e.clientY, id); }catch(e){ window.__appendLog('onPointerDown error: '+(e&&e.message),'error'); } }
-        function onPointerMove(e){ try{ const id = e.pointerId || 'm'; if(pointers.has(id)){ const pt = pointers.get(id); pt.x = e.clientX; pt.y = e.clientY; moveTrail(id,e.clientX,e.clientY); updateGrab(id,e.clientX,e.clientY); } }catch(e){ window.__appendLog('onPointerMove error: '+(e&&e.message),'error'); } }
-        function onPointerUp(e){ try{ const id = e.pointerId || 'm'; const pt = pointers.get(id); if(pt){ clearTimeout(pt.longpress); removeTrail(id); const dt = Date.now() - pt.downAt; const dx = e.clientX - pt.startX, dy = e.clientY - pt.startY; if(dt < 300 && Math.hypot(dx,dy) < 10){ handleTap(e.clientX, e.clientY); } releaseGrabs(id, e.clientX, e.clientY, (dx)/Math.max(1,dt)); } pointers.delete(id); }catch(e){ window.__appendLog('onPointerUp error: '+(e&&e.message),'error'); } }
-
-        window.addEventListener('pointerdown', onPointerDown); window.addEventListener('pointermove', onPointerMove); window.addEventListener('pointerup', onPointerUp); window.addEventListener('pointercancel', onPointerUp);
-
-        // Ripple + glyph burst + visual reactions
-        function createRipple(x,y,strength=1){ try{ const el = document.createElement('div'); el.className = 'ripple'; const size = 80 * strength; el.style.width = size + 'px'; el.style.height = size + 'px'; el.style.left = x + 'px'; el.style.top = y + 'px'; document.body.appendChild(el); requestAnimationFrame(()=>{ el.style.transition = 'transform 800ms cubic-bezier(.2,.8,.2,1), opacity 900ms'; el.style.transform = 'translate(-50%,-50%) scale(3)'; el.style.opacity = '0'; }); setTimeout(()=>el.remove(),1000); for(const p of particles){ const dx = p.x - x, dy = p.y - y, d = Math.hypot(dx,dy); if(d < radius*2){ const f = (1 - (d/(radius*2))) * (6*strength); p.vx += (dx/d) * f; p.vy += (dy/d) * f; } } // visual: quick eye flash
-          centerEye.style.transform = 'translate(-50%,-50%) scale(1.18)'; centerEye.style.textShadow = '0 0 14px rgba(255,230,140,1)'; setTimeout(()=>{ centerEye.style.transform='translate(-50%,-50%) scale(1)'; centerEye.style.textShadow='0 0 6px rgba(255,210,80,0.9)'; }, 260);
-        }catch(e){ window.__appendLog('createRipple error: '+(e&&e.message),'error'); } }
-
-        function glyphBurst(x,y){ try{ const letters=['𓂀','ا','ل','ع','ر','ا','ب','777']; for(let i=0;i<letters.length;i++){ const angle = Math.random()*Math.PI*2; const speed = 4 + Math.random()*6; const vx = Math.cos(angle)*speed; const vy = Math.sin(angle)*speed; const temp = { x, y, vx, vy, life:1000, t:Date.now(), char: letters[i] }; (function anim(tobj){ const dt = Date.now() - tobj.t; if(dt > tobj.life) return; ctx.fillStyle = `rgba(255,230,160,${1 - dt/tobj.life})`; ctx.font = '18px monospace'; ctx.fillText(tobj.char, tobj.x, tobj.y); tobj.x += tobj.vx; tobj.y += tobj.vy; requestAnimationFrame(()=>anim(tobj)); })(temp); } }catch(e){ window.__appendLog('glyphBurst error: '+(e&&e.message),'error'); } }
-
-        function handleTap(x,y){ createRipple(x,y,1); playChime(880,0.08); navigator.vibrate&&navigator.vibrate(18); glyphBurst(x,y); const now = Date.now(); if(!window.__lastTap) window.__lastTap = now; else { if(now - window.__lastTap < 350) triggerComet(); window.__lastTap = now; } }
-
-        function activateBatSeal(x,y){ try{ const g = document.getElementById('glyphs'); const node = document.createElement('div'); node.style.position='fixed'; node.style.left = (x||cx)+'px'; node.style.top = (y||cy)+'px'; node.style.transform='translate(-50%,-50%)'; node.style.color='#ffd97a'; node.style.fontSize='18px'; node.style.padding='8px 12px'; node.style.borderRadius='8px'; node.style.background='rgba(0,0,0,0.45)'; node.style.border='1px solid rgba(255,215,0,0.08)'; node.innerText = '🔐 Bat Seal • 𓂀 𓆣 777'; g.appendChild(node); setTimeout(()=>{ node.style.transition='all .6s'; node.style.opacity=0; setTimeout(()=>node.remove(),700); },2800); playChime(520,0.18); navigator.vibrate&&navigator.vibrate(60); }catch(e){ window.__appendLog('activateBatSeal error: '+(e&&e.message),'error'); } }
-
-        // chime
-        function initAudioCtx(){ try{ if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }catch(e){ audioCtx = null; } }
-        function playChime(freq=440, duration=0.12){ try{ initAudioCtx(); if(!audioCtx) return; const o = audioCtx.createOscillator(); const g = audioCtx.createGain(); o.type = 'sine'; o.frequency.value = freq; o.connect(g); g.connect(audioCtx.destination); g.gain.value = 0.0001; o.start(); g.gain.linearRampToValueAtTime(0.08, audioCtx.currentTime+0.01); g.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime+duration); o.stop(audioCtx.currentTime+duration+0.02); }catch(e){} }
-
-        // mic
-        async function enableMic(){ if(micEnabled) return; try{ audioCtx = new (window.AudioContext || window.webkitAudioContext)(); micStream = await navigator.mediaDevices.getUserMedia({ audio:true }); const src = audioCtx.createMediaStreamSource(micStream); analyser = audioCtx.createAnalyser(); analyser.fftSize = 2048; src.connect(analyser); micEnabled = true; document.getElementById('micBtn').innerText='Mic: on'; window.__appendLog('Mic enabled', 'info'); }catch(e){ window.__appendLog('Mic enable failed: '+(e&&e.message),'warn'); } }
-        function disableMic(){ try{ if(micStream){ micStream.getTracks().forEach(t=>t.stop()); micStream = null; } if(audioCtx){ audioCtx.close(); audioCtx=null; analyser=null; } micEnabled=false; document.getElementById('micBtn').innerText='Mic: off'; }catch(e){} }
-
-        document.getElementById('micBtn').addEventListener('click', ()=>{ if(micEnabled) disableMic(); else enableMic(); });
-
-        // explode/regroup
-        function explodeParticles(){ for(const p of particles){ p.vx = (Math.random()-0.5)*(8+Math.random()*16); p.vy = (Math.random()-0.5)*(8+Math.random()*16); } isExploded = true; nextCycle = Date.now() + getRandomDelay(); playChime(720,0.18); navigator.vibrate&&navigator.vibrate(40); window.__appendLog('Explode fired', 'info'); }
-        function regroupParticles(){ isExploded = false; nextCycle = Date.now() + getRandomDelay(); window.__appendLog('Regrouped', 'info'); }
-
-        document.getElementById('explodeBtn').addEventListener('click', explodeParticles);
-        document.getElementById('regenBtn').addEventListener('click', buildParticles);
-        document.getElementById('modeBtn').addEventListener('click', ()=>{ mode = mode==='interactive'?'calm':'interactive'; document.getElementById('modeBtn').innerText = 'وضع: '+(mode==='interactive'?'تفاعل':'هادئ'); if(mode==='calm'){ spacing = 12; fontSize = 10; } else { spacing = 6; fontSize = 14; } buildParticles(); });
-
-        // Test MetaMask connect behaviour (safe)
-        document.getElementById('testConnect').addEventListener('click', async ()=>{
-          try{
-            window.__appendLog('Attempting ethereum.request({method: "eth_requestAccounts"})', 'info');
-            const res = await (window.ethereum && window.ethereum.request ? window.ethereum.request({ method: 'eth_requestAccounts' }) : Promise.resolve([]));
-            window.__appendLog('ethereum.request returned: ' + JSON.stringify(res), 'info');
-          }catch(e){ window.__appendLog('ethereum.request threw: '+(e&&e.message), 'error'); }
-        });
-
-        // Simulate MetaMask Err (safe) — dispatch error event but don't create an uncaught rejection
-        document.getElementById('simulateErr').addEventListener('click', ()=>{
-          try{
-            const ev = new ErrorEvent('error', { message: 's: Failed to connect to MetaMask', filename: 'simulator', lineno: 1, colno: 1 });
-            window.dispatchEvent(ev);
-            window.__appendLog('Simulated MetaMask-like error event dispatched (no unhandled rejection).', 'warn');
-          }catch(e){ window.__appendLog('simulateErr failed: '+(e&&e.message),'error'); }
-        });
-
-        // expose debug helpers
-        window.__al_blackhole = { explodeParticles, buildParticles, triggerComet, enableMic, disableMic };
-
-        // initial build
-        buildParticles();
-
-      }catch(e){ window.__appendLog('Main initialization failed: '+(e&&e.message),'error'); }
-    })();
-
-  </script>
+document.getElementById('pick').onclick=pickFolder;
+</script>
 </body>
 </html>
-
