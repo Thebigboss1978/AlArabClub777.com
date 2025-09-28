@@ -1,247 +1,226 @@
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>AlArab Club 777 — Rooftop Pyramids View | بوابة 777</title>
-<meta name="description" content="AlArab Club 777 — تجربة ضيافة بسيطة وشِيك بإطلالة الأهرامات من السطح. Water‑Glass aesthetic + مؤشر فأرة تفاعلي. احجز مباشرة عبر WhatsApp.">
-<meta name="theme-color" content="#0b0f14"/>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>AlArab Club 777 — بوابة الصور والقصص + Grover Tones Wester</title>
+<meta name="description" content="معرض الصور، الفيديو، القصص، ومشغل Grover Tones Wester الصوتي. جميع الملفات تُحمّل من Google Drive أو /assets/." />
 <style>
-:root {
-  --bg1: #0b0f14;
-  --bg2: #0e131a;
-  --glass: rgba(255,255,255,0.06);
-  --glass-border: rgba(255,255,255,0.18);
-  --accent: #ffd166; /* golden 777 */
-  --text: #eaf2ff;
-  --muted:#b9c2d0;
-  --blur: 18px;
-}
-* { box-sizing:border-box }
-html,body { height:100% }
-body{
-  margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Noto Naskh Arabic", Tahoma, Arial;
-  color:var(--text);
-  background: radial-gradient(1200px 800px at 20% -10%, #1b2a3a 0%, transparent 60%),
-             radial-gradient(900px 600px at 120% 10%, #13212f 0%, transparent 60%),
-             linear-gradient(180deg, var(--bg1), var(--bg2));
-  overflow-x:hidden;
-}
-.water-overlay::before {
-  content:""; position:fixed; inset:-10vh;
-  background:
-    radial-gradient(40% 60% at 70% 20%, rgba(255,255,255,0.06), transparent 60%),
-    radial-gradient(35% 50% at 30% 80%, rgba(0,150,255,0.08), transparent 70%),
-    radial-gradient(25% 40% at 80% 90%, rgba(255,255,255,0.05), transparent 70%);
-  filter: blur(60px) saturate(140%);
-  pointer-events:none; z-index:0;
-}
-.container{ width:min(1200px, 92vw); margin:auto; position:relative; z-index:1; }
-nav{
-  display:flex; justify-content:space-between; align-items:center; padding:16px 0; gap:16px;
-}
-.brand{
-  display:flex; align-items:center; gap:12px; font-weight:700; letter-spacing:.5px;
-}
-.badge-777{ padding:6px 10px; border-radius:999px; border:1px solid var(--glass-border); background:var(--glass); backdrop-filter: blur(var(--blur)); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06); }
-.badge-777 svg{ display:block; }
-.btn{
-  padding:12px 18px; border-radius:14px; border:1px solid var(--glass-border); background:linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03));
-  color:var(--text); text-decoration:none; display:inline-flex; align-items:center; gap:10px; backdrop-filter: blur(var(--blur));
-  transition:transform .15s ease, background .2s ease, box-shadow .2s ease;
-  box-shadow: 0 10px 30px rgba(0,0,0,.25);
-}
-.btn:hover{ transform:translateY(-1px); box-shadow: 0 12px 40px rgba(0,0,0,.35); }
-.btn-accent{ border-color: rgba(255, 209, 102,.5); box-shadow: 0 10px 30px rgba(255, 209, 102,.12); }
-.hero{
-  display:grid; grid-template-columns:1.2fr .8fr; gap:24px; align-items:center; padding:40px 0 24px;
-}
-@media (max-width: 900px){ .hero{ grid-template-columns:1fr; } }
-.card{
-  background: var(--glass);
-  border: 1px solid var(--glass-border);
-  border-radius: 24px;
-  padding: clamp(18px, 4vw, 28px);
-  backdrop-filter: blur(var(--blur)) saturate(140%);
-  box-shadow: 0 20px 60px rgba(0,0,0,.35);
-}
-.h1{ font-size: clamp(28px, 3.6vw, 48px); line-height:1.15; margin:0 0 10px; }
-.lead{ color:var(--muted); font-size: clamp(15px, 1.4vw, 18px); }
-.kpis{ display:flex; gap:14px; flex-wrap:wrap; margin: 18px 0 0; }
-.kpi{ padding:10px 12px; border-radius:12px; border:1px solid var(--glass-border); background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02)); font-size:13px; color:var(--muted) }
-.gallery{
-  display:grid; grid-template-columns: repeat(3, 1fr); gap:14px;
-}
-@media (max-width: 700px){ .gallery{ grid-template-columns:1fr 1fr; } }
-.photo{
-  aspect-ratio: 4/3; border-radius: 18px; overflow:hidden; position:relative; border:1px solid var(--glass-border); background:#0e1620;
-}
-.photo img{ width:100%; height:100%; object-fit:cover; filter: saturate(110%) contrast(105%); transform:scale(1.02); }
+  :root{
+    --bg:#05060a; --gold:#ffd66b; --muted:#9aa3b2; --card: rgba(255,255,255,0.03);
+    --glass: rgba(255,255,255,0.04);
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0;font-family: "Cairo","Noto Naskh Arabic", system-ui, sans-serif;background:var(--bg);color:var(--gold);-webkit-font-smoothing:antialiased}
+  a{color:var(--gold);text-decoration:none}
+  .container{max-width:1200px;margin:0 auto;padding:20px}
 
-.grid{ display:grid; grid-template-columns: repeat(3, 1fr); gap:16px; }
-@media (max-width: 900px){ .grid{ grid-template-columns: 1fr; } }
+  header{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid rgba(255,215,120,0.04)}
+  .brand{display:flex;gap:12px;align-items:center}
+  .logo{width:56px;height:56px;border-radius:10px;background:linear-gradient(135deg,#ffd86b,#ffb347);display:grid;place-items:center;color:#111;font-weight:900}
+  .title{font-size:20px;font-weight:800}
+  .subtitle{color:var(--muted);font-size:13px}
 
-.feature h3{ margin:.2rem 0 .6rem; }
-.feature p{ color:var(--muted); margin:0; }
+  .hero{display:grid;grid-template-columns:1fr 360px;gap:20px;align-items:start;margin-top:18px}
+  .hero-left{padding:18px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:14px;border:1px solid var(--glass)}
+  .hero-right{position:sticky;top:18px;padding:14px;background:var(--card);border-radius:12px;border:1px solid var(--glass);}
 
-footer{
-  display:flex; justify-content:space-between; align-items:center; gap:16px;
-  padding:28px 0 60px; color:var(--muted); font-size:14px;
-}
-footer a{ color: var(--text) }
+  .cta{display:flex;gap:12px;margin-top:12px}
+  .btn{padding:10px 14px;border-radius:10px;background:linear-gradient(90deg,var(--gold),#ffb347);color:#111;font-weight:800;border:none;cursor:pointer}
+  .btn.ghost{background:transparent;border:1px solid var(--glass);color:var(--gold)}
 
- /* Cursor Add-on */
-.cursor-dot, .cursor-outline{
-  position: fixed; top:0; left:0; width:10px; height:10px; border-radius:50%;
-  pointer-events:none; transform: translate(-50%,-50%); z-index: 9999; mix-blend-mode: screen;
-}
-.cursor-dot{ background: radial-gradient(circle at 30% 30%, #8ec5ff, #1e90ff); filter: blur(0.5px); }
-.cursor-outline{ width:40px; height:40px; background: radial-gradient(circle at 50% 50%, rgba(141, 217, 255, .2), rgba(0,0,0,0)); border:1px solid rgba(141,217,255,.3); filter: blur(2px); }
-.ripple{
-  position: fixed; width:10px; height:10px; border-radius:999px; pointer-events:none; z-index:9998;
-  background: radial-gradient(circle, rgba(255,255,255,.55), rgba(141,217,255,.28) 60%, rgba(0,0,0,0) 70%);
-  transform: translate(-50%,-50%) scale(1);
-  animation: ripple .7s ease-out forwards;
-  mix-blend-mode: screen;
-}
-@keyframes ripple{ to{ transform: translate(-50%,-50%) scale(16); opacity:0 } }
+  .section{margin-top:26px}
+  .section h2{margin:0 0 12px;color:var(--gold)}
+  .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+  .thumb{position:relative;border-radius:10px;overflow:hidden;border:1px solid var(--glass);background:#0a0a0a}
+  .thumb img{display:block;width:100%;height:auto;object-fit:cover}
+  .thumb video{display:block;width:100%;height:auto;object-fit:cover}
+  .thumb .caption{position:absolute;left:8px;bottom:8px;background:rgba(0,0,0,0.5);padding:6px 8px;border-radius:8px;font-size:12px;color:#fff}
+  .thumb .actions{position:absolute;right:8px;top:8px;display:flex;gap:6px}
+  .actions a{background:rgba(0,0,0,0.5);padding:6px;border-radius:6px;color:#fff;font-weight:700;font-size:12px}
 
-.toggle{ position: fixed; inset-inline-end: 14px; inset-block-end: 16px; z-index: 10000; }
-.toggle .btn{ padding:10px 14px; font-size:13px }
+  .lightbox{position:fixed;inset:0;background:rgba(0,0,0,0.85);display:none;align-items:center;justify-content:center;z-index:9999}
+  .lightbox img, .lightbox video{max-width:92%;max-height:86%;border-radius:8px;box-shadow:0 20px 60px rgba(0,0,0,0.8)}
+  .lightbox .meta{position:absolute;bottom:20px;left:20px;color:var(--gold);font-size:14px;background:rgba(0,0,0,0.35);padding:8px 12px;border-radius:8px}
 
-small.hint{ color: var(--muted); display:block; margin-top:8px; }
+  .stories{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+  .story{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:14px;border-radius:12px;border:1px solid var(--glass)}
+  .story h3{margin:0 0 6px;color:var(--gold)}
+  .story p{color:var(--muted);line-height:1.6;font-size:14px}
+
+  .audio-card{display:flex;flex-direction:column;gap:8px;align-items:stretch}
+  audio, video{width:100%;border-radius:8px}
+
+  footer{margin:40px 0 20px;padding:20px;text-align:center;color:var(--muted);border-top:1px solid rgba(255,215,120,0.03)}
+  @media (max-width:900px){
+    .hero{grid-template-columns:1fr}
+    .hero-right{position:static}
+  }
+
+  /* ===== Intro Video Overlay ===== */
+  #introOverlay{
+    position:fixed;
+    inset:0;
+    background:#000;
+    z-index:99999;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+  }
+  #introOverlay video{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+  }
+  #introOverlay.fadeOut{
+    animation: fadeOut 2s forwards;
+  }
+  @keyframes fadeOut{
+    to{opacity:0;visibility:hidden}
+  }
 </style>
 </head>
-<body class="water-overlay">
-<div class="cursor-dot"></div>
-<div class="cursor-outline"></div>
+<body>
+
+<!-- Intro Video Overlay -->
+<div id="introOverlay">
+  <video id="introVideo" autoplay muted playsinline>
+    <source src="public/assets/tourist-video.mp4" type="video/mp4">
+    متصفحك لا يدعم تشغيل الفيديو
+  </video>
+</div>
 
 <div class="container">
-  <nav>
+  <header>
     <div class="brand">
-      <span class="badge-777" aria-hidden="true">
-        <!-- 777 sigil -->
-        <svg width="28" height="20" viewBox="0 0 42 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M4 26L18 4" stroke="url(#g1)" stroke-width="3" stroke-linecap="round"/>
-          <path d="M16 26L30 4" stroke="url(#g1)" stroke-width="3" stroke-linecap="round"/>
-          <path d="M28 26L42 4" stroke="url(#g1)" stroke-width="3" stroke-linecap="round"/>
-          <defs><linearGradient id="g1" x1="0" y1="0" x2="42" y2="0">
-            <stop stop-color="#fff7c7"/><stop offset="1" stop-color="#ffd166"/>
-          </linearGradient></defs>
-        </svg>
-      </span>
-      <span>AlArab Club <b>777</b> · بوابة</span>
-    </div>
-    <div style="display:flex; gap:10px">
-      <a class="btn" href="#gallery" aria-label="شاهد الصور">معرض</a>
-      <a class="btn btn-accent" href="https://wa.me/201234567890?text=السلام%20عليكم%20أرغب%20بحجز%20لـ%20AlArab%20Club%20777" target="_blank" rel="noopener">احجز مباشرة عبر WhatsApp</a>
-    </div>
-  </nav>
-
-  <section class="hero">
-    <div class="card">
-      <h1 class="h1">مشهد الأهرامات من السطح · <span style="color:var(--accent)">Water‑Glass</span> تجربة 777</h1>
-      <p class="lead">بيت ضيافة بإحساس بسيط وشِيك — زجاج مائي، هدوء، ولمسة سحرية من مؤشر الفأرة التفاعلي. خطوة أقرب للسكينة عند هضبة الجيزة.</p>
-      <div class="kpis">
-        <div class="kpi">↗ احجز مباشرة — أفضل سعر</div>
-        <div class="kpi">☕ Rooftop Sunrise</div>
-        <div class="kpi">🗺️ 700m من أبو الهول</div>
+      <div class="logo">777</div>
+      <div>
+        <div class="title">AlArab Club 777</div>
+        <div class="subtitle">بوابة الصور — Google Drive + مجلد /assets/</div>
       </div>
-      <small class="hint">Tip: حرّك الفأرة… وشوف الهالة المائية ✧</small>
     </div>
-    <div class="gallery" id="gallery">
-      <div class="photo"><img src="https://images.unsplash.com/photo-1563379105-766a02a0b567?q=80&w=1200&auto=format&fit=crop" alt="Rooftop with pyramids view placeholder"/></div>
-      <div class="photo"><img src="https://images.unsplash.com/photo-1523906630133-f6934a1ab1a1?q=80&w=1200&auto=format&fit=crop" alt="Ambient glass lighting"/></div>
-      <div class="photo"><img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1200&auto=format&fit=crop" alt="Calm water glass aesthetic"/></div>
+    <div>
+      <a class="btn" href="#pyramids">احجز الآن</a>
     </div>
-  </section>
+  </header>
 
-  <section class="grid">
-    <div class="card feature">
-      <h3>Water Glass Theme</h3>
-      <p>زجاج ضبابي + ألوان مائية + ظلال ناعمة. هوية 777: ذهب دافئ على خلفية ليلية.</p>
+  <div class="hero">
+    <div class="hero-left">
+      <h1 style="margin:0 0 8px">معرض ونُبَذ وصوت — الملفات من Google Drive أو /assets/</h1>
+      <p style="color:var(--muted);margin:0">تصفح الصور والفيديو مع روابط Google Drive File IDs أو مجلد محلي /assets/.</p>
+
+      <div class="section" id="gallerySection">
+        <h2>المعرض — الصور & الفيديو</h2>
+        <div class="gallery" id="galleryGrid"></div>
+      </div>
+
+      <div class="section" id="storiesSection">
+        <h2>القصص — خلف كل صورة حكاية</h2>
+        <div class="stories" id="storiesGrid"></div>
+      </div>
     </div>
-    <div class="card feature">
-      <h3>Interactive Mouse</h3>
-      <p>إضافة خفيفة (JS أقل من 40 سطر). هالة تتبع المؤشر + موجة عند النقر — تشتغل على سطح المكتب والمحمول (لمس) بصورة خفيفة.</p>
-    </div>
-    <div class="card feature">
-      <h3>SEO جاهز</h3>
-      <p>Meta + JSON‑LD + سرعة تحميل عالية. جاهز للفهرسة عبر Search Console.</p>
-    </div>
-  </section>
+
+    <aside class="hero-right">
+      <div style="margin-bottom:12px">
+        <h3 style="margin:0 0 8px;color:var(--gold)">Grover Tones Wester — مشغّل الصوت</h3>
+        <div class="audio-card card">
+          <audio id="groverAudio" controls preload="auto">
+            <source src="public/assets/grover-tones-wester.mp3" type="audio/mpeg">
+            متصفحك لا يدعم تشغيل الصوت.
+          </audio>
+        </div>
+      </div>
+    </aside>
+  </div>
 
   <footer>
-    <div>© <span id="year"></span> AlArab Club 777 · Giza</div>
-    <div><a href="mailto:hello@alarabclub777.com">hello@alarabclub777.com</a></div>
+    <div>© AlArab Club 777 — صور وفيديو من Google Drive أو /assets/</div>
   </footer>
 </div>
 
-<div class="toggle">
-  <button class="btn" id="toggleCursor">Cursor: On</button>
+<div id="lightbox" class="lightbox" onclick="closeLightbox(event)">
+  <div id="lbContent"></div>
+  <div class="meta" id="lbMeta"></div>
 </div>
 
-<!-- JSON-LD: LodgingBusiness -->
-<script type="application/ld+json">
-{
- "@context":"https://schema.org",
- "@type":"LodgingBusiness",
- "name":"AlArab Club 777",
- "url":"https://alarabclub777.com",
- "address":{"@type":"PostalAddress","addressLocality":"Giza","addressCountry":"EG"},
- "sameAs":[
-  "https://www.instagram.com/aluab_777",
-  "https://www.tripadvisor.com/",
-  "https://www.booking.com/"
- ],
- "amenityFeature":[
-  {"@type":"LocationFeatureSpecification","name":"Rooftop Pyramids view","value":true},
-  {"@type":"LocationFeatureSpecification","name":"WhatsApp direct booking","value":true}
- ]
-}
-</script>
-
 <script>
-/* Cursor Add‑on */
-(function(){
-  const dot = document.querySelector('.cursor-dot');
-  const outline = document.querySelector('.cursor-outline');
-  let on = true, x=0, y=0, ox=0, oy=0;
-  const lerp = (a,b,n)=> (1-n)*a + n*b;
+const DRIVE_IDS = {
+  pyramids: "1RR4eotIxrmHWmbDx_9VqIxl2QDeNMLRG",
+  camel:    "1UEz8oX9vQYkK2RxxqXWT0ZoWuzovS3gF",
+  horse:    "1CBAEg7PShHcQKke7XpKwufEhVdq9QuqJ",
+  saqqara:  "1J9nqlPZ5j8iDeQQdPhxkBGP_8HkxgG5u"
+};
 
-  function move(e){
-    x = (e.touches? e.touches[0].clientX : e.clientX);
-    y = (e.touches? e.touches[0].clientY : e.clientY);
-    dot.style.transform = `translate(${x}px, ${y}px)`;
-  }
-  function loop(){
-    ox = lerp(ox, x, .12);
-    oy = lerp(oy, y, .12);
-    outline.style.transform = `translate(${ox}px, ${oy}px)`;
-    requestAnimationFrame(loop);
-  }
-  function clickRipple(e){
-    if(!on) return;
-    const cx = e.clientX || (e.touches && e.touches[0].clientX);
-    const cy = e.clientY || (e.touches && e.touches[0].clientY);
-    const r = document.createElement('div');
-    r.className = 'ripple';
-    r.style.left = cx + 'px'; r.style.top = cy + 'px';
-    document.body.appendChild(r);
-    setTimeout(()=> r.remove(), 700);
-  }
-  function toggle(){
-    on = !on;
-    document.getElementById('toggleCursor').textContent = 'Cursor: ' + (on? 'On':'Off');
-    dot.style.display = outline.style.display = on? 'block':'none';
-  }
-  document.addEventListener('mousemove', e=> { if(on) move(e) });
-  document.addEventListener('touchmove', e=> { if(on) move(e) }, {passive:true});
-  document.addEventListener('click', clickRipple);
-  document.getElementById('toggleCursor').addEventListener('click', toggle);
-  document.getElementById('year').textContent = new Date().getFullYear();
-  loop();
-})();
+const ASSETS = [
+  "pyramids.jpg","camel.jpg","horse.jpg","saqqara.jpg",
+  "hotel.jpg","room-deluxe.jpg","room-standard.jpg"
+];
+
+function getMediaUrl(name){
+  const lower = name.toLowerCase();
+  if(lower.includes("pyramid")) return `https://drive.google.com/uc?export=view&id=${1n4LaH8-WWH31LMdWDIWMX4j06P8I-OVw}`;
+  if(lower.includes("camel"))   return `https://drive.google.com/uc?export=view&id=${1n4LaH8-WWH31LMdWDIWMX4j06P8I-OVw}`;
+  if(lower.includes("horse"))   return `https://drive.google.com/uc?export=view&id=${1n4LaH8-WWH31LMdWDIWMX4j06P8I-OVw}`;
+  if(lower.includes("saqqara")) return `https://drive.google.com/uc?export=view&id=${1n4LaH8-WWH31LMdWDIWMX4j06P8I-OVw}`;
+  return "public/assets/" + encodeURIComponent(name);
+}
+
+function captionFromName(name){
+  const map = {
+    "pyramids":"🏛️ جولة الأهرامات",
+    "camel":"🐪 سفاري الجمال",
+    "horse":"👑 رحلة الحصان",
+    "saqqara":"🌙 عرض الصوت والضوء",
+    "hotel":"🏨 الفندق",
+    "room deluxe":"غرفة ديلوكس",
+    "room standard":"غرفة ستاندرد"
+  };
+  const key = name.toLowerCase();
+  for(const k in map){ if(key.includes(k)) return map[k]; }
+  return name;
+}
+
+const galleryGrid = document.getElementById('galleryGrid');
+const storiesGrid = document.getElementById('storiesGrid');
+
+ASSETS.forEach(name=>{
+  const url = getMediaUrl(name);
+  const cap = captionFromName(name);
+  const thumb = document.createElement('div'); thumb.className='thumb';
+  thumb.innerHTML = `<img src="${url}" alt="${cap}" loading="lazy"><div class="caption">${cap}</div>`;
+  thumb.querySelector('img').addEventListener('click', ()=> openLightbox(url, cap, 'image'));
+  galleryGrid.appendChild(thumb);
+
+  const story = document.createElement('article'); story.className='story';
+  story.innerHTML = `<h3>${cap}</h3><p>قصة مرافقة للصورة ${cap}</p>`;
+  storiesGrid.appendChild(story);
+});
+
+const lightbox = document.getElementById('lightbox');
+const lbContent = document.getElementById('lbContent');
+const lbMeta = document.getElementById('lbMeta');
+
+function openLightbox(url, caption){
+  lbContent.innerHTML = `<img src="${url}" alt="${caption}" />`;
+  lbMeta.textContent = caption;
+  lightbox.style.display='flex';
+}
+function closeLightbox(e){if(e.target!==lightbox) return;lightbox.style.display='none';lbContent.innerHTML='';lbMeta.textContent='';}
+
+// ===== Intro Overlay JS =====
+const introOverlay = document.getElementById("introOverlay");
+const introVideo   = document.getElementById("introVideo");
+
+// بعد 12 ثانية يختفي الفيديو
+setTimeout(()=>{
+  introOverlay.classList.add("fadeOut");
+}, 12000);
+
+// لو الفيديو خلص بدري → يخفيه
+introVideo.addEventListener("ended", ()=>{
+  introOverlay.classList.add("fadeOut");
+});
 </script>
 </body>
 </html>
