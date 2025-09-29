@@ -1,0 +1,11 @@
+﻿Tour ID,Tour Name (Arabic),Tour Name (English),Description,Price (USD),Duration,Media File Name,Media Type,WhatsApp Message,Availability
+1,جولة الأهرامات,Pyramids Tour,تجربة أصيلة مع جيران خوفو,120,3 ساعات,pyramids.jpg,image,مرحباً، أرغب بحجز جولة الأهرامات,متاح
+2,ركوب الجمل,Camel Ride,جولة ممتعة بركوب الجمل حول الأهرامات,60,1 ساعة,camel.jpg,image,مرحباً، أرغب بحجز جولة ركوب الجمل,متاح
+3,رحلة الحصان,Horse Ride,جولة مميزة على ظهر الحصان,70,1 ساعة,horse.jpg,image,مرحباً، أرغب بحجز جولة ركوب الحصان,متاح
+4,مسيرة الفرسان,Horsemen Trek,رحلة طويلة مع مجموعة الفرسان,150,4 ساعات,meeting the old guy.mp4,video,مرحباً، أرغب بحجز مسيرة الفرسان,متاح
+5,مغامرة الباجي,Buggy Adventure,قيادة الباجي في الصحراء,200,2 ساعات,offers.png,image,مرحباً، أرغب بحجز مغامرة الباجي,متاح
+6,سباق الحرية,Freedom Race,سباق مثير في الصحراء,250,2 ساعات,promo1.mp4,video,مرحباً، أرغب بحجز سباق الحرية,متاح
+7,درب الذكريات,Path of Memories,جولة خاصة في سقارة وأبو الهول,180,3 ساعات,saqqara.jpg,image,مرحباً، أرغب بحجز درب الذكريات,متاح
+8,غرفة ستاندرد,Standard Room,إقامة لليلة واحدة في غرفة ستاندرد,80,1 ليلة,room-standard.jpg,image,مرحباً، أريد حجز غرفة ستاندرد,متاح
+9,غرفة ديلوكس,Deluxe Room,إقامة لليلة واحدة في غرفة ديلوكس,120,1 ليلة,room-deluxe.jpg,image,مرحباً، أريد حجز غرفة ديلوكس,متاح
+10,الفيديو التعريفي,Promo Tour,شرح الرحلة بالفيديو,0,5 دقائق,promo eng explain the tour.mp4,video,أريد مشاهدة الفيديو التعريفي,متاح

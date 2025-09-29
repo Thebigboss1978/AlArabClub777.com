@@ -1,105 +1,147 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>العرب Club 777 | الصفحة السياحية</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: "Tahoma", Arial, sans-serif;
-      line-height: 1.6;
-      background: #f9f9f9;
-      color: #222;
-    }
-
-    header {
-      background: linear-gradient(135deg, #000, #444);
-      color: #fff;
-      text-align: center;
-      padding: 1.5rem;
-    }
-
-    header img {
-      max-width: 180px;
-      height: auto;
-    }
-
-    main {
-      padding: 1.5rem;
-      max-width: 1200px;
-      margin: auto;
-    }
-
-    section {
-      margin-bottom: 2rem;
-    }
-
-    h2 {
-      font-size: 1.5rem;
-      margin-bottom: 1rem;
-      color: #333;
-    }
-
-    /* الصور والفيديوهات فل رسبونسف */
-    img, video {
-      max-width: 100%;
-      height: auto;
-      border-radius: 12px;
-      display: block;
-      margin: 0 auto;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1rem;
-    }
-
-    footer {
-      background: #111;
-      color: #fff;
-      text-align: center;
-      padding: 1rem;
-      margin-top: 2rem;
-    }
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>بوابة الأهرامات — AlArab AI Portal</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- هيدر -->
-  <header>
-    <img src="/assets/AlArabClub777.png" alt="Al Arab Club 777 Logo" />
-    <h1>مرحباً بكم في العرب Club 777</h1>
-    <p>جولات سياحية مميزة حول الأهرامات</p>
-  </header>
+  <div id="stars"></div>
+  <div id="blue-orb" aria-hidden="true"></div>
 
-  <!-- المحتوى -->
-  <main>
-    <section>
-      <h2>🎥 فيديو تعريفي</h2>
-      <video src="/assets/promo1.mp4" controls poster="/assets/pyramids-view.jpg"></video>
-    </section>
+  <div class="glyph" style="left:8%; animation-duration:26s;">𓂀</div>
+  <div class="glyph" style="left:28%; animation-duration:30s;">𓃣</div>
+  <div class="glyph" style="left:58%; animation-duration:22s;">𓆣</div>
+  <div class="glyph" style="left:78%; animation-duration:28s;">𓉔</div>
 
-    <section>
-      <h2>📸 لقطات من الرحلات</h2>
-      <div class="grid">
-        <img src="/assets/pyramids.jpg" alt="Pyramids" />
-        <img src="/assets/saqqara.jpg" alt="Saqqara" />
-        <img src="/assets/room-deluxe.jpg" alt="Deluxe Room" />
-        <img src="/assets/room-standard.jpg" alt="Standard Room" />
-      </div>
-    </section>
+  <div id="ground"></div>
 
-    <section>
-      <h2>💬 تواصل معنا مباشرة</h2>
-      <p>للحجز والاستفسار تواصل معنا عبر الواتساب:</p>
-      <p><a href="https://wa.me/201234567890" target="_blank">اضغط هنا للتحدث معنا</a></p>
-    </section>
-  </main>
+  <div id="tours">
+    <button class="tour-btn" onclick="createFlyingText('رحلة سفاري بالصحراء 🌵', false)">Safari</button>
+    <button class="tour-btn" onclick="createFlyingText('ركوب الجمال 🐪', false)">Camel Ride</button>
+    <button class="tour-btn" onclick="createFlyingText('دراجة رباعية الصحراء 🏍️', false)">Quad Bike</button>
+    <button class="tour-btn" onclick="createFlyingText('زيارة الأهرامات 🏜️', false)">Pyramids</button>
+  </div>
 
-  <!-- فوتر -->
-  <footer>
-    <p>© 2025 العرب Club 777 | جميع الحقوق محفوظة</p>
-  </footer>
+  <input id="chatbox" type="text" placeholder="اكتب رسالتك هنا..." autocomplete="off"/>
+
+<script>
+const stars = document.getElementById("stars");
+const chatbox = document.getElementById("chatbox");
+let activeMessage = null;
+
+function makeStars(n=110){
+  for (let i = 0; i < n; i++) {
+    const star = document.createElement("div");
+    star.className = "star";
+    star.style.left = Math.random() * window.innerWidth + "px";
+    star.style.top = Math.random() * window.innerHeight + "px";
+    star.style.opacity = 0.2 + Math.random()*0.9;
+    star.style.transform = `scale(${0.6 + Math.random()*1.6})`;
+    star.style.animationDuration = 6 + Math.random() * 12 + "s";
+    stars.appendChild(star);
+  }
+}
+makeStars(110);
+
+function createFlyingText(text, isAI = false){
+  const centerX = window.innerWidth/2;
+  const centerY = window.innerHeight/2 - 20;
+
+  if(activeMessage){
+    [...activeMessage.children].forEach(span => {
+      const randX = (Math.random() - 0.5) * window.innerWidth;
+      const randY = (Math.random() - 0.5) * window.innerHeight;
+      span.style.setProperty("--x", randX + "px");
+      span.style.setProperty("--y", randY + "px");
+      span.style.animation = "flyOut 1.8s forwards";
+      setTimeout(()=>{
+        span.style.animation = `orbit ${8 + Math.random()*12}s linear infinite`;
+        span.style.pointerEvents = "auto";
+        span.addEventListener("click", ()=> flashEffect(span));
+      }, 1800);
+    });
+    activeMessage = null;
+  }
+
+  const group = document.createElement("div");
+  group.style.position = "absolute";
+  group.style.left = 0; group.style.top = 0;
+
+  const chars = Array.from(text);
+  const fontSize = Math.max(28, Math.floor(Math.min(window.innerWidth, window.innerHeight)/18));
+
+  chars.forEach((ch, i) => {
+    const span = document.createElement("span");
+    span.className = "letter";
+    span.textContent = ch;
+    if(isAI) span.classList.add("ai-letter");
+
+    const randX = (Math.random() - 0.5) * window.innerWidth;
+    const randY = (Math.random() - 0.5) * window.innerHeight;
+    span.style.setProperty("--x", randX + "px");
+    span.style.setProperty("--y", randY + "px");
+
+    span.style.left = (centerX - (chars.length * (fontSize*0.28)) /2 + i*(fontSize*0.28)) + "px";
+    span.style.top = centerY + "px";
+    span.style.fontSize = fontSize + "px";
+
+    group.appendChild(span);
+  });
+
+  stars.appendChild(group);
+  activeMessage = group;
+}
+
+function flashEffect(span){
+  span.classList.add("flash");
+  setTimeout(()=>span.classList.remove("flash"), 700);
+}
+
+async function sendToServer(message){
+  try{
+    const res = await fetch('/api/chat', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ message })
+    });
+    const j = await res.json();
+    return j.reply;
+  }catch(e){
+    console.error(e);
+    return "تعذر الاتصال بالخادم.";
+  }
+}
+
+chatbox.addEventListener('keydown', async (e)=>{
+  if(e.key === 'Enter' && chatbox.value.trim() !== ""){
+    const txt = chatbox.value.trim();
+    createFlyingText(txt, false);
+    chatbox.value = "";
+    const reply = await sendToServer(txt);
+    if(reply) createFlyingText(reply, true);
+  }
+});
+
+const seeds = ['مغامرة','جمل','حصان','نلتقي','777','بوابة'];
+seeds.forEach((w,i)=> setTimeout(()=> spawnFloating(w), 800 + i*400));
+
+function spawnFloating(text){
+  const el = document.createElement('div');
+  el.className = 'floating-word';
+  el.textContent = text;
+  el.style.left = (Math.random()* (window.innerWidth*0.7) + window.innerWidth*0.15) + 'px';
+  el.style.top = (Math.random()* window.innerHeight*0.22 + window.innerHeight*0.06) + 'px';
+  el.onclick = ()=> { el.remove(); createFlyingText(text, false); };
+  document.body.appendChild(el);
+  setTimeout(()=> el.remove(), 7000);
+}
+
+window.addEventListener('resize', ()=>{
+  document.querySelectorAll('.star').forEach(s=>s.remove());
+  makeStars(110);
+});
+</script>
 </body>
 </html>
