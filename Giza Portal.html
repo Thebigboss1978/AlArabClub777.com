@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Final Master – Giza Portal 🌍</title>
+  <meta name="description" content="Final Master HTML – One Page Portal">
+  <style>
+    /* ====== RESET ====== */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Tahoma', sans-serif;
+      background: #fdfdfd;
+      color: #222;
+      line-height: 1.6;
+    }
+    img, video { max-width: 100%; height: auto; display: block; }
+    a { text-decoration: none; color: inherit; }
+    section { padding: 60px 20px; }
+    h1, h2, h3 { margin-bottom: 20px; }
+    .container { max-width: 1200px; margin: auto; }
+
+    /* ====== NAV ====== */
+    nav {
+      background: #111;
+      color: #fff;
+      padding: 15px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    nav ul { list-style: none; display: flex; gap: 15px; }
+    nav ul li a { color: #fff; font-weight: bold; }
+
+    /* ====== HERO ====== */
+    .hero {
+      background: url("hero.jpg") center/cover no-repeat;
+      min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      text-align: center; color: #fff;
+      position: relative;
+    }
+    .hero::after {
+      content: ""; position: absolute; top:0; left:0; right:0; bottom:0;
+      background: rgba(0,0,0,0.5);
+    }
+    .hero > * { position: relative; z-index: 2; }
+
+    /* ====== VIDEO SECTION ====== */
+    .video-box { text-align: center; }
+    .video-box video { width: 100%; border-radius: 12px; }
+
+    /* ====== CARDS ====== */
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px,1fr)); gap: 20px; }
+    .card { padding: 20px; border-radius: 12px; background: #fafafa; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+    .card:hover { transform: translateY(-5px); transition: 0.3s; }
+
+    /* ====== FOOTER ====== */
+    footer {
+      background: #111; color: #fff; text-align: center; padding: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ====== NAVIGATION ====== -->
+  <nav>
+    <div class="logo">🌐 Final Portal</div>
+    <ul>
+      <li><a href="#hero">الرئيسية</a></li>
+      <li><a href="#about">من نحن</a></li>
+      <li><a href="#video">فيديو</a></li>
+      <li><a href="#services">الخدمات</a></li>
+      <li><a href="#contact">اتصل بنا</a></li>
+    </ul>
+  </nav>
+
+  <!-- ====== HERO SECTION ====== -->
+  <section class="hero" id="hero">
+    <h1>Welcome to Final Master Portal</h1>
+    <p>كل شيء في صفحة واحدة – جاهز للتشغيل مباشرة</p>
+  </section>
+
+  <!-- ====== ABOUT ====== -->
+  <section id="about">
+    <div class="container">
+      <h2>من نحن</h2>
+      <p>
+        هذه النسخة الـ Final Master HTML تضم كل الأقسام في ملف واحد فقط،
+        لتسهيل النشر والتعديل والتشغيل سواء على Vercel أو GitHub Pages أو أي استضافة أخرى.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====== VIDEO SECTION ====== -->
+  <section id="video">
+    <div class="container video-box">
+      <h2>فيديو تجريبي</h2>
+      <video controls>
+        <source src="sample.mp4" type="video/mp4" />
+        متصفحك لا يدعم تشغيل الفيديو
+      </video>
+    </div>
+  </section>
+
+  <!-- ====== SERVICES / CARDS ====== -->
+  <section id="services">
+    <div class="container">
+      <h2>الخدمات</h2>
+      <div class="cards">
+        <div class="card"><h3>🚀 خدمة 1</h3><p>شرح الخدمة الأولى.</p></div>
+        <div class="card"><h3>💎 خدمة 2</h3><p>شرح الخدمة الثانية.</p></div>
+        <div class="card"><h3>🌍 خدمة 3</h3><p>شرح الخدمة الثالثة.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== CONTACT ====== -->
+  <section id="contact">
+    <div class="container">
+      <h2>اتصل بنا</h2>
+      <p>راسلنا مباشرة عبر <a href="https://wa.me/201234567890" target="_blank">واتساب</a></p>
+    </div>
+  </section>
+
+  <!-- ====== FOOTER ====== -->
+  <footer>
+    <p>© 2025 Final Portal – Designed & Powered by Club 777</p>
+  </footer>
+
+</body>
+</html>

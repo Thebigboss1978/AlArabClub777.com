@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AlArab Club 777 — جولات وحجز VIP</title>
+  <meta name="description" content="AlArab Club 777 — جولات الأهرامات، رؤية العملة، العائلة، نادي VIP، وحجوزات فورية عبر واتساب + QR." />
+  <meta name="theme-color" content="#0ea5e9" />
+  <style>
+    :root{--bg:#0b0e13;--card:#121621;--muted:#9aa3b2;--text:#e6edf3;
+      --brand:#0ea5e9;--brand-2:#ef4444;--brand-active:var(--brand);
+      --glass:rgba(255,255,255,.06);--glass-2:rgba(255,255,255,.12);--ring:rgba(14,165,233,.5)}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:"Cairo",sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
+    nav{background:rgba(0,0,0,.4);position:sticky;top:0;z-index:30;backdrop-filter:blur(6px)}
+    nav ul{display:flex;flex-wrap:wrap;justify-content:center;gap:16px;padding:12px;list-style:none}
+    nav a{color:var(--text);text-decoration:none;font-weight:700;padding:6px 10px;border-radius:8px}
+    nav a:hover{background:var(--glass-2)}
+    section{padding:40px 20px;max-width:1100px;margin:auto}
+    h1,h2{margin-bottom:12px}
+    .card{background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.03));
+      border:1px solid var(--glass-2);border-radius:22px;padding:18px;margin-bottom:20px}
+    .btn{display:inline-flex;align-items:center;gap:10px;padding:12px 16px;border-radius:14px;
+      border:1px solid var(--glass-2);cursor:pointer;text-decoration:none;font-weight:800}
+    .btn.primary{background:linear-gradient(135deg,var(--brand-active),#1f2937);color:#fff}
+    .btn.ghost{background:rgba(255,255,255,.05);color:#fff}
+    footer{background:#000;color:#fff;text-align:center;padding:16px}
+    .stars{position:fixed;inset:0;pointer-events:none;z-index:0}
+    .stars span{position:absolute;width:2px;height:2px;background:var(--brand-active);
+      opacity:.6;border-radius:50%;filter:drop-shadow(0 0 4px var(--ring))}
+  </style>
+</head>
+<body>
+  <!-- شريط التنقل -->
+  <nav>
+    <ul>
+      <li><a href="#main">الرئيسية</a></li>
+      <li><a href="#about">رؤية العملة</a></li>
+      <li><a href="#gallery">المواقع الصحفية</a></li>
+      <li><a href="#pyramids">الجولات</a></li>
+      <li><a href="#family">العائلة</a></li>
+      <li><a href="#club-vip">نادي VIP</a></li>
+      <li><a href="#tasks">المسؤوليات</a></li>
+    </ul>
+  </nav>
+
+  <!-- الرئيسية -->
+  <section id="main">
+    <h1>بوابة AlArab Club 777 — حيث يلتقي السحر الفرعوني بالتقنية.</h1>
+    <a href="#pyramids" class="btn primary">احجز جولتك الآن</a>
+  </section>
+
+  <!-- رؤية العملة -->
+  <section id="about">
+    <h1>رؤية العملة</h1>
+    <p>تجربة سياحية رقمية وفعلية، من الغروب إلى كروزات النيل الخاصة.</p>
+  </section>
+
+  <!-- المواقع الصحفية -->
+  <section id="gallery">
+    <h1>المواقع الصحفية</h1>
+    <ul><li>الصفحة الرئيسية</li><li>رؤية العملة</li><li>المسؤوليات</li></ul>
+  </section>
+
+  <!-- الجولات (مع واجهة الحجز) -->
+  <section id="pyramids">
+    <h1>جولات الأهرامات – نزلة السمان</h1>
+    <div class="card">
+      <h2>تجربة أصيلة مع أهل المكان</h2>
+      <p>ركوب الجمل أو الحصان، باجي/ATV، جولة كاملة مع تصوير وضيافة بدوية.</p>
+      <div class="btn primary" id="waBook">احجز الآن عبر واتساب</div>
+      <div id="qrcode" style="margin-top:14px"></div>
+    </div>
+  </section>
+
+  <!-- العائلة -->
+  <section id="family">
+    <h1>العائلة</h1>
+    <p>فضاء اجتماعي لعلاقات قوية وممتعة.</p>
+  </section>
+
+  <!-- VIP -->
+  <section id="club-vip">
+    <h1>نادي VIP</h1>
+    <p>مساحة خاصة للنخبة — دخول بكلمة سر.</p>
+  </section>
+
+  <!-- المسؤوليات -->
+  <section id="tasks">
+    <h1>المسؤوليات</h1>
+    <ul><li>الإعدادات</li><li>التدريب</li><li>التواصل</li></ul>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 AlArab Club 777</p>
+  </footer>
+
+  <div class="stars" id="stars"></div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script>
+    const PHONE="201234567890"; // رقمك الدولي
+    const waBook=document.getElementById('waBook');
+    const qrcodeBox=document.getElementById('qrcode');
+    function getWA(){
+      const txt=encodeURIComponent("مرحبًا، أود الحجز لجولة الأهرامات – نزلة السمان.");
+      return `https://wa.me/${PHONE}?text=${txt}`;
+    }
+    waBook.addEventListener('click',()=>window.open(getWA(),'_blank'));
+    new QRCode(qrcodeBox,{text:getWA(),width:120,height:120});
+    // نجوم خلفية
+    const stars=document.getElementById('stars');
+    Array.from({length:25}).forEach(()=>{const s=document.createElement('span');
+      s.style.left=Math.random()*100+'vw';s.style.top=Math.random()*100+'vh';
+      stars.appendChild(s)});
+  </script>
+</body>
+</html>

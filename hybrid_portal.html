@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>AlArab Club 777 — بوابة الصور والقصص + Grover Tones Wester</title>
+<meta name="description" content="معرض الصور، الفيديو، القصص، ومشغل Grover Tones Wester الصوتي. جميع الملفات تُحمّل من Google Drive أو /assets/." />
+<style>
+  :root{
+    --bg:#05060a; --gold:#ffd66b; --muted:#9aa3b2; --card: rgba(255,255,255,0.03);
+    --glass: rgba(255,255,255,0.04);
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0;font-family: "Cairo","Noto Naskh Arabic", system-ui, sans-serif;background:var(--bg) url('/assets/stars-bg.gif') repeat center center fixed;color:var(--gold);-webkit-font-smoothing:antialiased;background-size:cover}
+  a{color:var(--gold);text-decoration:none}
+  .container{max-width:1200px;margin:0 auto;padding:20px}
+
+  header{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid rgba(255,215,120,0.04)}
+  .brand{display:flex;gap:12px;align-items:center}
+  .logo{width:56px;height:56px;border-radius:10px;background:linear-gradient(135deg,#ffd86b,#ffb347);display:grid;place-items:center;color:#111;font-weight:900}
+  .title{font-size:20px;font-weight:800}
+  .subtitle{color:var(--muted);font-size:13px}
+
+  .hero{display:grid;grid-template-columns:1fr 360px;gap:20px;align-items:start;margin-top:18px}
+  .hero-left{padding:18px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:14px;border:1px solid var(--glass)}
+  .hero-right{position:sticky;top:18px;padding:14px;background:var(--card);border-radius:12px;border:1px solid var(--glass);}
+
+  .cta{display:flex;gap:12px;margin-top:12px}
+  .btn{padding:10px 14px;border-radius:10px;background:linear-gradient(90deg,var(--gold),#ffb347);color:#111;font-weight:800;border:none;cursor:pointer}
+  .btn.ghost{background:transparent;border:1px solid var(--glass);color:var(--gold)}
+
+  .section{margin-top:26px}
+  .section h2{margin:0 0 12px;color:var(--gold)}
+  .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+  .thumb{position:relative;border-radius:10px;overflow:hidden;border:1px solid var(--glass);background:#0a0a0a}
+  .thumb img{display:block;width:100%;height:auto;object-fit:cover}
+  .thumb video{display:block;width:100%;height:auto;object-fit:cover}
+  .thumb .caption{position:absolute;left:8px;bottom:8px;background:rgba(0,0,0,0.5);padding:6px 8px;border-radius:8px;font-size:12px;color:#fff}
+
+  .lightbox{position:fixed;inset:0;background:rgba(0,0,0,0.85);display:none;align-items:center;justify-content:center;z-index:9999}
+  .lightbox img, .lightbox video{max-width:92%;max-height:86%;border-radius:8px;box-shadow:0 20px 60px rgba(0,0,0,0.8)}
+  .lightbox .meta{position:absolute;bottom:20px;left:20px;color:var(--gold);font-size:14px;background:rgba(0,0,0,0.35);padding:8px 12px;border-radius:8px}
+
+  .stories{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+  .story{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:14px;border-radius:12px;border:1px solid var(--glass)}
+  .story h3{margin:0 0 6px;color:var(--gold)}
+  .story p{color:var(--muted);line-height:1.6;font-size:14px}
+
+  .audio-card{display:flex;flex-direction:column;gap:8px;align-items:stretch}
+  audio, video{width:100%;border-radius:8px}
+
+  footer{margin:40px 0 20px;padding:20px;text-align:center;color:var(--muted);border-top:1px solid rgba(255,215,120,0.03)}
+  @media (max-width:900px){
+    .hero{grid-template-columns:1fr}
+    .hero-right{position:static}
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="brand">
+        <div class="logo">777</div>
+        <div>
+          <div class="title">AlArab Club 777</div>
+          <div class="subtitle">بوابة الصور — Google Drive + مجلد /assets/</div>
+        </div>
+      </div>
+      <div>
+        <a class="btn" href="#pyramids">احجز الآن</a>
+      </div>
+    </header>
+
+    <div class="hero">
+      <div class="hero-left">
+        <h1 style="margin:0 0 8px">معرض ونُبَذ وصوت — الملفات من Google Drive أو /assets/</h1>
+        <p style="color:var(--muted);margin:0">تصفح الصور والفيديو مع روابط Google Drive File IDs أو مجلد محلي /assets/.</p>
+
+        <div class="section" id="gallerySection">
+          <h2>المعرض — الصور & الفيديو</h2>
+          <div class="gallery" id="galleryGrid"></div>
+        </div>
+
+        <div class="section" id="storiesSection">
+          <h2>القصص — خلف كل صورة حكاية</h2>
+          <div class="stories" id="storiesGrid"></div>
+        </div>
+      </div>
+
+      <aside class="hero-right">
+        <div style="margin-bottom:12px">
+          <h3 style="margin:0 0 8px;color:var(--gold)">Grover Tones Wester — مشغّل الصوت</h3>
+          <div class="audio-card card">
+            <audio id="groverAudio" controls preload="auto">
+              <source src="/assets/grover-tones-wester.mp3" type="audio/mpeg">
+              متصفحك لا يدعم تشغيل الصوت.
+            </audio>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <footer>
+      <div>© AlArab Club 777 — صور وفيديو من Google Drive أو /assets/</div>
+    </footer>
+  </div>
+
+  <div id="lightbox" class="lightbox" onclick="closeLightbox(event)">
+    <div id="lbContent"></div>
+    <div class="meta" id="lbMeta"></div>
+  </div>
+
+<script>
+const DRIVE_IDS = {
+  pyramids: "1RR4eotIxrmHWmbDx_9VqIxl2QDeNMLRG",
+  camel:    "1UEz8oX9vQYkK2RxxqXWT0ZoWuzovS3gF",
+  horse:    "1CBAEg7PShHcQKke7XpKwufEhVdq9QuqJ",
+  saqqara:  "1J9nqlPZ5j8iDeQQdPhxkBGP_8HkxgG5u"
+};
+
+const ASSETS = [
+  "pyramids.jpg","camel.jpg","horse.jpg","saqqara.jpg",
+  "hotel.jpg","room-deluxe.jpg","room-standard.jpg"
+];
+
+function getMediaUrl(name){
+  const lower = name.toLowerCase();
+  if(lower.includes("pyramid")) return `https://drive.google.com/uc?export=view&id=${DRIVE_IDS.pyramids}`;
+  if(lower.includes("camel"))   return `https://drive.google.com/uc?export=view&id=${DRIVE_IDS.camel}`;
+  if(lower.includes("horse"))   return `https://drive.google.com/uc?export=view&id=${DRIVE_IDS.horse}`;
+  if(lower.includes("saqqara")) return `https://drive.google.com/uc?export=view&id=${DRIVE_IDS.saqqara}`;
+  return "/assets/" + encodeURIComponent(name);
+}
+
+function captionFromName(name){
+  const map = {
+    "pyramids":"🏛️ جولة الأهرامات",
+    "camel":"🐪 سفاري الجمال",
+    "horse":"👑 رحلة الحصان",
+    "saqqara":"🌙 عرض الصوت والضوء",
+    "hotel":"🏨 الفندق",
+    "room deluxe":"غرفة ديلوكس",
+    "room standard":"غرفة ستاندرد"
+  };
+  const key = name.toLowerCase();
+  for(const k in map){ if(key.includes(k)) return map[k]; }
+  return name;
+}
+
+function storyTextFor(name){
+  const key = name.toLowerCase();
+  if(key.includes("camel")) return "تجربة ركوب الجمل تأخذك في رحلة ساحرة بين رمال الصحراء الذهبية، حيث تلتقط صور الغروب الخلابة وتسمع قصص البدو عن النجوم والرياح.";
+  if(key.includes("horse")) return "ركوب الحصان يمنحك إحساساً بالقوة والحرية، مناسب لعشاق المغامرات السريعة وصور الأكشن على خلفية الأهرامات.";
+  if(key.includes("pyramid")) return "زيارة الأهرامات رحلة عبر الزمن، حيث تشاهد عظمة الفراعنة وتلتقط صوراً بين الظل والضوء لأعجوبة من عجائب الدنيا.";
+  if(key.includes("saqqara")) return "سقارة، الموقع الأثري العريق، يكشف أسرار المقابر القديمة ويمنحك فرصة لاستكشاف بدايات الحضارة المصرية.";
+  if(key.includes("hotel")) return "فنادقنا تقدم الراحة والرفاهية بعد يوم طويل من الجولات، مع غرف مجهزة وخدمة ضيافة مميزة.";
+  if(key.includes("room deluxe")) return "غرفة الديلوكس توفر تجربة إقامة راقية بإطلالة جميلة وأثاث فاخر.";
+  if(key.includes("room standard")) return "الغرفة القياسية تمنحك إقامة عملية ومريحة مع كافة الخدمات الأساسية للراحة.";
+  return "صورة من الأرشيف تحمل بين طياتها قصة لم تُروَ بعد.";
+}
+
+const galleryGrid = document.getElementById('galleryGrid');
+const storiesGrid = document.getElementById('storiesGrid');
+
+function shuffle(array){
+  for(let i=array.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [array[i],array[j]]=[array[j],array[i]];
+  }
+  return array;
+}
+
+function renderGallery(){
+  galleryGrid.innerHTML = '';
+  storiesGrid.innerHTML = '';
+  const shuffled = shuffle([...ASSETS]);
+  shuffled.forEach(name=>{
+    const url = getMediaUrl(name);
+    const cap = captionFromName(name);
+    const isVideo = url.endsWith('.mp4')||url.endsWith('.mov')||url.endsWith('.webm');
+    const thumb = document.createElement('div'); thumb.className='thumb';
+    if(isVideo){
+      thumb.innerHTML = `<video src="${url}" muted preload="metadata"></video><div class="caption">${cap}</div>`;
+      thumb.querySelector('video').addEventListener('click', ()=> openLightbox(url, cap, 'video'));
+    } else {
+      thumb.innerHTML = `<img src="${url}" alt="${cap}" loading="lazy"><div class="caption">${cap}</div>`;
+      thumb.querySelector('img').addEventListener('click', ()=> openLightbox(url, cap, 'image'));
+    }
+    galleryGrid.appendChild(thumb);
+
+    const story = document.createElement('article'); story.className='story';
+    story.innerHTML = `<h3>${cap}</h3><p>${storyTextFor(name)}</p>`;
+    storiesGrid.appendChild(story);
+  });
+}
+
+renderGallery();
+
+setInterval(renderGallery, 15000); // يعيد خلط الصور وتحديث القصص كل 15 ثانية
+
+const lightbox = document.getElementById('lightbox');
+const lbContent = document.getElementById('lbContent');
+const lbMeta = document.getElementById('lbMeta');
+
+function openLightbox(url, caption, type){
+  lbContent.innerHTML = '';
+  if(type==='video'){
+    lbContent.innerHTML = `<video src="${url}" controls autoplay></video>`;
+  } else {
+    lbContent.innerHTML = `<img src="${url}" alt="${caption}" />`;
+  }
+  lbMeta.textContent = caption;
+  lightbox.style.display='flex';
+}
+
+function closeLightbox(e){if(e.target!==lightbox) return;lightbox.style.display='none';lbContent.innerHTML='';lbMeta.textContent='';}
+</script>
+</body>
+</html>
