@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Join the 777 Journey – Book Now</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      margin: 0;
+      background: linear-gradient(135deg, #000, #1a0e00);
+      font-family: 'Segoe UI', sans-serif;
+      color: #d4af37;
+      text-align: center;
+      padding: 40px;
+    }
+    h1 {
+      font-size: 2.4em;
+      margin-bottom: 0.2em;
+    }
+    form {
+      background: #111;
+      border: 1px solid #d4af37;
+      border-radius: 8px;
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 20px;
+      text-align: left;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #444;
+      border-radius: 4px;
+      background: #000;
+      color: #d4af37;
+      font-size: 1em;
+    }
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+    button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 12px;
+      background: #d4af37;
+      color: #000;
+      font-weight: bold;
+      border: none;
+      font-size: 1.1em;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #f1c861;
+    }
+  </style>
+</head>
+<body>
+  <h1>Join the 777 Journey – Book Now</h1>
+  <form onsubmit="submitForm(event)">
+    <label for="name">Full Name</label>
+    <input type="text" id="name" required>
+
+    <label for="email">Email Address</label>
+    <input type="email" id="email" required>
+
+    <label for="phone">WhatsApp Number</label>
+    <input type="text" id="phone" required>
+
+    <label for="nationality">Nationality</label>
+    <select id="nationality" required>
+      <option>Egyptian</option>
+      <option>Arab</option>
+      <option>Foreigner</option>
+      <option>Other</option>
+    </select>
+
+    <label for="guests">Number of Guests</label>
+    <input type="number" id="guests" required>
+
+    <label for="date">Preferred Date</label>
+    <input type="date" id="date" required>
+
+    <label for="type">Tour Type</label>
+    <select id="type" required>
+      <option>Camel Ride</option>
+      <option>Walking Tour</option>
+      <option>Bedouin Dinner</option>
+      <option>Photography</option>
+      <option>Private Safari</option>
+    </select>
+
+    <label for="requests">Special Requests</label>
+    <textarea id="requests" placeholder="Any special requirements..."></textarea>
+
+    <label for="source">How did you hear about us?</label>
+    <select id="source">
+      <option>Instagram</option>
+      <option>YouTube</option>
+      <option>Friend</option>
+      <option>Local Shop</option>
+      <option>Other</option>
+    </select>
+
+    <button type="submit">Book Now via WhatsApp</button>
+  </form>
+
+  <script>
+    function submitForm(e) {
+      e.preventDefault();
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const phone = document.getElementById('phone').value;
+      const nationality = document.getElementById('nationality').value;
+      const guests = document.getElementById('guests').value;
+      const date = document.getElementById('date').value;
+      const type = document.getElementById('type').value;
+      const requests = document.getElementById('requests').value;
+      const source = document.getElementById('source').value;
+
+      const msg = `777 Journey Booking:\nName: ${name}\nEmail: ${email}\nWhatsApp: ${phone}\nNationality: ${nationality}\nGuests: ${guests}\nDate: ${date}\nTour Type: ${type}\nSpecial Requests: ${requests}\nSource: ${source}`;
+      const url = `https://wa.me/971557119058?text=${encodeURIComponent(msg)}`;
+      window.open(url, '_blank');
+    }
+  </script>
+</body>
+</html>

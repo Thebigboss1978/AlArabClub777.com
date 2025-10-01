@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>بوابة العرّاب — تحويل أي ملف إلى تقرير احترافي</title>
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root{--gold:#d4af37;--bg:#0b0f14;--card:#0f141b;--muted:#8b98a5;--accent:#a27c1a}
+    html,body{height:100%;background:radial-gradient(1200px 1200px at 80% -20%, rgba(212,175,55,0.08), transparent 60%),
+                          radial-gradient(1000px 1000px at 0% 120%, rgba(212,175,55,0.06), transparent 60%),
+                          #0b0f14;color:#e8edf3}
+    /* Scrollbar */
+    *::-webkit-scrollbar{height:10px;width:10px}*::-webkit-scrollbar-thumb{background:#223041;border-radius:8px}
+    .gold { color: var(--gold); }
+    .gold-bg { background: linear-gradient(135deg, #31240a 0%, #1a1406 100%); border:1px solid rgba(212,175,55,.25) }
+    .glass { backdrop-filter:saturate(140%) blur(10px); background: rgba(10,14,18,.55); border: 1px solid rgba(255,255,255,.06) }
+    .card { background: var(--card); border:1px solid rgba(255,255,255,.06); border-radius: 18px }
+    .btn { border:1px solid rgba(212,175,55,.35); background: linear-gradient(180deg, rgba(212,175,55,.18), rgba(212,175,55,.08));
+           box-shadow: 0 6px 20px rgba(212,175,55,.08); }
+    .btn:hover { filter: brightness(1.08) }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace }
+    .divider { height:1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,.15), transparent) }
+    .dot { width:6px;height:6px;border-radius:50%;background:rgba(212,175,55,.6);box-shadow:0 0 10px rgba(212,175,55,.8)}
+    /* Scrollable box */
+    .scrollbox { max-height: 50vh; overflow: auto; }
+  </style>
+  <!-- External libs (browser-only, no server needed) -->
+  <!-- pdf.js for PDF text extraction -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js" integrity="sha512-+9mQuQPqVbQmKlpCGFA3+z9n2UHPG0wZQe7vKKr5XQWH5l4qbr8Cr1QOycHcH9N7nAvmI6C0h2e2oU2d7gQ1QQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <!-- mammoth for .docx → text -->
+  <script src="https://unpkg.com/mammoth/mammoth.browser.min.js"></script>
+  <!-- Tesseract.js for OCR of images -->
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+  <!-- franc-min for lightweight language detection -->
+  <script src="https://cdn.jsdelivr.net/npm/franc-min@6.2.0/index.min.js"></script>
+</head>
+<body class="relative overflow-x-hidden">
+  <!-- Background: Dotted Orb (Canvas) -->
+  <canvas id="orb" class="fixed inset-0 -z-10"></canvas>
+
+  <!-- Header -->
+  <header class="max-w-6xl mx-auto px-4 pt-8 pb-2">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-2xl gold-bg grid place-items-center"><span class="text-xl">👁️‍🗨️</span></div>
+        <div>
+          <h1 class="text-2xl md:text-3xl font-semibold tracking-wide">بوابة <span class="gold">العرّاب Club 777</span></h1>
+          <p class="text-sm text-gray-300/80">أي ملف → نص موحّد → تقرير احترافي — بدون حوار تلقائي.</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <button id="clearBtn" class="px-3 py-2 rounded-xl btn text-sm">تفريغ النتائج</button>
+        <button id="exportBtn" class="px-3 py-2 rounded-xl btn text-sm">تصدير JSON</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Controls / API Settings -->
+  <section class="max-w-6xl mx-auto px-4">
+    <div class="grid md:grid-cols-3 gap-4">
+      <div class="card p-4">
+        <h3 class="font-semibold mb-2">محرّك التحويل</h3>
+        <div class="text-sm text-gray-300/80 mb-3">لتحويل الصوت/الفيديو إلى نص عبر OpenAI Whisper (اختياري). يتم التخزين في الذاكرة المؤقتة فقط.</div>
+        <label class="text-xs text-gray-300/80">OpenAI API Key</label>
+        <input id="apiKey" type="password" class="w-full mt-1 px-3 py-2 rounded-xl bg-[#0c1117] border border-white/10 focus:outline-none focus:ring-2 focus:ring-yellow-700" placeholder="sk-..." />
+        <div class="grid grid-cols-2 gap-2 mt-3">
+          <div>
+            <label class="text-xs text-gray-300/80">نموذج Whisper</label>
+            <select id="whisperModel" class="w-full mt-1 px-3 py-2 rounded-xl bg-[#0c1117] border border-white/10">
+              <option value="whisper-1">whisper-1</option>
+              <option value="gpt-4o-transcribe">gpt-4o-transcribe</option>
+            </select>
+          </div>
+          <div>
+            <label class="text-xs text-gray-300/80">لغة متوقعة (اختياري)</label>
+            <input id="hintLang" class="w-full mt-1 px-3 py-2 rounded-xl bg-[#0c1117] border border-white/10" placeholder="ar / en / ..." />
+          </div>
+        </div>
+        <div class="mt-3 text-xs text-gray-400">⚠️ ملاحظة أمنية: وضع المفتاح هنا يعني استعماله محليًا في المتصفح فقط. لا يتم إرساله لأي جهة إلا لواجهة OpenAI إذا فعّلت التحويل.
+        </div>
+      </div>
+
+      <div class="card p-4">
+        <h3 class="font-semibold mb-2">رفع الملفات</h3>
+        <div id="drop" class="gold-bg rounded-2xl p-4 border-dashed border-2 border-yellow-900/40 text-center cursor-pointer">
+          <p class="font-medium">اسحب وأفلت الملفات هنا أو اضغط للاختيار</p>
+          <p class="text-xs text-gray-300/80 mt-1">يدعم: .txt .docx .pdf .mp3 .wav .m4a .mp4 .mov .png .jpg</p>
+          <input id="fileInput" type="file" multiple class="hidden" accept=".txt,.md,.docx,.pdf,.mp3,.wav,.m4a,.mp4,.mov,.png,.jpg,.jpeg" />
+        </div>
+        <div class="mt-3 text-xs text-gray-400">يمكنك رفع أي عدد من الملفات دفعة واحدة.</div>
+      </div>
+
+      <div class="card p-4">
+        <h3 class="font-semibold mb-2">تشغيل التحليل</h3>
+        <div class="text-sm text-gray-300/80 mb-3">تحويل كل الملفات إلى نص موحّد ثم إنشاء تقرير شامل.</div>
+        <button id="processBtn" class="w-full py-3 rounded-2xl btn font-semibold">تشغيل التحويل + التحليل</button>
+        <div class="divider my-4"></div>
+        <div class="text-xs text-gray-400">
+          • لا توجد ردود تلقائية على أسئلة داخل المحتوى.<br>
+          • النتائج تعرض في صناديق قابلة للتمرير مع فواصل واضحة.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Results -->
+  <section class="max-w-6xl mx-auto px-4 mt-6 mb-16">
+    <div class="card p-4">
+      <div class="flex items-center justify-between mb-3">
+        <h3 class="font-semibold">التقارير</h3>
+        <div class="text-xs text-gray-400">المخرجات التحليلية لكل ملف على حِدة</div>
+      </div>
+      <div id="results" class="grid gap-4"></div>
+    </div>
+  </section>
+
+  <!-- Template for a report card -->
+  <template id="reportTemplate">
+    <div class="glass rounded-2xl p-4">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <div class="dot"></div>
+          <h4 class="font-bold text-lg"></h4>
+        </div>
+        <span class="text-xs text-gray-400 mono"></span>
+      </div>
+      <div class="divider my-3"></div>
+      <div class="grid md:grid-cols-5 gap-3">
+        <div class="md:col-span-2">
+          <div class="text-xs text-gray-400 mb-1">البيانات الوصفية</div>
+          <ul class="text-sm space-y-1 leading-6">
+            <li><span class="text-gray-400">نوع الملف:</span> <span class="mono" data-k="type"></span></li>
+            <li><span class="text-gray-400">الحجم:</span> <span class="mono" data-k="size"></span></li>
+            <li><span class="text-gray-400">طول النص:</span> <span class="mono" data-k="length"></span></li>
+            <li><span class="text-gray-400">عدد الكلمات:</span> <span class="mono" data-k="words"></span></li>
+            <li><span class="text-gray-400">اللغة المتوقعة:</span> <span class="mono" data-k="lang"></span></li>
+            <li><span class="text-gray-400">عناصر مميّزة:</span> <span class="mono" data-k="tags"></span></li>
+          </ul>
+        </div>
+        <div class="md:col-span-3">
+          <div class="text-xs text-gray-400 mb-1">ملخص احترافي</div>
+          <div class="text-sm leading-7" data-k="summary"></div>
+        </div>
+      </div>
+      <div class="divider my-3"></div>
+      <div>
+        <div class="text-xs text-gray-400 mb-1">النص الخام (قابل للتمرير)</div>
+        <pre class="scrollbox p-3 bg-[#0b0f14] rounded-xl border border-white/5 text-xs leading-6 whitespace-pre-wrap" data-k="raw"></pre>
+      </div>
+    </div>
+  </template>
+
+  <!-- Logic -->
+  <script>
+  // ====== Background Dotted Orb ======
+  (function dottedOrb(){
+    const c = document.getElementById('orb');
+    const ctx = c.getContext('2d');
+    let w, h, t = 0, dots = [];
+    const DENSITY = 900; // number of dots
+    function resize(){ w = c.width = window.innerWidth; h = c.height = window.innerHeight }
+    window.addEventListener('resize', resize); resize();
+    function init(){
+      dots = Array.from({length:DENSITY}, (_,i)=>{
+        const phi = Math.acos(1-2*Math.random());
+        const theta = 2*Math.PI*Math.random();
+        const r = Math.min(w,h)*0.35;
+        return {phi,theta,r,spd:(Math.random()*0.0008+0.0002)}
+      })
+    }
+    function draw(){
+      t+=1; ctx.clearRect(0,0,w,h);
+      ctx.fillStyle = 'rgba(212,175,55,0.5)';
+      dots.forEach(d=>{
+        d.theta += d.spd;
+        const x = w/2 + d.r*Math.sin(d.phi)*Math.cos(d.theta);
+        const y = h/2 + d.r*Math.sin(d.phi)*Math.sin(d.theta);
+        ctx.beginPath(); ctx.arc(x,y, Math.random()*1.1+0.3, 0, Math.PI*2); ctx.fill();
+      });
+      requestAnimationFrame(draw);
+    }
+    init(); draw();
+  })();
+
+  // ====== Helpers ======
+  const $ = s => document.querySelector(s);
+  const $$ = s => Array.from(document.querySelectorAll(s));
+  const fmtBytes = b=>{
+    if(!b && b!==0) return '—';
+    const u=['B','KB','MB','GB']; let i=0; while(b>=1024 && i<u.length-1){b/=1024;i++};
+    return `${b.toFixed( i?1:0 )} ${u[i]}`
+  }
+  const wordCount = txt => (txt.trim().match(/\b\w+\b/gu)||[]).length;
+  const tagScan = txt => {
+    const tags = [];
+    if(/\b(class|function|def|import|var|let|const|=>|;\s*$)/m.test(txt)) tags.push('تقني/كود');
+    if(/\b(revenue|ROI|budget|cost|market|KPI)\b/i.test(txt)) tags.push('مالي/أعمال');
+    if(/\b(lesson|exercise|homework|exam|curriculum)\b/i.test(txt)) tags.push('تعليمي');
+    if(/[\u0600-\u06FF]/.test(txt)) tags.push('عربي');
+    if(!tags.length) tags.push('عام');
+    return tags.join(', ');
+  }
+  const detectLang = txt => {
+    try{ const code = franc(txt.slice(0, 5000) || ''); return code || 'und' }catch(e){ return 'und' }
+  }
+
+  // ====== File Ingest ======
+  const drop = $('#drop');
+  const fileInput = $('#fileInput');
+  let pendingFiles = [];
+
+  drop.addEventListener('click', ()=> fileInput.click());
+  drop.addEventListener('dragover', e=>{ e.preventDefault(); drop.style.opacity = 0.9 });
+  drop.addEventListener('dragleave', e=>{ drop.style.opacity = 1 });
+  drop.addEventListener('drop', e=>{
+    e.preventDefault(); drop.style.opacity = 1;
+    const files = Array.from(e.dataTransfer.files || []);
+    enqueue(files);
+  });
+  fileInput.addEventListener('change', e=> enqueue(Array.from(e.target.files || [])) );
+
+  function enqueue(files){
+    pendingFiles.push(...files);
+    drop.querySelector('p.font-medium').textContent = `تم اختيار ${pendingFiles.length} ملف/ملفات`;
+  }
+
+  // ====== Core: Convert Any File → Raw Text ======
+  async function fileToText(file){
+    const type = (file.type || '').toLowerCase();
+    const name = file.name.toLowerCase();
+
+    // Plain text / markdown
+    if(type.startsWith('text/') || name.endsWith('.txt') || name.endsWith('.md')){
+      return await file.text();
+    }
+
+    // DOCX via mammoth
+    if(name.endsWith('.docx')){
+      const arrayBuffer = await file.arrayBuffer();
+      const {value} = await window.mammoth.convertToHtml({arrayBuffer});
+      const text = value.replace(/<[^>]+>/g,' ');
+      return text;
+    }
+
+    // PDF via pdf.js
+    if(name.endsWith('.pdf')){
+      const data = new Uint8Array(await file.arrayBuffer());
+      const pdf = await pdfjsLib.getDocument({data}).promise;
+      let text = '';
+      for(let i=1;i<=pdf.numPages;i++){
+        const page = await pdf.getPage(i);
+        const content = await page.getTextContent();
+        text += content.items.map(it=>it.str).join(' ') + '\n';
+      }
+      return text;
+    }
+
+    // Images → OCR via Tesseract.js
+    if(type.startsWith('image/') || /\.(png|jpg|jpeg)$/i.test(name)){
+      const imgUrl = URL.createObjectURL(file);
+      try{
+        const langHint = ($('#hintLang').value || '').trim();
+        const ocr = await Tesseract.recognize(imgUrl, langHint || 'eng', { logger: m=>{} });
+        URL.revokeObjectURL(imgUrl);
+        return ocr.data.text || '';
+      }catch(e){ URL.revokeObjectURL(imgUrl); throw e }
+    }
+
+    // Audio / Video → Whisper API (if apiKey provided). For video we send as audio/ogg via passthrough.
+    if(/\.(mp3|wav|m4a|mp4|mov)$/i.test(name)){
+      const apiKey = ($('#apiKey').value || '').trim();
+      if(!apiKey){
+        return '[لم يتم تفعيل تحويل الصوت/الفيديو: أضف مفتاح OpenAI أعلى لتفعيل Whisper.]';
+      }
+      const model = ($('#whisperModel').value || 'whisper-1');
+      const form = new FormData();
+      form.append('file', file, file.name);
+      form.append('model', model);
+      const hint = ($('#hintLang').value || '').trim();
+      if(hint) form.append('language', hint);
+      const res = await fetch('https://api.openai.com/v1/audio/transcriptions', {
+        method:'POST', headers:{ 'Authorization': 'Bearer ' + apiKey }, body: form
+      });
+      if(!res.ok){
+        const err = await res.text();
+        throw new Error('فشل تحويل الصوت/الفيديو: ' + err);
+      }
+      const json = await res.json();
+      // API returns { text: "..." }
+      return json.text || '';
+    }
+
+    // Fallback: show that this type isn't supported yet
+    return '[نوع الملف غير مدعوم مباشرة في الوضع المحلي. رجاءً استخدم الأنواع المذكورة في اللوحة.]';
+  }
+
+  // ====== Summarizer (simple extractive + heuristic) ======
+  function summarize(text){
+    try{
+      if(!text) return '—';
+      // Normalize and split into sentences
+      const cleaned = text.replace(/\s+/g,' ').trim();
+      const parts = cleaned.split(/(?<=[.!؟?\n])\s+/g).filter(s=>s && s.length>1);
+      // Score sentences by keyword frequency
+      const freq = Object.create(null);
+      cleaned.toLowerCase().split(/[^\p{L}\p{N}]+/u).forEach(w=>{ if(!w) return; freq[w]=(freq[w]||0)+1 });
+      const scored = parts.map(s=>{
+        const tokens = s.toLowerCase().split(/[^\p{L}\p{N}]+/u);
+        const score = tokens.reduce((a,w)=> a + (freq[w]||0), 0) / (tokens.length||1);
+        return {s, score}
+      }).sort((a,b)=> b.score - a.score);
+      const take = Math.max(2, Math.min(6, Math.ceil(parts.length*0.15)));
+      return scored.slice(0, take).map(x=>x.s).join(' ');
+    }catch(e){ return text.slice(0,400) + (text.length>400?' …':'') }
+  }
+
+  // ====== Render report card ======
+  function renderReport(meta){
+    const t = document.getElementById('reportTemplate').content.cloneNode(true);
+    t.querySelector('h4').textContent = meta.name;
+    t.querySelector('span.mono').textContent = new Date().toLocaleString();
+    t.querySelector('[data-k="type"]').textContent = meta.type || '—';
+    t.querySelector('[data-k="size"]').textContent = fmtBytes(meta.size);
+    t.querySelector('[data-k="length"]').textContent = (meta.text||'').length.toLocaleString();
+    t.querySelector('[data-k="words"]').textContent = wordCount(meta.text||'').toLocaleString();
+    t.querySelector('[data-k="lang"]').textContent = meta.lang || '—';
+    t.querySelector('[data-k="tags"]').textContent = meta.tags || '—';
+    t.querySelector('[data-k="summary"]').textContent = meta.summary || '—';
+    t.querySelector('[data-k="raw"]').textContent = meta.text || '';
+    document.getElementById('results').appendChild(t);
+  }
+
+  // ====== Orchestrate ======
+  const processBtn = document.getElementById('processBtn');
+  const exportBtn  = document.getElementById('exportBtn');
+  const clearBtn   = document.getElementById('clearBtn');
+  let reports = [];
+
+  processBtn.addEventListener('click', async ()=>{
+    if(!pendingFiles.length){
+      alert('أضف ملفات أولاً');
+      return;
+    }
+    processBtn.disabled = true; processBtn.textContent = '... جاري المعالجة';
+    for(const file of pendingFiles){
+      try{
+        const raw = await fileToText(file);
+        const langCode = detectLang(raw);
+        const tags = tagScan(raw);
+        const summary = summarize(raw);
+        const meta = {
+          name: file.name,
+          size: file.size,
+          type: file.type || file.name.split('.').pop(),
+          text: raw,
+          lang: langCode,
+          tags, summary
+        };
+        reports.push(meta);
+        renderReport(meta);
+        // visual divider after each report
+        const div = document.createElement('div');
+        div.className = 'divider my-2';
+        document.getElementById('results').appendChild(div);
+      }catch(err){
+        const meta = { name:file.name, size:file.size, type:file.type || '—', text: '', lang:'—', tags:'—', summary:'' };
+        reports.push(meta);
+        const t = document.getElementById('reportTemplate').content.cloneNode(true);
+        t.querySelector('h4').textContent = file.name + ' — فشل المعالجة';
+        t.querySelector('span.mono').textContent = new Date().toLocaleString();
+        t.querySelector('[data-k="type"]').textContent = meta.type;
+        t.querySelector('[data-k="size"]').textContent = fmtBytes(meta.size);
+        t.querySelector('[data-k="length"]').textContent = '0';
+        t.querySelector('[data-k="words"]').textContent = '0';
+        t.querySelector('[data-k="lang"]').textContent = '—';
+        t.querySelector('[data-k="tags"]').textContent = '—';
+        t.querySelector('[data-k="summary"]').textContent = '—';
+        t.querySelector('[data-k="raw"]').textContent = (err && err.message) ? `خطأ: ${err.message}` : 'حدث خطأ غير معروف.';
+        document.getElementById('results').appendChild(t);
+        const div = document.createElement('div');
+        div.className = 'divider my-2';
+        document.getElementById('results').appendChild(div);
+      }
+    }
+    processBtn.disabled = false; processBtn.textContent = 'تشغيل التحويل + التحليل';
+    pendingFiles = []; // reset queue
+    drop.querySelector('p.font-medium').textContent = 'اسحب وأفلت الملفات هنا أو اضغط للاختيار';
+  });
+
+  exportBtn.addEventListener('click', ()=>{
+    const blob = new Blob([JSON.stringify(reports, null, 2)], {type:'application/json'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'alarab_reports.json'; a.click();
+    URL.revokeObjectURL(url);
+  });
+
+  clearBtn.addEventListener('click', ()=>{
+    reports = []; $('#results').innerHTML = '';
+  });
+  </script>
+</body>
+</html>

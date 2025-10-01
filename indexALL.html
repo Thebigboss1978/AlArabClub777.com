@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AlArabClub777 All-in-One</title>
+  <style>
+    body { font-family: Arial, sans-serif; background:#111; color:#eee; text-align:center; }
+    #chat { max-width:600px; margin:40px auto; padding:20px; border:1px solid #444; border-radius:12px; background:#222; }
+    input, button { padding:10px; margin:5px; border-radius:6px; }
+    .msg { text-align:left; margin:10px 0; }
+    .user { color:#0f0; }
+    .bot { color:#0ff; }
+  </style>
+</head>
+<body>
+  <h1>🚀 AlArabClub777 - All-in-One</h1>
+  <div id="chat">
+    <div id="messages"></div>
+    <input id="userInput" placeholder="اكتب رسالتك..." />
+    <button onclick="sendMessage()">إرسال</button>
+    <button onclick="toggleVoice()">🎙️ صوت</button>
+  </div>
+
+<script>
+let voiceEnabled = false;
+
+// === Chat with OpenAI ===
+async function askOpenAI(prompt) {
+  const res = await fetch("https://api.openai.com/v1/chat/completions", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`
+    },
+    body: JSON.stringify({
+      model: "gpt-4o-mini",
+      messages: [{ role: "user", content: prompt }]
+    })
+  });
+  const data = await res.json();
+  return data.choices[0].message.content;
+}
+
+// === ElevenLabs Voice ===
+async function speakWithElevenLabs(text) {
+  const res = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${process.env.ELEVENLABS_AGENT_ID}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "xi-api-key": process.env.ELEVENLABS_API_KEY
+    },
+    body: JSON.stringify({ text })
+  });
+  const audioBlob = await res.blob();
+  const audioUrl = URL.createObjectURL(audioBlob);
+  const audio = new Audio(audioUrl);
+  audio.play();
+}
+
+// === Supabase Example ===
+async function saveMessage(user, message) {
+  const { createClient } = window.supabase;
+  const supabase = createClient(
+    process.env.SUPABASE_URL,
+    process.env.SUPABASE_PUBLIC_KEY
+  );
+  await supabase.from("messages").insert([{ user, message }]);
+}
+
+// === Chat Handling ===
+async function sendMessage() {
+  const input = document.getElementById("userInput");
+  const text = input.value;
+  if (!text) return;
+  showMessage(text, "user");
+  input.value = "";
+
+  const reply = await askOpenAI(text);
+  showMessage(reply, "bot");
+
+  if (voiceEnabled) speakWithElevenLabs(reply);
+  saveMessage("user", text);
+  saveMessage("bot", reply);
+}
+
+function showMessage(msg, type) {
+  const div = document.createElement("div");
+  div.className = "msg " + type;
+  div.innerText = msg;
+  document.getElementById("messages").appendChild(div);
+}
+
+function toggleVoice() {
+  voiceEnabled = !voiceEnabled;
+  alert(voiceEnabled ? "🔊 الردود الصوتية مفعلة" : "🔇 الردود الصوتية متوقفة");
+}
+</script>
+
+<!-- Supabase JS -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+VERSION="v2.0"
+PACKNAME="FinalPortalAgentPack-${VERSION}"
+
+# هيكل المجلدات
+mkdir -p ${PACKNAME}/{api,worker,dashboard,scripts,pages,styles,assets/{logos,avatars,screens,safari,others}}
+
+# ملف README
+cat > ${PACKNAME}/README.md <<'EOF'
+# FinalPortalAgentPack v2.0
+This package contains:
+- api/: serverless API endpoints
+- worker/: background jobs
+- dashboard/: monitoring UI
+- scripts/: automation tools
+- assets/: organized images (logos, avatars, safari, screens…)
+EOF
+
+# ملف HTML تجريبي
+cat > ${PACKNAME}/pages/index.html <<'EOF'
+<!doctype html>
+<html lang="ar">
+<head>
+  <meta charset="utf-8">
+  <title>AlArab Portal 777</title>
+  <link rel="stylesheet" href="../styles/main.css">
+</head>
+<body>
+  <h1>🌍 أهلاً بكم في AlArab Club Portal</h1>
+  <p>هذا الموقع يعمل أونلاين و أوفلاين (PWA-ready)</p>
+  <img src="../assets/logos/logo.png" alt="Logo" width="200">
+</body>
+</html>
+EOF
+
+# ستايل بسيط
+cat > ${PACKNAME}/styles/main.css <<'EOF'
+body {
+  background: #111;
+  color: #eee;
+  font-family: sans-serif;
+  text-align: center;
+  padding: 2em;
+}
+EOF
+
+# اسكربت ضغط بدون تشفير
+cat > ${PACKNAME}/scripts/package.sh <<'EOF'
+#!/usr/bin/env bash
+set -euo pipefail
+VERSION="v2.0"
+PACKNAME="FinalPortalAgentPack-${VERSION}"
+tar -czf "${PACKNAME}.tar.gz" "${PACKNAME}"
+echo "✅ Created ${PACKNAME}.tar.gz"
+EOF
+chmod +x ${PACKNAME}/scripts/package.sh
+
+echo "📦 Created structure in ${PACKNAME}/"

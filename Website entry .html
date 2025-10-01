@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Chic Elegant Portal</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      overflow: hidden;
+      background: linear-gradient(135deg, #000000, #1a1a1a, #2e2e2e);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: "Papyrus", serif;
+      color: #d4af37;
+    }
+
+    /* الدائرة الذهبية */
+    .portal {
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      border: 3px solid #d4af37;
+      border-radius: 50%;
+      box-shadow: 0 0 20px #d4af37, inset 0 0 15px #d4af37;
+      animation: expand 6s ease-out forwards;
+      z-index: 2;
+    }
+    @keyframes expand {
+      0% { transform: scale(0.2); opacity: 1; }
+      80% { transform: scale(4); opacity: 0.8; }
+      100% { transform: scale(6); opacity: 0; }
+    }
+
+    /* الهرم */
+    .pyramid {
+      position: absolute;
+      bottom: 10%;
+      width: 0;
+      height: 0;
+      border-left: 120px solid transparent;
+      border-right: 120px solid transparent;
+      border-bottom: 200px solid #d4af37;
+      filter: drop-shadow(0 0 20px rgba(212,175,55,0.6));
+      opacity: 0;
+      animation: fadeIn 4s ease 4s forwards;
+      z-index: 1;
+    }
+
+    /* ضباب */
+    .fog {
+      position: absolute;
+      bottom: 0;
+      width: 200%;
+      height: 40%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 20%, transparent 70%);
+      animation: moveFog 15s linear infinite;
+      opacity: 0.4;
+      z-index: 0;
+    }
+    @keyframes moveFog {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* النص الترحيبي */
+    .welcome {
+      position: absolute;
+      top: 20%;
+      font-size: 2em;
+      letter-spacing: 2px;
+      opacity: 0;
+      animation: fadeIn 3s ease 5s forwards;
+    }
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    /* غبار ذهبي */
+    .particle {
+      position: absolute;
+      background: #d4af37;
+      border-radius: 50%;
+      opacity: 0.8;
+      animation: float 10s infinite;
+    }
+    @keyframes float {
+      0% { transform: translateY(0) scale(0.5); opacity: 1; }
+      100% { transform: translateY(-200px) scale(0.1); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="portal"></div>
+  <div class="pyramid"></div>
+  <div class="fog"></div>
+  <div class="welcome">👑 Welcome to AlArab Club 777</div>
+
+  <script>
+    // توليد الغبار الذهبي
+    for(let i=0; i<50; i++){
+      const p = document.createElement("div");
+      p.className = "particle";
+      const size = Math.random() * 4 + 2;
+      p.style.width = size+"px";
+      p.style.height = size+"px";
+      p.style.left = Math.random() * window.innerWidth + "px";
+      p.style.top = (Math.random() * window.innerHeight) + "px";
+      p.style.animationDuration = (5 + Math.random() * 10)+"s";
+      document.body.appendChild(p);
+    }
+  </script>
+</body>
+</html>
