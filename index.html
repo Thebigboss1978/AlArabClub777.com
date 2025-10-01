@@ -1,197 +1,248 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>AlArab Club 777 — Hybrid Portal</title>
-  <style>
-    body {
-      margin:0;
-      font-family: "Inter var", "Noto Kufi Arabic", sans-serif;
-      background: radial-gradient(circle at top left, #02021a, #0a0b0f);
-      color: #ffd966;
-      overflow-x: hidden;
-      position: relative;
-      z-index: 0;
-    }
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: url('/public/assets/stars-bg.gif') repeat center center;
-      background-size: cover;
-      z-index: -2;
-      opacity: 0.5;
-    }
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>AlArab Club 777 — Rooftop Pyramids View | بوابة 777</title>
+<meta name="description" content="AlArab Club 777 — تجربة ضيافة بسيطة وشِيك بإطلالة الأهرامات من السطح. Water‑Glass aesthetic + مؤشر فأرة تفاعلي. احجز مباشرة عبر WhatsApp.">
+<meta name="theme-color" content="#0b0f14"/>
+<style>
+:root {
+  --bg1: #0b0f14;
+  --bg2: #0e131a;
+  --glass: rgba(255,255,255,0.06);
+  --glass-border: rgba(255,255,255,0.18);
+  --accent: #ffd166; /* golden 777 */
+  --text: #eaf2ff;
+  --muted:#b9c2d0;
+  --blur: 18px;
+}
+* { box-sizing:border-box }
+html,body { height:100% }
+body{
+  margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Noto Naskh Arabic", Tahoma, Arial;
+  color:var(--text);
+  background: radial-gradient(1200px 800px at 20% -10%, #1b2a3a 0%, transparent 60%),
+             radial-gradient(900px 600px at 120% 10%, #13212f 0%, transparent 60%),
+             linear-gradient(180deg, var(--bg1), var(--bg2));
+  overflow-x:hidden;
+}
+.water-overlay::before {
+  content:""; position:fixed; inset:-10vh;
+  background:
+    radial-gradient(40% 60% at 70% 20%, rgba(255,255,255,0.06), transparent 60%),
+    radial-gradient(35% 50% at 30% 80%, rgba(0,150,255,0.08), transparent 70%),
+    radial-gradient(25% 40% at 80% 90%, rgba(255,255,255,0.05), transparent 70%);
+  filter: blur(60px) saturate(140%);
+  pointer-events:none; z-index:0;
+}
+.container{ width:min(1200px, 92vw); margin:auto; position:relative; z-index:1; }
+nav{
+  display:flex; justify-content:space-between; align-items:center; padding:16px 0; gap:16px;
+}
+.brand{
+  display:flex; align-items:center; gap:12px; font-weight:700; letter-spacing:.5px;
+}
+.badge-777{ padding:6px 10px; border-radius:999px; border:1px solid var(--glass-border); background:var(--glass); backdrop-filter: blur(var(--blur)); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06); }
+.badge-777 svg{ display:block; }
+.btn{
+  padding:12px 18px; border-radius:14px; border:1px solid var(--glass-border); background:linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03));
+  color:var(--text); text-decoration:none; display:inline-flex; align-items:center; gap:10px; backdrop-filter: blur(var(--blur));
+  transition:transform .15s ease, background .2s ease, box-shadow .2s ease;
+  box-shadow: 0 10px 30px rgba(0,0,0,.25);
+}
+.btn:hover{ transform:translateY(-1px); box-shadow: 0 12px 40px rgba(0,0,0,.35); }
+.btn-accent{ border-color: rgba(255, 209, 102,.5); box-shadow: 0 10px 30px rgba(255, 209, 102,.12); }
+.hero{
+  display:grid; grid-template-columns:1.2fr .8fr; gap:24px; align-items:center; padding:40px 0 24px;
+}
+@media (max-width: 900px){ .hero{ grid-template-columns:1fr; } }
+.card{
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  padding: clamp(18px, 4vw, 28px);
+  backdrop-filter: blur(var(--blur)) saturate(140%);
+  box-shadow: 0 20px 60px rgba(0,0,0,.35);
+}
+.h1{ font-size: clamp(28px, 3.6vw, 48px); line-height:1.15; margin:0 0 10px; }
+.lead{ color:var(--muted); font-size: clamp(15px, 1.4vw, 18px); }
+.kpis{ display:flex; gap:14px; flex-wrap:wrap; margin: 18px 0 0; }
+.kpi{ padding:10px 12px; border-radius:12px; border:1px solid var(--glass-border); background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02)); font-size:13px; color:var(--muted) }
+.gallery{
+  display:grid; grid-template-columns: repeat(3, 1fr); gap:14px;
+}
+@media (max-width: 700px){ .gallery{ grid-template-columns:1fr 1fr; } }
+.photo{
+  aspect-ratio: 4/3; border-radius: 18px; overflow:hidden; position:relative; border:1px solid var(--glass-border); background:#0e1620;
+}
+.photo img{ width:100%; height:100%; object-fit:cover; filter: saturate(110%) contrast(105%); transform:scale(1.02); }
 
-    canvas#circleCanvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-      pointer-events: none;
-    }
+.grid{ display:grid; grid-template-columns: repeat(3, 1fr); gap:16px; }
+@media (max-width: 900px){ .grid{ grid-template-columns: 1fr; } }
 
-    header {
-      padding: 20px;
-      display:flex;
-      justify-content: space-between;
-      align-items:center;
-      background: rgba(0,0,0,0.6);
-      box-shadow:0 4px 20px rgba(0,0,0,0.6);
-    }
-    header .logo {display:flex;align-items:center;gap:10px;}
-    header img {width:40px;height:40px;}
-    header h1 {margin:0;font-size:22px;color:#fff;letter-spacing:1px;}
-    nav a {color:#ffd966;margin:0 10px;text-decoration:none;font-weight:bold;transition:color 0.2s ease;}
-    nav a:hover {text-decoration:underline;color:#00ffd5;}
+.feature h3{ margin:.2rem 0 .6rem; }
+.feature p{ color:var(--muted); margin:0; }
 
-    .hero {text-align:center;padding:80px 20px;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));}
-    .hero h2 {font-size:32px;color:#00ffd5;margin-bottom:10px;}
-    .hero p {font-size:18px;color:#9aa3b2;max-width:700px;margin:0 auto;}
+footer{
+  display:flex; justify-content:space-between; align-items:center; gap:16px;
+  padding:28px 0 60px; color:var(--muted); font-size:14px;
+}
+footer a{ color: var(--text) }
 
-    .portals {display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;padding:60px 40px;max-width:1200px;margin:0 auto;}
-    .portal-card {
-      border-radius:20px;
-      background:linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.07));
-      padding:32px;
-      text-align:center;
-      box-shadow:0 10px 40px rgba(0,0,0,0.7);
-      transition:transform 0.3s ease, box-shadow 0.3s ease, background 1.5s ease;
-    }
-    .portal-card:hover {
-      transform:translateY(-8px) scale(1.03);
-      box-shadow:0 14px 50px rgba(0,255,213,0.25);
-      background:linear-gradient(180deg,rgba(255,255,255,0.1),rgba(0,255,213,0.1));
-    }
-    .portal-card h3 {margin:0;font-size:22px;color:#ffd966;}
-    .portal-card p {color:#b8b0a5;margin:12px 0 22px;font-size:15px;line-height:1.6;}
-    .portal-card a {
-      display:inline-block;
-      padding:12px 20px;
-      border-radius:14px;
-      background:linear-gradient(90deg,#00ffd5,#00c299);
-      color:#02131a;
-      font-weight:bold;
-      text-decoration:none;
-      transition:box-shadow 0.3s ease;
-    }
-    .portal-card a:hover {box-shadow:0 10px 35px rgba(0,255,213,0.3);}
+ /* Cursor Add-on */
+.cursor-dot, .cursor-outline{
+  position: fixed; top:0; left:0; width:10px; height:10px; border-radius:50%;
+  pointer-events:none; transform: translate(-50%,-50%); z-index: 9999; mix-blend-mode: screen;
+}
+.cursor-dot{ background: radial-gradient(circle at 30% 30%, #8ec5ff, #1e90ff); filter: blur(0.5px); }
+.cursor-outline{ width:40px; height:40px; background: radial-gradient(circle at 50% 50%, rgba(141, 217, 255, .2), rgba(0,0,0,0)); border:1px solid rgba(141,217,255,.3); filter: blur(2px); }
+.ripple{
+  position: fixed; width:10px; height:10px; border-radius:999px; pointer-events:none; z-index:9998;
+  background: radial-gradient(circle, rgba(255,255,255,.55), rgba(141,217,255,.28) 60%, rgba(0,0,0,0) 70%);
+  transform: translate(-50%,-50%) scale(1);
+  animation: ripple .7s ease-out forwards;
+  mix-blend-mode: screen;
+}
+@keyframes ripple{ to{ transform: translate(-50%,-50%) scale(16); opacity:0 } }
 
-    #booking {text-align:center;padding:60px 20px;}
-    #booking h3 {font-size:24px;color:#ffd966;margin-bottom:12px;}
-    #booking p {color:#9aa3b2;margin-bottom:20px;}
-    #booking a {
-      display:inline-block;
-      margin-top:15px;
-      padding:14px 22px;
-      border-radius:14px;
-      background:linear-gradient(90deg,#ffd966,#ffb84d);
-      color:#0a0b0f;
-      text-decoration:none;
-      font-weight:bold;
-      transition:box-shadow 0.3s ease;
-    }
-    #booking a:hover {box-shadow:0 10px 35px rgba(255,215,102,0.3);}
+.toggle{ position: fixed; inset-inline-end: 14px; inset-block-end: 16px; z-index: 10000; }
+.toggle .btn{ padding:10px 14px; font-size:13px }
 
-    footer {padding:30px;text-align:center;color:#9aa3b2;background:rgba(0,0,0,0.6);font-size:14px;letter-spacing:0.5px;}
-  </style>
+small.hint{ color: var(--muted); display:block; margin-top:8px; }
+</style>
 </head>
-<body>
+<body class="water-overlay">
+<div class="cursor-dot"></div>
+<div class="cursor-outline"></div>
 
-<canvas id="circleCanvas"></canvas>
-
-<header>
-  <div class="logo">
-    <img src="/public/assets/AlArab777logo.png" alt="AlArab Club 777 Logo">
-    <h1>AlArab Club 777 — البوابة الهجينة</h1>
-  </div>
+<div class="container">
   <nav>
-    <a href="#cyber">Cyber-Pyramid 2125</a>
-    <a href="#giza">Giza Ancient Portal</a>
-    <a href="#booking">الحجز</a>
+    <div class="brand">
+      <span class="badge-777" aria-hidden="true">
+        <!-- 777 sigil -->
+        <svg width="28" height="20" viewBox="0 0 42 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4 26L18 4" stroke="url(#g1)" stroke-width="3" stroke-linecap="round"/>
+          <path d="M16 26L30 4" stroke="url(#g1)" stroke-width="3" stroke-linecap="round"/>
+          <path d="M28 26L42 4" stroke="url(#g1)" stroke-width="3" stroke-linecap="round"/>
+          <defs><linearGradient id="g1" x1="0" y1="0" x2="42" y2="0">
+            <stop stop-color="#fff7c7"/><stop offset="1" stop-color="#ffd166"/>
+          </linearGradient></defs>
+        </svg>
+      </span>
+      <span>AlArab Club <b>777</b> · بوابة</span>
+    </div>
+    <div style="display:flex; gap:10px">
+      <a class="btn" href="#gallery" aria-label="شاهد الصور">معرض</a>
+      <a class="btn btn-accent" href="https://wa.me/201234567890?text=السلام%20عليكم%20أرغب%20بحجز%20لـ%20AlArab%20Club%20777" target="_blank" rel="noopener">احجز مباشرة عبر WhatsApp</a>
+    </div>
   </nav>
-</header>
 
-<section class="hero">
-  <h2>✦ اختر تجربتك ✦</h2>
-  <p>بين المستقبل النيونــي وعبق التاريخ الفرعوني — كل الطرق تؤدي إلى AlArab Club 777</p>
-</section>
+  <section class="hero">
+    <div class="card">
+      <h1 class="h1">مشهد الأهرامات من السطح · <span style="color:var(--accent)">Water‑Glass</span> تجربة 777</h1>
+      <p class="lead">بيت ضيافة بإحساس بسيط وشِيك — زجاج مائي، هدوء، ولمسة سحرية من مؤشر الفأرة التفاعلي. خطوة أقرب للسكينة عند هضبة الجيزة.</p>
+      <div class="kpis">
+        <div class="kpi">↗ احجز مباشرة — أفضل سعر</div>
+        <div class="kpi">☕ Rooftop Sunrise</div>
+        <div class="kpi">🗺️ 700m من أبو الهول</div>
+      </div>
+      <small class="hint">Tip: حرّك الفأرة… وشوف الهالة المائية ✧</small>
+    </div>
+    <div class="gallery" id="gallery">
+      <div class="photo"><img src="pyramids.jpg" alt="Rooftop with pyramids view"/></div>
+      <div class="photo"><img src="assets/horse.jpg" alt="Ambient glass lighting"/></div>
+      <div class="photo"><img src="assets/0702 pyrmd1-Cover.jpg" alt="youc selectedc"/></div>
+     <img src="AlArabClub777olma.html" alt="Bazaars">
+    </div>
+  </section>
 
-<section class="portals">
-  <div class="portal-card" id="cyber">
-    <h3>🚀 Cyber-Pyramid 2125</h3>
-    <p>بوابة زمنية نيون، Matrix Glyphs، ورحلات عبر الأبعاد مع العرّاب. تجربة فريدة تمزج بين التقنية والخيال العلمي.</p>
-    <a href="Index.html">ادخل البوابة</a>
-  </div>
+  <section class="grid">
+    <div class="card feature">
+      <h3>Water Glass Theme</h3>
+      <p>. هوية 777: ذهب دافئ على خلفية ليلية.</p>
+    </div>
+    <div class="card feature">
+      <h3>Interactive Mouse</h3>
+      <p>إضافة خفيفة (JS أقل من 40 سطر). هالة تتبع المؤشر + موجة عند النقر — تشتغل على سطح المكتب والمحمول (لمس) بصورة خفيفة.</p>
+    </div>
+    <div class="card feature">
+      <h3>SEO جاهز</h3>
+      <p>Meta + JSON‑LD + سرعة تحميل عالية. جاهز للفهرسة عبر Search Console.</p>
+    </div>
+  </section>
 
-  <div class="portal-card" id="giza">
-    <h3>🏛️ Giza Ancient Portal</h3>
-    <p>Canvas Pyramid ثلاثي الأبعاد، خدمات سياحية تفاعلية، ودردشة مباشرة مع مساعد AlArab لتكتشف أسرار الحضارة القديمة.</p>
-    <a href="AlArabClub777.html.html">ادخل البوابة</a>
-  </div>
-</section>
+  <footer>
+    <div>© <span id="year"></span> AlArab Club 777777 · Giza</div>
+    <div><a href="mailto:hello@alarabclub777.com">hello@alarabclub777.com</a></div>
+  </footer>
+</div>
 
-<section id="booking">
-  <h3>📲 احجز الآن</h3>
-  <p>كل التجارب مرتبطة بنظام حجز موحد — عبر WhatsApp أو البريد الإلكتروني. سهولة في الحجز وسرعة في التواصل.</p>
-  <a href="https://wa.me/201002446123?text=مرحبا%20اريد%20الحجز" target="_blank">احجز عبر واتساب</a>
-</section>
+<div class="toggle">
+  <button class="btn" id="toggleCursor">Cursor: On</button>
+</div>
 
-<footer>
-  © AlArab Club 777 — Hybrid Portal | Designed with ✦ روح + تقنية ✦
-</footer>
+<!-- JSON-LD: LodgingBusiness -->
+<script type="application/ld+json">
+{
+ "@context":"https://schema.org",
+ "@type":"LodgingBusiness",
+ "name":"AlArab Club 77777777",
+ "url":"https://alarabclub777.com",
+ "address":{"@type":"PostalAddress","addressLocality":"Giza","addressCountry":"EG"},
+ "sameAs":[
+  "https://www.instagram.com/aluab_777",
+  "https://www.tripadvisor.com/",
+  "https://www.booking.com/"
+ ],
+ "amenityFeature":[
+  {"@type":"LocationFeatureSpecification","name":"Rooftop Pyramids view","value":true},
+  {"@type":"LocationFeatureSpecification","name":"WhatsApp direct booking","value":true}
+ ]
+}
+</script>
 
 <script>
-const canvas = document.getElementById("circleCanvas");
-const ctx = canvas.getContext("2d");
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+/* Cursor Add‑on */
+(function(){
+  const dot = document.querySelector('.cursor-dot');
+  const outline = document.querySelector('.cursor-outline');
+  let on = true, x=0, y=0, ox=0, oy=0;
+  const lerp = (a,b,n)=> (1-n)*a + n*b;
 
-const particles = [];
-const radius = 220;
-const numParticles = 240;
-
-function initParticles(){
-  particles.length = 0;
-  for(let i=0;i<numParticles;i++){
-    const angle = (i/numParticles) * Math.PI*2;
-    const x = canvas.width/2 + Math.cos(angle)*radius;
-    const y = canvas.height/2 + Math.sin(angle)*radius;
-    particles.push({x,y,baseX:x,baseY:y});
+  function move(e){
+    x = (e.touches? e.touches[0].clientX : e.clientX);
+    y = (e.touches? e.touches[0].clientY : e.clientY);
+    dot.style.transform = `translate(${x}px, ${y}px)`;
   }
-}
-
-function drawParticles(mouseX=canvas.width/2, mouseY=canvas.height/2){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  ctx.fillStyle="rgba(0,255,213,0.7)";
-  particles.forEach(p=>{
-    const dx = mouseX - canvas.width/2;
-    const dy = mouseY - canvas.height/2;
-    ctx.beginPath();
-    ctx.arc(p.baseX+dx*0.05, p.baseY+dy*0.05, 2, 0, Math.PI*2);
-    ctx.fill();
-  });
-}
-
-document.addEventListener("mousemove",(e)=>{
-  drawParticles(e.clientX,e.clientY);
-});
-
-window.addEventListener("resize",()=>{
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-  initParticles();
-  drawParticles();
-});
-
-initParticles();
-drawParticles();
+  function loop(){
+    ox = lerp(ox, x, .12);
+    oy = lerp(oy, y, .12);
+    outline.style.transform = `translate(${ox}px, ${oy}px)`;
+    requestAnimationFrame(loop);
+  }
+  function clickRipple(e){
+    if(!on) return;
+    const cx = e.clientX || (e.touches && e.touches[0].clientX);
+    const cy = e.clientY || (e.touches && e.touches[0].clientY);
+    const r = document.createElement('div');
+    r.className = 'ripple';
+    r.style.left = cx + 'px'; r.style.top = cy + 'px';
+    document.body.appendChild(r);
+    setTimeout(()=> r.remove(), 700);
+  }
+  function toggle(){
+    on = !on;
+    document.getElementById('toggleCursor').textContent = 'Cursor: ' + (on? 'On':'Off');
+    dot.style.display = outline.style.display = on? 'block':'none';
+  }
+  document.addEventListener('mousemove', e=> { if(on) move(e) });
+  document.addEventListener('touchmove', e=> { if(on) move(e) }, {passive:true});
+  document.addEventListener('click', clickRipple);
+  document.getElementById('toggleCursor').addEventListener('click', toggle);
+  document.getElementById('year').textContent = new Date().getFullYear();
+  loop();
+})();
 </script>
 </body>
 </html>
