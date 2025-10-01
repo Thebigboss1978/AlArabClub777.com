@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Interactive Loading Stage Game</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: #eee;
+      line-height: 1.6;
+      margin: 20px;
+    }
+    h1, h2 {
+      color: #ffe066;
+    }
+    pre {
+      background: #222;
+      color: #0f0;
+      padding: 15px;
+      border-radius: 10px;
+      overflow-x: auto;
+    }
+    code {
+      font-family: "Courier New", monospace;
+    }
+    ul {
+      margin-left: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Creative Interactive Loading Stage Game</h1>
+  <p>
+    الكود يمثل لعبة/مشهد تحميل تفاعلي فيه مراحل مختلفة:
+    شريط طاقة (Energy Bar)، حركة طائر، كلمات عائمة، انفجارات، ومؤقت زمني.
+  </p>
+
+  <h2>ملاحظات للتحسين</h2>
+  <ul>
+    <li><b>Organization:</b> تنظيم الكود في وحدات/كلاسات واضحة.</li>
+    <li><b>Commenting:</b> إضافة تعليقات توضيحية لزيادة وضوح الغرض من كل جزء.</li>
+    <li><b>Performance Optimization:</b> استخدام <code>requestAnimationFrame</code> لتسريع الرسوميات وتقليل الحسابات المكررة.</li>
+    <li><b>User Experience:</b> إضافة تعليمات للاعب حول كيفية اللعب.</li>
+    <li><b>Mobile Support:</b> جعل العناصر Responsive للشاشات المختلفة.</li>
+  </ul>
+
+  <h2>الكود (JavaScript)</h2>
+  <pre><code>
+// --- Creative Interactive Loading Stage --- 
+
+let stagePhase = 1;
+const maxPlayTime = 7000; // 7 ثواني أقصى مدة للعب قبل الانتقال تلقائي
+
+class Game {
+    constructor() {
+        this.playPoints = 0;
+        this.spiritBar = document.createElement('div');
+        this.bird = {
+            x: window.innerWidth / 2,
+            y: window.innerHeight / 2
+        };
+
+        this.spiritFill = document.createElement('div');
+
+        this.spiritBar.style.position = 'fixed';
+        this.spiritBar.style.top = '20px';
+        this.spiritBar.style.left = '50%';
+        this.spiritBar.style.transform = 'translateX(-50%)';
+        this.spiritBar.style.width = '240px';
+        this.spiritBar.style.height = '18px';
+        this.spiritBar.style.border = '2px solid #ffe066';
+        this.spiritBar.style.borderRadius = '12px';
+        this.spiritBar.style.background = '#422';
+        this.spiritBar.style.zIndex = '99999';
+
+        document.body.appendChild(this.spiritBar);
+
+        this.spiritFill.style.width = '0%';
+        this.spiritFill.style.height = '100%';
+        this.spiritFill.style.borderRadius = '12px';
+        this.spiritFill.style.background = 'linear-gradient(90deg,#ffe066,#f7c873)';
+        this.spiritBar.appendChild(this.spiritFill);
+    }
+
+    updateSpiritBar() {
+        let percent = Math.min(100, this.playPoints);
+        this.spiritFill.style.width = percent + '%';
+    }
+
+    addExplosion(x, y, color) {
+        // Add your explosion logic here
+    }
+}
+
+class GameLogic {
+    constructor(game) {
+        this.game = game;
+        this.floatingWords = [];
+        this.spiritualWords = [];
+
+        this.init();
+    }
+
+    init() {
+        document.addEventListener('DOMContentLoaded', () => {
+            const loadingOverlay = document.createElement('div');
+            loadingOverlay.id = 'loading';
+            loadingOverlay.style.position = 'fixed';
+            loadingOverlay.style.top = 0;
+            loadingOverlay.style.left = 0;
+            loadingOverlay.style.width = '100%';
+            loadingOverlay.style.height = '100%';
+            loadingOverlay.style.background = 'rgba(0,0,0,0.8)';
+            loadingOverlay.style.display = 'flex';
+            loadingOverlay.style.justifyContent = 'center';
+            loadingOverlay.style.alignItems = 'center';
+            loadingOverlay.style.color = '#fff';
+            loadingOverlay.innerText = 'Loading...';
+            document.body.appendChild(loadingOverlay);
+
+            this.game.spiritBar.style.top = '20px';
+            this.game.spiritBar.style.left = '50%';
+            this.game.spiritBar.style.transform = 'translateX(-50%)';
+
+            const game = new Game();
+            game.updateSpiritBar();
+
+            requestAnimationFrame(this.interactiveLoading.bind(this));
+        });
+
+        document.addEventListener('click', (e) => {
+            if (this.checkClick(e)) {
+                this.game.addExplosion(this.game.bird.x, this.game.bird.y, "#ffe066");
+                this.game.playPoints += 3;
+            }
+        });
+    }
+
+    interactiveLoading(timestamp) {
+        switch (this.stagePhase) {
+            case 1:
+                if (this.checkMovement()) {
+                    this.game.playPoints += 0.2;
+                    this.stagePhase = 2;
+                }
+                break;
+
+            case 2:
+                if (Math.random() < 0.004) {
+                    const wordIndex = Math.floor(Math.random() * this.spiritualWords.length);
+                    const word = this.spiritualWords[wordIndex];
+                    this.floatingWords.push(word);
+                    this.game.playPoints += 0.5;
+                }
+                break;
+
+            case 3:
+                if (Math.random() < 0.03) {
+                    let fx = Math.random() * window.innerWidth;
+                    let fy = Math.random() * window.innerHeight;
+                    this.addExplosion(fx, fy, "#ffe066");
+                    this.game.playPoints += 0.8;
+                }
+                break;
+
+            default:
+                if (this.game.playPoints >= 100) {
+                    const loadingOverlay = document.getElementById('loading');
+                    loadingOverlay.style.transition = 'opacity 1.2s ease';
+                    loadingOverlay.style.opacity = 0;
+                    setTimeout(() => {
+                        this.finishLoadingStage();
+                    }, 1200);
+                }
+        }
+
+        requestAnimationFrame(this.interactiveLoading.bind(this));
+    }
+
+    checkMovement() {
+        return true; // simplified for demo
+    }
+
+    checkClick(e) {
+        const dist = Math.hypot(e.clientX - this.game.bird.x, e.clientY - this.game.bird.y);
+        return dist < 46;
+    }
+}
+
+class GameOverHandler {
+    finishLoadingStage() {
+        const loadingOverlay = document.getElementById('loading');
+        loadingOverlay.style.display = 'none';
+        alert('Game Finished!');
+    }
+}
+
+const gameLogic = new GameLogic(new Game());
+  </code></pre>
+</body>
+</html>

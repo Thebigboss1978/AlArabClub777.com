@@ -1,0 +1,594 @@
+<!doctype html>
+<!--
+  Giza Pyramids Interactive Portal — AlArab Club 777
+  Interactive booking experience for pyramid tours and activities
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Giza Pyramids Portal — AlArab Club 777</title>
+  <meta name="description" content="Interactive portal for Giza Pyramids tours and activities. Book camel rides, desert safaris, guided tours, and complete Egyptian adventures with AlArab Club 777." />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Giza Pyramids Portal — AlArab Club 777" />
+  <meta property="og:description" content="Experience the magic of the pyramids with interactive booking and immersive tours." />
+  <meta property="og:image" content="https://alarabclub777.vercel.app/assets/pyramids-og.jpg" />
+  <meta property="og:type" content="website" />
+  <style>
+  :root{
+    --bg:#0a0b0f; --gold:#ffd66b; --muted:#9aa3b2; --accent:#4aa3ff; --red:#dc2626;
+  }
+  html,body{height:100%;margin:0;font-family:Inter, system-ui, sans-serif;background:var(--bg);color:var(--gold);overflow:hidden;-webkit-font-smoothing:antialiased}
+  
+  /* Layers */
+  .matte{position:fixed;inset:0;z-index:0;background:
+    radial-gradient(1200px 600px at 15% 25%, rgba(255,214,107,.04), transparent 15%),
+    radial-gradient(900px 500px at 85% 75%, rgba(220,38,38,.03), transparent 15%),
+    linear-gradient(180deg, rgba(0,0,0,.4), rgba(0,0,0,.7));backdrop-filter: blur(8px)}
+  .grain{position:fixed;inset:0;z-index:1;pointer-events:none;background-image:radial-gradient(rgba(255,255,255,0.02) 1px, transparent 1px);background-size:8px 8px;opacity:.15}
+  .dot-pattern{position:fixed;inset:0;z-index:2;pointer-events:none;background-image:radial-gradient(rgba(255,214,107,0.04) 1px, transparent 1px);background-size:40px 40px;opacity:.1}
+  canvas#scene{position:fixed;inset:0;z-index:3;display:block}
+  
+  /* UI */
+  #ui{position:fixed;inset:0;z-index:8;display:flex;flex-direction:column;align-items:center;padding:20px;pointer-events:none}
+  header{pointer-events:auto;margin-top:10px;background:rgba(0,0,0,0.5);padding:15px 25px;border-radius:999px;color:var(--gold);font-weight:700;box-shadow:0 10px 40px rgba(0,0,0,.7);border:1px solid rgba(255,214,107,.1)}
+  .subtitle{margin-top:8px;color:var(--muted);font-size:14px;text-align:center}
+  .hint{position:fixed;left:20px;top:20px;color:var(--muted);font-size:13px;pointer-events:none;background:rgba(0,0,0,.3);padding:10px;border-radius:8px}
+  
+  .services{pointer-events:auto;width:100%;max-width:1200px;margin:clamp(40px,10vh,80px) auto 100px;display:grid;grid-template-columns:repeat(4,1fr);gap:20px;padding:0 20px;opacity:0;transform:translateY(25px);transition:all .8s ease}
+  .services.visible{opacity:1;transform:none}
+  .service-card{background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.01));border-radius:16px;padding:24px;border:1px solid rgba(255,214,107,.08);backdrop-filter:blur(10px);box-shadow:0 8px 32px rgba(0,0,0,.6);pointer-events:auto;transition:transform .3s ease, box-shadow .3s ease}
+  .service-card:hover{transform:translateY(-5px);box-shadow:0 15px 50px rgba(255,214,107,.1)}
+  .service-card h3{margin:0 0 10px;color:var(--gold);font-size:1.1rem}
+  .service-card p{margin:0 0 8px;color:var(--muted);font-size:0.9rem;line-height:1.4}
+  .service-card .price{margin-top:12px;color:var(--accent);font-weight:800;font-size:1.1rem}
+  .service-card .duration{color:rgba(255,214,107,.7);font-size:0.85rem;margin-top:4px}
+  .service-card a.btn{display:inline-block;margin-top:15px;padding:10px 16px;border-radius:10px;background:linear-gradient(90deg,var(--gold),#ffb84d);color:#0a0b0f;text-decoration:none;font-weight:700;transition:all .3s ease}
+  .service-card a.btn:hover{transform:scale(1.05);box-shadow:0 5px 20px rgba(255,214,107,.3)}
+  
+  .ascii-bg{position:fixed;top:12%;left:50%;transform:translateX(-50%);z-index:4;pointer-events:none;color:rgba(255,214,107,0.06);font-size:14px;line-height:14px;white-space:pre;text-align:center}
+  
+  .orb-wrap{position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:9;pointer-events:auto}
+  .orb{width:80px;height:80px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(160deg,#0a0b0f,#1a1b1f);border:1px solid rgba(255,255,255,.08);box-shadow:0 10px 50px rgba(255,214,107,.08);cursor:pointer;transition:transform .2s}
+  .orb.pulse{animation:orbPulse 1800ms infinite ease-in-out}
+  @keyframes orbPulse{0%{transform:scale(1)}50%{transform:scale(1.08)}100%{transform:scale(1)}}
+  .orb .dots{width:56px;height:56px;border-radius:50%;background:
+     radial-gradient(circle at 70% 30%, #ffd66b 0 2px, transparent 2.5px) 0 0/8px 8px,
+     radial-gradient(circle at 20% 80%, #4aa3ff 0 2px, transparent 2.5px) 4px 4px/8px 8px,
+     radial-gradient(circle at 40% 40%, #dc2626 0 2px, transparent 2.5px) 2px 6px/8px 8px, #0a0b0f;box-shadow:inset 0 0 15px rgba(255,215,120,.06)}
+  
+  .chat-toggle{position:fixed;right:20px;bottom:20px;z-index:12;width:65px;height:65px;border-radius:50%;background:linear-gradient(180deg,var(--gold),#ffb84d);display:grid;place-items:center;cursor:pointer;box-shadow:0 20px 60px rgba(0,0,0,.7);border:1px solid rgba(255,255,255,.1);pointer-events:auto;font-size:24px;transition:transform .3s ease}
+  .chat-toggle:hover{transform:scale(1.1)}
+  
+  .chat-window{position:fixed;right:20px;bottom:90px;width:380px;max-width:94vw;height:540px;background:rgba(10,11,15,0.98);color:#fff;border-radius:15px;box-shadow:0 35px 140px rgba(0,0,0,.8);z-index:13;display:none;flex-direction:column;pointer-events:auto;border:1px solid rgba(255,214,107,.1)}
+  .chat-header{padding:15px;border-bottom:1px solid rgba(255,255,255,.05);font-weight:700;background:rgba(255,214,107,.02)}
+  .chat-body{flex:1;padding:15px;overflow:auto;display:flex;flex-direction:column;gap:10px}
+  .chat-input{display:flex;padding:12px;border-top:1px solid rgba(255,255,255,.05);background:rgba(255,214,107,.02)}
+  .chat-input input{flex:1;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.03);color:#fff;font-size:14px}
+  .chat-input button{margin-left:10px;padding:10px 12px;border-radius:10px;background:var(--gold);border:0;color:#0a0b0f;font-weight:700;cursor:pointer}
+  .msg{max-width:85%;padding:10px 12px;border-radius:12px;font-size:14px;line-height:1.4}
+  .msg.agent{background:rgba(255,215,107,.1);align-self:flex-start;color:var(--gold)}
+  .msg.user{background:rgba(255,255,255,.06);align-self:flex-end;color:#fff}
+  
+  .mouse-dot{position:fixed;width:15px;height:15px;border-radius:50%;pointer-events:none;z-index:11;transform:translate(-50%,-50%);background:radial-gradient(circle, rgba(255,214,107,.8), rgba(255,214,107,.2));box-shadow:0 0 25px rgba(255,214,107,.3)}
+  
+  footer.portal-footer{position:fixed;left:0;right:0;bottom:0;z-index:14;display:flex;align-items:center;justify-content:space-between;padding:15px 20px;background:linear-gradient(180deg,rgba(0,0,0,0.3),rgba(0,0,0,0.6));backdrop-filter: blur(10px);pointer-events:auto;border-top:1px solid rgba(255,214,107,.05)}
+  .booking-actions{display:flex;gap:12px;align-items:center}
+  .btn-book{padding:12px 18px;border-radius:12px;background:linear-gradient(90deg,var(--gold),#ffb84d);color:#0a0b0f;text-decoration:none;font-weight:800;transition:all .3s ease}
+  .btn-book:hover{transform:scale(1.05);box-shadow:0 5px 25px rgba(255,214,107,.4)}
+  .muted{color:var(--muted);font-size:13px}
+  
+  @media (max-width:900px){ 
+    .services{grid-template-columns:repeat(2,1fr)} 
+    .chat-window{width:94vw;right:3%;left:3%} 
+  }
+  @media (max-width:600px){ 
+    .services{grid-template-columns:1fr} 
+    header{font-size:1.1rem;padding:12px 20px} 
+  }
+  </style>
+</head>
+<body>
+
+  <div class="matte" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="dot-pattern" aria-hidden="true"></div>
+  <canvas id="scene"></canvas>
+
+  <div class="ascii-bg" aria-hidden="true">
+       /\\    AlArab Club 777 — Gateway to Ancient Egypt
+      /  \\   Interactive Portal for Pyramid Adventures
+     /    \\  Book Tours • Explore • Experience Magic
+    /      \\ 
+   /   /\\   \\    
+  /___/__\\___\\____
+        ||||
+  </div>
+
+  <div id="ui">
+    <div class="orb-wrap">
+      <div class="orb pulse" id="orb" title="Activate Portal" role="button" aria-pressed="false">
+        <div class="dots" aria-hidden="true"></div>
+      </div>
+    </div>
+
+    <header>
+      AlArab Club 777 — Giza Pyramids Portal
+      <div class="subtitle">Your Gateway to Ancient Egypt</div>
+    </header>
+    <div class="hint">Mouse: Attract Particles • Click: Repel • Double Click: Pyramid Formation</div>
+
+    <section class="services" id="services" aria-hidden="true">
+      <div class="service-card" data-service="pyramid-tour">
+        <h3>🏛️ Pyramid Explorer</h3>
+        <p>Journey through Giza's ancient pyramid complex with expert archaeological guides. Discover hidden chambers and ancient secrets.</p>
+        <div class="duration">Full Day Experience</div>
+        <div class="price">$45 - $85 USD</div>
+        <a class="btn" data-action="book" href="#" role="button">Book Adventure</a>
+      </div>
+      
+      <div class="service-card" data-service="camel-safari">
+        <h3>🐪 Desert Camel Safari</h3>
+        <p>Experience the timeless journey across golden dunes on camelback. Sunrise and sunset rides available with traditional Bedouin guides.</p>
+        <div class="duration">2-4 Hours</div>
+        <div class="price">$25 - $50 USD</div>
+        <a class="btn" data-action="book" href="#" role="button">Book Safari</a>
+      </div>
+      
+      <div class="service-card" data-service="horse-riding">
+        <h3>🐎 Royal Horse Adventure</h3>
+        <p>Ride like ancient pharaohs around the pyramid complex. Professional horses and safety equipment provided for all skill levels.</p>
+        <div class="duration">1-3 Hours</div>
+        <div class="price">$30 - $60 USD</div>
+        <a class="btn" data-action="book" href="#" role="button">Book Ride</a>
+      </div>
+      
+      <div class="service-card" data-service="complete-package">
+        <h3>👑 Complete Egyptian Experience</h3>
+        <p>Ultimate package: pyramid tours, camel safari, horse riding, traditional lunch, and sunset viewing. Perfect for creating memories.</p>
+        <div class="duration">Full Day + Evening</div>
+        <div class="price">$120 - $250 USD</div>
+        <a class="btn" data-action="book" href="#" role="button">Book Package</a>
+      </div>
+      
+      <div class="service-card" data-service="saqqara">
+        <h3>🏺 Saqqara Archaeological Site</h3>
+        <p>Explore the ancient Saqqara complex with its step pyramids and tombs. Uncover 4,000 years of Egyptian history with expert guides.</p>
+        <div class="duration">Half Day</div>
+        <div class="price">$35 - $70 USD</div>
+        <a class="btn" data-action="book" href="#" role="button">Book Exploration</a>
+      </div>
+      
+      <div class="service-card" data-service="buggy-adventure">
+        <h3>🏎️ Desert Buggy Adventure</h3>
+        <p>High-speed desert exploration in modern off-road buggies. Navigate dunes and ancient paths with professional guides and safety gear.</p>
+        <div class="duration">2-3 Hours</div>
+        <div class="price">$60 - $120 USD</div>
+        <a class="btn" data-action="book" href="#" role="button">Book Thrill</a>
+      </div>
+      
+      <div class="service-card" data-service="sound-light">
+        <h3>🌙 Sound & Light Show</h3>
+        <p>Evening spectacular at the pyramids with narrated light projections telling the story of ancient Egypt. Magical nighttime experience.</p>
+        <div class="duration">1.5 Hours</div>
+        <div class="price">$25 - $45 USD</div>
+        <a class="btn" data-action="book" href="#" role="button">Book Show</a>
+      </div>
+      
+      <div class="service-card" data-service="hotel-transfer">
+        <h3>🚗 Airport & Hotel Transfers</h3>
+        <p>Comfortable and reliable transportation service. Professional drivers, luxury vehicles, 24/7 availability for all Cairo and Giza locations.</p>
+        <div class="duration">As Needed</div>
+        <div class="price">$15 - $40 USD</div>
+        <a class="btn" data-action="book" href="#" role="button">Book Transfer</a>
+      </div>
+    </section>
+  </div>
+
+  <!-- Chat System -->
+  <div class="chat-toggle" id="chatToggle" title="Chat with AlArab Club">💬</div>
+  <div class="chat-window" id="chatWindow" aria-hidden="true">
+    <div class="chat-header">AlArab Club 777 — Tour Assistant</div>
+    <div class="chat-body" id="chatBody"></div>
+    <div class="chat-input">
+      <input id="chatInput" placeholder="Ask about tours, pricing, or type 'book' to reserve..." />
+      <button id="chatSend">Send</button>
+    </div>
+  </div>
+
+  <div class="mouse-dot" id="mouseDot" aria-hidden="true"></div>
+
+  <!-- Footer with booking actions -->
+  <footer class="portal-footer" role="contentinfo">
+    <div style="display:flex;align-items:center;gap:15px;">
+      <div style="width:240px;height:135px;border-radius:10px;overflow:hidden;background:#000;display:grid;place-items:center">
+        <iframe id="ytplayer" width="240" height="135" src="https://www.youtube.com/embed/FYEaUdAWQoc?rel=0&modestbranding=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="Giza Pyramids Tour Video"></iframe>
+      </div>
+      <div>
+        <div class="muted">Contact AlArab Club 777</div>
+        <div style="margin-top:8px;"><a id="whatsappLink" class="btn-book" href="https://wa.me/201002446123?text=Hello%20AlArab%20Club%20777%2C%20I%27m%20interested%20in%20booking%20a%20Giza%20pyramids%20tour" target="_blank" rel="noopener noreferrer">WhatsApp Booking</a></div>
+        <div class="muted" style="margin-top:8px;">Email: <a id="mailLink" href="mailto:alarabclub777@gmail.com" style="color:var(--gold);text-decoration:underline">alarabclub777@gmail.com</a></div>
+      </div>
+    </div>
+
+    <div class="booking-actions">
+      <a id="bookNow" class="btn-book" href="https://alarabclub777.vercel.app/" target="_blank" rel="noopener noreferrer">View All Services</a>
+      <div style="display:flex;align-items:center;gap:10px">
+        <div style="font-size:12px;color:var(--muted);">Scan QR for instant booking</div>
+        <img id="qrImg" alt="QR Code for Booking" width="80" height="80"
+             src="https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=https%3A//wa.me/201002446123%3Ftext%3DHello%2520AlArab%2520Club%2520777%252C%2520I%2527m%2520interested%2520in%2520Giza%2520tours&choe=UTF-8" />
+      </div>
+    </div>
+  </footer>
+
+<script>
+/* ========= Enhanced Canvas Animation System ========= */
+(function(){
+  const canvas = document.getElementById('scene');
+  const ctx = canvas.getContext('2d');
+  let DPR = Math.min(2, window.devicePixelRatio || 1);
+  let W = 0, H = 0, CX = 0, CY = 0;
+  let particles = [], sandStorm = [], ripples = [], pyramidParticles = [], exploded=false, pyramidAngle=0, autoTimer=0;
+
+  const EGYPTIAN_GLYPHS = ['𓂀','𓆣','𓋹','𓊹','𓏏','𓎛','𓃭','𓇳','𓈖','𓊽','𓊪','𓈙','▲','△','◈','▴','◇','◆','✦','✧','✺','*','+','•','⬟','⬢','⬡'];
+  const darkSet = new Set(['𓎛','𓃭','𓇳','𓈖','▴','▲','◈','𓊽','◆','⬢']);
+
+  function fit(){
+    DPR = Math.min(2, window.devicePixelRatio || 1);
+    W = canvas.width = Math.floor(innerWidth * DPR);
+    H = canvas.height = Math.floor(innerHeight * DPR);
+    canvas.style.width = innerWidth + 'px';
+    canvas.style.height = innerHeight + 'px';
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+    CX = innerWidth/2; CY = innerHeight*0.6;
+    buildGrid();
+    buildPyramidParticles();
+  }
+  window.addEventListener('resize', fit);
+
+  function buildGrid(){
+    particles.length = 0;
+    const cols = Math.floor(innerWidth/32);
+    const rows = Math.floor(innerHeight/32);
+    for(let y=0;y<rows;y++){
+      for(let x=0;x<cols;x++){
+        const px = x * (innerWidth/cols) + (Math.random()-0.5)*6;
+        const py = y * (innerHeight/rows) + (Math.random()-0.5)*6;
+        particles.push({x:px,y:py,bx:px,by:py,vx:0,vy:0,ch: EGYPTIAN_GLYPHS[(x+y)%EGYPTIAN_GLYPHS.length], shade: ((x+y)%3===0?0.6:0.95)});
+      }
+    }
+  }
+
+  function buildPyramidParticles(){
+    pyramidParticles.length = 0;
+    const baseSize = Math.max(12, Math.min(30, Math.floor(Math.cbrt((innerWidth*innerHeight)/100))));
+    const spacing = Math.min(32, Math.max(15, Math.floor(Math.min(innerWidth, innerHeight) / 40)));
+    let idx=0;
+    for(let layer=0; layer<baseSize; layer++){
+      const n = baseSize - layer;
+      const y = CY - layer * spacing * 0.85;
+      for(let i=0;i<n;i++){
+        for(let j=0;j<n;j++){
+          const ox = CX + (i - n/2) * spacing + (j - n/2) * spacing * 0.5;
+          const oz = (j - n/2) * spacing * 0.65;
+          const ch = EGYPTIAN_GLYPHS[(idx++) % EGYPTIAN_GLYPHS.length];
+          const shade = darkSet.has(ch) ? 0.65 : 0.98;
+          pyramidParticles.push({ox, oy:y + (j-n/2)*spacing*0.2, oz, x:ox + (Math.random()-0.5)*8, y:y+(Math.random()-0.5)*8, vx:0,vy:0,vz:0, ch, shade});
+        }
+      }
+    }
+  }
+
+  function spawnSandStorm(){
+    if(sandStorm.length > 500) sandStorm.shift();
+    const x = Math.random()*innerWidth;
+    sandStorm.push({x, y:-25, ch: EGYPTIAN_GLYPHS[(Math.random()*EGYPTIAN_GLYPHS.length)|0], vy:1.2+Math.random()*2.5, alpha:0.95});
+  }
+  setInterval(spawnSandStorm, 90);
+
+  const mouse = {x:CX,y:CY,down:false};
+  window.addEventListener('mousemove', e=>{ 
+    mouse.x=e.clientX; mouse.y=e.clientY; 
+    document.getElementById('mouseDot').style.left = e.clientX + 'px'; 
+    document.getElementById('mouseDot').style.top = e.clientY + 'px';
+  });
+  window.addEventListener('pointerdown', e=>{ 
+    mouse.down=true; 
+    ripple(e.clientX,e.clientY,1.2); 
+    burst(e.clientX,e.clientY,1.6); 
+  });
+  window.addEventListener('pointerup', ()=>{ mouse.down=false; });
+  window.addEventListener('dblclick', ()=>{ toggleExplode(); });
+
+  function ripple(x,y,k=1){ 
+    ripples.push({x,y,r:10*k,life:1}); 
+  }
+  
+  function burst(cx,cy,power=1){
+    for(const p of pyramidParticles){
+      const dx = p.x - cx, dy = p.y - cy; const d = Math.hypot(dx,dy)+1e-4;
+      const f = (power*1.4) * (140 / (d));
+      p.vx += (dx/d) * f * (0.7 + Math.random()*1.0);
+      p.vy += (dy/d) * f * (0.7 + Math.random()*1.0);
+      p.vz += (Math.random()-0.5) * (f*0.25);
+    }
+    for(const g of particles){
+      const dx=g.x-cx, dy=g.y-cy, d=Math.hypot(dx,dy)+1e-4;
+      const f=(power*1.0)*(100/(d));
+      g.vx += (dx/d) * f * (0.4+Math.random()*0.7);
+      g.vy += (dy/d) * f * (0.4+Math.random()*0.7);
+    }
+  }
+
+  function toggleExplode(){ 
+    exploded = !exploded; 
+    if(exploded) burst(CX,CY,1.8); 
+    else burst(CX,CY,1.0); 
+  }
+
+  function egyptianPalette(t){
+    const hue = (35 + 200 * t) % 360;
+    const sat = 75 - 20 * Math.sin(t * Math.PI * 2);
+    const lig = 60 + 8 * Math.cos(t * Math.PI * 2);
+    return `hsl(${hue} ${sat}% ${lig}%)`;
+  }
+
+  let last = performance.now();
+  function tick(now){
+    requestAnimationFrame(tick);
+    const dt = Math.min(60, now - last); last = now;
+    autoTimer += dt;
+
+    // Pyramid particles physics
+    for(const p of pyramidParticles){
+      const dx = p.ox - p.x, dy = p.oy - p.y;
+      p.vx += dx * (exploded ? 0.008 : 0.04);
+      p.vy += dy * (exploded ? 0.008 : 0.04);
+      p.vz += (0 - p.vz) * 0.025;
+      const mx = p.x - mouse.x, my = p.y - mouse.y, md = Math.hypot(mx,my);
+      if(md < 180){
+        const f = (1 - md/180) * (mouse.down ? 3.0 : -3.0);
+        p.vx += (mx/md||0.001) * f;
+        p.vy += (my/md||0.001) * f;
+      }
+      p.vx *= 0.93; p.vy *= 0.93; p.vz *= 0.94;
+      p.x += p.vx * (dt*0.018);
+      p.y += p.vy * (dt*0.018);
+    }
+
+    // Grid particles physics
+    for(const g of particles){
+      const dx = g.bx - g.x, dy = g.by - g.y;
+      g.vx += dx * 0.025; g.vy += dy * 0.025;
+      const mdx = g.x - mouse.x, mdy = g.y - mouse.y, md = Math.hypot(mdx,mdy);
+      if(md < 140){
+        const m = (1 - md/140);
+        const sgn = mouse.down ? 1 : -1;
+        g.vx += sgn * (mdx/md||0.001) * m * 2.5;
+        g.vy += sgn * (mdy/md||0.001) * m * 2.5;
+      }
+      g.vx *= 0.91; g.vy *= 0.91;
+      g.x += g.vx * (dt*0.018); g.y += g.vy * (dt*0.018);
+    }
+
+    // Sand storm physics
+    for(const r of sandStorm){ 
+      r.y += r.vy; 
+      r.vy += 0.025; 
+      r.alpha *= 0.9985; 
+    }
+    while(sandStorm.length && sandStorm[0].y > innerHeight + 100) sandStorm.shift();
+
+    // Auto pyramid reformation
+    if(autoTimer > 8500){ autoTimer = 0; toggleExplode(); }
+
+    // Clear and render
+    ctx.clearRect(0,0,innerWidth,innerHeight);
+    const T = (now*0.0002) % 1;
+    
+    // Background gradient
+    const g = ctx.createLinearGradient(0,0,0,innerHeight);
+    g.addColorStop(0, 'rgba(10,11,15,0.0)');
+    g.addColorStop(1, 'rgba(0,0,0,0.7)');
+    ctx.fillStyle = g; ctx.fillRect(0,0,innerWidth,innerHeight);
+
+    // Ripple effects
+    for(let i=ripples.length-1;i>=0;i--){
+      const R = ripples[i];
+      ctx.save(); 
+      ctx.globalAlpha = 0.4 * R.life; 
+      ctx.lineWidth = 2.5; 
+      ctx.strokeStyle = 'rgba(255,214,107,0.95)';
+      ctx.beginPath(); 
+      ctx.arc(R.x,R.y,R.r,0,Math.PI*2); 
+      ctx.stroke(); 
+      ctx.restore();
+      R.r += 4.2; R.life -= 0.022; 
+      if(R.life <= 0) ripples.splice(i,1);
+    }
+
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    
+    // Render grid particles
+    for(const g of particles){
+      ctx.globalAlpha = Math.max(0.08, Math.min(0.98, g.shade));
+      ctx.fillStyle = egyptianPalette((T + (g.x%250)/700) % 1);
+      ctx.font = '14px monospace';
+      ctx.fillText(g.ch, g.x, g.y);
+    }
+
+    // Render sand storm
+    ctx.globalAlpha = 1;
+    ctx.font = '20px serif';
+    for(const R of sandStorm){
+      ctx.globalAlpha = Math.max(0.08, Math.min(1, R.alpha));
+      ctx.fillStyle = 'rgba(255,214,107,0.98)';
+      ctx.fillText(R.ch, R.x, R.y);
+    }
+
+    // Render 3D pyramid
+    if(pyramidParticles.length){
+      if(exploded) pyramidAngle += 0.015; else pyramidAngle += 0.006;
+      const cx = innerWidth/2, cy = innerHeight*0.48;
+      for(const p of pyramidParticles){
+        const rx = p.ox * Math.cos(pyramidAngle*0.7) - p.oz * Math.sin(pyramidAngle*0.7);
+        const rz = p.ox * Math.sin(pyramidAngle*0.7) + p.oz * Math.cos(pyramidAngle*0.7);
+        const sx = cx + (rx) * 1.05 + p.x - p.ox;
+        const sy = cy + (p.oy) - rz*0.08 + p.y - p.oy;
+        const depth = 1 - (rz / 1800);
+        const alpha = Math.max(0.08, Math.min(1, (p.shade * depth)));
+        ctx.globalAlpha = alpha;
+        ctx.fillStyle = egyptianPalette((T + (rz%350)/600) % 1);
+        ctx.font = '18px monospace';
+        ctx.fillText(p.ch, sx+1, sy+1);
+        ctx.globalAlpha = alpha;
+        ctx.fillText(p.ch, sx, sy);
+      }
+    }
+  }
+
+  fit();
+  requestAnimationFrame(tick);
+  window.PyramidsPortal = {
+    activatePortal: function(){
+      document.getElementById('services').classList.add('visible');
+      burst(CX, CY, 1.8);
+    },
+    rebuild: function(){ buildGrid(); buildPyramidParticles(); }
+  };
+  setTimeout(()=>{ burst(CX, CY, 1.2); }, 800);
+  setTimeout(()=>{ burst(CX-160, CY-100, 1.0); }, 1500);
+})();
+</script>
+
+<script>
+/* ========= UI interactions + booking system ========= */
+(function(){
+  const orb = document.getElementById('orb');
+  const services = document.getElementById('services');
+  const chatToggle = document.getElementById('chatToggle');
+  const chatWindow = document.getElementById('chatWindow');
+  const chatBody = document.getElementById('chatBody');
+  const chatInput = document.getElementById('chatInput');
+  const chatSend = document.getElementById('chatSend');
+
+  orb.addEventListener('click', ()=>{
+    services.classList.add('visible');
+    if(window.PyramidsPortal && typeof window.PyramidsPortal.activatePortal === 'function') {
+      window.PyramidsPortal.activatePortal();
+    }
+  });
+
+  document.querySelectorAll('[data-action="book"]').forEach(btn=>{
+    btn.addEventListener('click', (e)=>{
+      e.preventDefault();
+      const card = e.target.closest('.service-card');
+      const service = card?.dataset?.service || 'general';
+      openChat();
+      appendUser(`Interested in ${service.replace('-', ' ')}`);
+      sendToAgent(`I want details about ${service.replace('-', ' ')}`);
+    });
+  });
+
+  chatToggle.addEventListener('click', ()=>{
+    if(chatWindow.style.display === 'flex'){ 
+      chatWindow.style.display = 'none'; 
+      chatWindow.setAttribute('aria-hidden','true'); 
+    } else { 
+      openChat(); 
+    }
+  });
+
+  function openChat(){ 
+    chatWindow.style.display = 'flex'; 
+    chatWindow.setAttribute('aria-hidden','false'); 
+    chatInput.focus(); 
+    appendAgent('Welcome to AlArab Club 777! I\'m your Egyptian tour assistant. Which adventure interests you: Pyramid tours, Camel safaris, Desert adventures, or our complete package?'); 
+  }
+
+  function appendAgent(txt){ 
+    const d=document.createElement('div'); 
+    d.className='msg agent'; 
+    d.textContent = txt; 
+    chatBody.appendChild(d); 
+    chatBody.scrollTop = chatBody.scrollHeight; 
+  }
+
+  function appendUser(txt){ 
+    const d=document.createElement('div'); 
+    d.className='msg user'; 
+    d.textContent = txt; 
+    chatBody.appendChild(d); 
+    chatBody.scrollTop = chatBody.scrollHeight; 
+  }
+
+  function detectIntent(text){
+    text = text.toLowerCase();
+    const intent = {service:null,tone:'professional'};
+    if(/pyramid|explore|archaeological|tomb|ancient/.test(text)) intent.service='pyramid-tour';
+    if(/camel|safari|desert|dune|bedouin/.test(text)) intent.service='camel-safari';
+    if(/horse|ride|riding|pharaoh/.test(text)) intent.service='horse-riding';
+    if(/complete|package|full|everything|ultimate/.test(text)) intent.service='complete-package';
+    if(/saqqara|step|archaeological/.test(text)) intent.service='saqqara';
+    if(/buggy|off.?road|adventure|thrill|speed/.test(text)) intent.service='buggy-adventure';
+    if(/sound|light|show|evening|night/.test(text)) intent.service='sound-light';
+    if(/transfer|airport|transport|car|pickup/.test(text)) intent.service='hotel-transfer';
+    if(/spiritual|magical|mystical|soul/.test(text)) intent.tone='spiritual';
+    if(/adventure|exciting|thrill|fun|awesome/.test(text)) intent.tone='adventurous';
+    return intent;
+  }
+
+  function generateReply(text){
+    const intent = detectIntent(text);
+    const services = {
+      'pyramid-tour': "🏛️ **Pyramid Explorer Tour** - Journey through the ancient Giza complex with expert guides. Discover hidden chambers, learn about pyramid construction, and explore the Sphinx. Full day experience including lunch and transfers. Price: $45-85 USD",
+      'camel-safari': "🐪 **Desert Camel Safari** - Experience the timeless journey across golden dunes. Choose sunrise (6 AM) or sunset (4 PM) rides with traditional Bedouin guides. Includes tea ceremony in the desert. Duration: 2-4 hours. Price: $25-50 USD",
+      'horse-riding': "🐎 **Royal Horse Adventure** - Ride like ancient pharaohs around the pyramid complex. Professional horses, safety equipment, and guides provided. Perfect for all skill levels. Duration: 1-3 hours. Price: $30-60 USD",
+      'complete-package': "👑 **Complete Egyptian Experience** - Ultimate adventure package including pyramid tours, camel safari, horse riding, traditional Egyptian lunch, and sunset viewing. Perfect for creating unforgettable memories. Full day + evening. Price: $120-250 USD",
+      'saqqara': "🏺 **Saqqara Archaeological Site** - Explore the ancient Saqqara complex featuring the famous Step Pyramid of Djoser. Discover 4,000 years of Egyptian history with expert archaeological guides. Half day tour. Price: $35-70 USD",
+      'buggy-adventure': "🏎️ **Desert Buggy Adventure** - High-speed desert exploration in modern off-road buggies. Navigate ancient dunes and paths with professional guides. All safety gear included. Duration: 2-3 hours. Price: $60-120 USD",
+      'sound-light': "🌙 **Sound & Light Show** - Spectacular evening show at the pyramids with narrated light projections telling ancient Egypt's story. Magical nighttime experience. Duration: 1.5 hours. Price: $25-45 USD",
+      'hotel-transfer': "🚗 **Airport & Hotel Transfers** - Comfortable transportation with professional drivers and luxury vehicles. Available 24/7 for all Cairo and Giza locations. Price: $15-40 USD per trip"
+    };
+
+    let intro = '';
+    if(intent.tone === 'spiritual') intro = "Connect with ancient wisdom and desert tranquility — ";
+    else if(intent.tone === 'adventurous') intro = "Get ready for an unforgettable Egyptian adventure — ";
+    else intro = "Discover authentic Egypt with AlArab Club 777 — ";
+
+    const serviceInfo = intent.service ? services[intent.service] : "We offer complete Egyptian experiences: pyramid tours, desert safaris, archaeological sites, and luxury transfers. Which adventure calls to you?";
+    
+    return intro + serviceInfo + " Type 'book' to reserve your spot or ask about specific details!";
+  }
+
+  async function sendToAgent(msg){
+    appendUser(msg);
+    appendAgent("Preparing your Egyptian adventure details...");
+    setTimeout(()=>{
+      if(chatBody.lastElementChild && chatBody.lastElementChild.textContent === 'Preparing your Egyptian adventure details...') {
+        chatBody.lastElementChild.remove();
+      }
+      const reply = generateReply(msg);
+      appendAgent(reply);
+    }, 700 + Math.random()*800);
+  }
+
+  chatSend.addEventListener('click', ()=>{ 
+    const v=chatInput.value.trim(); 
+    if(!v) return; 
+    chatInput.value=''; 
+    sendToAgent(v); 
+  });
+
+  chatInput.addEventListener('keydown', e=>{ 
+    if(e.key==='Enter'){ 
+      e.preventDefault(); 
+      chatSend.click(); 
+    } 
+  });
+
+})();
+</script>
+
+</body>
+</html>

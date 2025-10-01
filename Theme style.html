@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AlArab Club 777 — Hybrid Portal</title>
+  <style>
+    body {
+      margin:0;
+      font-family: "Inter var","Noto Kufi Arabic",sans-serif;
+      background: radial-gradient(circle at top left,#02021a,#0a0b0f);
+      color:#ffd966;
+      overflow-x:hidden;
+      position:relative;
+    }
+    body::before {
+      content:"";
+      position:fixed;top:0;left:0;width:100%;height:100%;
+      background:url('/public/assets/stars-bg.gif') repeat center center;
+      background-size:cover;z-index:-3;opacity:.4;
+    }
+    canvas#bgCanvas {position:fixed;inset:0;z-index:-2;}
+
+    header {
+      padding:20px;display:flex;justify-content:space-between;align-items:center;
+      background:rgba(0,0,0,.6);box-shadow:0 4px 20px rgba(0,0,0,.6);
+    }
+    header .logo{display:flex;align-items:center;gap:10px;}
+    header img{width:40px;height:40px;}
+    header h1{margin:0;font-size:22px;color:#fff;}
+    nav a{color:#ffd966;margin:0 10px;text-decoration:none;font-weight:bold;}
+    nav a:hover{color:#00ffd5;text-decoration:underline;}
+
+    .hero{text-align:center;padding:70px 20px;}
+    .hero h2{font-size:32px;color:#00ffd5;margin-bottom:10px;}
+    .hero p{font-size:18px;color:#9aa3b2;max-width:700px;margin:0 auto;}
+
+    .portals{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+      gap:24px;padding:40px;max-width:1200px;margin:0 auto;}
+    .portal-card{
+      border-radius:20px;background:rgba(255,255,255,0.05);
+      padding:20px;text-align:center;box-shadow:0 10px 40px rgba(0,0,0,0.7);
+      transition:.4s;
+    }
+    .portal-card:hover{
+      transform:translateY(-6px) scale(1.02);
+      box-shadow:0 14px 50px rgba(0,255,213,0.25);
+      background:linear-gradient(180deg,rgba(255,255,255,.1),rgba(0,255,213,.1));
+    }
+    .portal-card h3{margin:0;font-size:20px;color:#ffd966;}
+    .portal-card p{color:#b8b0a5;margin:12px 0 18px;font-size:15px;line-height:1.6;}
+    .portal-card img{width:100%;border-radius:12px;margin-bottom:12px;}
+    .portal-card a{
+      display:inline-block;padding:12px 20px;border-radius:14px;
+      background:linear-gradient(90deg,#00ffd5,#00c299);
+      color:#02131a;font-weight:bold;text-decoration:none;
+    }
+    .portal-card a:hover{box-shadow:0 10px 35px rgba(0,255,213,.3);}
+
+    #booking{text-align:center;padding:60px 20px;}
+    #booking h3{font-size:24px;color:#ffd966;margin-bottom:12px;}
+    #booking p{color:#9aa3b2;margin-bottom:20px;}
+    #booking a{
+      display:inline-block;padding:14px 22px;border-radius:14px;
+      background:linear-gradient(90deg,#ffd966,#ffb84d);
+      color:#0a0b0f;font-weight:bold;text-decoration:none;
+    }
+
+    footer{padding:30px;text-align:center;color:#9aa3b2;background:rgba(0,0,0,0.6);}
+  </style>
+</head>
+<body>
+
+<canvas id="bgCanvas"></canvas>
+
+<header>
+  <div class="logo">
+    <img src="/public/assets/AlArab777logo.png" alt="AlArab Club 777 Logo">
+    <h1>AlArab Club 777 — البوابة الهجينة</h1>
+  </div>
+  <nav>
+    <a href="#cyber">Cyber-Pyramid 2125</a>
+    <a href="#giza">Giza Ancient Portal</a>
+    <a href="#booking">الحجز</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <h2>✦ اختر تجربتك ✦</h2>
+  <p>بين المستقبل النيونــي وعبق التاريخ الفرعوني — كل الطرق تؤدي إلى AlArab Club 777</p>
+</section>
+
+<section class="portals">
+  <div class="portal-card" id="giza">
+    <img id="giza-img" src="/public/assets/pyramids1.jpg" alt="Giza Portal">
+    <h3>🏛️ Giza Ancient Portal</h3>
+    <p>Canvas Pyramid ثلاثي الأبعاد، خدمات سياحية تفاعلية، ودردشة مباشرة مع مساعد AlArab لتكتشف أسرار الحضارة القديمة.</p>
+    <a href="AlArabClub777.html.html">ادخل البوابة</a>
+  </div>
+
+  <div class="portal-card" id="cyber">
+    <img id="cyber-img" src="/public/assets/cyber1.jpg" alt="Cyber Portal">
+    <h3>🚀 Cyber-Pyramid 2125</h3>
+    <p>بوابة زمنية نيون، Matrix Glyphs، ورحلات عبر الأبعاد مع العرّاب. تجربة فريدة تمزج بين التقنية والخيال العلمي.</p>
+    <a href="Index.html">ادخل البوابة</a>
+  </div>
+</section>
+
+<section id="booking">
+  <h3>📲 احجز الآن</h3>
+  <p>كل التجارب مرتبطة بنظام حجز موحد — عبر WhatsApp أو البريد الإلكتروني.</p>
+  <a href="https://wa.me/201002446123?text=مرحبا%20اريد%20الحجز" target="_blank">احجز عبر واتساب</a>
+</section>
+
+<footer>
+  © AlArab Club 777 — Hybrid Portal | Designed with ✦ روح + تقنية ✦
+</footer>
+
+<script>
+// صور عشوائية لكل كارد
+const gizaImages=["/public/assets/pyramids1.jpg","/public/assets/pyramids2.jpg","/public/assets/pyramids3.jpg"];
+const cyberImages=["/public/assets/cyber1.jpg","/public/assets/cyber2.jpg","/public/assets/cyber3.jpg"];
+const gizaImg=document.getElementById('giza-img');
+const cyberImg=document.getElementById('cyber-img');
+
+function changeImageRandom(el,arr){el.src=arr[Math.floor(Math.random()*arr.length)];}
+setInterval(()=>{changeImageRandom(gizaImg,gizaImages);changeImageRandom(cyberImg,cyberImages);},7000);
+
+// خلفية نقاط متحركة
+const canvas=document.getElementById('bgCanvas');const ctx=canvas.getContext('2d');let W,H,dots=[];
+function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;dots=[];const r=Math.min(W,H)/3;for(let i=0;i<300;i++){const a=Math.random()*Math.PI*2;const rad=r+(Math.random()*40-20);dots.push({x:W/2+rad*Math.cos(a),y:H/2+rad*Math.sin(a),baseR:rad,angle:a});}}resize();window.addEventListener('resize',resize);
+function draw(){ctx.clearRect(0,0,W,H);ctx.fillStyle="rgba(0,255,213,0.8)";dots.forEach(d=>{d.angle+=0.001;d.x=W/2+d.baseR*Math.cos(d.angle);d.y=H/2+d.baseR*Math.sin(d.angle);ctx.beginPath();ctx.arc(d.x,d.y,1.8,0,Math.PI*2);ctx.fill();});requestAnimationFrame(draw);}draw();
+</script>
+</body>
+</html>
