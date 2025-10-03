@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>𓋹 بوابة الروح السباعية - AlArab Club 777</title>
+    <meta name="description" content="بوابة الروح السباعية - تجربة روحانية فرعونية مع العلاج بالصوت 777Hz ومعبد دندرة">
+    <style>
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #1a1a1a;
+            --gold: #ffd700;
+            --gold-dark: #b8860b;
+            --blue: #00bfff;
+            --purple: #8a2be2;
+            --text: #f0f0f0;
+            --text-muted: #888;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+            color: var(--text);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+        
+        .spirit-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0, 191, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(138, 43, 226, 0.1) 0%, transparent 50%);
+            z-index: -1;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .header {
+            text-align: center;
+            padding: 40px 0;
+            border-bottom: 2px solid var(--gold);
+            margin-bottom: 40px;
+        }
+        
+        .header h1 {
+            font-size: 3rem;
+            color: var(--gold);
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+        }
+        
+        .portals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .portal-card {
+            background: rgba(26, 26, 26, 0.8);
+            border: 2px solid var(--gold);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .portal-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 215, 0, 0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.5s ease;
+            opacity: 0;
+        }
+        
+        .portal-card:hover::before {
+            opacity: 1;
+            animation: shimmer 2s infinite;
+        }
+        
+        .portal-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(255, 215, 0, 0.3);
+            border-color: var(--blue);
+        }
+        
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+        
+        .portal-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+        
+        .portal-title {
+            font-size: 1.5rem;
+            color: var(--gold);
+            margin-bottom: 15px;
+        }
+        
+        .portal-description {
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .portal-button {
+            background: linear-gradient(45deg, var(--gold), var(--gold-dark));
+            color: var(--bg-primary);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .portal-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(255, 215, 0, 0.4);
+        }
+        
+        .frequency-healing {
+            background: rgba(0, 191, 255, 0.1);
+            border: 2px solid var(--blue);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 40px 0;
+            text-align: center;
+        }
+        
+        .frequency-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .frequency-slider {
+            width: 200px;
+            height: 10px;
+            border-radius: 5px;
+            background: var(--bg-secondary);
+            outline: none;
+            -webkit-appearance: none;
+        }
+        
+        .frequency-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--gold);
+            cursor: pointer;
+        }
+        
+        .frequency-display {
+            font-size: 2rem;
+            color: var(--gold);
+            font-weight: bold;
+        }
+        
+        .ai-agent {
+            background: rgba(138, 43, 226, 0.1);
+            border: 2px solid var(--purple);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 40px 0;
+        }
+        
+        .chat-container {
+            background: var(--bg-secondary);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .chat-message {
+            margin: 10px 0;
+            padding: 10px 15px;
+            border-radius: 10px;
+            max-width: 80%;
+        }
+        
+        .chat-message.user {
+            background: var(--gold);
+            color: var(--bg-primary);
+            margin-left: auto;
+        }
+        
+        .chat-message.ai {
+            background: var(--purple);
+            color: var(--text);
+        }
+        
+        .chat-input {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .chat-input input {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid var(--gold);
+            border-radius: 10px;
+            background: var(--bg-secondary);
+            color: var(--text);
+            font-size: 1rem;
+        }
+        
+        .chat-input button {
+            padding: 12px 20px;
+            background: var(--gold);
+            color: var(--bg-primary);
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        .hidden-portal {
+            background: rgba(255, 0, 0, 0.1);
+            border: 2px solid #ff0000;
+            border-radius: 20px;
+            padding: 30px;
+            margin: 40px 0;
+            text-align: center;
+            position: relative;
+        }
+        
+        .hidden-portal::before {
+            content: '🔐';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 2rem;
+        }
+        
+        .bat-seal {
+            color: #ff0000;
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .portals-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .frequency-controls {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="spirit-background"></div>
+    
+    <div class="container">
+        <header class="header">
+            <h1>𓋹 بوابة الروح السباعية</h1>
+            <p>رحلتك الروحانية إلى أعماق الحضارة الفرعونية</p>
+        </header>
+        
+        <div class="portals-grid">
+            <div class="portal-card" onclick="enterPortal('dendera')">
+                <span class="portal-icon">🏛️</span>
+                <h3 class="portal-title">معبد دندرة</h3>
+                <p class="portal-description">اكتشف أسرار معبد دندرة مع البوابات ثلاثية الأبعاد والطقوس المقدسة</p>
+                <button class="portal-button">ادخل المعبد</button>
+            </div>
+            
+            <div class="portal-card" onclick="enterPortal('healing')">
+                <span class="portal-icon">🔊</span>
+                <h3 class="portal-title">العلاج بالصوت</h3>
+                <p class="portal-description">تجربة العلاج بالترددات المقدسة 777Hz لاستعادة التوازن الروحي</p>
+                <button class="portal-button">ابدأ العلاج</button>
+            </div>
+            
+            <div class="portal-card" onclick="enterPortal('energy')">
+                <span class="portal-icon">🌌</span>
+                <h3 class="portal-title">بوابات الطاقة</h3>
+                <p class="portal-description">بوابات الطاقة والطقوس المقدسة لتنشيط الشاكرات</p>
+                <button class="portal-button">افتح البوابات</button>
+            </div>
+            
+            <div class="portal-card" onclick="enterPortal('scripts')">
+                <span class="portal-icon">📜</span>
+                <h3 class="portal-title">النصوص الطقسية</h3>
+                <p class="portal-description">النصوص المقدسة والترانيم الفرعونية للطقوس الروحانية</p>
+                <button class="portal-button">اقرأ النصوص</button>
+            </div>
+        </div>
+        
+        <div class="frequency-healing">
+            <h2>🔊 العلاج بالترددات المقدسة 777Hz</h2>
+            <p>استمع للترددات المقدسة التي استخدمها الفراعنة للشفاء والتوازن الروحي</p>
+            
+            <div class="frequency-controls">
+                <span>التردد:</span>
+                <input type="range" class="frequency-slider" min="1" max="1000" value="777" id="frequencySlider">
+                <span class="frequency-display" id="frequencyDisplay">777 Hz</span>
+            </div>
+            
+            <button class="portal-button" onclick="playFrequency()">تشغيل التردد</button>
+            <button class="portal-button" onclick="stopFrequency()">إيقاف</button>
+        </div>
+        
+        <div class="ai-agent">
+            <h2>🤖 العرّاب الروحاني - AI Agent</h2>
+            <p>تحدث مع العرّاب الروحاني للحصول على إرشادات شخصية</p>
+            
+            <div class="chat-container" id="chatContainer">
+                <div class="chat-message ai">
+                    <strong>العرّاب:</strong> مرحباً بك في بوابة الروح السباعية. كيف يمكنني مساعدتك في رحلتك الروحانية؟
+                </div>
+            </div>
+            
+            <div class="chat-input">
+                <input type="text" id="chatInput" placeholder="اكتب رسالتك هنا..." onkeypress="handleKeyPress(event)">
+                <button onclick="sendMessage()">إرسال</button>
+            </div>
+        </div>
+        
+        <div class="hidden-portal">
+            <h2 class="bat-seal">🦇 بوابة Bat Seal</h2>
+            <p>البوابة المخفية - الوصول مقيد</p>
+            <p>هذه البوابة محمية بأقوى الطقوس الفرعونية</p>
+            <button class="portal-button" onclick="attemptBatSeal()">محاولة الوصول</button>
+        </div>
+    </div>
+    
+    <script>
+        // Frequency Healing
+        let audioContext;
+        let oscillator;
+        let isPlaying = false;
+        
+        const frequencySlider = document.getElementById('frequencySlider');
+        const frequencyDisplay = document.getElementById('frequencyDisplay');
+        
+        frequencySlider.addEventListener('input', function() {
+            frequencyDisplay.textContent = this.value + ' Hz';
+        });
+        
+        function playFrequency() {
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            
+            if (!isPlaying) {
+                oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator.frequency.setValueAtTime(frequencySlider.value, audioContext.currentTime);
+                oscillator.type = 'sine';
+                
+                gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+                
+                oscillator.start();
+                isPlaying = true;
+                
+                // Visual feedback
+                document.body.style.animation = 'pulse 2s infinite';
+            }
+        }
+        
+        function stopFrequency() {
+            if (oscillator && isPlaying) {
+                oscillator.stop();
+                isPlaying = false;
+                document.body.style.animation = 'none';
+            }
+        }
+        
+        // AI Agent Chat
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            
+            if (message) {
+                addMessage(message, 'user');
+                input.value = '';
+                
+                // Simulate AI response
+                setTimeout(() => {
+                    const responses = [
+                        "الترددات المقدسة 777Hz تساعد في تنشيط الشاكرات وتوازن الطاقة الداخلية.",
+                        "معبد دندرة يحتوي على أسرار عميقة عن الطاقة الكونية والشفاء.",
+                        "البوابات الروحانية تفتح عندما تكون مستعداً للدخول إلى عالم أعمق.",
+                        "الطقوس الفرعونية كانت تستخدم لربط الإنسان بالطاقة الكونية.",
+                        "العرّاب يرشدك في رحلتك الروحانية نحو الاستيقاظ الداخلي."
+                    ];
+                    
+                    const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+                    addMessage(randomResponse, 'ai');
+                }, 1000);
+            }
+        }
+        
+        function addMessage(message, sender) {
+            const chatContainer = document.getElementById('chatContainer');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `chat-message ${sender}`;
+            
+            if (sender === 'ai') {
+                messageDiv.innerHTML = `<strong>العرّاب:</strong> ${message}`;
+            } else {
+                messageDiv.innerHTML = `<strong>أنت:</strong> ${message}`;
+            }
+            
+            chatContainer.appendChild(messageDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+        
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+        
+        // Portal Functions
+        function enterPortal(portalType) {
+            const messages = {
+                'dendera': 'تدخل معبد دندرة... استعد للأسرار المقدسة',
+                'healing': 'تبدأ جلسة العلاج بالصوت... استرخِ واستمع',
+                'energy': 'تفتح بوابات الطاقة... اشعر بالطاقة تتدفق',
+                'scripts': 'تقرأ النصوص الطقسية... اربط روحك بالحكمة القديمة'
+            };
+            
+            alert(messages[portalType]);
+        }
+        
+        function attemptBatSeal() {
+            const attempts = ['محاولة 1: فشل', 'محاولة 2: فشل', 'محاولة 3: فشل'];
+            const randomAttempt = attempts[Math.floor(Math.random() * attempts.length)];
+            alert(randomAttempt + '\n\nالبوابة محمية بقوة. تحتاج إلى مفاتيح خاصة للوصول.');
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add some visual effects
+            const cards = document.querySelectorAll('.portal-card');
+            cards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.2}s`;
+                card.style.animation = 'fadeInUp 0.6s ease forwards';
+            });
+        });
+        
+        // CSS Animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(30px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            
+            @keyframes pulse {
+                0%, 100% { opacity: 1; }
+                50% { opacity: 0.8; }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

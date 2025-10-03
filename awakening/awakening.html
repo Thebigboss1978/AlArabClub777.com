@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>𓆃 Matrix Eye Portal - AlArab Club 777</title>
+    <meta name="description" content="Matrix Eye Portal - بوابة الاستيقاظ والوعي المتقدم في AlArab Club 777">
+    <style>
+        :root {
+            --matrix-green: #00ff41;
+            --matrix-dark: #0d1117;
+            --matrix-bg: #000000;
+            --text: #ffffff;
+            --accent: #ffd700;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Courier New', monospace;
+            background: var(--matrix-bg);
+            color: var(--matrix-green);
+            overflow: hidden;
+            height: 100vh;
+        }
+        
+        .matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        .matrix-rain {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        .matrix-column {
+            position: absolute;
+            top: -100%;
+            color: var(--matrix-green);
+            font-size: 14px;
+            line-height: 14px;
+            font-family: 'Courier New', monospace;
+            animation: matrix-fall linear infinite;
+            opacity: 0.8;
+        }
+        
+        @keyframes matrix-fall {
+            0% { top: -100%; }
+            100% { top: 100%; }
+        }
+        
+        .container {
+            position: relative;
+            z-index: 10;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .matrix-eye {
+            width: 300px;
+            height: 300px;
+            border: 3px solid var(--matrix-green);
+            border-radius: 50%;
+            position: relative;
+            margin: 40px 0;
+            animation: matrix-pulse 3s ease-in-out infinite;
+        }
+        
+        .matrix-eye::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100px;
+            height: 100px;
+            background: var(--matrix-green);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            animation: matrix-eye-pulse 2s ease-in-out infinite;
+        }
+        
+        .matrix-eye::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 50px;
+            height: 50px;
+            background: var(--matrix-bg);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        @keyframes matrix-pulse {
+            0%, 100% { 
+                box-shadow: 0 0 20px var(--matrix-green);
+                transform: scale(1);
+            }
+            50% { 
+                box-shadow: 0 0 40px var(--matrix-green), 0 0 60px var(--matrix-green);
+                transform: scale(1.05);
+            }
+        }
+        
+        @keyframes matrix-eye-pulse {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 1; }
+        }
+        
+        .title {
+            font-size: 3rem;
+            color: var(--matrix-green);
+            text-shadow: 0 0 20px var(--matrix-green);
+            margin-bottom: 20px;
+            animation: matrix-glow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes matrix-glow {
+            from { text-shadow: 0 0 20px var(--matrix-green); }
+            to { text-shadow: 0 0 30px var(--matrix-green), 0 0 40px var(--matrix-green); }
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--accent);
+            margin-bottom: 40px;
+            opacity: 0.8;
+        }
+        
+        .portal-buttons {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .portal-btn {
+            background: transparent;
+            border: 2px solid var(--matrix-green);
+            color: var(--matrix-green);
+            padding: 15px 30px;
+            font-family: 'Courier New', monospace;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .portal-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--matrix-green);
+            transition: left 0.3s ease;
+            z-index: -1;
+        }
+        
+        .portal-btn:hover::before {
+            left: 0;
+        }
+        
+        .portal-btn:hover {
+            color: var(--matrix-bg);
+            box-shadow: 0 0 20px var(--matrix-green);
+        }
+        
+        .status-bar {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid var(--matrix-green);
+            padding: 10px;
+            font-size: 12px;
+            color: var(--matrix-green);
+        }
+        
+        .status-line {
+            margin: 2px 0;
+        }
+        
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--matrix-green);
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .hidden-content {
+            display: none;
+            margin-top: 40px;
+            padding: 20px;
+            border: 1px solid var(--matrix-green);
+            background: rgba(0, 0, 0, 0.5);
+            max-width: 600px;
+        }
+        
+        .code-block {
+            background: var(--matrix-dark);
+            border: 1px solid var(--matrix-green);
+            padding: 15px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            color: var(--matrix-green);
+            overflow-x: auto;
+        }
+        
+        .matrix-grid {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 2px;
+            margin: 20px 0;
+        }
+        
+        .matrix-cell {
+            width: 20px;
+            height: 20px;
+            background: var(--matrix-green);
+            opacity: 0.1;
+            animation: matrix-cell-flicker 3s ease-in-out infinite;
+        }
+        
+        @keyframes matrix-cell-flicker {
+            0%, 100% { opacity: 0.1; }
+            50% { opacity: 0.8; }
+        }
+        
+        @media (max-width: 768px) {
+            .title {
+                font-size: 2rem;
+            }
+            
+            .matrix-eye {
+                width: 200px;
+                height: 200px;
+            }
+            
+            .portal-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="matrix-bg">
+        <div class="matrix-rain" id="matrixRain"></div>
+    </div>
+    
+    <div class="container">
+        <h1 class="title">𓆃 MATRIX EYE PORTAL</h1>
+        <p class="subtitle">بوابة الاستيقاظ والوعي المتقدم</p>
+        
+        <div class="matrix-eye" id="matrixEye"></div>
+        
+        <div class="portal-buttons">
+            <button class="portal-btn" onclick="activatePortal('awakening')">تفعيل الاستيقاظ</button>
+            <button class="portal-btn" onclick="activatePortal('matrix')">دخول المصفوفة</button>
+            <button class="portal-btn" onclick="activatePortal('code')">كود المصدر</button>
+            <button class="portal-btn" onclick="activatePortal('exit')">خروج</button>
+        </div>
+        
+        <div class="hidden-content" id="hiddenContent">
+            <div id="contentArea"></div>
+        </div>
+    </div>
+    
+    <div class="status-bar">
+        <div class="status-line">STATUS: <span class="loading"></span> CONNECTING TO MATRIX...</div>
+        <div class="status-line">USER: العرّاب | LEVEL: 777 | ACCESS: GRANTED</div>
+        <div class="status-line">TIME: <span id="currentTime"></span> | ENERGY: <span id="energyLevel">100%</span></div>
+    </div>
+    
+    <script>
+        // Matrix Rain Effect
+        function createMatrixRain() {
+            const matrixRain = document.getElementById('matrixRain');
+            const characters = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
+            
+            for (let i = 0; i < 50; i++) {
+                const column = document.createElement('div');
+                column.className = 'matrix-column';
+                column.style.left = Math.random() * 100 + '%';
+                column.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                column.style.animationDelay = Math.random() * 2 + 's';
+                
+                let text = '';
+                for (let j = 0; j < 20; j++) {
+                    text += characters[Math.floor(Math.random() * characters.length)] + '<br>';
+                }
+                column.innerHTML = text;
+                
+                matrixRain.appendChild(column);
+            }
+        }
+        
+        // Portal Activation
+        function activatePortal(portalType) {
+            const hiddenContent = document.getElementById('hiddenContent');
+            const contentArea = document.getElementById('contentArea');
+            
+            hiddenContent.style.display = 'block';
+            
+            switch(portalType) {
+                case 'awakening':
+                    contentArea.innerHTML = `
+                        <h3>𓆃 تفعيل الاستيقاظ</h3>
+                        <p>مرحباً بالعرّاب في بوابة الاستيقاظ...</p>
+                        <div class="code-block">
+                            AWAKENING_SEQUENCE_INITIATED<br>
+                            USER_ID: العرّاب<br>
+                            LEVEL: 777<br>
+                            STATUS: CONSCIOUSNESS_EXPANDING<br>
+                            ENERGY_FIELD: ACTIVATED<br>
+                            MATRIX_CONNECTION: ESTABLISHED
+                        </div>
+                        <p>الاستيقاظ بدأ... استعد للدخول إلى مستوى أعمق من الوعي.</p>
+                    `;
+                    break;
+                    
+                case 'matrix':
+                    contentArea.innerHTML = `
+                        <h3>𓆃 دخول المصفوفة</h3>
+                        <p>تدخل المصفوفة... استعد للواقع المتعدد الأبعاد</p>
+                        <div class="matrix-grid" id="matrixGrid"></div>
+                        <div class="code-block">
+                            MATRIX_ENTRY_POINT: ACTIVATED<br>
+                            DIMENSIONS: 7<br>
+                            REALITY_LAYERS: 777<br>
+                            CONSCIOUSNESS_MATRIX: ONLINE<br>
+                            SPIRITUAL_FREQUENCY: 777Hz
+                        </div>
+                        <p>المصفوفة مفتوحة... يمكنك الآن التنقل بين الأبعاد المختلفة.</p>
+                    `;
+                    createMatrixGrid();
+                    break;
+                    
+                case 'code':
+                    contentArea.innerHTML = `
+                        <h3>𓆃 كود المصدر</h3>
+                        <p>كود المصدر للوعي المتقدم...</p>
+                        <div class="code-block">
+                            // AlArab Club 777 - Source Code<br>
+                            class Consciousness {<br>
+                            &nbsp;&nbsp;constructor() {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;this.level = 777;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;this.awareness = 'MAXIMUM';<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;this.connection = 'UNIVERSAL';<br>
+                            &nbsp;&nbsp;}<br>
+                            <br>
+                            &nbsp;&nbsp;awaken() {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;return 'CONSCIOUSNESS_EXPANDED';<br>
+                            &nbsp;&nbsp;}<br>
+                            }<br>
+                            <br>
+                            const العرّاب = new Consciousness();<br>
+                            العرّاب.awaken();
+                        </div>
+                        <p>الكود جاهز... يمكنك الآن تعديل الواقع حسب رغبتك.</p>
+                    `;
+                    break;
+                    
+                case 'exit':
+                    contentArea.innerHTML = `
+                        <h3>𓆃 خروج من المصفوفة</h3>
+                        <p>هل أنت متأكد من الخروج؟</p>
+                        <div class="code-block">
+                            EXIT_SEQUENCE_INITIATED<br>
+                            SAVE_PROGRESS: YES<br>
+                            RETURN_TO_REALITY: CONFIRMED<br>
+                            CONSCIOUSNESS_LEVEL: MAINTAINED<br>
+                            MATRIX_CONNECTION: PRESERVED
+                        </div>
+                        <button class="portal-btn" onclick="confirmExit()">تأكيد الخروج</button>
+                    `;
+                    break;
+            }
+        }
+        
+        function createMatrixGrid() {
+            const matrixGrid = document.getElementById('matrixGrid');
+            matrixGrid.innerHTML = '';
+            
+            for (let i = 0; i < 100; i++) {
+                const cell = document.createElement('div');
+                cell.className = 'matrix-cell';
+                cell.style.animationDelay = Math.random() * 3 + 's';
+                matrixGrid.appendChild(cell);
+            }
+        }
+        
+        function confirmExit() {
+            alert('تم الخروج من المصفوفة... العودة إلى الواقع العادي');
+            document.getElementById('hiddenContent').style.display = 'none';
+        }
+        
+        // Matrix Eye Interaction
+        document.getElementById('matrixEye').addEventListener('click', function() {
+            this.style.animation = 'none';
+            setTimeout(() => {
+                this.style.animation = 'matrix-pulse 3s ease-in-out infinite';
+            }, 100);
+            
+            // Random matrix effect
+            const randomEffect = Math.random();
+            if (randomEffect > 0.7) {
+                activatePortal('awakening');
+            } else if (randomEffect > 0.4) {
+                activatePortal('matrix');
+            } else {
+                activatePortal('code');
+            }
+        });
+        
+        // Status Updates
+        function updateStatus() {
+            const currentTime = new Date().toLocaleTimeString();
+            document.getElementById('currentTime').textContent = currentTime;
+            
+            const energyLevel = Math.floor(Math.random() * 20) + 80;
+            document.getElementById('energyLevel').textContent = energyLevel + '%';
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            createMatrixRain();
+            updateStatus();
+            setInterval(updateStatus, 1000);
+            
+            // Add some random matrix effects
+            setInterval(() => {
+                const randomColumn = document.querySelector('.matrix-column');
+                if (randomColumn) {
+                    randomColumn.style.color = Math.random() > 0.5 ? '#ffd700' : '#00ff41';
+                }
+            }, 2000);
+        });
+        
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            switch(e.key) {
+                case '1':
+                    activatePortal('awakening');
+                    break;
+                case '2':
+                    activatePortal('matrix');
+                    break;
+                case '3':
+                    activatePortal('code');
+                    break;
+                case 'Escape':
+                    document.getElementById('hiddenContent').style.display = 'none';
+                    break;
+            }
+        });
+    </script>
+</body>
+</html>

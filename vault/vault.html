@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>𓊉 Vault - خزانة العرّاب</title>
+    <meta name="description" content="Vault - خزانة العرّاب الشخصية في AlArab Club 777">
+    <style>
+        :root {
+            --primary: #ffd700;
+            --secondary: #1a1a1a;
+            --accent: #00bfff;
+            --text: #ffffff;
+            --text-muted: #888;
+            --bg: #000000;
+            --success: #00ff41;
+            --warning: #ff6b35;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, var(--bg) 0%, var(--secondary) 100%);
+            color: var(--text);
+            min-height: 100vh;
+        }
+        
+        .vault-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0, 191, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(0, 255, 65, 0.1) 0%, transparent 50%);
+            z-index: -1;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .header {
+            text-align: center;
+            padding: 40px 0;
+            border-bottom: 2px solid var(--primary);
+            margin-bottom: 40px;
+        }
+        
+        .header h1 {
+            font-size: 3rem;
+            color: var(--primary);
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+        }
+        
+        .vault-door {
+            width: 300px;
+            height: 400px;
+            border: 4px solid var(--primary);
+            border-radius: 20px;
+            margin: 40px auto;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.1) 0%, transparent 70%);
+            animation: vault-pulse 3s ease-in-out infinite;
+            cursor: pointer;
+        }
+        
+        .vault-door::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100px;
+            height: 100px;
+            border: 3px solid var(--primary);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            animation: vault-rotate 10s linear infinite;
+        }
+        
+        .vault-door::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            animation: vault-core 2s ease-in-out infinite;
+        }
+        
+        @keyframes vault-pulse {
+            0%, 100% { 
+                box-shadow: 0 0 20px var(--primary);
+                transform: scale(1);
+            }
+            50% { 
+                box-shadow: 0 0 40px var(--primary), 0 0 60px var(--primary);
+                transform: scale(1.05);
+            }
+        }
+        
+        @keyframes vault-rotate {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        
+        @keyframes vault-core {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 1; }
+        }
+        
+        .vault-text {
+            font-size: 1.5rem;
+            color: var(--primary);
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+            z-index: 10;
+        }
+        
+        .vault-content {
+            display: none;
+            margin-top: 40px;
+        }
+        
+        .vault-content.active {
+            display: block;
+            animation: vaultOpen 0.5s ease-out;
+        }
+        
+        @keyframes vaultOpen {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .files-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+        
+        .file-item {
+            background: rgba(26, 26, 26, 0.8);
+            border: 2px solid var(--primary);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .file-item::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 215, 0, 0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.5s ease;
+            opacity: 0;
+        }
+        
+        .file-item:hover::before {
+            opacity: 1;
+            animation: shimmer 2s infinite;
+        }
+        
+        .file-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(255, 215, 0, 0.3);
+        }
+        
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+        
+        .file-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+        
+        .file-name {
+            color: var(--primary);
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .file-description {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+        
+        .file-size {
+            color: var(--accent);
+            font-size: 0.8rem;
+            margin-bottom: 15px;
+        }
+        
+        .file-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+        
+        .file-btn {
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            color: var(--bg);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .file-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+        }
+        
+        .upload-section {
+            background: rgba(26, 26, 26, 0.8);
+            border: 2px solid var(--accent);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 40px 0;
+            text-align: center;
+        }
+        
+        .upload-area {
+            border: 2px dashed var(--accent);
+            border-radius: 15px;
+            padding: 40px;
+            margin: 20px 0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .upload-area:hover {
+            border-color: var(--primary);
+            background: rgba(255, 215, 0, 0.1);
+        }
+        
+        .upload-area.dragover {
+            border-color: var(--success);
+            background: rgba(0, 255, 65, 0.1);
+        }
+        
+        .upload-icon {
+            font-size: 3rem;
+            color: var(--accent);
+            margin-bottom: 15px;
+        }
+        
+        .upload-text {
+            color: var(--text-muted);
+            margin-bottom: 15px;
+        }
+        
+        .upload-button {
+            background: linear-gradient(45deg, var(--accent), var(--primary));
+            color: var(--bg);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .upload-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 191, 255, 0.4);
+        }
+        
+        .stats {
+            background: rgba(26, 26, 26, 0.8);
+            border: 2px solid var(--success);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 40px 0;
+        }
+        
+        .stats h3 {
+            color: var(--success);
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 15px;
+            background: rgba(0, 255, 65, 0.1);
+            border: 1px solid var(--success);
+            border-radius: 10px;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            color: var(--success);
+            font-weight: bold;
+            display: block;
+        }
+        
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        
+        .access-control {
+            background: rgba(26, 26, 26, 0.8);
+            border: 2px solid var(--warning);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 40px 0;
+            text-align: center;
+        }
+        
+        .access-control h3 {
+            color: var(--warning);
+            margin-bottom: 20px;
+        }
+        
+        .access-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        .access-input {
+            padding: 12px;
+            border: 2px solid var(--warning);
+            border-radius: 10px;
+            background: var(--secondary);
+            color: var(--text);
+            font-size: 1rem;
+        }
+        
+        .access-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+        }
+        
+        .access-button {
+            background: linear-gradient(45deg, var(--warning), var(--primary));
+            color: var(--bg);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .access-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(255, 107, 53, 0.4);
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .vault-door {
+                width: 250px;
+                height: 300px;
+            }
+            
+            .files-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="vault-background"></div>
+    
+    <div class="container">
+        <header class="header">
+            <h1>𓊉 Vault</h1>
+            <p>خزانة العرّاب الشخصية - ملفاتك الآمنة</p>
+        </header>
+        
+        <div class="vault-door" onclick="openVault()">
+            <div class="vault-text">VAULT</div>
+        </div>
+        
+        <div class="vault-content" id="vaultContent">
+            <div class="files-grid">
+                <div class="file-item" onclick="openFile('photos')">
+                    <span class="file-icon">📸</span>
+                    <h3 class="file-name">Photos HD</h3>
+                    <p class="file-description">صور عالية الجودة من الأهرامات والصحراء</p>
+                    <div class="file-size">2.5 GB</div>
+                    <div class="file-actions">
+                        <button class="file-btn" onclick="downloadFile('photos')">تحميل</button>
+                        <button class="file-btn" onclick="previewFile('photos')">معاينة</button>
+                    </div>
+                </div>
+                
+                <div class="file-item" onclick="openFile('videos')">
+                    <span class="file-icon">🎞️</span>
+                    <h3 class="file-name">Cinematic Scrolls</h3>
+                    <p class="file-description">فيديوهات سينمائية من رحلات AlArab Club</p>
+                    <div class="file-size">5.2 GB</div>
+                    <div class="file-actions">
+                        <button class="file-btn" onclick="downloadFile('videos')">تحميل</button>
+                        <button class="file-btn" onclick="previewFile('videos')">معاينة</button>
+                    </div>
+                </div>
+                
+                <div class="file-item" onclick="openFile('voiceovers')">
+                    <span class="file-icon">🎤</span>
+                    <h3 class="file-name">Voiceovers</h3>
+                    <p class="file-description">تسجيلات صوتية للطقوس والترانيم</p>
+                    <div class="file-size">1.8 GB</div>
+                    <div class="file-actions">
+                        <button class="file-btn" onclick="downloadFile('voiceovers')">تحميل</button>
+                        <button class="file-btn" onclick="previewFile('voiceovers')">معاينة</button>
+                    </div>
+                </div>
+                
+                <div class="file-item" onclick="openFile('documents')">
+                    <span class="file-icon">📄</span>
+                    <h3 class="file-name">Documents</h3>
+                    <p class="file-description">وثائق ومستندات المشروع</p>
+                    <div class="file-size">150 MB</div>
+                    <div class="file-actions">
+                        <button class="file-btn" onclick="downloadFile('documents')">تحميل</button>
+                        <button class="file-btn" onclick="previewFile('documents')">معاينة</button>
+                    </div>
+                </div>
+                
+                <div class="file-item" onclick="openFile('templates')">
+                    <span class="file-icon">📋</span>
+                    <h3 class="file-name">Templates</h3>
+                    <p class="file-description">قوالب وتصاميم للمشروع</p>
+                    <div class="file-size">300 MB</div>
+                    <div class="file-actions">
+                        <button class="file-btn" onclick="downloadFile('templates')">تحميل</button>
+                        <button class="file-btn" onclick="previewFile('templates')">معاينة</button>
+                    </div>
+                </div>
+                
+                <div class="file-item" onclick="openFile('backups')">
+                    <span class="file-icon">💾</span>
+                    <h3 class="file-name">Backups</h3>
+                    <p class="file-description">نسخ احتياطية من جميع الملفات</p>
+                    <div class="file-size">10.5 GB</div>
+                    <div class="file-actions">
+                        <button class="file-btn" onclick="downloadFile('backups')">تحميل</button>
+                        <button class="file-btn" onclick="previewFile('backups')">معاينة</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="upload-section">
+                <h3>رفع ملفات جديدة</h3>
+                <p>اسحب وأفلت الملفات هنا أو انقر للاختيار</p>
+                
+                <div class="upload-area" id="uploadArea" onclick="triggerFileInput()">
+                    <div class="upload-icon">📁</div>
+                    <div class="upload-text">اسحب الملفات هنا أو انقر للاختيار</div>
+                    <button class="upload-button">اختيار ملفات</button>
+                </div>
+                
+                <input type="file" id="fileInput" multiple style="display: none;" onchange="handleFileUpload(event)">
+            </div>
+            
+            <div class="stats">
+                <h3>إحصائيات الخزانة</h3>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-number">24</span>
+                        <span class="stat-label">ملف</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">20.5</span>
+                        <span class="stat-label">GB إجمالي</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">777</span>
+                        <span class="stat-label">رمز البركة</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">100%</span>
+                        <span class="stat-label">آمن</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="access-control">
+                <h3>التحكم في الوصول</h3>
+                <p>إدارة صلاحيات الوصول للملفات</p>
+                
+                <form class="access-form" onsubmit="manageAccess(event)">
+                    <input type="text" class="access-input" id="userEmail" placeholder="البريد الإلكتروني" required>
+                    <select class="access-input" id="accessLevel" required>
+                        <option value="">اختر مستوى الوصول</option>
+                        <option value="read">قراءة فقط</option>
+                        <option value="write">قراءة وكتابة</option>
+                        <option value="admin">إدارة كاملة</option>
+                    </select>
+                    <button type="submit" class="access-button">إدارة الوصول</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let vaultOpen = false;
+        
+        function openVault() {
+            if (!vaultOpen) {
+                const vaultContent = document.getElementById('vaultContent');
+                vaultContent.classList.add('active');
+                vaultOpen = true;
+                
+                // Add visual effect
+                const vaultDoor = document.querySelector('.vault-door');
+                vaultDoor.style.animation = 'vault-pulse 1s ease-in-out infinite';
+                
+                setTimeout(() => {
+                    vaultDoor.style.animation = 'vault-pulse 3s ease-in-out infinite';
+                }, 3000);
+                
+                // Show welcome message
+                setTimeout(() => {
+                    alert('مرحباً بك في خزانة العرّاب! 🎯\n\nهنا يمكنك الوصول إلى جميع ملفاتك الشخصية والموارد الخاصة بـ AlArab Club 777.');
+                }, 500);
+            } else {
+                alert('الخزانة مفتوحة بالفعل!');
+            }
+        }
+        
+        function openFile(fileType) {
+            const fileInfo = {
+                'photos': 'Photos HD - صور عالية الجودة من الأهرامات والصحراء',
+                'videos': 'Cinematic Scrolls - فيديوهات سينمائية من رحلات AlArab Club',
+                'voiceovers': 'Voiceovers - تسجيلات صوتية للطقوس والترانيم',
+                'documents': 'Documents - وثائق ومستندات المشروع',
+                'templates': 'Templates - قوالب وتصاميم للمشروع',
+                'backups': 'Backups - نسخ احتياطية من جميع الملفات'
+            };
+            
+            const info = fileInfo[fileType];
+            if (info) {
+                alert(`${info}\n\nهل تريد تحميل هذا الملف؟`);
+            }
+        }
+        
+        function downloadFile(fileType) {
+            const fileName = {
+                'photos': 'Photos_HD_AlArab_Club_777.zip',
+                'videos': 'Cinematic_Scrolls_AlArab_Club_777.zip',
+                'voiceovers': 'Voiceovers_AlArab_Club_777.zip',
+                'documents': 'Documents_AlArab_Club_777.zip',
+                'templates': 'Templates_AlArab_Club_777.zip',
+                'backups': 'Backups_AlArab_Club_777.zip'
+            };
+            
+            const name = fileName[fileType];
+            if (name) {
+                alert(`بدء تحميل ${name}...\n\nسيتم إرسال رابط التحميل إلى بريدك الإلكتروني.`);
+            }
+        }
+        
+        function previewFile(fileType) {
+            const previewInfo = {
+                'photos': 'معاينة Photos HD:\n\n• 150+ صورة عالية الجودة\n• صور الأهرامات من زوايا مختلفة\n• صور الصحراء والمغامرات\n• صور الطقوس الروحانية',
+                'videos': 'معاينة Cinematic Scrolls:\n\n• 25+ فيديو سينمائي\n• رحلات صحراوية\n• زيارات الأهرامات\n• طقوس روحانية',
+                'voiceovers': 'معاينة Voiceovers:\n\n• 50+ تسجيل صوتي\n• ترانيم فرعونية\n• طقوس العلاج بالصوت\n• ترددات 777Hz',
+                'documents': 'معاينة Documents:\n\n• وثائق المشروع\n• خطط الرحلات\n• معلومات تاريخية\n• دليل المستخدم',
+                'templates': 'معاينة Templates:\n\n• قوالب التصميم\n• شعارات المشروع\n• قوالب الويب\n• مواد تسويقية',
+                'backups': 'معاينة Backups:\n\n• نسخ احتياطية كاملة\n• ملفات المشروع\n• قاعدة البيانات\n• الإعدادات'
+            };
+            
+            const info = previewInfo[fileType];
+            if (info) {
+                alert(info);
+            }
+        }
+        
+        function triggerFileInput() {
+            document.getElementById('fileInput').click();
+        }
+        
+        function handleFileUpload(event) {
+            const files = event.target.files;
+            if (files.length > 0) {
+                let message = `تم رفع ${files.length} ملف:\n\n`;
+                for (let i = 0; i < files.length; i++) {
+                    message += `• ${files[i].name} (${(files[i].size / 1024 / 1024).toFixed(2)} MB)\n`;
+                }
+                message += '\nتم رفع الملفات بنجاح!';
+                alert(message);
+            }
+        }
+        
+        function manageAccess(event) {
+            event.preventDefault();
+            
+            const email = document.getElementById('userEmail').value;
+            const accessLevel = document.getElementById('accessLevel').value;
+            
+            const accessNames = {
+                'read': 'قراءة فقط',
+                'write': 'قراءة وكتابة',
+                'admin': 'إدارة كاملة'
+            };
+            
+            const levelName = accessNames[accessLevel];
+            
+            alert(`تم تحديث صلاحيات الوصول:\n\nالمستخدم: ${email}\nالمستوى: ${levelName}\n\nسيتم إرسال رابط الوصول إلى البريد الإلكتروني.`);
+            
+            // Clear form
+            document.getElementById('userEmail').value = '';
+            document.getElementById('accessLevel').value = '';
+        }
+        
+        // Drag and drop functionality
+        const uploadArea = document.getElementById('uploadArea');
+        
+        uploadArea.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            this.classList.add('dragover');
+        });
+        
+        uploadArea.addEventListener('dragleave', function(e) {
+            e.preventDefault();
+            this.classList.remove('dragover');
+        });
+        
+        uploadArea.addEventListener('drop', function(e) {
+            e.preventDefault();
+            this.classList.remove('dragover');
+            
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                let message = `تم رفع ${files.length} ملف:\n\n`;
+                for (let i = 0; i < files.length; i++) {
+                    message += `• ${files[i].name} (${(files[i].size / 1024 / 1024).toFixed(2)} MB)\n`;
+                }
+                message += '\nتم رفع الملفات بنجاح!';
+                alert(message);
+            }
+        });
+        
+        // Add some interactive effects
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add hover effects to vault door
+            const vaultDoor = document.querySelector('.vault-door');
+            vaultDoor.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.1)';
+            });
+            
+            vaultDoor.addEventListener('mouseleave', function() {
+                this.style.transform = 'scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>
