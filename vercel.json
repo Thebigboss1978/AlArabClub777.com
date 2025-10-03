@@ -1,15 +1,91 @@
-{
-  "version": 2,
-  "builds": [
-    {
-      "src": "index.html",
-      "use": "@vercel/static"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
-    }
-  ]
-}
+   "version": 2,
+-  "builds": [
+-    {
+-      "src": "index.html",
+-      "use": "@vercel/static"
+-    }
+-  ],
+-  "routes": [
+-    {
+-      "src": "/(.*)",
+-      "dest": "/index.html"
+-    }
+-  ]
+-}
++{
++  "version": 2,
++  "name": "alarab-club-777",
++  "builds": [
++    {
++      "src": "package.json",
++      "use": "@vercel/static"
++    }
++  ],
++  "routes": [
++    {
++      "src": "/",
++      "dest": "/index.html"
++    },
++    {
++      "src": "/spirit",
++      "dest": "/spirit/spirit.html"
++    },
++    {
++      "src": "/awakening",
++      "dest": "/awakening/awakening.html"
++    },
++    {
++      "src": "/777club",
++      "dest": "/777club/777club.html"
++    },
++    {
++      "src": "/nftgate",
++      "dest": "/nftgate/nftgate.html"
++    },
++    {
++      "src": "/site-map",
++      "dest": "/site-map/site-map.html"
++    },
++    {
++      "src": "/vault",
++      "dest": "/vault/vault.html"
++    },
++    {
++      "src": "/booking",
++      "dest": "/booking/booking.html"
++    },
++    {
++      "src": "/photos",
++      "dest": "/photos/photos.html"
++    },
++    {
++      "src": "/chat",
++      "dest": "/chat/chat.html"
++    },
++    {
++      "src": "/(.*)",
++      "dest": "/$1"
++    }
++  ],
++  "headers": [
++    {
++      "source": "/(.*)",
++      "headers": [
++        {
++          "key": "X-Content-Type-Options",
++          "value": "nosniff"
++        },
++        {
++          "key": "X-Frame-Options",
++          "value": "DENY"
++        },
++        {
++          "key": "X-XSS-Protection",
++          "value": "1; mode=block"
++        }
++      ]
++    }
++  ]
++}
+EOF
+)
