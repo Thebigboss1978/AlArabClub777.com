@@ -1,0 +1,598 @@
+
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>جولة الأهرامات – نزلة السمان | حجز فوري</title>
+<meta name="description" content="حجز جولات الأهرامات — نزلة السمان. كل الحجز يذهب أولًا إلى واتساب." />
+<meta name="theme-color" content="#0ea5e9"/>
+<style>
+  :root{
+    --bg:#071223; --panel:#0e1620; --muted:#a7b3bd; --text:#e7f4fb;
+    --accent:#0ea5e9; --accent-2:#ffd66b; --glass: rgba(255,255,255,0.04);
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0;font-family:Inter, system-ui, "Noto Sans Arabic", Cairo, Tahoma; background:var(--bg); color:var(--text); -webkit-font-smoothing:antialiased}
+  /* layout */
+  .wrap{min-height:100vh;display:grid;grid-template-columns:1fr 380px;gap:20px;padding:28px;align-items:start}
+  @media(max-width:1000px){ .wrap{grid-template-columns:1fr; padding:16px} .sidebar{order:2} .main{order:1} }
+  .main{max-width:1100px;margin:0 auto}
+  .hero{background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));border-radius:14px;padding:18px;border:1px solid var(--glass);box-shadow:0 10px 40px rgba(0,0,0,.6)}
+  h1{margin:0 0 8px;font-size:22px}
+  .lead{color:var(--muted);margin:0 0 14px}
+  .chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+  .chip{padding:8px 12px;border-radius:999px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.03);font-weight:700;color:var(--muted)}
+  .toggle-mode{display:flex;gap:8px;margin:12px 0}
+  .mode-btn{padding:8px 12px;border-radius:10px;border:1px solid var(--glass);cursor:pointer;background:transparent;color:var(--muted);font-weight:800}
+  .mode-btn.active{background:linear-gradient(135deg,var(--accent),#60c0f4);color:#001827}
+  /* services grid */
+  .offers-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:12px}
+  .offer{background:linear-gradient(180deg, rgba(255,255,255,.01), rgba(255,255,255,.02));padding:14px;border-radius:12px;border:1px solid var(--glass);box-shadow:0 8px 30px rgba(0,0,0,.6)}
+  .offer h3{margin:0 0 6px;font-size:16px;color:var(--accent-2)}
+  .offer p{margin:0 0 8px;color:var(--muted);font-size:13px}
+  .offer .meta{display:flex;justify-content:space-between;align-items:center;gap:8px}
+  .price{font-weight:900;color:var(--accent);font-size:15px}
+  .book-btn{display:inline-block;margin-top:10px;padding:10px 12px;border-radius:10px;background:linear-gradient(90deg,var(--accent),#60c0f4);color:#021521;text-decoration:none;font-weight:800;border:0;cursor:pointer}
+  .small{font-size:12px;color:var(--muted)}
+  /* sidebar */
+  .sidebar{width:100%;max-width:380px;position:sticky;top:20px;align-self:start}
+  .card{background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));padding:14px;border-radius:12px;border:1px solid var(--glass);box-shadow:0 10px 40px rgba(0,0,0,.6)}
+  .video-wrap{border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,.03);margin-bottom:12px}
+  video{width:100%;display:block;background:#000}
+  .qr-wrap{display:flex;justify-content:space-between;align-items:center;gap:12px}
+  /* top controls */
+  .topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px}
+  .brand{display:flex;align-items:center;gap:10px}
+  .logo{width:44px;height:44;border-radius:10px;background:linear-gradient(135deg,var(--accent),#22d3ee);display:grid;place-items:center;font-weight:900;color:#021521}
+  .actions{display:flex;gap:8px;align-items:center}
+  .action-btn{background:rgba(255,255,255,.02);border:1px solid var(--glass);padding:8px 10px;border-radius:10px;color:var(--muted);cursor:pointer}
+  /* settings overlay */
+  .settings{position:fixed;right:18px;bottom:18px;z-index:99}
+  .gear{width:56px;height:56;border-radius:999px;background:linear-gradient(180deg,var(--accent-2),#ffd66b);display:grid;place-items:center;cursor:pointer;box-shadow:0 18px 60px rgba(0,0,0,.6)}
+  .settings-panel{position:fixed;right:86px;bottom:18px;width:360px;max-width:92vw;background:var(--panel);border-radius:12px;padding:12px;border:1px solid rgba(255,255,255,.04);box-shadow:0 30px 120px rgba(0,0,0,.7);display:none}
+  .settings-panel.open{display:block}
+  .field{display:flex;gap:8px;flex-direction:column;margin-bottom:8px}
+  .field label{font-size:13px;color:var(--muted)}
+  .field input{padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,.04);background:transparent;color:var(--text)}
+  .small-muted{font-size:12px;color:var(--muted)}
+  /* canvas portal */
+  canvas#scene{position:fixed;left:0;top:0;width:100%;height:100%;z-index:0;pointer-events:none}
+  /* chat / ai fallback note */
+  .note{margin-top:10px;font-size:13px;color:var(--muted)}
+  footer{margin-top:18px;color:var(--muted);font-size:13px;text-align:center}
+</style>
+</head>
+<body>
+
+<!-- Portal canvas (visual-only) -->
+<canvas id="scene" aria-hidden="true"></canvas>
+
+
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>جولة الأهرامات – نزلة السمان | حجز فوري</title>
+<meta name="description" content="حجز جولات الأهرامات — نزلة السمان. كل الحجز يذهب أولًا إلى واتساب." />
+<meta name="theme-color" content="#0ea5e9"/>
+<style>
+  :root{
+    --bg:#071223; --panel:#0e1620; --muted:#a7b3bd; --text:#e7f4fb;
+    --accent:#0ea5e9; --accent-2:#ffd66b; --glass: rgba(255,255,255,0.04);
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0;font-family:Inter, system-ui, "Noto Sans Arabic", Cairo, Tahoma; background:var(--bg); color:var(--text); -webkit-font-smoothing:antialiased}
+  /* layout */
+  .wrap{min-height:100vh;display:grid;grid-template-columns:1fr 380px;gap:20px;padding:28px;align-items:start}
+  @media(max-width:1000px){ .wrap{grid-template-columns:1fr; padding:16px} .sidebar{order:2} .main{order:1} }
+  .main{max-width:1100px;margin:0 auto}
+  .hero{background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));border-radius:14px;padding:18px;border:1px solid var(--glass);box-shadow:0 10px 40px rgba(0,0,0,.6)}
+  h1{margin:0 0 8px;font-size:22px}
+  .lead{color:var(--muted);margin:0 0 14px}
+  .chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+  .chip{padding:8px 12px;border-radius:999px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.03);font-weight:700;color:var(--muted)}
+  .toggle-mode{display:flex;gap:8px;margin:12px 0}
+  .mode-btn{padding:8px 12px;border-radius:10px;border:1px solid var(--glass);cursor:pointer;background:transparent;color:var(--muted);font-weight:800}
+  .mode-btn.active{background:linear-gradient(135deg,var(--accent),#60c0f4);color:#001827}
+  /* services grid */
+  .offers-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:12px}
+  .offer{background:linear-gradient(180deg, rgba(255,255,255,.01), rgba(255,255,255,.02));padding:14px;border-radius:12px;border:1px solid var(--glass);box-shadow:0 8px 30px rgba(0,0,0,.6)}
+  .offer h3{margin:0 0 6px;font-size:16px;color:var(--accent-2)}
+  .offer p{margin:0 0 8px;color:var(--muted);font-size:13px}
+  .offer .meta{display:flex;justify-content:space-between;align-items:center;gap:8px}
+  .price{font-weight:900;color:var(--accent);font-size:15px}
+  .book-btn{display:inline-block;margin-top:10px;padding:10px 12px;border-radius:10px;background:linear-gradient(90deg,var(--accent),#60c0f4);color:#021521;text-decoration:none;font-weight:800;border:0;cursor:pointer}
+  .small{font-size:12px;color:var(--muted)}
+  /* sidebar */
+  .sidebar{width:100%;max-width:380px;position:sticky;top:20px;align-self:start}
+  .card{background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));padding:14px;border-radius:12px;border:1px solid var(--glass);box-shadow:0 10px 40px rgba(0,0,0,.6)}
+  .video-wrap{border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,.03);margin-bottom:12px}
+  video{width:100%;display:block;background:#000}
+  .qr-wrap{display:flex;justify-content:space-between;align-items:center;gap:12px}
+  /* top controls */
+  .topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px}
+  .brand{display:flex;align-items:center;gap:10px}
+  .logo{width:44px;height:44;border-radius:10px;background:linear-gradient(135deg,var(--accent),#22d3ee);display:grid;place-items:center;font-weight:900;color:#021521}
+  .actions{display:flex;gap:8px;align-items:center}
+  .action-btn{background:rgba(255,255,255,.02);border:1px solid var(--glass);padding:8px 10px;border-radius:10px;color:var(--muted);cursor:pointer}
+  /* settings overlay */
+  .settings{position:fixed;right:18px;bottom:18px;z-index:99}
+  .gear{width:56px;height:56;border-radius:999px;background:linear-gradient(180deg,var(--accent-2),#ffd66b);display:grid;place-items:center;cursor:pointer;box-shadow:0 18px 60px rgba(0,0,0,.6)}
+  .settings-panel{position:fixed;right:86px;bottom:18px;width:360px;max-width:92vw;background:var(--panel);border-radius:12px;padding:12px;border:1px solid rgba(255,255,255,.04);box-shadow:0 30px 120px rgba(0,0,0,.7);display:none}
+  .settings-panel.open{display:block}
+  .field{display:flex;gap:8px;flex-direction:column;margin-bottom:8px}
+  .field label{font-size:13px;color:var(--muted)}
+  .field input{padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,.04);background:transparent;color:var(--text)}
+  .small-muted{font-size:12px;color:var(--muted)}
+  /* canvas portal */
+  canvas#scene{position:fixed;left:0;top:0;width:100%;height:100%;z-index:0;pointer-events:none}
+  /* chat / ai fallback note */
+  .note{margin-top:10px;font-size:13px;color:var(--muted)}
+  footer{margin-top:18px;color:var(--muted);font-size:13px;text-align:center}
+</style>
+</head>
+<body>
+
+<!-- Portal canvas (visual-only) -->
+<canvas id="scene" aria-hidden="true"></canvas>
+
+<!-- Settings gear -->
+<div class="settings" aria-hidden="false">
+  <div class="gear" id="gear" title="Settings">⚙️</div>
+  <div class="settings-panel" id="settingsPanel" role="dialog" aria-modal="false">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+      <strong>Settings</strong>
+      <button id="closeSettings" class="action-btn">Close</button>
+    </div>
+    <div class="field">
+      <label>WhatsApp number (international, no +)</label>
+      <input id="cfgPhone" placeholder="971551234567" />
+      <div class="small-muted">All booking clicks open WhatsApp to this number.</div>
+    </div>
+    <div class="field">
+      <label>Google Sheets CSV (public URL)</label>
+      <input id="cfgCSV" placeholder="https://.../pub?output=csv"/>
+      <div class="small-muted">Sheet should have columns: id,title,desc,price,duration,active</div>
+    </div>
+    <div class="field">
+      <label>AI API endpoint (optional)</label>
+      <input id="cfgAI" placeholder="https://your-api.example.com/ai"/>
+      <div class="small-muted">If filled, chat can use remote AI (optional).</div>
+    </div>
+    <div style="display:flex;gap:8px;justify-content:flex-end">
+      <button id="saveSettings" class="action-btn">Save</button>
+      <button id="resetSettings" class="action-btn">Reset</button>
+    </div>
+    <div class="note">Changes saved locally in your browser. To have shared control use the Google Sheet (edit rows live).</div>
+  </div>
+</div>
+
+<!-- Page top -->
+<div style="padding:18px 28px;position:relative;z-index:2">
+  <div class="topbar">
+    <div class="brand">
+      <div class="logo">𓂀</div>
+      <div>
+        <div style="font-weight:800">جولة الأهرامات – نزلة السمان</div>
+        <div class="small-muted">احجز عبر واتساب مباشرة — تواصل فوري</div>
+      </div>
+    </div>
+    <div class="actions">
+      <button class="action-btn" id="refreshOffers">تحديث العروض</button>
+      <button class="action-btn" id="openQR">عرض QR</button>
+    </div>
+  </div>
+</div>
+
+<!-- Main layout -->
+<div class="wrap" role="main" style="position:relative;z-index:2">
+  <main class="main">
+    <section class="hero card">
+      <h1>تجربة أصيلة مع جيران خوفو وخفرع</h1>
+      <p class="lead">ركوب جمل/حصان، باجي/ATV، جولة كاملة، تصوير وضيافة بدوية — احجز الآن عبر واتساب. أثناء انتظار الحجز: تفاعل مع البوابة(الهرم) واستمتع بالحروف الطائرة.</p>
+
+      <div class="chips" id="summaryChips" aria-hidden="true">
+        <div class="chip">📍 نزلة السمان</div>
+        <div class="chip">⏱ 60–150 دقيقة</div>
+        <div class="chip">🎥 تصوير HD</div>
+      </div>
+
+      <div class="toggle-mode" role="radiogroup" aria-label="Choose mode">
+        <button class="mode-btn active" data-mode="spiritual">روحانية 🔵</button>
+        <button class="mode-btn" data-mode="adventure">مغامرة 🔴</button>
+      </div>
+
+      <div class="offers-grid" id="offersGrid" aria-live="polite">
+        <!-- offers injected here from CSV -->
+      </div>
+
+      <div class="note">كل زرّ "احجز" يفتح WhatsApp إلى رقمك — يمكنك تعديل الرقم من ⚙️ Settings أو بتعديل Google Sheet مباشرة.</div>
+      <footer>© نزلة السمان — AlArab Club 777</footer>
+    </section>
+
+  </main>
+
+  <aside class="sidebar">
+    <div class="card">
+      <div class="video-wrap">
+        <video id="promoVideo" controls muted playsinline preload="metadata">
+          <!-- Source can be set to a file in the same folder or via Google Drive public link -->
+          <source id="videoSrc" src="" type="video/mp4"/>
+          متصفحك لا يدعم الفيديو.
+        </video>
+      </div>
+
+      <div style="display:flex;gap:10px;align-items:center;justify-content:space-between;margin-bottom:8px">
+        <div>
+          <div style="font-weight:800">احجز عبر QR</div>
+          <div class="small">امسح الكود لفتح واتساب برسالة جاهزة</div>
+        </div>
+        <div id="qrcodeBox"></div>
+      </div>
+
+      <div style="margin-top:8px;display:flex;gap:8px;align-items:center;justify-content:space-between">
+        <a id="whatsappMain" class="book-btn" href="#" target="_blank" rel="noopener">حجز فوري</a>
+        <button id="shareNow" class="action-btn">مشاركة</button>
+      </div>
+
+      <div style="margin-top:12px">
+        <div style="font-weight:700;margin-bottom:6px">تفاصيل التواصل</div>
+        <div id="contactInfo" class="small-muted">واتساب: يتم جلبه من الإعدادات</div>
+        <div class="note" style="margin-top:10px">لتحرير العروض مباشرة: عدّل جداول Google Sheets (CSV العام) وسيتم تحديث الموقع مباشرة بعد الضغط على "تحديث العروض".</div>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<!-- QR lib -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+<script>
+/* =========================
+   Config & defaults
+   ========================= */
+const DEFAULT_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT9qkqp2gmx_IIElxTQQiOLF680qe1b4uNhGopZuZhEVxumd-YejBPsHuGiThAWdQzi14hjYAV2rzGb/pub?output=csv";
+const DEFAULT_PHONE = "971557119058"; // final WhatsApp number you asked (+971 55 711 9058) - store without +
+const LS_KEY = "pyramids_settings_v1";
+
+let state = {
+  phone: DEFAULT_PHONE,
+  csv: DEFAULT_CSV,
+  aiEndpoint: "",
+  offers: [],
+  mode: "spiritual"
+};
+
+// load saved settings
+(function loadSettings(){
+  try{
+    const raw = localStorage.getItem(LS_KEY);
+    if(raw) Object.assign(state, JSON.parse(raw));
+  }catch(e){}
+})();
+
+/* =========================
+   Utility functions
+   ========================= */
+function saveSettings(){
+  localStorage.setItem(LS_KEY, JSON.stringify({phone:state.phone,csv:state.csv,aiEndpoint:state.aiEndpoint}));
+  renderContact();
+  renderQR();
+}
+function phoneToWhatsAppURL({offer="استفسار", modeLabel="روحانية"}){
+  const txt = `مرحبًا، أود الحجز / الاستفسار عن: ${offer}\nنوع الجولة: ${modeLabel}\nالاسم: \nالتاريخ: \nعدد الأشخاص: `;
+  return `https://wa.me/${state.phone}?text=${encodeURIComponent(txt)}`;
+}
+
+/* =========================
+   DOM refs & event wiring
+   ========================= */
+const offersGrid = document.getElementById('offersGrid');
+const qrcodeBox = document.getElementById('qrcodeBox');
+const whatsappMain = document.getElementById('whatsappMain');
+const contactInfo = document.getElementById('contactInfo');
+const cfgPhone = document.getElementById('cfgPhone');
+const cfgCSV = document.getElementById('cfgCSV');
+const cfgAI = document.getElementById('cfgAI');
+const gear = document.getElementById('gear');
+const settingsPanel = document.getElementById('settingsPanel');
+const saveSettingsBtn = document.getElementById('saveSettings');
+const closeSettingsBtn = document.getElementById('closeSettings');
+const resetSettingsBtn = document.getElementById('resetSettings');
+const refreshOffersBtn = document.getElementById('refreshOffers');
+const openQRBtn = document.getElementById('openQR');
+const modeButtons = document.querySelectorAll('.mode-btn');
+const videoSrc = document.getElementById('videoSrc');
+const promoVideo = document.getElementById('promoVideo');
+
+/* init inputs */
+cfgPhone.value = state.phone;
+cfgCSV.value = state.csv;
+cfgAI.value = state.aiEndpoint;
+
+/* settings panel */
+gear.addEventListener('click', ()=> settingsPanel.classList.toggle('open'));
+closeSettingsBtn.addEventListener('click', ()=> settingsPanel.classList.remove('open'));
+saveSettingsBtn.addEventListener('click', ()=>{
+  state.phone = (cfgPhone.value || DEFAULT_PHONE).replace(/\D/g,'');
+  state.csv = cfgCSV.value || DEFAULT_CSV;
+  state.aiEndpoint = cfgAI.value || "";
+  saveSettings();
+  settingsPanel.classList.remove('open');
+  fetchAndRenderOffers();
+});
+resetSettingsBtn.addEventListener('click', ()=>{
+  localStorage.removeItem(LS_KEY);
+  state.phone = DEFAULT_PHONE; state.csv = DEFAULT_CSV; state.aiEndpoint = "";
+  cfgPhone.value = state.phone; cfgCSV.value = state.csv; cfgAI.value = state.aiEndpoint;
+  saveSettings();
+  fetchAndRenderOffers();
+});
+
+/* mode buttons */
+modeButtons.forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    modeButtons.forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    state.mode = btn.dataset.mode;
+    renderOffers(); renderQR();
+  });
+});
+
+/* refresh offers */
+refreshOffersBtn.addEventListener('click', ()=> fetchAndRenderOffers());
+
+/* QR open (show in new tab as data URL) */
+openQRBtn.addEventListener('click', ()=>{
+  const url = phoneToWhatsAppURL({offer:'استفسار عام', modeLabel:modeLabel()});
+  // open minimal QR page
+  const html = `<html><body style="display:flex;align-items:center;justify-content:center;height:100vh"><img src="${generateQRCodeDataURL(url)}" /></body></html>`;
+  const w = window.open();
+  w.document.write(html);
+});
+
+/* share button */
+document.getElementById('shareNow').addEventListener('click', async ()=>{
+  const url = phoneToWhatsAppURL({offer:'استفسار عام', modeLabel:modeLabel()});
+  if(navigator.share){ navigator.share({title:'جولة الأهرامات',text:'احجز عبر واتساب',url}); }
+  else window.open(url,'_blank');
+});
+
+/* promo video: if user has file 'promo.mp4' near index.html, browser will load it; otherwise leave blank */
+(function tryAutoVideo(){
+  // default: leave src blank for user to replace; if file exists in same folder named promo.mp4 it will load
+  // nothing else to do here
+})();
+
+/* =========================
+   Google Sheet CSV fetch & parse
+   ========================= */
+async function fetchCSV(url){
+  // fetch csv text, parse simple CSV where header row present
+  try{
+    const r = await fetch(url, {cache: "no-store"});
+    if(!r.ok) throw new Error('CSV fetch failed');
+    const txt = await r.text();
+    return parseCSV(txt);
+  }catch(e){
+    console.warn('CSV error', e);
+    return null;
+  }
+}
+function parseCSV(text){
+  // simple CSV parser (handles quoted commas)
+  const lines = text.split(/\r?\n/).filter(Boolean);
+  if(!lines.length) return [];
+  const parseRow = (row)=> {
+    const res=[]; let cur='', inQ=false;
+    for(let i=0;i<row.length;i++){
+      const ch=row[i];
+      if(ch==='\"'){ inQ=!inQ; continue; }
+      if(ch===',' && !inQ){ res.push(cur); cur=''; continue; }
+      cur += ch;
+    }
+    res.push(cur);
+    return res.map(s=>s.trim());
+  };
+  const headers = parseRow(lines.shift()).map(h=>h.replace(/\s+/g,'_').toLowerCase());
+  return lines.map(l=>{
+    const vals = parseRow(l);
+    const obj={};
+    headers.forEach((h,i)=> obj[h]= (vals[i]!==undefined? vals[i] : ""));
+    return obj;
+  });
+}
+
+/* =========================
+   Render functions
+   ========================= */
+function clearOffers(){ offersGrid.innerHTML = ""; }
+function modeLabel(){ return state.mode === 'spiritual' ? 'روحانية' : 'مغامرة'; }
+
+function renderOffers(){
+  clearOffers();
+  const offers = state.offers.filter(o=> (o.active ? (["1","true","TRUE","yes","فعال"].includes(o.active) || o.active==="") : true ));
+  if(!offers.length){
+    offersGrid.innerHTML = `<div class="small-muted">لا توجد عروض حالياً — افتح الإعدادات لتحديد CSV أو اضغط "تحديث العروض".</div>`;
+    return;
+  }
+  offers.forEach(o=>{
+    const el = document.createElement('article');
+    el.className = 'offer';
+    const title = o.title || o.name || "عرض";
+    const desc = o.desc || o.description || "";
+    const price = (o.price && o.price.length)? o.price : "تواصل لمعرفة السعر";
+    const duration = o.duration || "";
+    el.innerHTML = `
+      <h3>${escapeHTML(title)}</h3>
+      <p>${escapeHTML(desc)}</p>
+      <div class="meta">
+        <div class="small">${escapeHTML(duration)}</div>
+        <div class="price">${escapeHTML(price)}</div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;justify-content:flex-end">
+        <a class="book-btn" data-offer="${escapeHTML(title)}" href="#">احجز / استفسر</a>
+      </div>
+    `;
+    offersGrid.appendChild(el);
+  });
+  // wire booking buttons
+  offersGrid.querySelectorAll('.book-btn').forEach(btn=>{
+    btn.addEventListener('click',(e)=>{
+      e.preventDefault();
+      const offer = e.currentTarget.dataset.offer || 'استفسار';
+      const wa = phoneToWhatsAppURL({offer, modeLabel: modeLabel()});
+      // Always send user to WhatsApp first (as requested)
+      window.open(wa, '_blank');
+    });
+  });
+}
+
+function renderContact(){
+  contactInfo.innerHTML = `واتساب: <strong>+${state.phone}</strong>`;
+  whatsappMain.href = phoneToWhatsAppURL({offer:'استفسار عام', modeLabel: modeLabel()});
+  whatsappMain.target = "_blank";
+  renderQR();
+}
+
+function renderQR(){
+  qrcodeBox.innerHTML = "";
+  const url = phoneToWhatsAppURL({offer:'استفسار عام', modeLabel: modeLabel()});
+  new QRCode(qrcodeBox, {text: url, width:110, height:110});
+}
+
+/* =========================
+   Fetch + render full pipeline
+   ========================= */
+async function fetchAndRenderOffers(){
+  // show loading
+  offersGrid.innerHTML = `<div class="small-muted">...جارٍ تحميل العروض من Google Sheets</div>`;
+  const csvUrl = state.csv || DEFAULT_CSV;
+  const parsed = await fetchCSV(csvUrl);
+  if(!parsed){ offersGrid.innerHTML = `<div class="small-muted">فشل تحميل العروض. تأكد أن CSV منشور كـ "عام".</div>`; return; }
+  // expected columns: id,title,desc,price,duration,active
+  state.offers = parsed.map(r=>({
+    id: r.id || r.uid || "",
+    title: r.title || r.name || r.offer || "",
+    desc: r.desc || r.description || r.details || "",
+    price: r.price || r.cost || "",
+    duration: r.duration || "",
+    active: r.active || "1"
+  }));
+  renderOffers();
+  renderContact();
+}
+
+/* =========================
+   Small helpers
+   ========================= */
+function escapeHTML(s){ return (s||"").replace(/[&<>"']/g, c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function generateQRCodeDataURL(text){
+  // draw on canvas using QRCode lib; return dataURL
+  const container = document.createElement('div');
+  new QRCode(container,{text, width:256, height:256});
+  // convert to dataURL by finding image tag
+  const img = container.querySelector('img');
+  if(img) return img.src;
+  // fallback: svg or canvas
+  const canvas = container.querySelector('canvas');
+  if(canvas) return canvas.toDataURL('image/png');
+  return '';
+}
+
+/* =========================
+   Canvas animation (simple, decorative)
+   ========================= */
+(function canvasPortal(){
+  const canvas = document.getElementById('scene');
+  const ctx = canvas.getContext('2d');
+  let W=0,H=0,DPR=1;
+  const glyphs = ['𓂀','𓆣','𓋹','▲','◈','•','✦','✧'];
+  const particles = [];
+  function resize(){ DPR = Math.min(2, devicePixelRatio||1); W = canvas.width = innerWidth*DPR; H = canvas.height = innerHeight*DPR; canvas.style.width = innerWidth+'px'; canvas.style.height = innerHeight+'px'; ctx.setTransform(DPR,0,0,DPR,0,0); }
+  window.addEventListener('resize', resize); resize();
+  // seed
+  for(let i=0;i<160;i++) particles.push({x:Math.random()*innerWidth,y:Math.random()*innerHeight, vx:(Math.random()-0.5)*0.6, vy:(Math.random()-0.5)*0.3, ch: glyphs[i%glyphs.length], s: 10+Math.random()*12, a:0.3+Math.random()*0.7});
+  let t=0;
+  function tick(){
+    requestAnimationFrame(tick); t+=0.01;
+    ctx.clearRect(0,0,innerWidth,innerHeight);
+    // subtle radial
+    const g = ctx.createRadialGradient(innerWidth*0.2,innerHeight*0.15,100, innerWidth*0.6,innerHeight*0.6, innerWidth);
+    g.addColorStop(0, 'rgba(14,165,233,.03)'); g.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = g; ctx.fillRect(0,0,innerWidth,innerHeight);
+    // draw particles
+    ctx.textAlign='center'; ctx.textBaseline='middle';
+    for(const p of particles){
+      p.x += p.vx + Math.sin(t + p.y*0.002)*0.2;
+      p.y += p.vy + Math.cos(t + p.x*0.002)*0.1;
+      if(p.x < -40) p.x = innerWidth+40;
+      if(p.x > innerWidth+40) p.x = -40;
+      if(p.y < -40) p.y = innerHeight+40;
+      if(p.y > innerHeight+40) p.y = -40;
+      ctx.globalAlpha = p.a * (0.7 + 0.3*Math.sin(t + p.x*0.01));
+      const col = `hsl(${40 + 200*(Math.sin((p.x+p.y+t)*0.001)+1)/2} 70% 60%)`;
+      ctx.fillStyle = col;
+      ctx.font = `${p.s}px serif`;
+      // shadow for depth
+      ctx.fillText(p.ch, p.x+1.2, p.y+1.2);
+      ctx.fillText(p.ch, p.x, p.y);
+    }
+    ctx.globalAlpha = 1;
+    // rotating center glyph (portal)
+    const cx = innerWidth*0.5, cy = innerHeight*0.45;
+    ctx.save();
+    ctx.translate(cx,cy);
+    ctx.rotate(t*0.5);
+    for(let i=0;i<8;i++){
+      ctx.rotate(Math.PI*2/8);
+      ctx.globalAlpha = 0.9 - i*0.08;
+      ctx.font = `${18 + i*3}px serif`;
+      ctx.fillStyle = i%2 ? '#ffd66b' : '#0ea5e9';
+      ctx.fillText(glyphs[i%glyphs.length], 120, 0);
+    }
+    ctx.restore();
+  }
+  tick();
+})();
+
+/* =========================
+   Init
+   ========================= */
+renderContact();
+renderQR();
+fetchAndRenderOffers();
+
+/* =========================
+   Extra: allow placing a local promo video if named promo.mp4 in same folder
+   ========================= */
+(async function checkPromo(){
+  const tryURL = "./promo.mp4";
+  try{
+    const r = await fetch(tryURL, {method:'HEAD'});
+    if(r.ok){ videoSrc.src = tryURL; promoVideo.load(); } // auto loads
+  }catch(e){}
+})();
+
+/* =========================
+   Small: allow direct CSV override from query ?csv=...
+   ========================= */
+(function maybeQueryOverride(){
+  const qs = new URLSearchParams(location.search);
+  if(qs.get('csv')){ state.csv = qs.get('csv'); cfgCSV.value = state.csv; saveSettings(); fetchAndRenderOffers(); }
+  if(qs.get('phone')){ state.phone = qs.get('phone').replace(/\D/g,''); cfgPhone.value = state.phone; saveSettings(); }
+})();
+
+/* =========================
+   Helper to download QR image (used by openQR)
+   ========================= */
+function downloadDataURL(dataURL, filename){
+  const a = document.createElement('a');
+  a.href = dataURL; a.download = filename || 'qr.png';
+  document.body.appendChild(a); a.click(); a.remove();
+}
+
+</script>
+
+</body>
+</html>

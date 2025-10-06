@@ -1,0 +1,558 @@
++<!DOCTYPE html>
++<html lang="ar" dir="rtl">
++<head>
++    <meta charset="UTF-8">
++    <meta name="viewport" content="width=device-width, initial-scale=1.0">
++    <title>🤖 العرّاب AI - محادثة ذكية</title>
++    <meta name="description" content="تحدث مع العرّاب AI - مساعدك الذكي في AlArab Club 777">
++    <style>
++        :root {
++            --primary: #ffd700;
++            --secondary: #1a1a1a;
++            --accent: #00bfff;
++            --text: #ffffff;
++            --text-muted: #888;
++            --bg: #000000;
++            --success: #00ff41;
++            --warning: #ff6b35;
++        }
++        
++        * {
++            margin: 0;
++            padding: 0;
++            box-sizing: border-box;
++        }
++        
++        body {
++            font-family: 'Arial', sans-serif;
++            background: linear-gradient(135deg, var(--bg) 0%, var(--secondary) 100%);
++            color: var(--text);
++            height: 100vh;
++            overflow: hidden;
++        }
++        
++        .chat-container {
++            display: flex;
++            flex-direction: column;
++            height: 100vh;
++            max-width: 1200px;
++            margin: 0 auto;
++            background: rgba(26, 26, 26, 0.9);
++            border: 2px solid var(--primary);
++            border-radius: 20px;
++            overflow: hidden;
++        }
++        
++        .chat-header {
++            background: linear-gradient(45deg, var(--primary), var(--accent));
++            color: var(--bg);
++            padding: 20px;
++            text-align: center;
++            border-bottom: 2px solid var(--primary);
++        }
++        
++        .chat-header h1 {
++            font-size: 1.5rem;
++            margin-bottom: 5px;
++        }
++        
++        .chat-header p {
++            font-size: 0.9rem;
++            opacity: 0.8;
++        }
++        
++        .chat-messages {
++            flex: 1;
++            overflow-y: auto;
++            padding: 20px;
++            display: flex;
++            flex-direction: column;
++            gap: 15px;
++        }
++        
++        .message {
++            max-width: 80%;
++            padding: 15px 20px;
++            border-radius: 20px;
++            position: relative;
++            animation: messageSlide 0.3s ease-out;
++        }
++        
++        .message.user {
++            background: linear-gradient(45deg, var(--primary), var(--accent));
++            color: var(--bg);
++            align-self: flex-end;
++            border-bottom-right-radius: 5px;
++        }
++        
++        .message.ai {
++            background: rgba(26, 26, 26, 0.8);
++            border: 2px solid var(--primary);
++            color: var(--text);
++            align-self: flex-start;
++            border-bottom-left-radius: 5px;
++        }
++        
++        .message.system {
++            background: rgba(0, 255, 65, 0.1);
++            border: 1px solid var(--success);
++            color: var(--success);
++            align-self: center;
++            text-align: center;
++            font-size: 0.9rem;
++        }
++        
++        @keyframes messageSlide {
++            from {
++                opacity: 0;
++                transform: translateY(20px);
++            }
++            to {
++                opacity: 1;
++                transform: translateY(0);
++            }
++        }
++        
++        .message-header {
++            display: flex;
++            align-items: center;
++            gap: 10px;
++            margin-bottom: 8px;
++        }
++        
++        .message-avatar {
++            width: 30px;
++            height: 30px;
++            border-radius: 50%;
++            display: flex;
++            align-items: center;
++            justify-content: center;
++            font-size: 1.2rem;
++            font-weight: bold;
++        }
++        
++        .message-avatar.user {
++            background: var(--bg);
++            color: var(--primary);
++        }
++        
++        .message-avatar.ai {
++            background: var(--primary);
++            color: var(--bg);
++        }
++        
++        .message-sender {
++            font-weight: bold;
++            font-size: 0.9rem;
++        }
++        
++        .message-time {
++            font-size: 0.8rem;
++            opacity: 0.7;
++            margin-left: auto;
++        }
++        
++        .message-content {
++            line-height: 1.5;
++        }
++        
++        .message-actions {
++            display: flex;
++            gap: 10px;
++            margin-top: 10px;
++        }
++        
++        .action-btn {
++            background: transparent;
++            border: 1px solid var(--primary);
++            color: var(--primary);
++            padding: 5px 10px;
++            border-radius: 15px;
++            font-size: 0.8rem;
++            cursor: pointer;
++            transition: all 0.3s ease;
++        }
++        
++        .action-btn:hover {
++            background: var(--primary);
++            color: var(--bg);
++        }
++        
++        .chat-input-container {
++            padding: 20px;
++            border-top: 2px solid var(--primary);
++            background: rgba(26, 26, 26, 0.9);
++        }
++        
++        .chat-input-form {
++            display: flex;
++            gap: 15px;
++            align-items: center;
++        }
++        
++        .chat-input {
++            flex: 1;
++            padding: 15px 20px;
++            border: 2px solid var(--primary);
++            border-radius: 25px;
++            background: var(--secondary);
++            color: var(--text);
++            font-size: 1rem;
++            outline: none;
++            transition: all 0.3s ease;
++        }
++        
++        .chat-input:focus {
++            border-color: var(--accent);
++            box-shadow: 0 0 10px rgba(0, 191, 255, 0.3);
++        }
++        
++        .chat-input::placeholder {
++            color: var(--text-muted);
++        }
++        
++        .send-button {
++            background: linear-gradient(45deg, var(--primary), var(--accent));
++            color: var(--bg);
++            border: none;
++            padding: 15px 25px;
++            border-radius: 25px;
++            font-size: 1rem;
++            font-weight: bold;
++            cursor: pointer;
++            transition: all 0.3s ease;
++            display: flex;
++            align-items: center;
++            gap: 8px;
++        }
++        
++        .send-button:hover {
++            transform: scale(1.05);
++            box-shadow: 0 10px 20px rgba(255, 215, 0, 0.4);
++        }
++        
++        .send-button:disabled {
++            opacity: 0.5;
++            cursor: not-allowed;
++            transform: none;
++            box-shadow: none;
++        }
++        
++        .quick-actions {
++            display: flex;
++            gap: 10px;
++            margin-bottom: 15px;
++            flex-wrap: wrap;
++        }
++        
++        .quick-action {
++            background: rgba(255, 215, 0, 0.1);
++            border: 1px solid var(--primary);
++            color: var(--primary);
++            padding: 8px 15px;
++            border-radius: 20px;
++            font-size: 0.9rem;
++            cursor: pointer;
++            transition: all 0.3s ease;
++        }
++        
++        .quick-action:hover {
++            background: var(--primary);
++            color: var(--bg);
++        }
++        
++        .typing-indicator {
++            display: none;
++            align-items: center;
++            gap: 10px;
++            padding: 15px 20px;
++            background: rgba(26, 26, 26, 0.8);
++            border: 2px solid var(--primary);
++            border-radius: 20px;
++            border-bottom-left-radius: 5px;
++            align-self: flex-start;
++            max-width: 80%;
++        }
++        
++        .typing-dots {
++            display: flex;
++            gap: 4px;
++        }
++        
++        .typing-dot {
++            width: 8px;
++            height: 8px;
++            background: var(--primary);
++            border-radius: 50%;
++            animation: typingDot 1.4s infinite ease-in-out;
++        }
++        
++        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
++        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
++        
++        @keyframes typingDot {
++            0%, 80%, 100% {
++                transform: scale(0);
++                opacity: 0.5;
++            }
++            40% {
++                transform: scale(1);
++                opacity: 1;
++            }
++        }
++        
++        .ai-status {
++            display: flex;
++            align-items: center;
++            gap: 10px;
++            font-size: 0.9rem;
++            color: var(--text-muted);
++        }
++        
++        .status-indicator {
++            width: 10px;
++            height: 10px;
++            border-radius: 50%;
++            background: var(--success);
++            animation: statusPulse 2s infinite;
++        }
++        
++        @keyframes statusPulse {
++            0%, 100% { opacity: 1; }
++            50% { opacity: 0.5; }
++        }
++        
++        @media (max-width: 768px) {
++            .chat-container {
++                border-radius: 0;
++                border: none;
++            }
++            
++            .message {
++                max-width: 90%;
++            }
++            
++            .chat-input-form {
++                flex-direction: column;
++                gap: 10px;
++            }
++            
++            .quick-actions {
++                justify-content: center;
++            }
++        }
++    </style>
++</head>
++<body>
++    <div class="chat-container">
++        <div class="chat-header">
++            <h1>🤖 العرّاب AI</h1>
++            <p>مساعدك الذكي في AlArab Club 777</p>
++            <div class="ai-status">
++                <div class="status-indicator"></div>
++                <span>متصل ومستعد للمساعدة</span>
++            </div>
++        </div>
++        
++        <div class="chat-messages" id="chatMessages">
++            <div class="message system">
++                <div class="message-content">
++                    مرحباً بك في AlArab Club 777! أنا العرّاب AI، مساعدك الذكي. كيف يمكنني مساعدتك اليوم؟
++                </div>
++            </div>
++        </div>
++        
++        <div class="typing-indicator" id="typingIndicator">
++            <div class="message-avatar ai">🤖</div>
++            <div class="typing-dots">
++                <div class="typing-dot"></div>
++                <div class="typing-dot"></div>
++                <div class="typing-dot"></div>
++            </div>
++        </div>
++        
++        <div class="chat-input-container">
++            <div class="quick-actions">
++                <div class="quick-action" onclick="sendQuickMessage('مرحباً')">مرحباً</div>
++                <div class="quick-action" onclick="sendQuickMessage('أريد حجز رحلة')">حجز رحلة</div>
++                <div class="quick-action" onclick="sendQuickMessage('معلومات عن الأهرامات')">معلومات الأهرامات</div>
++                <div class="quick-action" onclick="sendQuickMessage('العرّاب من أنت؟')">من أنت؟</div>
++                <div class="quick-action" onclick="sendQuickMessage('مساعدتي في الروحانيات')">روحانيات</div>
++            </div>
++            
++            <form class="chat-input-form" onsubmit="sendMessage(event)">
++                <input type="text" class="chat-input" id="messageInput" placeholder="اكتب رسالتك هنا..." required>
++                <button type="submit" class="send-button" id="sendButton">
++                    <span>إرسال</span>
++                    <span>📤</span>
++                </button>
++            </form>
++        </div>
++    </div>
++    
++    <script>
++        const chatMessages = document.getElementById('chatMessages');
++        const messageInput = document.getElementById('messageInput');
++        const sendButton = document.getElementById('sendButton');
++        const typingIndicator = document.getElementById('typingIndicator');
++        
++        let isTyping = false;
++        
++        // AI Responses
++        const aiResponses = {
++            'مرحباً': 'مرحباً بك! أنا العرّاب AI، مساعدك الذكي في AlArab Club 777. كيف يمكنني مساعدتك في رحلتك الروحانية؟',
++            'أريد حجز رحلة': 'ممتاز! يمكنني مساعدتك في حجز رحلة إلى الأهرامات أو الصحراء. ما نوع الرحلة التي تفضلها؟\n\n• رحلة صحراوية (سفاري، جمال، ATV)\n• زيارة الأهرامات (نهارية أو ليلية)\n• رحلة روحانية (معبد دندرة، العلاج بالصوت)\n\nأخبرني ما تفضله وسأساعدك في الحجز!',
++            'معلومات عن الأهرامات': 'الأهرامات هي أعجوبة من عجائب الدنيا السبع! إليك بعض المعلومات المثيرة:\n\n🏛️ **هرم خوفو**: الأكبر والأعلى (146.5 متر)\n🏛️ **هرم خفرع**: يحتوي على معبد الوادي\n🏛️ **هرم منقرع**: الأصغر والأكثر تفصيلاً\n\n✨ **أسرار مثيرة**:\n• بنيت قبل 4500 سنة\n• محاذاة دقيقة مع النجوم\n• تحتوي على غرف سرية\n• طاقة روحية قوية\n\nهل تريد معرفة المزيد عن أسرار معينة؟',
++            'العرّاب من أنت؟': 'أنا العرّاب AI، المساعد الذكي لشريف الشاويش مؤسس AlArab Club 777! 🎯\n\n**من أنا:**\n• مساعد ذكي متخصص في السياحة الروحانية\n• أعرف كل شيء عن الأهرامات والطقوس الفرعونية\n• أساعدك في التخطيط لرحلتك المثالية\n• أقدم نصائح روحانية وتاريخية\n\n**مهمتي:**\n• جعل رحلتك لا تُنسى\n• ربطك بالطاقة الروحانية لمصر القديمة\n• تقديم تجربة شخصية ومخصصة\n\nكيف يمكنني مساعدتك في رحلتك الروحانية؟',
++            'مساعدتي في الروحانيات': 'ممتاز! الروحانيات هي جوهر AlArab Club 777! 🧿\n\n**ما يمكنني مساعدتك فيه:**\n\n🔊 **العلاج بالصوت**: ترددات 777Hz للشفاء والتوازن\n🏛️ **معبد دندرة**: طقوس الطاقة والبوابات الروحانية\n🌌 **بوابات الطاقة**: تنشيط الشاكرات والطاقة الداخلية\n📜 **النصوص الطقسية**: ترانيم فرعونية مقدسة\n\n**نصائح روحانية:**\n• استمع للترددات المقدسة 777Hz\n• مارس التأمل عند الأهرامات\n• استخدم الرموز الفرعونية للطاقة\n• اربط روحك بالحضارة القديمة\n\nهل تريد البدء بجلسة علاج بالصوت أم معرفة المزيد عن الطقوس؟'
++        };
++        
++        function sendMessage(event) {
++            event.preventDefault();
++            
++            const message = messageInput.value.trim();
++            if (!message) return;
++            
++            // Add user message
++            addMessage(message, 'user');
++            messageInput.value = '';
++            
++            // Show typing indicator
++            showTypingIndicator();
++            
++            // Simulate AI response
++            setTimeout(() => {
++                hideTypingIndicator();
++                const response = getAIResponse(message);
++                addMessage(response, 'ai');
++            }, 1500 + Math.random() * 1000);
++        }
++        
++        function sendQuickMessage(message) {
++            messageInput.value = message;
++            sendMessage({ preventDefault: () => {} });
++        }
++        
++        function addMessage(content, sender) {
++            const messageDiv = document.createElement('div');
++            messageDiv.className = `message ${sender}`;
++            
++            const now = new Date();
++            const time = now.toLocaleTimeString('ar-SA', { 
++                hour: '2-digit', 
++                minute: '2-digit' 
++            });
++            
++            let avatar, senderName;
++            if (sender === 'user') {
++                avatar = '👤';
++                senderName = 'أنت';
++            } else {
++                avatar = '🤖';
++                senderName = 'العرّاب AI';
++            }
++            
++            messageDiv.innerHTML = `
++                <div class="message-header">
++                    <div class="message-avatar ${sender}">${avatar}</div>
++                    <div class="message-sender">${senderName}</div>
++                    <div class="message-time">${time}</div>
++                </div>
++                <div class="message-content">${content.replace(/\n/g, '<br>')}</div>
++                ${sender === 'ai' ? `
++                    <div class="message-actions">
++                        <button class="action-btn" onclick="copyMessage('${content.replace(/'/g, "\\'")}')">نسخ</button>
++                        <button class="action-btn" onclick="likeMessage(this)">👍</button>
++                        <button class="action-btn" onclick="dislikeMessage(this)">👎</button>
++                    </div>
++                ` : ''}
++            `;
++            
++            chatMessages.appendChild(messageDiv);
++            chatMessages.scrollTop = chatMessages.scrollHeight;
++        }
++        
++        function getAIResponse(message) {
++            const lowerMessage = message.toLowerCase();
++            
++            // Check for exact matches first
++            for (const [key, response] of Object.entries(aiResponses)) {
++                if (lowerMessage.includes(key.toLowerCase())) {
++                    return response;
++                }
++            }
++            
++            // Check for keywords
++            if (lowerMessage.includes('حجز') || lowerMessage.includes('رحلة')) {
++                return 'ممتاز! يمكنني مساعدتك في حجز رحلة. ما نوع الرحلة التي تفضلها؟\n\n• رحلة صحراوية\n• زيارة الأهرامات\n• رحلة روحانية\n\nأخبرني المزيد عن تفضيلاتك!';
++            }
++            
++            if (lowerMessage.includes('سعر') || lowerMessage.includes('تكلفة')) {
++                return 'أسعارنا تنافسية مع خصم 777 خاص! 💰\n\n• رحلة صحراوية: من 50$ للشخص\n• زيارة الأهرامات: من 30$ للشخص\n• رحلة روحانية: من 100$ للشخص\n\nجميع الأسعار تشمل:\n✅ النقل\n✅ المرشد\n✅ الوجبات\n✅ التأمين\n\nهل تريد معرفة المزيد عن أي رحلة؟';
++            }
++            
++            if (lowerMessage.includes('شكراً') || lowerMessage.includes('شكرا')) {
++                return 'العفو! أنا هنا لمساعدتك دائماً. 😊\n\nهل هناك أي شيء آخر يمكنني مساعدتك فيه؟';
++            }
++            
++            if (lowerMessage.includes('وداع') || lowerMessage.includes('باي')) {
++                return 'وداعاً! أتمنى لك رحلة رائعة في AlArab Club 777! 🎯\n\nتذكر: أنا هنا دائماً لمساعدتك. عود إلينا قريباً!';
++            }
++            
++            // Default response
++            return 'شكراً لرسالتك! أنا العرّاب AI، مساعدك الذكي. يمكنني مساعدتك في:\n\n• حجز الرحلات\n• معلومات عن الأهرامات\n• النصائح الروحانية\n• أسئلة عامة\n\nكيف يمكنني مساعدتك بشكل أفضل؟';
++        }
++        
++        function showTypingIndicator() {
++            if (isTyping) return;
++            isTyping = true;
++            typingIndicator.style.display = 'flex';
++            chatMessages.scrollTop = chatMessages.scrollHeight;
++        }
++        
++        function hideTypingIndicator() {
++            isTyping = false;
++            typingIndicator.style.display = 'none';
++        }
++        
++        function copyMessage(content) {
++            navigator.clipboard.writeText(content).then(() => {
++                alert('تم نسخ الرسالة!');
++            });
++        }
++        
++        function likeMessage(button) {
++            button.style.background = 'var(--success)';
++            button.style.color = 'var(--bg)';
++            button.textContent = '👍 شكراً!';
++        }
++        
++        function dislikeMessage(button) {
++            button.style.background = 'var(--warning)';
++            button.style.color = 'var(--bg)';
++            button.textContent = '👎 سأتحسن!';
++        }
++        
++        // Auto-focus input
++        messageInput.focus();
++        
++        // Handle Enter key
++        messageInput.addEventListener('keypress', function(e) {
++            if (e.key === 'Enter' && !e.shiftKey) {
++                e.preventDefault();
++                sendMessage(e);
++            }
++        });
++        
++        // Add some interactive effects
++        document.addEventListener('DOMContentLoaded', function() {
++            // Add welcome message after a delay
++            setTimeout(() => {
++                addMessage('مرحباً! أنا العرّاب AI، مساعدك الذكي في AlArab Club 777. يمكنني مساعدتك في التخطيط لرحلتك الروحانية، حجز الرحلات، أو الإجابة على أسئلتك عن الأهرامات والطقوس الفرعونية. كيف يمكنني مساعدتك اليوم؟', 'ai');
++            }, 1000);
++        });
++    </script>
++</body>
++</html>
+EOF
+)
