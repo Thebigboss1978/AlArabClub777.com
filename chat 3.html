@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>بوابة AlArab Club 777 — Glass Chat Portal</title>
+  <style>
+    /* Glass-style minimal UI */
+    :root{
+      --bg:#0b0f14;
+      --glass:#ffffff22;
+      --accent:#7ee787;
+      --muted:#cbd5e1;
+      --glass-strong:#ffffff33;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    html,body{height:100%;margin:0;background:linear-gradient(180deg,#071021 0%, #06131a 100%);color:var(--muted)}
+    .wrap{min-height:100%;display:flex;align-items:center;justify-content:center;padding:24px}
+    .card{width:100%;max-width:980px;background:linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));backdrop-filter: blur(10px) saturate(120%);border-radius:16px;padding:18px;border:1px solid var(--glass);box-shadow:0 10px 30px rgba(3,6,10,0.6)}
+    header{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+    .logo{width:52px;height:52px;border-radius:10px;background:linear-gradient(90deg,var(--accent),#7ad0ff);display:flex;align-items:center;justify-content:center;color:#041017;font-weight:800}
+    h1{margin:0;font-size:18px}
+    .muted{color:var(--muted);font-size:13px}
+    main{display:grid;grid-template-columns:1fr 360px;gap:14px}
+    .chat{background:transparent;border-radius:12px;padding:12px;min-height:420px;max-height:72vh;overflow:auto;border:1px dashed var(--glass-strong)}
+    .controls{padding:12px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));border:1px solid var(--glass)}
+    .msg{margin:8px 0;padding:10px;border-radius:10px;max-width:78%}
+    .from-user{margin-left:auto;background:linear-gradient(180deg, rgba(126,231,135,0.12), rgba(126,231,135,0.06));border:1px solid rgba(126,231,135,0.12);color:#dfffe0}
+    .from-bot{margin-right:auto;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.005));border:1px solid rgba(255,255,255,0.03);color:var(--muted)}
+    footer{display:flex;gap:8px;align-items:center;margin-top:10px}
+    textarea{width:100%;min-height:72px;border-radius:10px;padding:10px;background:transparent;border:1px solid var(--glass-strong);color:var(--muted);resize:vertical}
+    button{background:var(--accent);border:none;padding:8px 12px;border-radius:10px;color:#041017;font-weight:700;cursor:pointer}
+    .small{background:transparent;border:1px solid var(--glass-strong;color:var(--muted);padding:6px 8px;border-radius:8px}
+    label{font-size:13px;color:var(--muted);display:block;margin-bottom:6px}
+    input[type=text]{width:100%;padding:8px;border-radius:8px;border:1px solid var(--glass-strong);background:transparent;color:var(--muted)}
+    .row{display:flex;gap:8px}
+    .hint{font-size:12px;color:#9fb0c0;margin-top:8px}
+    .meta{font-size:12px;color:#9fb0c0}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card" role="application">
+      <header>
+        <div class="logo">777</div>
+        <div>
+          <h1>بوابة AlArab Club 777 — Glass Chat</h1>
+          <div class="muted">واجهة دردشة زجاجية متصلة بـOllama محلي، Google Drive وGitHub</div>
+        </div>
+      </header>
+
+      <main>
+        <section>
+          <div id="chat" class="chat" aria-live="polite"></div>
+
+          <footer>
+            <textarea id="prompt" placeholder="اكتب سؤالك هنا — ابدأ بجملة واحدة واضحة..."></textarea>
+          </footer>
+          <div style="margin-top:8px;display:flex;gap:8px;align-items:center;justify-content:space-between">
+            <div>
+              <button id="send">أرسل</button>
+              <button id="send-stream" title="محاكاة استريم">إرسال (stream)</button>
+              <button id="clear">مسح</button>
+            </div>
+            <div class="meta">النموذج: <span id="modelName">ollama/default</span></div>
+          </div>
+        </section>
+
+        <aside class="controls">
+          <label>إعدادات الاتصال</label>
+          <div style="margin-bottom:8px">
+            <label>OLLAMA API (مثال: http://localhost:11434)</label>
+            <input id="ollamaBase" type="text" value="http://localhost:11434" />
+          </div>
+          <div style="margin-bottom:8px">
+            <label>Model (مثال: "llama3.2" أو "AlArabClub777/Pyramids:latest")</label>
+            <input id="ollamaModel" type="text" value="AlArabClub777/Pyramids:latest1" />
+          </div>
+
+          <hr style="opacity:0.06;margin:10px 0" />
+
+          <label>تخزين ومشاركة</label>
+          <div style="margin-bottom:8px">
+            <button id="saveDrive">احفظ المحادثة في Google Drive</button>
+          </div>
+          <div style="margin-bottom:8px">
+            <button id="commitGit">احفظ في GitHub (commit)</button>
+          </div>
+
+          <div class="hint">ملاحظة: للأزرار أعلاه تحتاج إلى مفاتيح/توكنات — ضعها بالسكربت أو عبر متغيرات البيئة قبل الاستخدام.</div>
+
+          <hr style="opacity:0.06;margin:10px 0" />
+
+          <label>سجل (debug)</label>
+          <pre id="log" style="height:140px;overflow:auto;background:transparent;border-radius:8px;border:1px solid var(--glass-strong);padding:8px;color:var(--muted)"></pre>
+        </aside>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    // ====== CONFIG (عدل فقط هنا) ======
+    const CONFIG = {
+      OLLAMA_BASE: document.getElementById('ollamaBase').value || 'http://localhost:11434',
+      MODEL: document.getElementById('ollamaModel').value || 'AlArabClub777/Pyramids:latest1',
+      // Google Drive / GitHub tokens must be provided by you locally. This UI WILL NOT store tokens remotely.
+      GDRIVE_API_KEY: '',
+      GITHUB_REPO: '', // e.g. 'username/repo'
+      GITHUB_TOKEN: '',
+    }
+
+    // ====== UI helpers ======
+    const chat = document.getElementById('chat')
+    const log = document.getElementById('log')
+    const modelName = document.getElementById('modelName')
+    const promptEl = document.getElementById('prompt')
+
+    function appendLog(s){ log.textContent += s+'\n'; log.scrollTop = log.scrollHeight }
+    function addMessage(text, who='bot'){
+      const div = document.createElement('div')
+      div.className = 'msg ' + (who === 'user' ? 'from-user' : 'from-bot')
+      div.innerHTML = text.replace(/\n/g,'<br/>')
+      chat.appendChild(div)
+      chat.scrollTop = chat.scrollHeight
+    }
+
+    // update CONFIG UI on input change
+    document.getElementById('ollamaBase').addEventListener('change', e=> CONFIG.OLLAMA_BASE = e.target.value)
+    document.getElementById('ollamaModel').addEventListener('change', e=> { CONFIG.MODEL = e.target.value; modelName.textContent = CONFIG.MODEL })
+
+    // ====== Ollama simple call (non-streaming) ======
+    async function callOllama(prompt){
+      const url = `${CONFIG.OLLAMA_BASE.replace(/\/$/,'')}/api/chat`
+      appendLog('POST -> ' + url)
+      const body = {
+        model: CONFIG.MODEL,
+        messages: [
+          { role: 'system', content: 'You are AlArab Club assistant. Answer in Arabic (mix of fusha and dialects). Keep short, actionable.' },
+          { role: 'user', content: prompt }
+        ],
+        options: { temperature: 0.7, num_predict: 512 }
+      }
+      try{
+        const r = await fetch(url, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body) })
+        if(!r.ok){ const t = await r.text(); appendLog('OLLAMA ERROR: '+r.status+' '+t); addMessage('خطأ في الاتصال بموديل Ollama: '+r.status,'bot'); return }
+        const js = await r.json()
+        // Ollama chat response expected in js.message.content
+        const message = (js.message && (js.message.content || js.message)) || JSON.stringify(js)
+        addMessage(message, 'bot')
+        appendLog('Response OK')
+        return message
+      }catch(err){ appendLog('CALL ERR: '+err); addMessage('خطأ داخلي: '+err,'bot') }
+    }
+
+    // ====== Event handlers ======
+    document.getElementById('send').addEventListener('click', async ()=>{
+      const text = promptEl.value.trim(); if(!text) return
+      addMessage(text,'user')
+      promptEl.value=''
+      appendLog('Sending prompt...')
+      await callOllama(text)
+    })
+
+    document.getElementById('clear').addEventListener('click', ()=>{ chat.innerHTML=''; appendLog('Cleared chat') })
+
+    // ====== Save to Google Drive (requires OAuth/token) ======
+    document.getElementById('saveDrive').addEventListener('click', async ()=>{
+      appendLog('Save to Drive pressed')
+      const conv = Array.from(document.querySelectorAll('.msg')).map(n=>n.innerText).join('\n---\n')
+      const filename = `alArab_conversation_${new Date().toISOString().replace(/[:.]/g,'-')}.txt`
+      if(!CONFIG.GDRIVE_API_KEY){ appendLog('No GDRIVE_API_KEY set in CONFIG'); alert('لم يتم ضبط مفتاح Google Drive. أدخله في CONFIG داخل الملف قبل الاستعمال.'); return }
+      // Note: Proper Drive upload needs OAuth 2.0. This button only attempts to create a public file via Drive's upload endpoint if you set an access token.
+      appendLog('Drive save requires user token — see instructions in file header')
+    })
+
+    // ====== Commit to GitHub (create a file) ======
+    document.getElementById('commitGit').addEventListener('click', async ()=>{
+      appendLog('Commit to Git pressed')
+      if(!CONFIG.GITHUB_REPO || !CONFIG.GITHUB_TOKEN){ appendLog('Missing GITHUB_REPO or GITHUB_TOKEN in CONFIG'); alert('ضع GITHUB_REPO و GITHUB_TOKEN في CONFIG داخل الملف قبل الاستخدام.'); return }
+      const conv = Array.from(document.querySelectorAll('.msg')).map(n=>n.innerText).join('\n---\n')
+      const path = `conversations/${new Date().toISOString().replace(/[:.]/g,'-')}.txt`
+      const createUrl = `https://api.github.com/repos/${CONFIG.GITHUB_REPO}/contents/${encodeURIComponent(path)}`
+      const payload = { message: 'Add conversation via AlArab portal', committer:{name:'AlArab Bot', email:'bot@alarab.club'}, content: btoa(unescape(encodeURIComponent(conv))) }
+      try{
+        const r = await fetch(createUrl, { method:'PUT', headers:{ Authorization:'token '+CONFIG.GITHUB_TOKEN, 'Content-Type':'application/json' }, body: JSON.stringify(payload) })
+        const js = await r.json()
+        if(r.status>=200 && r.status<300){ appendLog('Committed to GitHub: '+path); alert('تم الحفظ في GitHub: '+path); return }
+        appendLog('GitHub error: '+ JSON.stringify(js))
+        alert('خطأ في GitHub: '+(js.message||'unknown'))
+      }catch(e){ appendLog('GitHub commit exception: '+e) }
+    })
+
+    // === Quick demo content if Ollama not available locally ===
+    (async function demoCheck(){
+      try{
+        const r = await fetch(CONFIG.OLLAMA_BASE + '/api/ping')
+        if(r.ok) appendLog('Ollama ping OK')
+      }catch(e){ appendLog('No Ollama detected at ' + CONFIG.OLLAMA_BASE + ' — you can still use UI and connect later.') }
+    })()
+
+  </script>
+</body>
+</html>
