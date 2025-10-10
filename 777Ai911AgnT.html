@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>AI-Agent 777 – Self-Boot Portal</title>
+<style>
+body{margin:0;background:#000;color:#00fff5;font-family:system-ui;text-align:center;overflow:hidden}
+#stars{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0}
+#ui{position:relative;z-index:1;margin-top:45vh}
+</style>
+</head>
+<body>
+<canvas id="stars"></canvas>
+<div id="ui"><h2>🫆 Booting AlArab 777 Agent...</h2></div>
+
+<script>
+// ───────────── [1] نظام الخلفية
+(()=>{const c=document.getElementById('stars'),x=c.getContext('2d');
+c.width=innerWidth;c.height=innerHeight;
+const s=Array.from({length:777},()=>({x:Math.random()*c.width,y:Math.random()*c.height,z:Math.random()*c.width}));
+(function a(){x.fillStyle="#000";x.fillRect(0,0,c.width,c.height);
+for(const i of s){i.z-=2;if(i.z<=0)i.z=c.width;
+const X=(i.x-c.width/2)*(c.width/i.z)+c.width/2,Y=(i.y-c.height/2)*(c.width/i.z)+c.height/2;
+x.fillStyle="#00fff5";x.fillRect(X,Y,(1-i.z/c.width)*2,(1-i.z/c.width)*2);}requestAnimationFrame(a)})()})();
+
+// ───────────── [2] نظام الكشف التلقائي
+(()=>{const id='agent-'+Math.random().toString(36).slice(2,7);
+console.log('🧠 Boot ID:',id);
+navigator.permissions?.query({name:"camera"}).then(p=>console.log('🎥 Cam:',p.state)).catch(()=>{});
+setTimeout(()=>document.getElementById('ui').innerHTML='<button id="open">Enter</button>',2000);
+})();
+
+// ───────────── [3] أوامر ذاتية متداخلة (script inside script)
+(()=>{window.addEventListener('click',e=>{
+if(e.target.id==='open'){
+  (function stage1(){console.log('🪄 dressing self');stage2()})();
+  function stage2(){console.log('⚙️ syncing memory');stage3()}
+  function stage3(){console.log('🌐 link ready');document.getElementById('ui').innerHTML='✅ Agent Ready'}}
+});})();
+</script>
+</body>
+</html>

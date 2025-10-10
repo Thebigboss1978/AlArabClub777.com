@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AlArab 777 Portal — Stellar Gateway • To The Moon 🚀</title>
+    <style>
+        :root {
+            --cyber-cyan: #00fff5;
+            --cyber-gold: #ffcc66;
+            --cyber-purple: #9d4edd;
+            --deep-space: #000000;
+            --panel-glass: rgba(7, 16, 33, 0.7);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            height: 100%;
+            overflow-x: hidden;
+            background: var(--deep-space);
+            color: var(--cyber-cyan);
+            font-family: 'Courier New', 'Inter', system-ui, -apple-system, monospace;
+        }
+
+        /* Stellar Background */
+        #stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        /* Boot Screen */
+        #bootScreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            transition: opacity 1s, visibility 1s;
+        }
+
+        #bootScreen.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .boot-content h2 {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            text-shadow: 0 0 20px var(--cyber-cyan);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+
+        .boot-logo {
+            font-size: 80px;
+            margin-bottom: 20px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .boot-text {
+            font-size: 14px;
+            color: var(--cyber-gold);
+            margin-top: 20px;
+            letter-spacing: 2px;
+        }
+
+        #enterBtn {
+            margin-top: 40px;
+            padding: 15px 50px;
+            font-size: 18px;
+            font-weight: bold;
+            background: linear-gradient(90deg, var(--cyber-cyan), var(--cyber-purple));
+            border: none;
+            border-radius: 50px;
+            color: #000;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 0 30px rgba(0, 255, 245, 0.5);
+        }
+
+        #enterBtn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 50px rgba(0, 255, 245, 0.8);
+        }
+
+        /* Main Container */
+        #mainPortal {
+            position: relative;
+            z-index: 1;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 1s, visibility 1s;
+        }
+
+        #mainPortal.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Header */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 60;
+            padding: 15px 25px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: linear-gradient(180deg, rgba(0,0,0,0.8), rgba(7,16,33,0.6));
+            backdrop-filter: blur(12px);
+            border-bottom: 2px solid var(--cyber-cyan);
+            box-shadow: 0 0 30px rgba(0, 255, 245, 0.3);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--cyber-cyan), var(--cyber-purple));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            color: #000;
+            font-size: 22px;
+            box-shadow: 0 0 20px rgba(0, 255, 245, 0.6);
+            animation: rotate 10s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        h1 {
+            font-size: 1.3rem;
+            margin: 0;
+            text-shadow: 0 0 10px var(--cyber-cyan);
+        }
+
+        .header-note {
+            font-size: 11px;
+            color: var(--cyber-gold);
+            letter-spacing: 1px;
+        }
+
+        .status-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 15px;
+            background: rgba(0, 255, 245, 0.1);
+            border: 1px solid var(--cyber-cyan);
+            border-radius: 20px;
+            font-size: 12px;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            background: #4ade80;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 30px auto;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 1fr 450px;
+            gap: 20px;
+        }
+
+        @media (max-width: 1200px) {
+            .container {
+                grid-template-columns: 1fr 400px;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Panel */
+        .panel {
+            background: var(--panel-glass);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid rgba(0, 255, 245, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 255, 245, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(0, 255, 245, 0.2);
+        }
+
+        .panel-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--cyber-cyan);
+            text-shadow: 0 0 10px var(--cyber-cyan);
+        }
+
+        /* Gallery */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .card {
+            border-radius: 12px;
+            overflow: hidden;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(0, 255, 245, 0.2);
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 40px rgba(0, 255, 245, 0.3);
+            border-color: var(--cyber-cyan);
+        }
+
+        .thumb {
+            height: 150px;
+            border-radius: 10px;
+            background: #0b0d12;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--cyber-gold);
+            font-weight: 800;
+            font-size: 1.2rem;
+            text-shadow: 0 0 10px var(--cyber-gold);
+        }
+
+        .card-title {
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--cyber-cyan);
+        }
+
+        .card-desc {
+            color: var(--cyber-gold);
+            font-size: 0.85rem;
+            opacity: 0.8;
+        }
+
+        /* AI Agent Chat */
+        .agent-section {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .chat-window {
+            height: 50vh;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 12px;
+            padding: 15px;
+            overflow-y: auto;
+            border: 1px solid rgba(0, 255, 245, 0.2);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .msg {
+            padding: 12px 16px;
+            border-radius: 12px;
+            max-width: 85%;
+            line-height: 1.6;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .msg.user {
+            align-self: flex-end;
+            background: linear-gradient(90deg, var(--cyber-purple), var(--cyber-cyan));
+            color: #000;
+            font-weight: 600;
+            border-bottom-left-radius: 4px;
+        }
+
+        .msg.bot {
+            align-self: flex-start;
+            background: rgba(0, 255, 245, 0.1);
+            color: var(--cyber-cyan);
+            border: 1px solid rgba(0, 255, 245, 0.3);
+            border-bottom-right-radius: 4px;
+        }
+
+        .typing-indicator {
+            align-self: flex-start;
+            padding: 12px 16px;
+            background: rgba(0, 255, 245, 0.1);
+            border-radius: 12px;
+            border: 1px solid rgba(0, 255, 245, 0.3);
+            display: none;
+        }
+
+        .typing-indicator.active {
+            display: block;
+        }
+
+        .typing-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--cyber-cyan);
+            margin: 0 3px;
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-8px); }
+        }
+
+        .input-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .input-row input {
+            flex: 1;
+            padding: 12px 16px;
+            border-radius: 12px;
+            border: 1px solid rgba(0, 255, 245, 0.3);
+            background: rgba(0, 0, 0, 0.5);
+            color: var(--cyber-cyan);
+            font-family: inherit;
+            transition: all 0.3s;
+        }
+
+        .input-row input:focus {
+            outline: none;
+            border-color: var(--cyber-cyan);
+            box-shadow: 0 0 15px rgba(0, 255, 245, 0.3);
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 12px;
+            border: none;
+            background: linear-gradient(90deg, var(--cyber-cyan), var(--cyber-purple));
+            color: #000;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(0, 255, 245, 0.5);
+        }
+
+        /* Port Control */
+        .port-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .port-grid .btn {
+            font-size: 12px;
+            padding: 10px;
+        }
+
+        #portOutput {
+            margin-top: 15px;
+            background: rgba(0, 0, 0, 0.7);
+            color: var(--cyber-gold);
+            padding: 12px;
+            border-radius: 10px;
+            height: 150px;
+            overflow: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            border: 1px solid rgba(0, 255, 245, 0.2);
+        }
+
+        /* Footer */
+        .footer {
+            max-width: 1400px;
+            margin: 30px auto;
+            text-align: center;
+            color: var(--cyber-gold);
+            font-size: 13px;
+            padding-bottom: 50px;
+            text-shadow: 0 0 10px var(--cyber-gold);
+        }
+
+        .btc-ticker {
+            display: inline-block;
+            animation: float 2s ease-in-out infinite;
+            font-weight: bold;
+            color: #ff9500;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--cyber-cyan);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--cyber-purple);
+        }
+    </style>
+</head>
+<body>
+    <!-- Stellar Background -->
+    <canvas id="stars"></canvas>
+
+    <!-- Boot Screen -->
+    <div id="bootScreen">
+        <div class="boot-content">
+            <div class="boot-logo">🫆</div>
+            <h2>Booting AlArab 777 Agent...</h2>
+            <div class="boot-text">DECENTRALIZED • AUTONOMOUS • UNSTOPPABLE</div>
+            <div class="boot-text" style="margin-top: 10px;">₿ TO THE MOON 🚀</div>
+            <button id="enterBtn">ENTER PORTAL</button>
+        </div>
+    </div>
+
+    <!-- Main Portal -->
+    <div id="mainPortal">
+        <header>
+            <div class="brand">
+                <div class="logo">777</div>
+                <div>
+                    <h1>AlArab 777 Portal — Stellar Gateway</h1>
+                    <div class="header-note">DECENTRALIZED AI • BLOCKCHAIN NATIVE • BTC FOREVER 🚀</div>
+                </div>
+            </div>
+            <div class="status-badge">
+                <span class="status-dot"></span>
+                <span>ONLINE • M1 MacBook Pro</span>
+            </div>
+        </header>
+
+        <main class="container">
+            <!-- LEFT: Gallery -->
+            <section class="panel">
+                <div class="panel-header">
+                    <div class="panel-title">📸 Stellar Gallery</div>
+                    <div style="font-size: 11px; color: var(--cyber-gold);">Auto-sync • Port 7777</div>
+                </div>
+
+                <div id="gallery" class="gallery-grid">
+                    <!-- Generated by JS -->
+                </div>
+            </section>
+
+            <!-- RIGHT: AI Agent + Control -->
+            <aside class="agent-section">
+                <div class="panel">
+                    <div class="panel-header">
+                        <div class="panel-title">🤖 العرّاب AI Agent</div>
+                        <select id="modelSelect" style="padding: 6px 12px; border-radius: 8px; background: rgba(0,0,0,0.5); color: var(--cyber-cyan); border: 1px solid rgba(0,255,245,0.3);">
+                            <!-- Populated by JS -->
+                        </select>
+                    </div>
+
+                    <div id="chat" class="chat-window">
+                        <div class="msg bot">🌟 مرحباً Bitcoiner! أنا العرّاب، AI Agent ذاتي التشغيل. TO THE MOON! 🚀₿</div>
+                    </div>
+
+                    <div class="typing-indicator" id="typingIndicator">
+                        <span class="typing-dot"></span>
+                        <span class="typing-dot"></span>
+                        <span class="typing-dot"></span>
+                    </div>
+
+                    <div class="input-row">
+                        <input id="userMsg" placeholder="أدخل أمرك أو سؤالك... (مثال: status • close port 7777)" autocomplete="off">
+                        <button class="btn" id="sendBtn">SEND ➤</button>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-header">
+                        <div class="panel-title">🧱 Port Control</div>
+                    </div>
+
+                    <div class="port-grid">
+                        <input id="portNum" placeholder="Port #" type="number" style="padding: 10px; background: rgba(0,0,0,0.5); color: var(--cyber-cyan); border: 1px solid rgba(0,255,245,0.3); border-radius: 8px;">
+                        <button class="btn" onclick="doExec('list')">LIST</button>
+                        <button class="btn" onclick="doExec('scan')">SCAN</button>
+                        <button class="btn" onclick="doExec('find', getPort())">FIND</button>
+                        <button class="btn" onclick="doExec('close', getPort())">CLOSE</button>
+                        <button class="btn" onclick="doExec('force', getPort())">FORCE</button>
+                    </div>
+
+                    <pre id="portOutput"></pre>
+                </div>
+            </aside>
+        </main>
+
+        <div class="footer">
+            <div class="btc-ticker">₿ BTC TO THE MOON 🚀</div>
+            <br>
+            AlArabClub777 — العرّاب © 2025 — Decentralized AI Portal
+            <br>
+            MacBook Pro M1 • GitHub • Google Drive • Avil Integration
+            <br>
+            <span style="opacity: 0.7;">Self-Boot • Blockchain Native • HODL Forever 💎🙌</span>
+        </div>
+    </div>
+
+    <script>
+        // ═══════════════════════════════════════════════════════════
+        // [1] STELLAR BACKGROUND SYSTEM — 777 STARS TO THE MOON
+        // ═══════════════════════════════════════════════════════════
+        (()=>{
+            const canvas = document.getElementById('stars');
+            const ctx = canvas.getContext('2d');
+            
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            
+            const stars = Array.from({length: 777}, () => ({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                z: Math.random() * canvas.width,
+                size: Math.random() * 2
+            }));
+
+            function animateStars() {
+                ctx.fillStyle = '#000';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                for (const star of stars) {
+                    star.z -= 3;
+                    if (star.z <= 0) star.z = canvas.width;
+                    
+                    const x = (star.x - canvas.width/2) * (canvas.width/star.z) + canvas.width/2;
+                    const y = (star.y - canvas.height/2) * (canvas.width/star.z) + canvas.height/2;
+                    const size = (1 - star.z/canvas.width) * star.size * 3;
+                    
+                    const brightness = 1 - star.z/canvas.width;
+                    ctx.fillStyle = `rgba(0, 255, 245, ${brightness})`;
+                    ctx.fillRect(x, y, size, size);
+                }
+                
+                requestAnimationFrame(animateStars);
+            }
+            
+            animateStars();
+
+            window.addEventListener('resize', () => {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            });
+        })();
+
+        // ═══════════════════════════════════════════════════════════
+        // [2] BOOT SYSTEM & AUTO-DETECTION
+        // ═══════════════════════════════════════════════════════════
+        (()=>{
+            const agentId = 'agent-' + Math.random().toString(36).slice(2, 7);
+            console.log('🧠 Boot ID:', agentId);
+            console.log('💻 System: MacBook Pro M1');
+            console.log('₿ Mode: Decentralized Bitcoin Believer');
+            
+            const enterBtn = document.getElementById('enterBtn');
+            const bootScreen = document.getElementById('bootScreen');
+            const mainPortal = document.getElementById('mainPortal');
+            
+            enterBtn.addEventListener('click', () => {
+                bootScreen.classList.add('hidden');
+                setTimeout(() => {
+                    mainPortal.classList.add('visible');
+                    initPortal();
+                }, 1000);
+            });
+        })();
+
+        // ═══════════════════════════════════════════════════════════
+        // [3] PORTAL INITIALIZATION
+        // ═══════════════════════════════════════════════════════════
+        const BACKEND = 'http://127.0.0.1:11434'; // Local backend for AI and Port Control
+        const API_KEY = 'alarab-secret-7777';
+        const MODELS = [
+            {id: 'local:AlArabClub777', label: 'Local — AlArabClub777'},
+            {id: 'local:deepseek-r1', label: 'Local — deepseek-r1'},
+            {id: 'local:llama3', label: 'Local — llama3'},
+            {id: 'online:gpt-oss', label: 'Online — GPT'},
+            {id: 'online:mixtral', label: 'Online — Mixtral'}
+        ];
+
+        function initPortal() {
+            loadGallery();
+            initAIAgent();
+        }
+
+        // ═══════════════════════════════════════════════════════════
+        // [4] GALLERY SYSTEM
+        // ═══════════════════════════════════════════════════════════
+        async function loadGallery() {
+            const gallery = document.getElementById('gallery');
+            gallery.innerHTML = '';
+            
+            const demoItems = [
+                '🌌 Nebula', '🪐 Saturn', '🌟 Supernova',
+                '🚀 Rocket', '🛸 UFO', '💎 Diamond'
+            ];
+            
+            demoItems.forEach((item, i) => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <div class="thumb">${item}</div>
+                    <div class="card-title">Asset ${i + 1}</div>
+                    <div class="card-desc">Stellar Collection</div>
+                `;
+                gallery.appendChild(card);
+            });
+        }
+
+        // ═══════════════════════════════════════════════════════════
+        // [5] AI AGENT SYSTEM
+        // ═══════════════════════════════════════════════════════════
+        function initAIAgent() {
+            const chat = document.getElementById('chat');
+            const userMsg = document.getElementById('userMsg');
+            const sendBtn = document.getElementById('sendBtn');
+            const modelSelect = document.getElementById('modelSelect');
+            const typingIndicator = document.getElementById('typingIndicator');
+
+            MODELS.forEach(m => {
+                const opt = document.createElement('option');
+                opt.value = m.id;
+                opt.textContent = m.label;
+                modelSelect.appendChild(opt);
+            });
+
+            const responses = {
+                'bitcoin': '₿ BTC TO THE MOON! 🚀 HODL FOREVER! Diamond hands! 💎🙌',
+                'status': '✅ All systems operational\n🌌 Stellar background: ACTIVE\n🤖 AI Agent: ONLINE\n💻 M1 MacBook: READY\n₿ BTC Mode: ENGAGED',
+                'moon': '🌙 We\'re going to the MOON! Just like Bitcoin! 🚀₿',
+                'port': 'استخدم لوحة Port Control للتحكم في البورتات 🧱',
+                'help': '🌟 Available commands:\n• bitcoin - BTC info\n• status - System check\n• moon - 🚀\n• port - Port control\n• decentralized - Philosophy',
+                'decentralized': '🔓 Decentralization is freedom!\n₿ Be your own bank\n🚀 No limits, no borders',
+                'default': '🤖 Received! Processing your command... TO THE MOON! 🚀'
+            };
+
+            async function sendMessage() {
+                const text = userMsg.value.trim();
+                if (!text) return;
+
+                appendChat('user', text);
+                userMsg.value = '';
+                sendBtn.disabled = true;
+                typingIndicator.classList.add('active');
+
+                await new Promise(r => setTimeout(r, 1000));
+                typingIndicator.classList.remove('active');
+
+                let reply = responses['default'];
+                for (let key in responses) {
+                    if (text.toLowerCase().includes(key)) {
+                        reply = responses[key];
+                        break;
+                    }
+                }
+
+                appendChat('bot', reply);
+                sendBtn.disabled = false;
+                userMsg.focus();
+            }
+
+            function appendChat(who, text) {
+                const msg = document.createElement('div');
+                msg.className = 'msg ' + who;
+                msg.textContent = text;
+                chat.appendChild(msg);
+                chat.scrollTop = chat.scrollHeight;
+            }
+
+            sendBtn.addEventListener('click', sendMessage);
+            userMsg.addEventListener('keypress', e => {
+                if (e.key === 'Enter') sendMessage();
+            });
+        }
+
+        // ═══════════════════════════════════════════════════════════
+        // [6] PORT CONTROL SYSTEM
+        // ═══════════════════════════════════════════════════════════
+        function getPort() {
+            return document.getElementById('portNum').value;
+        }
+
+        async function doExec(cmd, arg) {
+            const out = document.getElementById('portOutput');
+            out.textContent += `\n$ ${cmd} ${arg || ''}\n`;
+            out.textContent += `⚡ Executing on M1 MacBook Pro...\n`;
+            out.textContent += `✅ Command queued for processing\n`;
+            out.scrollTop = out.scrollHeight;
+        }
+    </script>
+</body>
+</html>
