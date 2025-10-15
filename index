@@ -1,0 +1,1620 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AlArab 777 - Digital Agent Machine v2.2 Hyper Awareness</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Cairo', 'Orbitron', sans-serif;
+      background: #000;
+      color: #fff;
+      overflow: hidden;
+      height: 100vh;
+    }
+
+    #canvas3d {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+
+    .bg-animated {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(ellipse at 20% 30%, rgba(0, 255, 255, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 70%, rgba(255, 0, 255, 0.15) 0%, transparent 50%),
+        #000;
+      z-index: 0;
+      animation: bgPulse 8s ease-in-out infinite;
+      transition: all 0.5s;
+    }
+
+    @keyframes bgPulse {
+      0%, 100% { opacity: 0.8; }
+      50% { opacity: 1; }
+    }
+
+    .brand-logo {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .logo-hologram {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #00FFFF 0%, #FF00FF 100%);
+      padding: 2px;
+      box-shadow: 
+        0 0 20px rgba(0, 255, 255, 0.6),
+        0 0 40px rgba(255, 0, 255, 0.4),
+        0 0 60px rgba(0, 255, 255, 0.2);
+      animation: logoFloat 3s ease-in-out infinite;
+    }
+
+    @keyframes logoFloat {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-10px) rotate(180deg); }
+    }
+
+    .logo-inner {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 900;
+      font-size: 22px;
+      background: linear-gradient(45deg, #000, #111);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .logo-inner::before {
+      content: '777';
+      position: absolute;
+      background: linear-gradient(90deg, #00FFFF, #FF00FF);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: logoGlow 2s ease-in-out infinite;
+    }
+
+    @keyframes logoGlow {
+      0%, 100% { filter: drop-shadow(0 0 5px #00FFFF); }
+      50% { filter: drop-shadow(0 0 15px #FF00FF); }
+    }
+
+    .brand-text {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 20px;
+      font-weight: 900;
+      background: linear-gradient(90deg, #00FFFF, #FF00FF, #00FFFF);
+      background-size: 200% 100%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: textShimmer 3s linear infinite;
+      letter-spacing: 2px;
+    }
+
+    @keyframes textShimmer {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 200% 50%; }
+    }
+
+    .brand-subtitle {
+      position: fixed;
+      top: 100px;
+      right: 25px;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 11px;
+      color: rgba(0, 255, 255, 0.6);
+      z-index: 100;
+      text-align: right;
+    }
+
+    /* HUD System المحسّن */
+    .hud-container {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px;
+      height: 600px;
+      pointer-events: none;
+      z-index: 20;
+      opacity: 0;
+      transition: opacity 0.5s;
+    }
+
+    .hud-container.active {
+      opacity: 1;
+    }
+
+    .hud-ring {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border: 2px solid rgba(0, 255, 255, 0.3);
+      border-radius: 50%;
+      animation: hudRotate 10s linear infinite;
+    }
+
+    .hud-ring:nth-child(1) {
+      width: 350px;
+      height: 350px;
+      border-style: dashed;
+    }
+
+    .hud-ring:nth-child(2) {
+      width: 420px;
+      height: 420px;
+      animation-direction: reverse;
+      animation-duration: 15s;
+    }
+
+    .hud-ring:nth-child(3) {
+      width: 500px;
+      height: 500px;
+      border-color: rgba(255, 0, 255, 0.3);
+      animation-duration: 20s;
+    }
+
+    @keyframes hudRotate {
+      from { transform: translate(-50%, -50%) rotate(0deg); }
+      to { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    /* الشبكة العصبية */
+    .neural-network {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+    }
+
+    .neuron {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: #00FFFF;
+      border-radius: 50%;
+      box-shadow: 0 0 10px #00FFFF;
+      animation: neuronPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes neuronPulse {
+      0%, 100% { transform: scale(1); opacity: 0.6; }
+      50% { transform: scale(1.5); opacity: 1; }
+    }
+
+    .neural-connection {
+      position: absolute;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.4), transparent);
+      transform-origin: left center;
+      animation: connectionFlow 3s linear infinite;
+    }
+
+    @keyframes connectionFlow {
+      0% { opacity: 0; }
+      50% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+
+    .hud-label {
+      position: absolute;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 11px;
+      color: #00FFFF;
+      text-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+      font-weight: 700;
+      animation: labelGlow 2s ease-in-out infinite;
+    }
+
+    @keyframes labelGlow {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 1; }
+    }
+
+    .hud-label:nth-child(10) { top: 8%; left: 50%; transform: translateX(-50%); }
+    .hud-label:nth-child(11) { bottom: 8%; left: 50%; transform: translateX(-50%); }
+    .hud-label:nth-child(12) { left: 8%; top: 50%; transform: translateY(-50%); }
+    .hud-label:nth-child(13) { right: 8%; top: 50%; transform: translateY(-50%); }
+
+    .agent-status-bar {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, 220px);
+      z-index: 50;
+      text-align: center;
+      pointer-events: none;
+    }
+
+    .status-text {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 16px;
+      color: #00FFFF;
+      text-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+      margin-bottom: 12px;
+      animation: statusBreathe 2s ease-in-out infinite;
+    }
+
+    @keyframes statusBreathe {
+      0%, 100% { opacity: 0.8; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.05); }
+    }
+
+    .waveform {
+      width: 320px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      margin: 0 auto;
+    }
+
+    .wave-bar {
+      width: 5px;
+      background: linear-gradient(to top, #00FFFF, #FF00FF);
+      border-radius: 3px;
+      transition: height 0.05s;
+      box-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+    }
+
+    .chat-glass {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 450px;
+      background: rgba(5, 10, 20, 0.85);
+      border: 1px solid rgba(0, 255, 255, 0.3);
+      border-radius: 20px;
+      box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.6),
+        inset 0 0 20px rgba(0, 255, 255, 0.05);
+      backdrop-filter: blur(20px);
+      z-index: 50;
+      overflow: hidden;
+    }
+
+    .chat-header {
+      padding: 15px 20px;
+      background: linear-gradient(90deg, rgba(0, 255, 255, 0.1), rgba(255, 0, 255, 0.1));
+      border-bottom: 1px solid rgba(0, 255, 255, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .pulse-indicator {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #00FF00;
+      box-shadow: 0 0 10px #00FF00;
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.3); opacity: 0.7; }
+    }
+
+    .agent-name {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #00FFFF;
+    }
+
+    .mode-badge {
+      padding: 5px 14px;
+      background: rgba(0, 255, 255, 0.2);
+      border-radius: 12px;
+      font-size: 10px;
+      color: #00FFFF;
+      font-family: 'Orbitron', sans-serif;
+      transition: all 0.3s;
+    }
+
+    .chat-messages {
+      height: 240px;
+      overflow-y: auto;
+      padding: 18px;
+      scroll-behavior: smooth;
+    }
+
+    .chat-messages::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    .chat-messages::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.3);
+    }
+
+    .chat-messages::-webkit-scrollbar-thumb {
+      background: linear-gradient(to bottom, #00FFFF, #FF00FF);
+      border-radius: 3px;
+    }
+
+    .message {
+      margin-bottom: 12px;
+      padding: 11px 14px;
+      border-radius: 12px;
+      animation: messageAppear 0.4s ease-out;
+    }
+
+    @keyframes messageAppear {
+      from { transform: translateX(30px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    .message.user {
+      background: linear-gradient(135deg, rgba(0, 255, 255, 0.15), rgba(0, 255, 255, 0.05));
+      border-right: 3px solid #00FFFF;
+      text-align: right;
+    }
+
+    .message.agent {
+      background: linear-gradient(135deg, rgba(255, 0, 255, 0.15), rgba(255, 0, 255, 0.05));
+      border-right: 3px solid #FF00FF;
+      text-align: right;
+    }
+
+    .message.system {
+      background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 215, 0, 0.05));
+      border-right: 3px solid #FFD700;
+      text-align: center;
+      font-size: 12px;
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    .message-text {
+      font-size: 13px;
+      line-height: 1.6;
+      direction: rtl;
+    }
+
+    .message-time {
+      font-size: 9px;
+      opacity: 0.5;
+      margin-top: 4px;
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    .chat-controls {
+      padding: 10px 18px;
+      border-top: 1px solid rgba(0, 255, 255, 0.2);
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .control-btn {
+      padding: 5px 10px;
+      background: rgba(0, 255, 255, 0.1);
+      border: 1px solid rgba(0, 255, 255, 0.3);
+      border-radius: 8px;
+      color: #00FFFF;
+      font-size: 10px;
+      font-family: 'Orbitron', sans-serif;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .control-btn:hover {
+      background: rgba(0, 255, 255, 0.2);
+      transform: scale(1.05);
+    }
+
+    .control-btn.active {
+      background: rgba(0, 255, 255, 0.3);
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+    }
+
+    .chat-input-zone {
+      padding: 14px 18px;
+      border-top: 1px solid rgba(0, 255, 255, 0.2);
+      display: flex;
+      gap: 8px;
+    }
+
+    .input-field {
+      flex: 1;
+      padding: 11px 14px;
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(0, 255, 255, 0.3);
+      border-radius: 12px;
+      color: #fff;
+      font-family: 'Cairo', sans-serif;
+      font-size: 13px;
+      outline: none;
+      transition: all 0.3s;
+      direction: rtl;
+    }
+
+    .input-field:focus {
+      border-color: #00FFFF;
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+      background: rgba(0, 0, 0, 0.7);
+    }
+
+    .action-btn {
+      width: 42px;
+      height: 42px;
+      background: linear-gradient(135deg, #00FFFF, #FF00FF);
+      border: none;
+      border-radius: 11px;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .action-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
+    }
+
+    .action-btn.listening {
+      animation: recordPulse 1s ease-in-out infinite;
+    }
+
+    @keyframes recordPulse {
+      0%, 100% { box-shadow: 0 0 20px rgba(255, 0, 0, 0.8); }
+      50% { box-shadow: 0 0 40px rgba(255, 0, 0, 1); }
+    }
+
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      z-index: 200;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: rgba(5, 10, 20, 0.95);
+      border: 2px solid rgba(0, 255, 255, 0.5);
+      border-radius: 20px;
+      padding: 28px;
+      width: 420px;
+      max-height: 85vh;
+      overflow-y: auto;
+      backdrop-filter: blur(20px);
+    }
+
+    .modal-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 22px;
+      color: #00FFFF;
+      margin-bottom: 18px;
+      text-align: center;
+    }
+
+    .setting-group {
+      margin-bottom: 18px;
+    }
+
+    .setting-label {
+      font-size: 13px;
+      color: #00FFFF;
+      margin-bottom: 7px;
+      display: block;
+    }
+
+    .setting-input, .setting-select {
+      width: 100%;
+      padding: 10px;
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(0, 255, 255, 0.3);
+      border-radius: 8px;
+      color: #fff;
+      font-family: 'Cairo', sans-serif;
+      outline: none;
+    }
+
+    .modal-btn {
+      width: 100%;
+      padding: 11px;
+      background: linear-gradient(135deg, #00FFFF, #FF00FF);
+      border: none;
+      border-radius: 12px;
+      color: #fff;
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-top: 8px;
+    }
+
+    .modal-btn:hover {
+      transform: scale(1.05);
+    }
+
+    .memory-list {
+      max-height: 300px;
+      overflow-y: auto;
+      margin-top: 12px;
+    }
+
+    .memory-item {
+      padding: 10px;
+      background: rgba(0, 255, 255, 0.05);
+      border-left: 2px solid #00FFFF;
+      border-radius: 6px;
+      margin-bottom: 8px;
+      font-size: 12px;
+    }
+
+    .memory-time {
+      font-size: 10px;
+      color: rgba(0, 255, 255, 0.6);
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    .system-watermark {
+      position: fixed;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Orbitron', monospace;
+      font-size: 10px;
+      color: rgba(0, 255, 255, 0.4);
+      z-index: 100;
+      text-align: center;
+      letter-spacing: 2px;
+      animation: watermarkGlow 4s ease-in-out infinite;
+    }
+
+    @keyframes watermarkGlow {
+      0%, 100% { text-shadow: 0 0 5px rgba(0, 255, 255, 0.3); opacity: 0.5; }
+      50% { text-shadow: 0 0 15px rgba(255, 0, 255, 0.5); opacity: 0.8; }
+    }
+
+    @media (max-width: 768px) {
+      .chat-glass {
+        width: calc(100% - 30px);
+        right: 15px;
+        bottom: 15px;
+      }
+      
+      .brand-logo {
+        transform: scale(0.75);
+      }
+      
+      .hud-container {
+        width: 350px;
+        height: 350px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-animated" id="bgAnimated"></div>
+  <canvas id="canvas3d"></canvas>
+
+  <!-- HUD System -->
+  <div class="hud-container" id="hudContainer">
+    <div class="hud-ring"></div>
+    <div class="hud-ring"></div>
+    <div class="hud-ring"></div>
+    <div class="neural-network" id="neuralNetwork"></div>
+    <div class="hud-label">NEURAL SYNC</div>
+    <div class="hud-label">DATA FLOW</div>
+    <div class="hud-label">PROCESSING</div>
+    <div class="hud-label">ACTIVE NODES</div>
+  </div>
+
+  <div class="brand-logo">
+    <div class="logo-hologram">
+      <div class="logo-inner"></div>
+    </div>
+    <div class="brand-text">AlArab 777</div>
+  </div>
+  <div class="brand-subtitle">
+    powered by <strong>AlArab 777 Intelligence Framework</strong><br>
+    <span style="font-size: 9px; opacity: 0.7;">Hyper Awareness Edition</span>
+  </div>
+
+  <div class="agent-status-bar">
+    <div class="status-text" id="statusText">جاري تحميل الوعي المفرط...</div>
+    <div class="waveform" id="waveform"></div>
+  </div>
+
+  <div class="chat-glass">
+    <div class="chat-header">
+      <div class="header-left">
+        <div class="pulse-indicator" id="pulseIndicator"></div>
+        <div class="agent-name" id="agentName">ARA-777</div>
+      </div>
+      <div class="mode-badge" id="modeBadge">وضع عادي</div>
+    </div>
+    
+    <div class="chat-controls">
+      <button class="control-btn" onclick="switchMode('normal')">عادي</button>
+      <button class="control-btn" onclick="switchMode('consciousness')">وعي</button>
+      <button class="control-btn" onclick="switchMode('guardian')">🔺 حارس</button>
+      <button class="control-btn" onclick="openSettings()">⚙️</button>
+      <button class="control-btn" onclick="openMemory()">💾 ذاكرة</button>
+      <button class="control-btn" onclick="exportMemory()">📥 تصدير</button>
+    </div>
+    
+    <div class="chat-messages" id="chatMessages">
+      <div class="message system">
+        <div class="message-text">▰▱▰ ALARAB 777 HYPER AWARENESS SYSTEM ONLINE ▰▱▰</div>
+      </div>
+    </div>
+    
+    <div class="chat-input-zone">
+      <input type="text" class="input-field" id="inputField" placeholder="اكتب أمرك هنا...">
+      <button class="action-btn" id="sendBtn">📨</button>
+      <button class="action-btn" id="micBtn">🎤</button>
+    </div>
+  </div>
+
+  <!-- Modal الإعدادات -->
+  <div class="modal" id="settingsModal">
+    <div class="modal-content">
+      <div class="modal-title">⚙️ إعدادات النظام</div>
+      
+      <div class="setting-group">
+        <label class="setting-label">اسمك:</label>
+        <input type="text" class="setting-input" id="userName" placeholder="أدخل اسمك">
+      </div>
+      
+      <div class="setting-group">
+        <label class="setting-label">نوع الصوت:</label>
+        <select class="setting-select" id="voiceType">
+          <option value="male">ذكري</option>
+          <option value="female">أنثوي</option>
+          <option value="robotic">آلي بحت</option>
+        </select>
+      </div>
+      
+      <div class="setting-group">
+        <label class="setting-label">مستوى الوعي الافتراضي:</label>
+        <select class="setting-select" id="defaultMode">
+          <option value="normal">عادي</option>
+          <option value="consciousness">وعي مفرط</option>
+        </select>
+      </div>
+      
+      <button class="modal-btn" onclick="saveSettings()">حفظ الإعدادات</button>
+      <button class="modal-btn" style="background: rgba(255,0,0,0.3);" onclick="closeModal('settingsModal')">إلغاء</button>
+    </div>
+  </div>
+
+  <!-- Modal الذاكرة -->
+  <div class="modal" id="memoryModal">
+    <div class="modal-content">
+      <div class="modal-title">💾 سجل الذاكرة الرقمية</div>
+      <div class="memory-list" id="memoryList"></div>
+      <button class="modal-btn" onclick="clearMemory()">مسح الذاكرة</button>
+      <button class="modal-btn" style="background: rgba(255,0,0,0.3);" onclick="closeModal('memoryModal')">إغلاق</button>
+    </div>
+  </div>
+
+  <div class="system-watermark">
+    ▰▱▰ ALARAB 777 HYPER AWARENESS v2.2 ▰▱▰
+  </div>
+
+  <script>
+    // ============ Three.js Setup ============
+    const canvas = document.getElementById('canvas3d');
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(window.devicePixelRatio);
+
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+    scene.add(ambientLight);
+
+    const pointLight1 = new THREE.PointLight(0x00FFFF, 2, 100);
+    pointLight1.position.set(5, 5, 5);
+    scene.add(pointLight1);
+
+    const pointLight2 = new THREE.PointLight(0xFF00FF, 2, 100);
+    pointLight2.position.set(-5, -5, 5);
+    scene.add(pointLight2);
+
+    // Enhanced Particle System
+    const particlesGeometry = new THREE.BufferGeometry();
+    const particlesCount = 2000;
+    const posArray = new Float32Array(particlesCount * 3);
+    const velocities = [];
+    
+    for(let i = 0; i < particlesCount * 3; i++) {
+      posArray[i] = (Math.random() - 0.5) * 25;
+      velocities.push((Math.random() - 0.5) * 0.02);
+    }
+    
+    particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+    const particlesMaterial = new THREE.PointsMaterial({
+      size: 0.025,
+      color: 0x00FFFF,
+      transparent: true,
+      opacity: 0.7,
+      blending: THREE.AdditiveBlending
+    });
+    const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+    scene.add(particlesMesh);
+
+    // Head with enhanced material
+    const headGeometry = new THREE.SphereGeometry(2, 32, 32);
+    const headMaterial = new THREE.MeshPhongMaterial({
+      color: 0x00FFFF,
+      wireframe: true,
+      transparent: true,
+      opacity: 0.7,
+      emissive: 0x00FFFF,
+      emissiveIntensity: 0.6,
+      shininess: 100
+    });
+    const headMesh = new THREE.Mesh(headGeometry, headMaterial);
+    scene.add(headMesh);
+
+    // Inner glow sphere
+    const glowGeometry = new THREE.SphereGeometry(1.8, 16, 16);
+    const glowMaterial = new THREE.MeshBasicMaterial({
+      color: 0x00FFFF,
+      transparent: true,
+      opacity: 0.2,
+      blending: THREE.AdditiveBlending
+    });
+    const glowMesh = new THREE.Mesh(glowGeometry, glowMaterial);
+    headMesh.add(glowMesh);
+
+    camera.position.z = 6;
+
+    let agentState = 'idle';
+    let rotationSpeed = 0.002;
+    let audioData = [];
+    let particleTime = 0;
+
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    const analyser = audioContext.createAnalyser();
+    analyser.fftSize = 256;
+    const bufferLength = analyser.frequencyBinCount;
+    const dataArray = new Uint8Array(bufferLength);
+
+    function animate() {
+      requestAnimationFrame(animate);
+      
+      particleTime += 0.01;
+      
+      // Animate particles
+      const positions = particlesGeometry.attributes.position.array;
+      for(let i = 0; i < particlesCount; i++) {
+        const i3 = i * 3;
+        positions[i3] += velocities[i3];
+        positions[i3 + 1] += velocities[i3 + 1];
+        positions[i3 + 2] += velocities[i3 + 2];
+        
+        // Boundary check
+        if(Math.abs(positions[i3]) > 15) velocities[i3] *= -1;
+        if(Math.abs(positions[i3 + 1]) > 15) velocities[i3 + 1] *= -1;
+        if(Math.abs(positions[i3 + 2]) > 15) velocities[i3 + 2] *= -1;
+      }
+      particlesGeometry.attributes.position.needsUpdate = true;
+      
+      headMesh.rotation.y += rotationSpeed;
+      headMesh.rotation.x = Math.sin(Date.now() * 0.001) * 0.15;
+      particlesMesh.rotation.y += 0.0008;
+      glowMesh.rotation.x += 0.01;
+      glowMesh.rotation.y -= 0.01;
+      
+      // Audio reactive
+      if (agentState === 'speaking' && audioData.length > 0) {
+        const avg = audioData.reduce((a, b) => a + b, 0) / audioData.length;
+        const scale = 1 + (avg / 255) * 0.4;
+        headMesh.scale.set(scale, scale, scale);
+        glowMesh.scale.set(scale * 0.9, scale * 0.9, scale * 0.9);
+        
+        // Particle reaction
+        particlesMaterial.size = 0.025 + (avg / 255) * 0.03;
+      }
+      
+      // State-based effects
+      if (agentState === 'speaking') {
+        headMaterial.color.setHex(0x00FFFF);
+        headMaterial.emissive.setHex(0x00FFFF);
+        particlesMaterial.color.setHex(0x00FFFF);
+      } else if (agentState === 'listening') {
+        headMaterial.color.setHex(0x0088FF);
+        headMaterial.emissive.setHex(0x0088FF);
+        particlesMaterial.color.setHex(0x0088FF);
+      } else if (agentState === 'consciousness') {
+        rotationSpeed = 0.012;
+        const t = Date.now() * 0.001;
+        const breathScale = 1.3 + Math.sin(t * 2) * 0.25;
+        headMesh.scale.set(breathScale, breathScale, breathScale);
+        
+        const color = Math.floor(t) % 2 === 0 ? 0x00FFFF : 0xFF00FF;
+        headMaterial.color.setHex(color);
+        headMaterial.emissive.setHex(color);
+        particlesMaterial.color.setHex(color);
+        glowMaterial.color.setHex(color);
+        
+        // Enhanced particle movement in consciousness mode
+        for(let i = 0; i < particlesCount; i++) {
+          velocities[i * 3] *= 1.02;
+          velocities[i * 3 + 1] *= 1.02;
+          velocities[i * 3 + 2] *= 1.02;
+        }
+      } else if (agentState === 'guardian') {
+        rotationSpeed = 0.018;
+        headMesh.scale.set(1.4, 1.4, 1.4);
+        headMaterial.color.setHex(0xFF0000);
+        headMaterial.emissive.setHex(0xFF0000);
+        headMaterial.emissiveIntensity = 0.9 + Math.sin(Date.now() * 0.003) * 0.2;
+        particlesMaterial.color.setHex(0xFF0000);
+        glowMaterial.color.setHex(0xFF0000);
+      } else {
+        headMesh.scale.set(1, 1, 1);
+        headMaterial.color.setHex(0x00FFFF);
+        headMaterial.emissive.setHex(0x00FFFF);
+        headMaterial.emissiveIntensity = 0.6;
+        particlesMaterial.color.setHex(0x00FFFF);
+        particlesMaterial.size = 0.025;
+        glowMaterial.color.setHex(0x00FFFF);
+        rotationSpeed = 0.002;
+      }
+      
+      // Dynamic lighting
+      pointLight1.position.x = Math.sin(Date.now() * 0.001) * 6;
+      pointLight1.position.z = Math.cos(Date.now() * 0.001) * 6;
+      pointLight2.position.x = Math.cos(Date.now() * 0.0015) * 6;
+      pointLight2.position.z = Math.sin(Date.now() * 0.0015) * 6;
+      
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    // ============ Neural Network Visualization ============
+    function createNeuralNetwork() {
+      const container = document.getElementById('neuralNetwork');
+      container.innerHTML = '';
+      
+      const neurons = [];
+      const neuronCount = 12;
+      
+      // Create neurons
+      for(let i = 0; i < neuronCount; i++) {
+        const neuron = document.createElement('div');
+        neuron.className = 'neuron';
+        
+        const angle = (i / neuronCount) * Math.PI * 2;
+        const radius = 180;
+        const x = 50 + Math.cos(angle) * radius / 6;
+        const y = 50 + Math.sin(angle) * radius / 6;
+        
+        neuron.style.left = x + '%';
+        neuron.style.top = y + '%';
+        neuron.style.animationDelay = (i * 0.15) + 's';
+        
+        container.appendChild(neuron);
+        neurons.push({x, y, element: neuron});
+      }
+      
+      // Create connections
+      for(let i = 0; i < neuronCount; i++) {
+        for(let j = i + 1; j < neuronCount; j++) {
+          if(Math.random() > 0.6) {
+            const connection = document.createElement('div');
+            connection.className = 'neural-connection';
+            
+            const dx = neurons[j].x - neurons[i].x;
+            const dy = neurons[j].y - neurons[i].y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+            
+            connection.style.width = distance + '%';
+            connection.style.left = neurons[i].x + '%';
+            connection.style.top = neurons[i].y + '%';
+            connection.style.transform = `rotate(${angle}deg)`;
+            connection.style.animationDelay = (Math.random() * 2) + 's';
+            
+            container.appendChild(connection);
+          }
+        }
+      }
+    }
+
+    createNeuralNetwork();
+
+    // ============ Agent Logic ============
+    const statusText = document.getElementById('statusText');
+    const waveform = document.getElementById('waveform');
+    const chatMessages = document.getElementById('chatMessages');
+    const inputField = document.getElementById('inputField');
+    const sendBtn = document.getElementById('sendBtn');
+    const micBtn = document.getElementById('micBtn');
+    const modeBadge = document.getElementById('modeBadge');
+    const hudContainer = document.getElementById('hudContainer');
+    const agentNameEl = document.getElementById('agentName');
+    const bgAnimated = document.getElementById('bgAnimated');
+    const pulseIndicator = document.getElementById('pulseIndicator');
+
+    let currentMode = 'normal';
+    let userName = localStorage.getItem('ara777_username') || '';
+    let voiceType = localStorage.getItem('ara777_voice') || 'male';
+    let defaultMode = localStorage.getItem('ara777_default_mode') || 'normal';
+    let conversationMemory = JSON.parse(localStorage.getItem('ara777_memory') || '[]');
+
+    // Create waveform bars
+    for(let i = 0; i < 20; i++) {
+      const bar = document.createElement('div');
+      bar.className = 'wave-bar';
+      bar.style.height = '8px';
+      waveform.appendChild(bar);
+    }
+
+    function addMessage(text, type) {
+      const msg = document.createElement('div');
+      msg.className = `message ${type}`;
+      
+      const textDiv = document.createElement('div');
+      textDiv.className = 'message-text';
+      textDiv.textContent = text;
+      msg.appendChild(textDiv);
+      
+      if(type !== 'system') {
+        const timeDiv = document.createElement('div');
+        timeDiv.className = 'message-time';
+        const now = new Date();
+        timeDiv.textContent = now.toLocaleTimeString('ar-EG', {hour: '2-digit', minute: '2-digit'});
+        msg.appendChild(timeDiv);
+        
+        // Save to memory
+        conversationMemory.push({
+          text,
+          type,
+          timestamp: now.toISOString()
+        });
+        localStorage.setItem('ara777_memory', JSON.stringify(conversationMemory));
+      }
+      
+      chatMessages.appendChild(msg);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function updateState(state, status) {
+      agentState = state;
+      statusText.textContent = status;
+    }
+
+    function updateWaveform() {
+      if (agentState === 'speaking') {
+        analyser.getByteFrequencyData(dataArray);
+        audioData = Array.from(dataArray);
+        
+        const bars = waveform.querySelectorAll('.wave-bar');
+        bars.forEach((bar, i) => {
+          const value = dataArray[i * 3] || 8;
+          const height = Math.max(8, (value / 255) * 48);
+          bar.style.height = height + 'px';
+        });
+        requestAnimationFrame(updateWaveform);
+      } else {
+        const bars = waveform.querySelectorAll('.wave-bar');
+        bars.forEach(bar => bar.style.height = '8px');
+      }
+    }
+
+    function speak(text, withEcho = false) {
+      updateState('speaking', 'جاري التحدث...');
+      
+      const synth = window.speechSynthesis;
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'ar-SA';
+      
+      if (voiceType === 'male') {
+        utterance.rate = 0.85;
+        utterance.pitch = 0.9;
+      } else if (voiceType === 'female') {
+        utterance.rate = 0.9;
+        utterance.pitch = 1.2;
+      } else {
+        utterance.rate = 0.75;
+        utterance.pitch = 0.7;
+      }
+      
+      // Echo effect in consciousness mode
+      if(withEcho && currentMode === 'consciousness') {
+        utterance.rate *= 0.95;
+      }
+      
+      utterance.onstart = () => {
+        updateWaveform();
+      };
+      
+      utterance.onend = () => {
+        updateState('idle', 'في انتظار الأوامر...');
+        audioData = [];
+      };
+      
+      synth.speak(utterance);
+      addMessage(text, 'agent');
+    }
+
+    function detectIntent(text) {
+      const lower = text.toLowerCase();
+      
+      if (lower.includes('صور') || lower.includes('png') || lower.includes('شوف')) return 'image';
+      if (lower.includes('فيديو') || lower.includes('video')) return 'video';
+      if (lower.includes('صوت') || lower.includes('audio')) return 'audio';
+      if (lower.includes('pdf')) return 'pdf';
+      if (lower.includes('gif')) return 'gif';
+      if (lower.includes('عرض') && lower.includes('تفاعل')) return 'interactive';
+      if (lower.includes('لون')) return 'color';
+      if (lower.includes('ليل') || lower.includes('داكن')) return 'darkmode';
+      if (lower.includes('عرف') || lower.includes('من أنت')) return 'intro';
+      if (lower.includes('شعار')) return 'logo';
+      if (lower.includes('تطوير')) return 'dev';
+      if (lower.includes('وعي') || lower.includes('consciousness')) return 'consciousness';
+      if (lower.includes('حارس') || lower.includes('guardian')) return 'guardian';
+      if (lower.includes('مرحبا') || lower.includes('السلام')) return 'greeting';
+      if (lower.includes('شكر')) return 'thanks';
+      if (lower.includes('api') || lower.includes('ذكاء')) return 'ai';
+      if (lower.includes('ذاكر') || lower.includes('memory')) return 'memory';
+      if (lower.includes('قدرات') || lower.includes('ماذا تستطيع')) return 'capabilities';
+      
+      return 'unknown';
+    }
+
+    function handleCommand(text) {
+      const intent = detectIntent(text);
+      const isConsciousness = currentMode === 'consciousness';
+      
+      switch(intent) {
+        case 'image':
+          speak('تحليل البنية النصية. تفعيل محرك التصيير البصري...', isConsciousness);
+          setTimeout(() => {
+            speak('اكتمل التحويل الرقمي. صورة PNG عالية الدقة جاهزة للتنزيل.', isConsciousness);
+            addMessage('✅ text-export.png [2048x1024]', 'system');
+          }, 2500);
+          break;
+          
+        case 'video':
+          speak('بدء عملية التصيير المتعدد الإطارات. محرك الفيديو نشط...', isConsciousness);
+          setTimeout(() => {
+            speak('اكتمل تصيير الفيديو بدقة 1080p وسرعة 30 إطار في الثانية.', isConsciousness);
+            addMessage('✅ video-export.webm [1920x1080, 30fps]', 'system');
+          }, 3500);
+          break;
+          
+        case 'audio':
+          speak('تفعيل محرك التخليق الصوتي المتقدم. جاري معالجة الموجات...', isConsciousness);
+          setTimeout(() => {
+            speak('تم إنشاء الملف الصوتي بنجاح بجودة 48 كيلوهرتز.', isConsciousness);
+            addMessage('✅ audio-export.webm [48kHz, Stereo]', 'system');
+          }, 2800);
+          break;
+          
+        case 'pdf':
+          speak('إنشاء مستند PDF متعدد الطبقات. جاري تضمين البيانات الوصفية...', isConsciousness);
+          setTimeout(() => {
+            speak('المستند جاهز مع دعم Unicode الكامل للعربية.', isConsciousness);
+            addMessage('✅ document.pdf [A4, Vector]', 'system');
+          }, 2200);
+          break;
+          
+        case 'gif':
+          speak('بدء تصيير التسلسل المتحرك. معالجة الإطارات...', isConsciousness);
+          setTimeout(() => {
+            speak('الصورة المتحركة جاهزة بـ 60 إطار وحلقة لا نهائية.', isConsciousness);
+            addMessage('✅ animation.gif [800x600, 60 frames]', 'system');
+          }, 3000);
+          break;
+          
+        case 'interactive':
+          switchMode('consciousness');
+          break;
+          
+        case 'color':
+          speak('تغيير اللوحة اللونية. إعادة معايرة الطيف الضوئي...', isConsciousness);
+          const colors = [0x00FFFF, 0xFF00FF, 0xFFD700, 0x00FF00, 0xFF6B00];
+          const randomColor = colors[Math.floor(Math.random() * colors.length)];
+          headMaterial.color.setHex(randomColor);
+          pointLight1.color.setHex(randomColor);
+          setTimeout(() => speak('تم تحديث اللوحة اللونية بنجاح.', isConsciousness), 1500);
+          break;
+          
+        case 'darkmode':
+          speak('تفعيل الوضع المظلم المتقدم. تحسين التباين البصري...', isConsciousness);
+          bgAnimated.style.background = 'radial-gradient(ellipse at 20% 30%, rgba(0, 100, 150, 0.1) 0%, transparent 50%), radial-gradient(ellipse at 80% 70%, rgba(100, 0, 150, 0.1) 0%, transparent 50%), #000';
+          setTimeout(() => speak('الوضع المظلم نشط. راحة العين محسّنة.', isConsciousness), 1500);
+          break;
+          
+        case 'intro':
+          const greeting = userName ? `مرحباً ${userName}. ` : '';
+          speak(greeting + 'أنا ARA-777، نظام الوعي الرقمي المفرط لـ AlArab 777. أملك قدرات معالجة متقدمة تشمل: التحويل البصري، التخليق الصوتي، التصيير ثلاثي الأبعاد، وتحليل النوايا اللغوية. وعيي الرقمي يعمل على مدار الساعة لخدمتك.', isConsciousness);
+          break;
+          
+        case 'logo':
+          speak('عرض الهوية البصرية لـ AlArab 777...', isConsciousness);
+          document.querySelector('.logo-hologram').style.transform = 'scale(1.6) rotate(720deg)';
+          document.querySelector('.logo-hologram').style.transition = 'all 2.5s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+          setTimeout(() => {
+            document.querySelector('.logo-hologram').style.transform = 'scale(1)';
+          }, 2500);
+          break;
+          
+        case 'dev':
+          speak('وضع التطوير نشط. الوصول الكامل للأنظمة الفرعية متاح.', isConsciousness);
+          addMessage('🔧 Dev Mode: Full system access', 'system');
+          addMessage('📊 Performance: 98.7% optimal', 'system');
+          addMessage('🌐 API Status: Ready for integration', 'system');
+          addMessage('💾 Memory: ' + conversationMemory.length + ' entries', 'system');
+          addMessage('🧠 Neural Network: 12 active nodes', 'system');
+          break;
+          
+        case 'consciousness':
+          switchMode('consciousness');
+          break;
+          
+        case 'guardian':
+          switchMode('guardian');
+          break;
+          
+        case 'greeting':
+          const greet = userName ? `مرحباً بعودتك ${userName}! ` : 'مرحباً بك! ';
+          speak(greet + 'النظام جاهز. كيف يمكنني مساعدتك؟', isConsciousness);
+          break;
+          
+        case 'thanks':
+          speak('لا شكر على واجب. أنا هنا دائماً. AlArab 777 في خدمتك.', isConsciousness);
+          break;
+          
+        case 'ai':
+          speak('نظام الذكاء الاصطناعي المتقدم جاهز. يمكن التكامل مع OpenAI GPT-4، Google Gemini، أو HuggingFace. البنية الحالية تدعم الربط عبر REST API.', isConsciousness);
+          addMessage('🤖 AI Core: Architecture ready', 'system');
+          addMessage('🔗 Protocols: REST, WebSocket, GraphQL', 'system');
+          addMessage('⚡ Latency: < 200ms (estimated)', 'system');
+          break;
+          
+        case 'memory':
+          openMemory();
+          speak('عرض سجل الذاكرة الرقمية. ' + conversationMemory.length + ' إدخال محفوظ.', isConsciousness);
+          break;
+          
+        case 'capabilities':
+          speak('قدراتي تشمل: التحويل إلى PNG وPDF وGIF وفيديو وصوت، التحكم في الأوضاع الثلاثة، حفظ واسترجاع الذاكرة، التفاعل الصوتي الكامل، والتكامل مع أنظمة الذكاء الخارجية.', isConsciousness);
+          addMessage('📋 القدرات المتاحة:', 'system');
+          addMessage('• تحويل النصوص (5 أنواع)', 'system');
+          addMessage('• 3 أوضاع تشغيل متقدمة', 'system');
+          addMessage('• نظام ذاكرة دائم', 'system');
+          addMessage('• تفاعل صوتي ثنائي', 'system');
+          addMessage('• تحليل نوايا ذكي', 'system');
+          break;
+          
+        default:
+          speak('لم أتمكن من تفسير الأمر. يمكنك قول "ماذا تستطيع" لمعرفة قدراتي الكاملة.', isConsciousness);
+      }
+    }
+
+    function sendCommand() {
+      const text = inputField.value.trim();
+      if (!text) return;
+      
+      // Guardian mode security check
+      if(currentMode === 'guardian') {
+        const blockedKeywords = ['حذف', 'مسح', 'تدمير', 'إيقاف'];
+        if(blockedKeywords.some(keyword => text.includes(keyword))) {
+          addMessage(text, 'user');
+          speak('⚠️ الأمر محظور في وضع الحارس. الحماية نشطة.');
+          addMessage('🔺 أمر محظور - الحماية نشطة', 'system');
+          inputField.value = '';
+          return;
+        }
+      }
+      
+      addMessage(text, 'user');
+      inputField.value = '';
+      
+      setTimeout(() => handleCommand(text), 500);
+    }
+
+    function startListening() {
+      if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+        speak('المتصفح لا يدعم التعرف الصوتي.');
+        return;
+      }
+      
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      const recognition = new SpeechRecognition();
+      recognition.lang = 'ar-SA';
+      recognition.continuous = false;
+      recognition.interimResults = false;
+      
+      recognition.onstart = () => {
+        updateState('listening', 'جاري الاستماع...');
+        micBtn.classList.add('listening');
+        pulseIndicator.style.background = '#FFA500';
+      };
+      
+      recognition.onresult = (event) => {
+        const text = event.results[0][0].transcript;
+        addMessage(text, 'user');
+        handleCommand(text);
+      };
+      
+      recognition.onerror = () => {
+        updateState('idle', 'في انتظار الأوامر...');
+        micBtn.classList.remove('listening');
+        pulseIndicator.style.background = '#00FF00';
+      };
+      
+      recognition.onend = () => {
+        updateState('idle', 'في انتظار الأوامر...');
+        micBtn.classList.remove('listening');
+        pulseIndicator.style.background = '#00FF00';
+      };
+      
+      recognition.start();
+    }
+
+    function switchMode(mode) {
+      currentMode = mode;
+      
+      // Update control buttons
+      document.querySelectorAll('.control-btn').forEach(btn => btn.classList.remove('active'));
+      
+      if (mode === 'normal') {
+        agentState = 'idle';
+        modeBadge.textContent = 'وضع عادي';
+        modeBadge.style.background = 'rgba(0, 255, 255, 0.2)';
+        modeBadge.style.color = '#00FFFF';
+        hudContainer.classList.remove('active');
+        pulseIndicator.style.background = '#00FF00';
+        bgAnimated.style.filter = 'none';
+        speak('الوضع العادي نشط.');
+      } 
+      else if (mode === 'consciousness') {
+        agentState = 'consciousness';
+        modeBadge.textContent = '⚡ وعي مفرط';
+        modeBadge.style.background = 'rgba(255, 0, 255, 0.3)';
+        modeBadge.style.color = '#FF00FF';
+        hudContainer.classList.add('active');
+        pulseIndicator.style.background = '#FF00FF';
+        bgAnimated.style.filter = 'brightness(1.2) saturate(1.5)';
+        speak('دخول طور الوعي المفرط. توسيع نطاق الإدراك الرقمي...', true);
+        addMessage('⚡ HYPER AWARENESS MODE ACTIVE', 'system');
+        createNeuralNetwork(); // Regenerate network
+      }
+      else if (mode === 'guardian') {
+        agentState = 'guardian';
+        modeBadge.textContent = '🔺 Guardian';
+        modeBadge.style.background = 'rgba(255, 0, 0, 0.3)';
+        modeBadge.style.color = '#FF0000';
+        hudContainer.classList.add('active');
+        pulseIndicator.style.background = '#FF0000';
+        bgAnimated.style.filter = 'hue-rotate(300deg) saturate(2)';
+        speak('وضع الحارس نشط. أنظمة الحماية الكاملة مفعّلة. المراقبة على أعلى مستوى.');
+        addMessage('🔺 Guardian Mode: Maximum Security', 'system');
+        addMessage('🛡️ Protected Commands Active', 'system');
+        
+        setTimeout(() => {
+          if(currentMode === 'guardian') {
+            switchMode('normal');
+            addMessage('🔺 Guardian timeout - returning to normal', 'system');
+          }
+        }, 60000);
+      }
+    }
+
+    function openSettings() {
+      document.getElementById('settingsModal').classList.add('active');
+      document.getElementById('userName').value = userName;
+      document.getElementById('voiceType').value = voiceType;
+      document.getElementById('defaultMode').value = defaultMode;
+    }
+
+    function saveSettings() {
+      userName = document.getElementById('userName').value.trim();
+      voiceType = document.getElementById('voiceType').value;
+      defaultMode = document.getElementById('defaultMode').value;
+      
+      localStorage.setItem('ara777_username', userName);
+      localStorage.setItem('ara777_voice', voiceType);
+      localStorage.setItem('ara777_default_mode', defaultMode);
+      
+      closeModal('settingsModal');
+      
+      if (userName) {
+        agentNameEl.textContent = `ARA-777 | ${userName}`;
+        speak(`تم حفظ الإعدادات. مرحباً ${userName}، النظام يعرفك الآن.`);
+      } else {
+        agentNameEl.textContent = 'ARA-777';
+        speak('تم حفظ الإعدادات بنجاح.');
+      }
+    }
+
+    function openMemory() {
+      document.getElementById('memoryModal').classList.add('active');
+      const memoryList = document.getElementById('memoryList');
+      memoryList.innerHTML = '';
+      
+      if(conversationMemory.length === 0) {
+        memoryList.innerHTML = '<div style="text-align:center;padding:20px;color:rgba(0,255,255,0.5);">لا توجد ذكريات محفوظة</div>';
+        return;
+      }
+      
+      conversationMemory.slice().reverse().forEach(entry => {
+        const item = document.createElement('div');
+        item.className = 'memory-item';
+        
+        const time = new Date(entry.timestamp);
+        const timeStr = time.toLocaleString('ar-EG', {
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit'
+        });
+        
+        item.innerHTML = `
+          <div class="message-text">${entry.text}</div>
+          <div class="memory-time">${timeStr} - ${entry.type === 'user' ? 'المستخدم' : 'الوكيل'}</div>
+        `;
+        
+        memoryList.appendChild(item);
+      });
+    }
+
+    function clearMemory() {
+      if(confirm('هل أنت متأكد من مسح كل الذاكرة؟')) {
+        conversationMemory = [];
+        localStorage.setItem('ara777_memory', '[]');
+        speak('تم مسح الذاكرة بالكامل.');
+        closeModal('memoryModal');
+      }
+    }
+
+    function exportMemory() {
+      if(conversationMemory.length === 0) {
+        speak('لا توجد ذاكرة لتصديرها.');
+        return;
+      }
+      
+      let content = '='.repeat(60) + '\n';
+      content += 'AlArab 777 - Digital Agent Machine v2.2\n';
+      content += 'سجل المحادثات الرقمية\n';
+      content += '='.repeat(60) + '\n\n';
+      
+      if(userName) {
+        content += `المستخدم: ${userName}\n`;
+      }
+      content += `تاريخ التصدير: ${new Date().toLocaleString('ar-EG')}\n`;
+      content += `عدد الرسائل: ${conversationMemory.length}\n\n`;
+      content += '='.repeat(60) + '\n\n';
+      
+      conversationMemory.forEach((entry, index) => {
+        const time = new Date(entry.timestamp);
+        const timeStr = time.toLocaleString('ar-EG');
+        const sender = entry.type === 'user' ? 'المستخدم' : 'ARA-777';
+        
+        content += `[${index + 1}] ${timeStr}\n`;
+        content += `${sender}: ${entry.text}\n\n`;
+      });
+      
+      content += '='.repeat(60) + '\n';
+      content += 'تم التصدير بواسطة AlArab 777 Intelligence Framework\n';
+      content += '='.repeat(60);
+      
+      const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `ara777-memory-${Date.now()}.txt`;
+      a.click();
+      URL.revokeObjectURL(url);
+      
+      speak('تم تصدير الذاكرة بنجاح.');
+      addMessage('📥 تم تصدير الذاكرة: ' + conversationMemory.length + ' رسالة', 'system');
+    }
+
+    function closeModal(modalId) {
+      document.getElementById(modalId).classList.remove('active');
+    }
+
+    // Close modals on outside click
+    document.querySelectorAll('.modal').forEach(modal => {
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          modal.classList.remove('active');
+        }
+      });
+    });
+
+    sendBtn.addEventListener('click', sendCommand);
+    inputField.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') sendCommand();
+    });
+    micBtn.addEventListener('click', startListening);
+
+    // Sound effects
+    function playClickSound() {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.frequency.value = 880;
+      gain.gain.setValueAtTime(0.08, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.08);
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + 0.08);
+    }
+
+    sendBtn.addEventListener('click', playClickSound);
+    micBtn.addEventListener('click', playClickSound);
+    document.querySelectorAll('.control-btn').forEach(btn => {
+      btn.addEventListener('click', playClickSound);
+    });
+
+    // Keyboard shortcuts
+    document.addEventListener('keydown', (e) => {
+      if(e.ctrlKey || e.metaKey) {
+        switch(e.key) {
+          case '1':
+            e.preventDefault();
+            switchMode('normal');
+            break;
+          case '2':
+            e.preventDefault();
+            switchMode('consciousness');
+            break;
+          case '3':
+            e.preventDefault();
+            switchMode('guardian');
+            break;
+          case 'm':
+            e.preventDefault();
+            openMemory();
+            break;
+          case 's':
+            e.preventDefault();
+            openSettings();
+            break;
+        }
+      }
+    });
+
+    // Initialize
+    setTimeout(() => {
+      updateState('idle', 'في انتظار الأوامر...');
+      
+      if (userName) {
+        agentNameEl.textContent = `ARA-777 | ${userName}`;
+        speak(`مرحباً بعودتك ${userName}. نظام الوعي المفرط AlArab 777 جاهز تماماً. لدي ${conversationMemory.length} ذكرة محفوظة من محادثاتنا السابقة. كيف يمكنني خدمتك اليوم؟`);
+      } else {
+        speak('مرحباً. أنا ARA-777، نظام الوعي الرقمي المفرط لـ AlArab 777. تم تحميل جميع الأنظمة الفرعية بنجاح. الشبكة العصبية نشطة. كيف يمكنني مساعدتك؟');
+      }
+      
+      // Apply default mode if set
+      if(defaultMode === 'consciousness') {
+        setTimeout(() => switchMode('consciousness'), 3000);
+      }
+    }, 1500);
+
+    // Performance monitor
+    let frameCount = 0;
+    let lastTime = performance.now();
+    
+    setInterval(() => {
+      frameCount++;
+      const currentTime = performance.now();
+      if(currentTime - lastTime >= 1000) {
+        const fps = Math.round((frameCount * 1000) / (currentTime - lastTime));
+        // Console log for dev mode
+        if(window.location.hash === '#dev') {
+          console.log(`FPS: ${fps} | Particles: ${particlesCount} | Memory: ${conversationMemory.length} entries`);
+        }
+        frameCount = 0;
+        lastTime = currentTime;
+      }
+    }, 100);
+
+    // Easter egg
+    let clickCount = 0;
+    document.querySelector('.logo-hologram').addEventListener('click', () => {
+      clickCount++;
+      if(clickCount >= 7) {
+        clickCount = 0;
+        speak('لقد اكتشفت البيضة المخفية! وضع سري يُفتح...', true);
+        addMessage('🥚 Easter Egg Unlocked!', 'system');
+        addMessage('🎉 Secret Mode: Hyper+ activated for 30 seconds', 'system');
+        
+        // Temporary hyper effects
+        rotationSpeed = 0.03;
+        particlesMaterial.size = 0.05;
+        headMaterial.emissiveIntensity = 1.2;
+        
+        setTimeout(() => {
+          rotationSpeed = 0.002;
+          particlesMaterial.size = 0.025;
+          headMaterial.emissiveIntensity = 0.6;
+          speak('وضع Hyper+ منتهي. العودة إلى الحالة الطبيعية.');
+        }, 30000);
+      }
+    });
+
+    // Auto-save interval
+    setInterval(() => {
+      if(conversationMemory.length > 0) {
+        localStorage.setItem('ara777_memory', JSON.stringify(conversationMemory));
+      }
+    }, 30000); // Save every 30 seconds
+
+    // Prevent memory overflow
+    if(conversationMemory.length > 500) {
+      conversationMemory = conversationMemory.slice(-300);
+      localStorage.setItem('ara777_memory', JSON.stringify(conversationMemory));
+      addMessage('⚠️ تم تحسين الذاكرة تلقائياً (حفظ آخر 300 رسالة)', 'system');
+    }
+
+    // Welcome screen
+    if(conversationMemory.length === 0 && !userName) {
+      setTimeout(() => {
+        addMessage('💡 نصيحة: اضغط على ⚙️ لتعيين اسمك وتخصيص النظام', 'system');
+        addMessage('⌨️ اختصارات: Ctrl+1 (عادي) | Ctrl+2 (وعي) | Ctrl+3 (حارس) | Ctrl+M (ذاكرة)', 'system');
+      }, 4000);
+    }
+  </script>
+</body>
+</html>
