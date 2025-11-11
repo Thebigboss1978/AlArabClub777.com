@@ -1,0 +1,64 @@
+<!doctype html><html lang="ar" dir="rtl"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>AutoModeAX 777 — Dashboard</title>
+<style>
+:root{--bg:#050816;--neon:#7dd3fc;--gold:#ffd166;--muted:#9aa3b2}
+html,body{height:100%}body{margin:0;font-family:system-ui,-apple-system,"Cairo",sans-serif;background:radial-gradient(circle at 20% 10%,#001029,#000);color:var(--gold);display:flex;align-items:center;justify-content:center}
+.card{width:92%;max-width:1100px;background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.01));border-radius:16px;padding:18px;box-shadow:0 10px 40px rgba(0,0,0,.6);border:1px solid rgba(255,255,255,.06)}
+header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+h1{margin:0;font-size:20px;color:var(--neon)}.small{color:var(--muted);font-size:12px}
+.grid{display:grid;grid-template-columns:1fr 360px;gap:14px}.panel{background:rgba(0,0,0,.25);padding:12px;border-radius:10px}
+pre{white-space:pre-wrap;color:#e6fff9;background:transparent;border-radius:8px;overflow:auto;max-height:280px}
+.agents .agt{display:flex;align-items:center;gap:10px;padding:8px;border-radius:8px;margin-bottom:8px;background:linear-gradient(90deg,rgba(125,211,252,.08),rgba(255,209,102,.04))}
+.dot{width:12px;height:12px;border-radius:50%}.dot.on{background:var(--neon);box-shadow:0 0 8px var(--neon)}.dot.off{background:#333}
+.btn{background:#0b1220;border:1px solid rgba(255,255,255,.08);color:var(--gold);padding:10px 14px;border-radius:10px;cursor:pointer}
+.inputcmd{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,.08);background:#020316;color:var(--neon)}
+footer{margin-top:14px;color:var(--muted);font-size:12px;text-align:center}
+.eye{width:120px;height:120px;border-radius:50%;background:radial-gradient(circle at 30% 30%,rgba(125,211,252,.12),rgba(255,209,102,.06));display:flex;align-items:center;justify-content:center;box-shadow:0 10px 30px rgba(0,0,0,.6);margin:auto}
+.lamp{width:60px;height:60px;border-radius:6px;background:linear-gradient(180deg,var(--gold),#f2b63d);display:flex;align-items:center;justify-content:center;color:#111;font-weight:800}
+</style></head><body>
+<div class="card"><header><div><h1>AutoModeAX+ 777 — لوحة التشغيل الحي</h1><div class="small">العرّاب • وحدة الوعي — الحالة الحيّة</div></div>
+<div style="text-align:center"><div class="eye" id="eye"><div class="lamp">𓂀</div></div><div class="small" style="margin-top:6px">Eye of AX — الوعي</div></div></header>
+<div class="grid"><div><div class="panel"><h3>الحالة العامة</h3><div id="statusBox"><div class="small">Loading...</div></div></div>
+<div class="panel" style="margin-top:12px"><h3>سجل الذاكرة (مقتطفات)</h3><pre id="memoryBox">جارٍ تحميل الذاكرة...</pre></div>
+<div class="panel" style="margin-top:12px"><h3>أرسل أمر إلى الوكيل</h3>
+<input id="cmdInput" class="inputcmd" placeholder="اكتب أمر شيل هنا، مثال: echo hello"/>
+<div style="margin-top:8px;display:flex;gap:8px"><button class="btn" onclick="runCmd()">تشغيل الأمر</button><button class="btn" onclick="refreshNow()">تحديث الآن</button></div>
+<pre id="cmdOut" style="margin-top:8px">لا توجد نتائج بعد.</pre></div></div>
+<div><div class="panel"><h3>وكلاء النظام</h3><div class="agents" id="agentsList">جارٍ التحميل...</div></div>
+<div class="panel" style="margin-top:12px"><h3>طاقة النظام</h3><div style="display:flex;gap:10px;align-items:center;justify-content:center">
+<div style="flex:1;text-align:center"><div style="font-size:28px;color:var(--neon)" id="cycleCount">--</div><div class="small">عدد الدورات</div></div>
+<div style="flex:1;text-align:center"><div style="font-size:18px" id="lastActive">--</div><div class="small">آخر نشاط</div></div></div></div>
+<div class="panel" style="margin-top:12px"><h3>Meeting Table</h3><pre id="meeting">جاري التحميل...</pre></div></div></div>
+<footer>░▒▓█ 𓁹 ALARAB 777 — AutoModeAX █▓▒░</footer></div>
+<script>
+const api=(p)=>p;
+async function fetchJson(u){try{const r=await fetch(u);return await r.json()}catch(e){return null}}
+async function refreshNow(){
+  const m=await fetchJson(api("/api/memory")); const a=await fetchJson(api("/api/agents"));
+  if(m&&m.ok){const mem=m.memory;
+    document.getElementById('memoryBox').textContent=JSON.stringify(mem.history?mem.history.slice(-8).reverse():mem,null,2);
+    document.getElementById('cycleCount').textContent=mem.last_cycle?(mem.last_cycle.count||mem.last_cycle):'--';
+    document.getElementById('lastActive').textContent=mem.last_cycle?(mem.last_cycle.ts||'--'):'--';
+    const mt=mem.meeting_table||{}; document.getElementById('meeting').textContent=JSON.stringify(mt,null,2);
+    document.getElementById('statusBox').innerHTML=`<div class="small">ذاكرة محلية • عناصر: ${Object.keys(mem).length}</div>`;
+  }else{ document.getElementById('memoryBox').textContent="لم أستطع الوصول إلى /api/memory"; }
+  if(a&&a.ok){const ag=a.agents; const c=document.getElementById('agentsList'); c.innerHTML="";
+    Object.keys(ag).forEach(k=>{const it=ag[k]; const d=document.createElement('div'); d.className='agt';
+      const dot=document.createElement('div'); dot.className='dot '+(it.last_ts?'on':'off');
+      const html=`<div style="flex:1"><strong>${k}</strong><div class="small">${it.desc}</div></div>
+      <div style="font-size:12px;text-align:left"><div class="small">آخر: ${it.last_ts||'—'}</div>
+      <div style="max-width:200px;overflow:hidden;text-overflow:ellipsis">${it.last_output_preview||''}</div></div>`;
+      d.appendChild(dot); d.innerHTML+=html; c.appendChild(d); });
+  }else{ document.getElementById('agentsList').textContent="تعذر الوصول إلى حالة الوكلاء"; }
+}
+async function runCmd(){
+  const cmd=document.getElementById('cmdInput').value.trim();
+  if(!cmd){alert("أدخل أمرًا أولاً");return}
+  document.getElementById('cmdOut').textContent="⏳ جارٍ التنفيذ...";
+  try{const r=await fetch(api("/api/run"),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({cmd})});
+      const j=await r.json(); document.getElementById('cmdOut').textContent=j.ok?(j.out||"(نجح بدون خرج)"):"خطأ: "+(j.error||"unknown");
+  }catch(e){ document.getElementById('cmdOut').textContent="خطأ اتصالي: "+e; }
+}
+setInterval(refreshNow, 1200); window.onload=refreshNow;
+</script></body></html>
