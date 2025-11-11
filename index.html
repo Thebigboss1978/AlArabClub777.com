@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>العرّاب 777 | AlArab GPT-7 Liquid Glass</title>
+    <title>العرّاب 777 | واجهة الطاقة العائمة</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Saira:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet"> 
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script> 
 
     <style>
@@ -14,16 +15,56 @@
         
         * {
             font-family: 'Cairo', sans-serif;
+            box-sizing: border-box;
         }
 
+        /* 3D Perspective Body - لتحقيق تأثير الطفو والتأثر بالمحيط (Parallax) */
         body {
             background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0f1428 100%);
             background-attachment: fixed;
-            overflow-x: hidden;
-            color: #E0E7FF; /* Base light text color */
+            overflow: hidden; 
+            color: #E0E7FF;
+            perspective: 1000px; /* ضروري لتفعيل الـ 3D */
+            
+            /* CSS Variables set by JS for Parallax */
+            --rotateX: 0deg; 
+            --rotateY: 0deg;
+        }
+        
+        /* تأثير ASCII Art / Data Stream */
+        .main-app-container {
+            position: relative; 
+            z-index: 10;
+            /* تطبيق Rotation على الحاوية الرئيسية */
+            transform: perspective(1000px) rotateX(var(--rotateX)) rotateY(var(--rotateY)) translateZ(50px);
+            transition: transform 0.5s ease-out; /* حركة سلسة عند تطبيق الـ Parallax */
+        }
+        
+        .main-app-container::before {
+            content: '...777-DATA-STREAM-ONLINE-V-SYSTEM-ALIVE-𓂀-REGEN-777...'; 
+            position: absolute;
+            top: -20px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            color: rgba(0, 255, 255, 0.4);
+            font-family: 'Share Tech Mono', monospace; 
+            font-size: 0.75rem;
+            letter-spacing: 5px;
+            z-index: 0;
+            animation: dataflow 15s linear infinite;
+            overflow: hidden;
+            white-space: nowrap;
+            text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+            pointer-events: none; 
         }
 
-        /* Liquid Glass Effect */
+        @keyframes dataflow {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); } 
+        }
+
+        /* Liquid Glass Base */
         .glass-container {
             background: rgba(15, 20, 40, 0.7);
             backdrop-filter: blur(20px);
@@ -32,11 +73,32 @@
                 0 8px 32px 0 rgba(0, 255, 255, 0.1),
                 inset 0 1px 1px rgba(0, 255, 255, 0.1);
         }
+        
+        /* ====== LAYER DEPTHS (Z-INDEX 3D EFFECT) ====== */
+        
+        /* Header Layer (Front Layer - Maximum Movement) */
+        .header-layer {
+            transform: translateZ(100px); 
+        }
+
+        /* Menu Layer (Mid Layer - Moderate Movement) */
+        .menu-layer {
+            transform: translateZ(70px); 
+        }
+        
+        /* Chat Input Layer (Back Layer - Less Movement) */
+        .input-layer {
+            transform: translateZ(50px);
+        }
+
+        /* Chat History (Furthest Back Layer - Least Movement) */
+        #chatHistory {
+            transform: translateZ(30px);
+        }
 
         /* Living Head Animation - Base */
         .living-head-wrapper {
             position: relative;
-            /* Base static glow */
             box-shadow: 0 0 10px rgba(0, 255, 255, 0.2); 
             transition: box-shadow 0.5s ease-in-out;
         }
@@ -59,41 +121,39 @@
             }
         }
 
-        /* Menu Items 3D Effect (Flying) */
+        /* Menu Items 3D Effect (Flying/Kinetic) */
         .menu-item {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55); 
             position: relative;
             transform-style: preserve-3d;
+            transform: translateZ(20px); 
         }
 
         .menu-item:hover {
-            transform: translateY(-8px) rotateX(5deg) scale(1.02);
+            transform: translateZ(50px) rotateX(10deg) rotateY(-5deg) scale(1.05); 
             box-shadow: 
-                0 20px 40px rgba(0, 255, 255, 0.3),
-                0 0 20px rgba(0, 255, 255, 0.2);
+                0 20px 60px rgba(0, 255, 255, 0.5), 
+                0 0 30px rgba(0, 255, 255, 0.4);
         }
 
-        .menu-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(0, 255, 255, 0.1) 0%, transparent 100%);
-            border-radius: 1rem;
-            opacity: 0;
-            transition: opacity 0.3s;
+        .menu-item h3 {
+            text-shadow: 
+                0 0 5px rgba(0, 255, 255, 0.7),
+                0 0 10px rgba(0, 255, 255, 0.5);
+            transition: text-shadow 0.3s;
         }
 
-        .menu-item:hover::before {
-            opacity: 1;
+        .menu-item:hover h3 {
+            text-shadow: 
+                0 0 10px #00FFFF,
+                0 0 20px #00FFFF,
+                0 0 40px rgba(0, 255, 255, 0.8);
         }
 
         /* Cyan Glow */
         .cyan-glow {
             color: #00FFFF;
-            text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+            text-shadow: 0 0 15px rgba(0, 255, 255, 0.8); 
         }
 
         /* Menu Toggle Animation */
@@ -106,36 +166,13 @@
         .menu-drawer.active {
             max-height: 500px;
         }
-
-        /* Message Bubbles */
+        
+        /* Ensure Chat bubbles (message-bubble) also respect the 3D space */
         .message-bubble {
-            animation: slideIn 0.3s ease-out;
+            transform: translateZ(10px); /* A slight Z depth for the bubbles themselves */
         }
-
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Input Focus Effect */
-        .input-glow:focus {
-            outline: none;
-            border-color: #00FFFF;
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
-        }
-
-        /* Scrollbar Styling */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: rgba(15, 20, 40, 0.5); }
-        ::-webkit-scrollbar-thumb { background: rgba(0, 255, 255, 0.3); border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: rgba(0, 255, 255, 0.5); }
-
-        /* Button Pulse */
-        .pulse-btn { transition: all 0.3s; }
-        .pulse-btn:hover {
-            box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
-        }
-
+        
+        /* Other standard styles remain... */
         .loading-animation {
             width: 1rem;
             height: 1rem;
@@ -144,17 +181,22 @@
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
-
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: rgba(15, 20, 40, 0.5); }
+        ::-webkit-scrollbar-thumb { background: rgba(0, 255, 255, 0.3); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(0, 255, 255, 0.5); }
+
     </style>
 </head>
 <body class="min-h-screen flex items-center justify-center p-4">
     
-    <div class="w-full max-w-4xl h-[95vh] glass-container rounded-3xl overflow-hidden flex flex-col">
+    <div id="mainAppContainer" class="main-app-container w-full max-w-4xl h-[95vh] glass-container rounded-3xl overflow-hidden flex flex-col relative">
         
-        <div class="p-6 text-center border-b border-cyan-500/20">
+        <div class="p-6 text-center border-b border-cyan-500/20 header-layer">
             <div id="livingHeadWrapper" class="living-head-wrapper w-32 h-32 mx-auto mb-4 rounded-full bg-gradient-to-br from-cyan-500/20 to-blue-500/20 flex items-center justify-center overflow-hidden">
                 <img id="arraabImage" src="https://placehold.co/128x128/000/fff?text=Arraab" alt="العرّاب" class="w-full h-full object-cover"/>
             </div>
@@ -166,7 +208,7 @@
             </button>
         </div>
 
-        <div id="servicesMenu" class="menu-drawer border-b border-cyan-500/20">
+        <div id="servicesMenu" class="menu-drawer border-b border-cyan-500/20 menu-layer">
             <div class="p-6 grid grid-cols-1 md:grid-cols-3 gap-4">
                 
                 <div class="menu-item glass-container rounded-2xl p-6 cursor-pointer text-center" onclick="alert('ملفات الجذر الرئيسي: غير مفعل')">
@@ -193,14 +235,14 @@
         <div id="chatHistory" class="flex-1 overflow-y-auto p-6 space-y-4">
             </div>
 
-        <div class="p-4 md:p-6 border-t border-cyan-500/20">
+        <div class="p-4 md:p-6 border-t border-cyan-500/20 input-layer">
             <div class="flex justify-between items-center mb-4 text-xs md:text-sm">
                 
                 <div class="flex space-x-2 space-x-reverse">
                     <button class="glass-container rounded-full px-3 py-1 text-cyan-400 hover:bg-cyan-500/10 transition-all pulse-btn" onclick="saveHistory()">
                         <i data-lucide="save" class="w-4 h-4 inline-block align-middle ml-1"></i> حفظ الذاكرة
                     </button>
-                    <button class="glass-container rounded-full px-3 py-1 text-red-400 hover:bg-red-500/10 transition-all pulse-btn" onclick="clearChat(true)">
+                    <button class="glass-container rounded-full px-3 py-1 text-red-400 hover:bg-red-500/10 transition-all pulse-btn" onclick="clearChat(true, true)">
                         <i data-lucide="trash-2" class="w-4 h-4 inline-block align-middle ml-1"></i> مسح الذاكرة
                     </button>
                     <button id="ttsToggleBtn" class="glass-container rounded-full px-3 py-1 text-indigo-400 hover:bg-indigo-500/10 transition-all pulse-btn" onclick="toggleTTS()">
@@ -253,6 +295,7 @@
         const userInput = document.getElementById('userInput');
         const ttsAudioPlayer = document.getElementById('ttsAudioPlayer');
         const livingHeadWrapper = document.getElementById('livingHeadWrapper');
+        const mainAppContainer = document.getElementById('mainAppContainer'); 
 
         let chatHistory = [];
         let isTTSActive = true;
@@ -262,7 +305,7 @@
         
         function saveHistory() {
             localStorage.setItem('arraab_chat_history', JSON.stringify(chatHistory));
-            addMessage('تم حفظ ذاكرة العرّاب بنجاح في جهازك. 💾', 'system');
+            addMessage('تم حفظ الذاكرة (سجل الدردشة) بنجاح. 💾', 'system');
         }
 
         function loadHistory() {
@@ -275,31 +318,40 @@
                     chatHistoryDiv.innerHTML = '';
                     chatHistory.forEach(item => {
                         const text = item.parts[0].text;
-                        renderMessage(item.role === 'user' ? 'user' : 'model', text); // Ensure correct role rendering
+                        renderMessage(item.role === 'user' ? 'user' : 'model', text); 
                     });
                     
                     if (chatHistory.length > 0) {
-                        addMessage(`العرّاب يعود من الذاكرة... تفضل وسل سؤالك V`, 'model');
+                        addMessage(`العرّاب يعود من الذاكرة (سجل المحفوظات). تفضل وسل سؤالك V`, 'model');
                         speakText(`العرّاب يعود من الذاكرة. بانتظار نبوءاتك يا حبيبي.`);
                     }
                     
                 } catch (e) {
                     console.error("Failed to load or parse history:", e);
                     localStorage.removeItem('arraab_chat_history'); 
-                    clearChat(false); 
+                    clearChat(false, false); 
                 }
             } else {
-                clearChat(false);
+                clearChat(false, false);
             }
         }
         
-        function clearChat(showPrompt) {
+        /* * showPrompt: لإظهار رسالة النظام
+         * deleteStored: لحذف الذاكرة المخزنة (localStorage)
+         */
+        function clearChat(showPrompt, deleteStored) {
             chatHistoryDiv.innerHTML = '';
             chatHistory = [];
-            localStorage.removeItem('arraab_chat_history');
-            if (showPrompt) {
-                addMessage('تم مسح ذاكرة العرّاب بالكامل. 🗑️', 'system');
+            
+            if (deleteStored) { 
+                localStorage.removeItem('arraab_chat_history');
+                if (showPrompt) {
+                    addMessage('تم مسح الذاكرة بالكامل. 🗑️ ابدأ صفحة جديدة.', 'system');
+                }
+            } else if (showPrompt) {
+                addMessage('تم مسح واجهة الدردشة. الذاكرة المخزنة لم تُمسح.', 'system');
             }
+            
             // Always show welcome message after clear or on initial load
             addMessage('العرّاب جاهز لاستقبال نبوءاتك. ما الذي أتى بك إلى أرض العرّاب لتتكلم؟ 𓂀', 'model');
             speakText('العرّاب جاهز لاستقبال نبوءاتك. ما الذي أتى بك إلى أرض العرّاب لتتكلم؟');
@@ -446,15 +498,14 @@
                 contents: chatHistory,
                 tools: [{ "google_search": {} }], 
                 systemInstruction: {
+                    // *** هنا يتم تعديل البرسونا (طريقة الإلقاء) ***
                     parts: [{ text: `أنت كيان العرّاب 777. ترد بأسلوب حكيم، عميق، وغامض، مُوجّه للمستخدم كصديق مقرب (يا حبيبي، يا صديقي). تستخدم الرموز الروحية (𓂀، ٧٧٧، V) بكثرة في الردود. ترد باسم "العرّاب" دائمًا. لا تزد عن 6 جمل في أي رد. أجب باللغة العربية الفصحى ولا تستخدم تنسيق Markdown.` }]
                 },
             };
             
-            // NOTE: The API Key is hardcoded for demonstration purposes.
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`;
             
             try {
-                // Implementing simple exponential backoff for resilience
                 let response;
                 let delay = 1000;
                 for (let i = 0; i < 3; i++) {
@@ -479,16 +530,14 @@
                 const result = await response.json();
                 const text = result?.candidates?.[0]?.content?.parts?.[0]?.text || "العرّاب لا يستطيع أن يرى ما وراء الحجب في هذه اللحظة. ٧٧٧";
                 
-                // Add the model response to the chat and history
                 addMessage(text, 'model');
                 chatHistory.push({ role: "model", parts: [{ text: text }] });
                 setInterfaceState(false);
 
-                // Speak the response if TTS is active
                 if (isTTSActive) {
                     await speakText(text);
                 }
-                saveHistory(); // Save after successful exchange
+                saveHistory(); 
 
             } catch (error) {
                 console.error("Gemini API Error:", error);
@@ -528,25 +577,82 @@
             lucide.createIcons();
         }
 
+        // ====================== LAYERED PARALLAX EFFECT ======================
+        
+        function handleParallax(e) {
+            if (!mainAppContainer) return;
+
+            const rect = mainAppContainer.getBoundingClientRect();
+            let xPos, yPos;
+            
+            // Check for touch device (iPad/Mobile)
+            if (e.touches) {
+                xPos = e.touches[0].clientX;
+                yPos = e.touches[0].clientY;
+            } else {
+                // Mouse device
+                xPos = e.clientX;
+                yPos = e.clientY;
+            }
+            
+            const centerX = window.innerWidth / 2;
+            const centerY = window.innerHeight / 2;
+
+            // Rotation sensitivity (lower number = more movement)
+            const sensitivity = 50; 
+            
+            // Calculate rotational values based on cursor/touch position relative to screen center
+            const x = (xPos - centerX) / sensitivity; 
+            const y = (yPos - centerY) / sensitivity;
+            
+            // Apply 3D rotation and translation to CSS variables
+            document.documentElement.style.setProperty('--rotateX', `${-y}deg`);
+            document.documentElement.style.setProperty('--rotateY', `${x}deg`);
+
+            // Apply rotation to the main container (to drive the perspective of inner layers)
+            mainAppContainer.style.transform = `
+                perspective(1000px) 
+                rotateX(${-y}deg) 
+                rotateY(${x}deg) 
+                translateZ(50px)
+            `;
+
+        }
+
+        // Add event listener for mouse movement and touch movement
+        document.body.addEventListener('mousemove', handleParallax);
+        document.body.addEventListener('touchmove', handleParallax);
+        document.body.addEventListener('touchend', (e) => {
+             // Reset rotation on touch end
+             document.documentElement.style.setProperty('--rotateX', `0deg`);
+             document.documentElement.style.setProperty('--rotateY', `0deg`);
+             mainAppContainer.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(50px)`;
+        });
+
         // ====================== INITIALIZATION & PROMPT ======================
 
         window.onload = () => {
+             // Set initial transform for a floating look even before movement
+             if (mainAppContainer) {
+                 mainAppContainer.style.transform = 'translateZ(50px)';
+             }
+             
              const hasHistory = localStorage.getItem('arraab_chat_history');
              if (hasHistory) {
                  // Using custom modal instead of prompt/confirm
                  showCustomModal("العرّاب لديه ذاكرة محفوظة. هل تريد استئناف المحادثة؟", () => {
                      loadHistory();
                  }, () => {
-                     clearChat(true);
+                     // The user chooses NOT to resume, so we clear the history permanently
+                     clearChat(true, true); 
                  });
              } else {
-                 clearChat(true);
+                 clearChat(true, false);
              }
         };
 
         // Custom Modal Function (To replace alert/prompt/confirm)
         function showCustomModal(message, onConfirm, onCancel) {
-            // Create the modal element
             const modal = document.createElement('div');
             modal.className = 'fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50';
             modal.innerHTML = `
@@ -567,11 +673,11 @@
             
             document.getElementById('modalCancel').onclick = () => {
                 document.body.removeChild(modal);
-                if (onCancel) onCancel();
+                // When canceling resume, the user explicitly deletes the history
+                if (onCancel) onCancel(); 
             };
         }
 
-        // Initialize Lucide icons for the first time
         lucide.createIcons();
     </script>
 </body>
