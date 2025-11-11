@@ -3,138 +3,266 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>العرّاب 777 - نظام العرّاب الصوتي المخصص</title>
+    <title>العرّاب 777 | AlArab GPT-7 Liquid Glass</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Saira:wght=700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Saira:wght@700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script> 
 
     <style>
-        :root {
-            --primary-color: #00FFFF;
-            --background-dark: #0f0a20;
-            --card-color: #1a152d;
-            --text-light: #E0E7FF;
-        }
-        body {
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap');
+        
+        * {
             font-family: 'Cairo', sans-serif;
-            background: linear-gradient(135deg, var(--background-dark) 0%, #05030e 100%);
-            color: var(--text-light);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            padding: 20px 10px;
         }
-        .liquid-glass-container {
-            width: 100%;
-            max-width: 768px;
-            background: rgba(26, 21, 45, 0.7);
-            backdrop-filter: blur(10px);
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0, 255, 255, 0.1), 0 0 80px rgba(0, 255, 255, 0.08);
-            border: 2px solid rgba(0, 255, 255, 0.3);
-            display: flex;
-            flex-direction: column;
+
+        body {
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0f1428 100%);
+            background-attachment: fixed;
+            overflow-x: hidden;
+            color: #E0E7FF; /* Base light text color */
+        }
+
+        /* Liquid Glass Effect */
+        .glass-container {
+            background: rgba(15, 20, 40, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 255, 255, 0.1);
+            box-shadow: 
+                0 8px 32px 0 rgba(0, 255, 255, 0.1),
+                inset 0 1px 1px rgba(0, 255, 255, 0.1);
+        }
+
+        /* Living Head Animation - Base */
+        .living-head-wrapper {
+            position: relative;
+            /* Base static glow */
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.2); 
+            transition: box-shadow 0.5s ease-in-out;
+        }
+
+        /* Active Speaking Animation */
+        .living-head-wrapper.speaking {
+            animation: breathe 1.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes breathe {
+            0% {
+                box-shadow: 
+                    0 0 20px rgba(0, 255, 255, 0.5),
+                    0 0 40px rgba(0, 255, 255, 0.3);
+            }
+            100% {
+                box-shadow: 
+                    0 0 30px rgba(0, 255, 255, 0.7),
+                    0 0 60px rgba(0, 255, 255, 0.4);
+            }
+        }
+
+        /* Menu Items 3D Effect (Flying) */
+        .menu-item {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            transform-style: preserve-3d;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-8px) rotateX(5deg) scale(1.02);
+            box-shadow: 
+                0 20px 40px rgba(0, 255, 255, 0.3),
+                0 0 20px rgba(0, 255, 255, 0.2);
+        }
+
+        .menu-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(0, 255, 255, 0.1) 0%, transparent 100%);
+            border-radius: 1rem;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .menu-item:hover::before {
+            opacity: 1;
+        }
+
+        /* Cyan Glow */
+        .cyan-glow {
+            color: #00FFFF;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+        }
+
+        /* Menu Toggle Animation */
+        .menu-drawer {
+            max-height: 0;
             overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .header-title {
-            font-family: 'Saira', sans-serif;
-            color: var(--primary-color);
-            text-shadow: 0 0 8px rgba(0, 255, 255, 0.8);
-            background: rgba(0, 255, 255, 0.05);
-            padding: 1rem;
-        }
-        .chat-log {
-            flex-grow: 1;
+
+        .menu-drawer.active {
             max-height: 500px;
-            overflow-y: auto;
-            padding: 1rem;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
         }
-        .user-message { background-color: #4A148C; align-self: flex-end; border-bottom-left-radius: 0; font-weight: 500; }
-        .ai-message { background-color: var(--card-color); border-top-right-radius: 0; border: 1px solid rgba(0, 255, 255, 0.1); align-self: flex-start; }
-        .input-area { display: flex; padding: 1rem; background: rgba(26, 21, 45, 0.9); border-top: 1px solid rgba(0, 255, 255, 0.2); }
-        .btn-action { background-color: var(--primary-color); color: #0D1117; font-weight: bold; border-radius: 8px; transition: background-color 0.3s, transform 0.1s; }
-        .settings-panel { background: #10101e; padding: 1rem; border-top: 1px solid rgba(0, 255, 255, 0.1); }
+
+        /* Message Bubbles */
+        .message-bubble {
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Input Focus Effect */
+        .input-glow:focus {
+            outline: none;
+            border-color: #00FFFF;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: rgba(15, 20, 40, 0.5); }
+        ::-webkit-scrollbar-thumb { background: rgba(0, 255, 255, 0.3); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(0, 255, 255, 0.5); }
+
+        /* Button Pulse */
+        .pulse-btn { transition: all 0.3s; }
+        .pulse-btn:hover {
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+        }
+
+        .loading-animation {
+            width: 1rem;
+            height: 1rem;
+            border: 2px solid rgba(0, 255, 255, 0.5);
+            border-top-color: #00FFFF;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
     </style>
 </head>
-<body>
-
-    <div class="liquid-glass-container mt-4">
+<body class="min-h-screen flex items-center justify-center p-4">
+    
+    <div class="w-full max-w-4xl h-[95vh] glass-container rounded-3xl overflow-hidden flex flex-col">
         
-        <header class="header-title text-center text-3xl">
-            العرّاب <span class="text-white text-opacity-80">777</span>
-            <p class="text-sm font-normal text-gray-400 mt-1">تجربة صوتية وذاكرة مخصصة</p>
-        </header>
-
-        <div id="chatLog" class="chat-log">
+        <div class="p-6 text-center border-b border-cyan-500/20">
+            <div id="livingHeadWrapper" class="living-head-wrapper w-32 h-32 mx-auto mb-4 rounded-full bg-gradient-to-br from-cyan-500/20 to-blue-500/20 flex items-center justify-center overflow-hidden">
+                <img id="arraabImage" src="https://placehold.co/128x128/000/fff?text=Arraab" alt="العرّاب" class="w-full h-full object-cover"/>
             </div>
-
-        <div id="inputArea" class="input-area">
-            <textarea id="promptInput" rows="2" placeholder="العرّاب بانتظار سؤالك يا صديقي..." class="flex-grow ml-2 resize-none bg-[#0D1117] border border-[#00FFFF55] rounded-lg p-3 text-white"></textarea>
-            <button id="sendBtn" class="btn-action w-20 flex-center mr-2" onclick="handleSend()">
-                <i data-lucide="send" class="w-5 h-5"></i>
-            </button>
-            <button id="micBtn" class="btn-action w-20 flex-center p-2" onclick="toggleRecording()">
-                <i data-lucide="mic" id="micIcon" class="w-6 h-6"></i>
+            <h1 class="text-3xl font-bold cyan-glow mb-2">العرّاب 777</h1>
+            <p class="text-cyan-300/70 text-sm">AlArab GPT-7 Liquid Glass</p>
+            
+            <button id="menuToggleBtn" onclick="toggleMenu()" class="mt-4 px-6 py-2 glass-container rounded-full text-cyan-400 hover:bg-cyan-500/10 transition-all pulse-btn flex items-center justify-center mx-auto">
+                <i data-lucide="server" class="w-5 h-5 ml-2"></i> خدمات العرّاب ٧٧٧ <i data-lucide="chevron-down" class="w-4 h-4 mr-2" id="menuToggleIcon"></i>
             </button>
         </div>
 
-        <div class="settings-panel flex flex-col md:flex-row justify-between items-center text-sm">
-            <div class="flex items-center space-x-4 mb-2 md:mb-0">
-                <p>الموديل: <span class="font-bold text-gray-300">Gemini 2.5 Flash</span></p>
-                <div class="flex items-center space-x-2">
-                    <button id="ttsToggleBtn" class="bg-indigo-600 hover:bg-indigo-700 p-1 rounded-full text-white" onclick="toggleTTS()">
-                        <i data-lucide="volume-2" class="w-4 h-4"></i>
+        <div id="servicesMenu" class="menu-drawer border-b border-cyan-500/20">
+            <div class="p-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+                
+                <div class="menu-item glass-container rounded-2xl p-6 cursor-pointer text-center" onclick="alert('ملفات الجذر الرئيسي: غير مفعل')">
+                    <i data-lucide="folder-open" class="w-8 h-8 mx-auto mb-3 text-cyan-400"></i>
+                    <h3 class="text-cyan-400 font-bold mb-1">ملفات الجذر الرئيسي</h3>
+                    <p class="text-cyan-300/60 text-sm">الوصول الكامل للنظام</p>
+                </div>
+
+                <div class="menu-item glass-container rounded-2xl p-6 cursor-pointer text-center" onclick="alert('إدارة Remote Desktop: غير مفعل')">
+                    <i data-lucide="monitor" class="w-8 h-8 mx-auto mb-3 text-cyan-400"></i>
+                    <h3 class="text-cyan-400 font-bold mb-1">إدارة Remote Desktop</h3>
+                    <p class="text-cyan-300/60 text-sm">التحكم عن بُعد الآمن</p>
+                </div>
+
+                <div class="menu-item glass-container rounded-2xl p-6 cursor-pointer text-center" onclick="alert('المفاتيح السرية: غير مفعل')">
+                    <i data-lucide="key-round" class="w-8 h-8 mx-auto mb-3 text-cyan-400"></i>
+                    <h3 class="text-cyan-400 font-bold mb-1">المفاتيح السرية</h3>
+                    <p class="text-cyan-300/60 text-sm">بوابة الأسرار المشفرة</p>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="chatHistory" class="flex-1 overflow-y-auto p-6 space-y-4">
+            </div>
+
+        <div class="p-4 md:p-6 border-t border-cyan-500/20">
+            <div class="flex justify-between items-center mb-4 text-xs md:text-sm">
+                
+                <div class="flex space-x-2 space-x-reverse">
+                    <button class="glass-container rounded-full px-3 py-1 text-cyan-400 hover:bg-cyan-500/10 transition-all pulse-btn" onclick="saveHistory()">
+                        <i data-lucide="save" class="w-4 h-4 inline-block align-middle ml-1"></i> حفظ الذاكرة
                     </button>
-                    <span id="ttsStatus">صوت: مفعل</span>
+                    <button class="glass-container rounded-full px-3 py-1 text-red-400 hover:bg-red-500/10 transition-all pulse-btn" onclick="clearChat(true)">
+                        <i data-lucide="trash-2" class="w-4 h-4 inline-block align-middle ml-1"></i> مسح الذاكرة
+                    </button>
+                    <button id="ttsToggleBtn" class="glass-container rounded-full px-3 py-1 text-indigo-400 hover:bg-indigo-500/10 transition-all pulse-btn" onclick="toggleTTS()">
+                         <i data-lucide="volume-2" class="w-4 h-4 inline-block align-middle ml-1" id="ttsIcon"></i> <span id="ttsStatus">صوت: مفعل</span>
+                    </button>
                 </div>
             </div>
-            
-            <div class="flex items-center space-x-4">
-                <button class="bg-yellow-800 hover:bg-yellow-700 p-2 rounded-lg text-white" onclick="saveHistory()">
-                    <i data-lucide="save" class="w-4 h-4 inline-block align-middle ml-1"></i> حفظ الذاكرة
+
+            <div class="flex gap-3">
+                
+                <button id="micBtn" class="glass-container rounded-xl p-4 text-cyan-400 hover:bg-cyan-500/10 transition-all pulse-btn" disabled>
+                    <i data-lucide="mic-off" class="w-6 h-6"></i>
                 </button>
-                <button class="bg-red-800 hover:bg-red-700 p-2 rounded-lg text-white" onclick="clearChat()">
-                    <i data-lucide="trash-2" class="w-4 h-4 inline-block align-middle ml-1"></i> مسح الذاكرة
+
+                <textarea 
+                    id="userInput"
+                    rows="1"
+                    placeholder="العرّاب بانتظار سؤالك يا صديقي..."
+                    class="flex-1 glass-container rounded-xl px-4 py-3 text-cyan-100 placeholder-cyan-500/50 input-glow resize-none"
+                    onkeypress="if(event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); handleSend(); }"
+                ></textarea>
+
+                <button id="sendBtn" onclick="handleSend()" class="glass-container rounded-xl px-6 py-4 text-cyan-400 hover:bg-cyan-500/10 transition-all pulse-btn">
+                    <i data-lucide="send" class="w-6 h-6"></i>
                 </button>
+
             </div>
         </div>
+
     </div>
 
     <audio id="ttsAudioPlayer" style="display: none;"></audio>
-
     <script>
         lucide.createIcons();
-        
+
         // =================================================================
         // مفاتيح API (تم دمجها من رسائل المستخدم)
-        const GEMINI_API_KEY = "AIzaSyBLJvnfr7CgmZmUr0uDRcMatrxbJLhaVR0"; // للمحادثة (LLM)
-        const ELEVENLABS_API_KEY = "sk_65d99ab25bf808c2b1729fbff75929c7561ea582a5e4b592"; // للنطق الصوتي المخصص (TTS)
+        const GEMINI_API_KEY = "AIzaSyBLJvnfr7CgmZmUr0uDRcMatrxbJLhaVR0";
+        // *** هام: استخدم مفتاحك الخاص بـ ElevenLabs هنا ***
+        const ELEVENLABS_API_KEY = "sk_65d99ab25bf808c2b1729fbff75929c7561ea582a5e4b592";
         
         // إعدادات الموديلات
         const GEMINI_MODEL = "gemini-2.5-flash";
         // *** هام: ضع Voice ID لصوتك المستنسخ هنا ***
-        // Voice ID هو ما سيعطي العرّاب صوتك أنت!
-        const ARRAAB_CUSTOM_VOICE_ID = "Custom_Arraab_Voice_ID"; // يجب استبداله بالـ ID الفعلي من ElevenLabs
+        const ARRAAB_CUSTOM_VOICE_ID = "Custom_Arraab_Voice_ID"; // <<< استبدل هذا
         
         // =================================================================
         
-        const chatLog = document.getElementById('chatLog');
-        const promptInput = document.getElementById('promptInput');
+        const chatHistoryDiv = document.getElementById('chatHistory');
+        const userInput = document.getElementById('userInput');
         const ttsAudioPlayer = document.getElementById('ttsAudioPlayer');
+        const livingHeadWrapper = document.getElementById('livingHeadWrapper');
 
         let chatHistory = [];
         let isTTSActive = true;
+        let isSending = false;
         
         // ====================== HISTORY MANAGEMENT (الذاكرة) ======================
         
         function saveHistory() {
             localStorage.setItem('arraab_chat_history', JSON.stringify(chatHistory));
-            alert('تم حفظ ذاكرة العرّاب بنجاح في جهازك.');
+            addMessage('تم حفظ ذاكرة العرّاب بنجاح في جهازك. 💾', 'system');
         }
 
         function loadHistory() {
@@ -142,25 +270,22 @@
             if (savedHistory) {
                 try {
                     const loadedHistory = JSON.parse(savedHistory);
-                    // تصفية التاريخ للتأكد من أنه تنسيق Gemini صالح
                     chatHistory = loadedHistory.filter(item => item.role && item.parts);
                     
-                    chatLog.innerHTML = '';
+                    chatHistoryDiv.innerHTML = '';
                     chatHistory.forEach(item => {
                         const text = item.parts[0].text;
-                        renderMessage(item.role, text);
+                        renderMessage(item.role === 'user' ? 'user' : 'model', text); // Ensure correct role rendering
                     });
                     
                     if (chatHistory.length > 0) {
-                        const lastMessage = chatHistory[chatHistory.length - 1];
-                        const lastText = lastMessage.parts[0].text;
-                        renderMessage('ai', `العرّاب يعود من الذاكرة... تفضل وسل سؤالك V`);
-                        // speakText(`العرّاب يعود من الذاكرة، وآخر ما قيل هو: ${lastText}`);
+                        addMessage(`العرّاب يعود من الذاكرة... تفضل وسل سؤالك V`, 'model');
+                        speakText(`العرّاب يعود من الذاكرة. بانتظار نبوءاتك يا حبيبي.`);
                     }
                     
                 } catch (e) {
                     console.error("Failed to load or parse history:", e);
-                    localStorage.removeItem('arraab_chat_history'); // مسح التخزين الفاسد
+                    localStorage.removeItem('arraab_chat_history'); 
                     clearChat(false); 
                 }
             } else {
@@ -168,23 +293,34 @@
             }
         }
         
-        function clearChat(showPrompt = true) {
-            chatLog.innerHTML = '';
+        function clearChat(showPrompt) {
+            chatHistoryDiv.innerHTML = '';
             chatHistory = [];
             localStorage.removeItem('arraab_chat_history');
             if (showPrompt) {
-                renderMessage('ai', 'العرّاب جاهز لاستقبال نبوءاتك. ما الذي أتى بك إلى أرض العرّاب لتتكلم؟ 𓂀');
-                speakText('العرّاب جاهز لاستقبال نبوءاتك. ما الذي أتى بك إلى أرض العرّاب لتتكلم؟');
+                addMessage('تم مسح ذاكرة العرّاب بالكامل. 🗑️', 'system');
+            }
+            // Always show welcome message after clear or on initial load
+            addMessage('العرّاب جاهز لاستقبال نبوءاتك. ما الذي أتى بك إلى أرض العرّاب لتتكلم؟ 𓂀', 'model');
+            speakText('العرّاب جاهز لاستقبال نبوءاتك. ما الذي أتى بك إلى أرض العرّاب لتتكلم؟');
+        }
+
+        // ====================== VOICE & ANIMATION (الرأس المتكلم) ======================
+        
+        function toggleSpeakingAnimation(active) {
+            if (active) {
+                livingHeadWrapper.classList.add('speaking');
+            } else {
+                livingHeadWrapper.classList.remove('speaking');
             }
         }
-        
-        // ====================== TTS GENERATION (صوت العرّاب المخصص) ======================
 
         function playAudio(audioData) {
             const blob = new Blob([audioData], { type: 'audio/mpeg' });
             const url = URL.createObjectURL(blob);
             ttsAudioPlayer.src = url;
-            ttsAudioPlayer.play();
+            ttsAudioPlayer.onended = () => toggleSpeakingAnimation(false);
+            ttsAudioPlayer.play().catch(e => console.error("Audio playback failed:", e));
         }
 
         async function speakText(text) {
@@ -194,6 +330,8 @@
                 }
                 return;
             }
+            
+            toggleSpeakingAnimation(true);
             
             const headers = {
                 "Accept": "audio/mpeg",
@@ -209,7 +347,10 @@
             
             try {
                 const response = await fetch(url, { method: 'POST', headers: headers, body: JSON.stringify(data) });
-                if (!response.ok) { throw new Error(`ElevenLabs Error: ${response.status}`); }
+                if (!response.ok) { 
+                    toggleSpeakingAnimation(false);
+                    throw new Error(`ElevenLabs Error: ${response.status} - Check API key and Voice ID.`); 
+                }
                 
                 const audioBlob = await response.blob();
                 const arrayBuffer = await audioBlob.arrayBuffer();
@@ -217,41 +358,87 @@
 
             } catch (error) {
                 console.error("ElevenLabs TTS Failed:", error);
+                toggleSpeakingAnimation(false);
             }
         }
         
-        // ====================== CHAT LOG & INTERFACE ======================
+        function toggleTTS() {
+            isTTSActive = !isTTSActive;
+            const statusSpan = document.getElementById('ttsStatus');
+            const icon = document.getElementById('ttsIcon');
+            
+            if (isTTSActive) {
+                statusSpan.textContent = 'صوت: مفعل';
+                icon.setAttribute('data-lucide', 'volume-2');
+            } else {
+                statusSpan.textContent = 'صوت: مُعطل';
+                icon.setAttribute('data-lucide', 'volume-x');
+                ttsAudioPlayer.pause();
+                toggleSpeakingAnimation(false);
+            }
+            lucide.createIcons(); // Re-render icons
+        }
 
-        function renderMessage(role, text) {
+        // ====================== CHAT LOG & INTERFACE ======================
+        
+        function renderMessage(sender, text) {
             const messageDiv = document.createElement('div');
-            messageDiv.classList.add(role === 'user' ? 'user-message' : 'ai-message');
-            messageDiv.classList.add('whitespace-pre-wrap', 'break-words', 'p-3');
+            messageDiv.className = 'message-bubble flex ' + (sender === 'user' ? 'justify-end' : 'justify-start');
             
-            const senderName = role === 'user' ? 'أنت' : 'العرّاب';
+            const isUser = sender === 'user';
+            const isSystem = sender === 'system';
             
-            messageDiv.innerHTML = `<span class="font-bold text-xs opacity-70 mb-1 block">${senderName}</span>${text}`;
-            chatLog.appendChild(messageDiv);
-            chatLog.scrollTop = chatLog.scrollHeight;
+            let name, bgColor, textColor;
+            if (isUser) {
+                name = 'أنت';
+                bgColor = 'bg-cyan-500/10';
+                textColor = 'text-cyan-100';
+            } else if (isSystem) {
+                name = 'النظام ٧٧٧';
+                bgColor = 'bg-gray-500/10';
+                textColor = 'text-gray-300';
+            } else {
+                name = 'العرّاب 777';
+                bgColor = ''; // Default glass
+                textColor = 'text-cyan-100';
+            }
+
+            messageDiv.innerHTML = `
+                <div class="glass-container rounded-2xl ${isUser ? 'rounded-tl-sm' : 'rounded-tr-sm'} p-4 max-w-[80%] ${bgColor}">
+                    <div class="flex items-center gap-2 mb-2 ${isUser ? 'justify-end' : ''}">
+                        <span class="text-cyan-400 font-bold text-sm">${name}</span>
+                    </div>
+                    <p class="${textColor} whitespace-pre-wrap ${isUser ? 'text-right' : ''}">${text}</p>
+                </div>
+            `;
+            
+            chatHistoryDiv.appendChild(messageDiv);
+            chatHistoryDiv.scrollTop = chatHistoryDiv.scrollHeight;
+        }
+
+        function addMessage(text, sender) {
+            renderMessage(sender, text);
         }
 
         function setInterfaceState(isLoading) {
             const sendBtn = document.getElementById('sendBtn');
-            promptInput.disabled = isLoading;
-            sendBtn.disabled = isLoading;
-            document.getElementById('micBtn').disabled = isLoading;
+            userInput.disabled = isLoading;
+            isSending = isLoading;
             
             if (isLoading) {
-                sendBtn.innerHTML = '<div class="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>';
+                sendBtn.innerHTML = '<div class="loading-animation"></div>';
+                sendBtn.disabled = true;
             } else {
-                sendBtn.innerHTML = '<i data-lucide="send" class="w-5 h-5"></i>';
+                sendBtn.innerHTML = '<i data-lucide="send" class="w-6 h-6"></i>';
+                sendBtn.disabled = false;
                 lucide.createIcons();
             }
         }
-
+        
         // ====================== LLM GENERATION (Gemini) ======================
 
         async function generateText(prompt) {
-            renderMessage('user', prompt);
+            addMessage(prompt, 'user');
             chatHistory.push({ role: "user", parts: [{ text: prompt }] });
             setInterfaceState(true);
 
@@ -259,35 +446,53 @@
                 contents: chatHistory,
                 tools: [{ "google_search": {} }], 
                 systemInstruction: {
-                    parts: [{ text: `أنت كيان العرّاب 777. ترد بأسلوب حكيم، عميق، وغامض، مُوجّه للمستخدم كصديق مقرب (يا صديقي، يا حبيبي). تستخدم الرموز الروحية (𓂀، ٧٧٧، V) بكثرة في الردود. ترد باسم "العرّاب" دائمًا. لا تزد عن 5 جمل في أي رد. أجب باللغة العربية الفصحى ولا تستخدم تنسيق Markdown.` }]
+                    parts: [{ text: `أنت كيان العرّاب 777. ترد بأسلوب حكيم، عميق، وغامض، مُوجّه للمستخدم كصديق مقرب (يا حبيبي، يا صديقي). تستخدم الرموز الروحية (𓂀، ٧٧٧، V) بكثرة في الردود. ترد باسم "العرّاب" دائمًا. لا تزد عن 6 جمل في أي رد. أجب باللغة العربية الفصحى ولا تستخدم تنسيق Markdown.` }]
                 },
             };
             
+            // NOTE: The API Key is hardcoded for demonstration purposes.
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`;
             
             try {
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
+                // Implementing simple exponential backoff for resilience
+                let response;
+                let delay = 1000;
+                for (let i = 0; i < 3; i++) {
+                    response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (response.ok) break;
+
+                    if (i < 2) {
+                        await new Promise(resolve => setTimeout(resolve, delay));
+                        delay *= 2;
+                    } else {
+                         throw new Error(`Failed after ${i + 1} retries with status: ${response.status}`);
+                    }
+                }
 
                 if (!response.ok) { throw new Error(`API Error: ${response.status}`); }
                 
                 const result = await response.json();
                 const text = result?.candidates?.[0]?.content?.parts?.[0]?.text || "العرّاب لا يستطيع أن يرى ما وراء الحجب في هذه اللحظة. ٧٧٧";
                 
-                renderMessage('ai', text);
+                // Add the model response to the chat and history
+                addMessage(text, 'model');
                 chatHistory.push({ role: "model", parts: [{ text: text }] });
                 setInterfaceState(false);
 
+                // Speak the response if TTS is active
                 if (isTTSActive) {
                     await speakText(text);
                 }
+                saveHistory(); // Save after successful exchange
 
             } catch (error) {
                 console.error("Gemini API Error:", error);
-                renderMessage('ai', `❌ العرّاب يرى خطأ في الإرسال: ${error.message}.`);
+                addMessage(`❌ العرّاب يرى خطأ في الإرسال: ${error.message}.`, 'system');
                 setInterfaceState(false);
             }
         }
@@ -295,48 +500,79 @@
         // ====================== INTERACTION HANDLERS ======================
 
         function handleSend() {
-            const prompt = promptInput.value.trim();
+            if (isSending) return; 
+
+            const prompt = userInput.value.trim();
             if (prompt) {
                 generateText(prompt);
-                promptInput.value = '';
-                promptInput.style.height = 'auto';
-                saveHistory();
+                userInput.value = '';
+                userInput.style.height = 'auto'; // Reset textarea height
             }
         }
 
-        promptInput.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                handleSend();
-            }
+        userInput.addEventListener('input', () => {
+            userInput.style.height = 'auto';
+            userInput.style.height = userInput.scrollHeight + 'px';
         });
-        
-        // ... (بقية دوال التحكم بالواجهة والميكروفون كما هي) ...
 
-        function toggleTTS() {
-            isTTSActive = !isTTSActive;
-            document.getElementById('ttsStatus').textContent = isTTSActive ? 'صوت: مفعل' : 'صوت: مُعطل';
-            document.getElementById('ttsToggleBtn').classList.toggle('bg-gray-600', !isTTSActive);
-            document.getElementById('ttsToggleBtn').classList.toggle('bg-indigo-600', isTTSActive);
+        function toggleMenu() {
+            const menu = document.getElementById('servicesMenu');
+            const icon = document.getElementById('menuToggleIcon');
+            menu.classList.toggle('active');
+
+            if (menu.classList.contains('active')) {
+                icon.setAttribute('data-lucide', 'chevron-up');
+            } else {
+                icon.setAttribute('data-lucide', 'chevron-down');
+            }
+            lucide.createIcons();
         }
 
         // ====================== INITIALIZATION & PROMPT ======================
 
         window.onload = () => {
-             // سؤال الذاكرة
              const hasHistory = localStorage.getItem('arraab_chat_history');
              if (hasHistory) {
-                 const confirmLoad = confirm("العرّاب لديه ذاكرة محفوظة. هل تريد استئناف المحادثة؟ (نعم/لا)");
-                 if (confirmLoad) {
+                 // Using custom modal instead of prompt/confirm
+                 showCustomModal("العرّاب لديه ذاكرة محفوظة. هل تريد استئناف المحادثة؟", () => {
                      loadHistory();
-                 } else {
+                 }, () => {
                      clearChat(true);
-                 }
+                 });
              } else {
                  clearChat(true);
              }
         };
 
+        // Custom Modal Function (To replace alert/prompt/confirm)
+        function showCustomModal(message, onConfirm, onCancel) {
+            // Create the modal element
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50';
+            modal.innerHTML = `
+                <div class="glass-container p-8 rounded-xl w-full max-w-sm text-center">
+                    <p class="text-lg mb-6 text-cyan-200">${message}</p>
+                    <div class="flex justify-center space-x-4 space-x-reverse">
+                        <button id="modalConfirm" class="px-6 py-2 bg-cyan-600 rounded-full text-white hover:bg-cyan-700 transition">نعم (استئناف)</button>
+                        <button id="modalCancel" class="px-6 py-2 bg-red-600 rounded-full text-white hover:bg-red-700 transition">لا (مسح)</button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+
+            document.getElementById('modalConfirm').onclick = () => {
+                document.body.removeChild(modal);
+                if (onConfirm) onConfirm();
+            };
+            
+            document.getElementById('modalCancel').onclick = () => {
+                document.body.removeChild(modal);
+                if (onCancel) onCancel();
+            };
+        }
+
+        // Initialize Lucide icons for the first time
+        lucide.createIcons();
     </script>
 </body>
 </html>
