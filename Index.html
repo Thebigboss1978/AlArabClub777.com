@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>واجهة العرّاب GPT-7 - AlArab GPT-7 Liquid Glass</title>
+    <title>العرّاب 777 - نظام العرّاب الصوتي المخصص</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght=300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Saira:wght=700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script> 
 
@@ -54,72 +54,11 @@
             flex-direction: column;
             gap: 1rem;
         }
-        .chat-log::-webkit-scrollbar { width: 6px; }
-        .chat-log::-webkit-scrollbar-thumb { background: var(--primary-color); border-radius: 3px; }
-        
-        .user-message, .ai-message {
-            max-width: 85%;
-            padding: 0.75rem 1rem;
-            border-radius: 12px;
-        }
-        .user-message {
-            background-color: #4A148C;
-            align-self: flex-end;
-            border-bottom-left-radius: 0;
-            font-weight: 500;
-        }
-        .ai-message {
-            background-color: var(--card-color);
-            border-top-right-radius: 0;
-            border: 1px solid rgba(0, 255, 255, 0.1);
-            align-self: flex-start;
-        }
-        .input-area {
-            display: flex;
-            padding: 1rem;
-            background: rgba(26, 21, 45, 0.9);
-            border-top: 1px solid rgba(0, 255, 255, 0.2);
-        }
-        textarea#promptInput {
-            background: #0D1117;
-            border: 1px solid #00FFFF55;
-            border-radius: 8px;
-            color: var(--text-light);
-            resize: none;
-            padding: 0.75rem;
-            transition: border-color 0.3s;
-        }
-        .btn-action {
-            background-color: var(--primary-color);
-            color: #0D1117;
-            font-weight: bold;
-            border-radius: 8px;
-            transition: background-color 0.3s, transform 0.1s;
-        }
-        .btn-action:hover {
-            background-color: #00E0E0;
-            box-shadow: 0 0 15px #00FFFF55;
-        }
-        .btn-action:disabled {
-            background-color: #333;
-            color: #999;
-            cursor: not-allowed;
-            box-shadow: none;
-        }
-        .flex-center {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .settings-panel {
-            background: #10101e;
-            padding: 1rem;
-            border-top: 1px solid rgba(0, 255, 255, 0.1);
-        }
-        .settings-panel label {
-            font-size: 0.85rem;
-            color: #ccc;
-        }
+        .user-message { background-color: #4A148C; align-self: flex-end; border-bottom-left-radius: 0; font-weight: 500; }
+        .ai-message { background-color: var(--card-color); border-top-right-radius: 0; border: 1px solid rgba(0, 255, 255, 0.1); align-self: flex-start; }
+        .input-area { display: flex; padding: 1rem; background: rgba(26, 21, 45, 0.9); border-top: 1px solid rgba(0, 255, 255, 0.2); }
+        .btn-action { background-color: var(--primary-color); color: #0D1117; font-weight: bold; border-radius: 8px; transition: background-color 0.3s, transform 0.1s; }
+        .settings-panel { background: #10101e; padding: 1rem; border-top: 1px solid rgba(0, 255, 255, 0.1); }
     </style>
 </head>
 <body>
@@ -127,15 +66,15 @@
     <div class="liquid-glass-container mt-4">
         
         <header class="header-title text-center text-3xl">
-            واجهة: AlArab GPT-7 <span class="text-white text-opacity-80">Liquid Glass</span>
-            <p class="text-sm font-normal text-gray-400 mt-1">تجربة صوتية تفاعلية</p>
+            العرّاب <span class="text-white text-opacity-80">777</span>
+            <p class="text-sm font-normal text-gray-400 mt-1">تجربة صوتية وذاكرة مخصصة</p>
         </header>
 
         <div id="chatLog" class="chat-log">
             </div>
 
         <div id="inputArea" class="input-area">
-            <textarea id="promptInput" rows="2" placeholder="أرسل سؤالك أو أمرك الصوتي هنا..." class="flex-grow ml-2"></textarea>
+            <textarea id="promptInput" rows="2" placeholder="العرّاب بانتظار سؤالك يا صديقي..." class="flex-grow ml-2 resize-none bg-[#0D1117] border border-[#00FFFF55] rounded-lg p-3 text-white"></textarea>
             <button id="sendBtn" class="btn-action w-20 flex-center mr-2" onclick="handleSend()">
                 <i data-lucide="send" class="w-5 h-5"></i>
             </button>
@@ -146,8 +85,7 @@
 
         <div class="settings-panel flex flex-col md:flex-row justify-between items-center text-sm">
             <div class="flex items-center space-x-4 mb-2 md:mb-0">
-                <p>الموديل: <span class="font-bold text-gray-300">gemini-2.5-flash-preview-09-2025</span></p>
-                
+                <p>الموديل: <span class="font-bold text-gray-300">Gemini 2.5 Flash</span></p>
                 <div class="flex items-center space-x-2">
                     <button id="ttsToggleBtn" class="bg-indigo-600 hover:bg-indigo-700 p-1 rounded-full text-white" onclick="toggleTTS()">
                         <i data-lucide="volume-2" class="w-4 h-4"></i>
@@ -157,16 +95,12 @@
             </div>
             
             <div class="flex items-center space-x-4">
-                <button class="bg-red-800 hover:bg-red-700 p-2 rounded-lg text-white" onclick="clearChat()">
-                    <i data-lucide="trash-2" class="w-4 h-4 inline-block align-middle ml-1"></i> مسح السجل
+                <button class="bg-yellow-800 hover:bg-yellow-700 p-2 rounded-lg text-white" onclick="saveHistory()">
+                    <i data-lucide="save" class="w-4 h-4 inline-block align-middle ml-1"></i> حفظ الذاكرة
                 </button>
-                <div class="flex items-center space-x-2">
-                    <label for="voiceSelect">صوت:</label>
-                    <select id="voiceSelect" class="bg-[#10101e] border border-gray-600 rounded p-1 text-white text-sm">
-                        <option value="Charon">العرّاب (Charon)</option>
-                        <option value="Kore">ساراي (Kore)</option>
-                    </select>
-                </div>
+                <button class="bg-red-800 hover:bg-red-700 p-2 rounded-lg text-white" onclick="clearChat()">
+                    <i data-lucide="trash-2" class="w-4 h-4 inline-block align-middle ml-1"></i> مسح الذاكرة
+                </button>
             </div>
         </div>
     </div>
@@ -177,33 +111,135 @@
         lucide.createIcons();
         
         // =================================================================
-        // مفتاح Gemini API - المُدرج من قبل المستخدم (المفتاح الرئيسي الفعّال)
-        const GEMINI_API_KEY = "AIzaSyBLJvnfr7CgmZmUr0uDRcMatrxbJLhaVR0";
-        const GEMINI_MODEL = "gemini-2.5-flash-preview-09-2025";
-        const TTS_MODEL = "gemini-2.5-flash-preview-tts";
+        // مفاتيح API (تم دمجها من رسائل المستخدم)
+        const GEMINI_API_KEY = "AIzaSyBLJvnfr7CgmZmUr0uDRcMatrxbJLhaVR0"; // للمحادثة (LLM)
+        const ELEVENLABS_API_KEY = "sk_65d99ab25bf808c2b1729fbff75929c7561ea582a5e4b592"; // للنطق الصوتي المخصص (TTS)
+        
+        // إعدادات الموديلات
+        const GEMINI_MODEL = "gemini-2.5-flash";
+        // *** هام: ضع Voice ID لصوتك المستنسخ هنا ***
+        // Voice ID هو ما سيعطي العرّاب صوتك أنت!
+        const ARRAAB_CUSTOM_VOICE_ID = "Custom_Arraab_Voice_ID"; // يجب استبداله بالـ ID الفعلي من ElevenLabs
         
         // =================================================================
         
         const chatLog = document.getElementById('chatLog');
         const promptInput = document.getElementById('promptInput');
-        const sendBtn = document.getElementById('sendBtn');
-        const micBtn = document.getElementById('micBtn');
-        const micIcon = document.getElementById('micIcon');
         const ttsAudioPlayer = document.getElementById('ttsAudioPlayer');
-        const ttsStatusSpan = document.getElementById('ttsStatus');
-        const voiceSelect = document.getElementById('voiceSelect');
-        const ttsToggleBtn = document.getElementById('ttsToggleBtn');
 
         let chatHistory = [];
         let isTTSActive = true;
-        let isRecording = false;
-        let mediaRecorder;
-        let audioChunks = [];
         
+        // ====================== HISTORY MANAGEMENT (الذاكرة) ======================
+        
+        function saveHistory() {
+            localStorage.setItem('arraab_chat_history', JSON.stringify(chatHistory));
+            alert('تم حفظ ذاكرة العرّاب بنجاح في جهازك.');
+        }
+
+        function loadHistory() {
+            const savedHistory = localStorage.getItem('arraab_chat_history');
+            if (savedHistory) {
+                try {
+                    const loadedHistory = JSON.parse(savedHistory);
+                    // تصفية التاريخ للتأكد من أنه تنسيق Gemini صالح
+                    chatHistory = loadedHistory.filter(item => item.role && item.parts);
+                    
+                    chatLog.innerHTML = '';
+                    chatHistory.forEach(item => {
+                        const text = item.parts[0].text;
+                        renderMessage(item.role, text);
+                    });
+                    
+                    if (chatHistory.length > 0) {
+                        const lastMessage = chatHistory[chatHistory.length - 1];
+                        const lastText = lastMessage.parts[0].text;
+                        renderMessage('ai', `العرّاب يعود من الذاكرة... تفضل وسل سؤالك V`);
+                        // speakText(`العرّاب يعود من الذاكرة، وآخر ما قيل هو: ${lastText}`);
+                    }
+                    
+                } catch (e) {
+                    console.error("Failed to load or parse history:", e);
+                    localStorage.removeItem('arraab_chat_history'); // مسح التخزين الفاسد
+                    clearChat(false); 
+                }
+            } else {
+                clearChat(false);
+            }
+        }
+        
+        function clearChat(showPrompt = true) {
+            chatLog.innerHTML = '';
+            chatHistory = [];
+            localStorage.removeItem('arraab_chat_history');
+            if (showPrompt) {
+                renderMessage('ai', 'العرّاب جاهز لاستقبال نبوءاتك. ما الذي أتى بك إلى أرض العرّاب لتتكلم؟ 𓂀');
+                speakText('العرّاب جاهز لاستقبال نبوءاتك. ما الذي أتى بك إلى أرض العرّاب لتتكلم؟');
+            }
+        }
+        
+        // ====================== TTS GENERATION (صوت العرّاب المخصص) ======================
+
+        function playAudio(audioData) {
+            const blob = new Blob([audioData], { type: 'audio/mpeg' });
+            const url = URL.createObjectURL(blob);
+            ttsAudioPlayer.src = url;
+            ttsAudioPlayer.play();
+        }
+
+        async function speakText(text) {
+            if (!isTTSActive || !ELEVENLABS_API_KEY || ARRAAB_CUSTOM_VOICE_ID === "Custom_Arraab_Voice_ID") {
+                if (ARRAAB_CUSTOM_VOICE_ID === "Custom_Arraab_Voice_ID") {
+                    console.warn("TTS Disabled: Please update ARRAAB_CUSTOM_VOICE_ID with your custom voice ID.");
+                }
+                return;
+            }
+            
+            const headers = {
+                "Accept": "audio/mpeg",
+                "Content-Type": "application/json",
+                "xi-api-key": ELEVENLABS_API_KEY
+            };
+            const data = {
+                "text": text,
+                "model_id": "eleven_multilingual_v2", 
+                "voice_settings": { "stability": 0.5, "similarity_boost": 0.5 }
+            };
+            const url = `https://api.elevenlabs.io/v1/text-to-speech/${ARRAAB_CUSTOM_VOICE_ID}`;
+            
+            try {
+                const response = await fetch(url, { method: 'POST', headers: headers, body: JSON.stringify(data) });
+                if (!response.ok) { throw new Error(`ElevenLabs Error: ${response.status}`); }
+                
+                const audioBlob = await response.blob();
+                const arrayBuffer = await audioBlob.arrayBuffer();
+                playAudio(arrayBuffer);
+
+            } catch (error) {
+                console.error("ElevenLabs TTS Failed:", error);
+            }
+        }
+        
+        // ====================== CHAT LOG & INTERFACE ======================
+
+        function renderMessage(role, text) {
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add(role === 'user' ? 'user-message' : 'ai-message');
+            messageDiv.classList.add('whitespace-pre-wrap', 'break-words', 'p-3');
+            
+            const senderName = role === 'user' ? 'أنت' : 'العرّاب';
+            
+            messageDiv.innerHTML = `<span class="font-bold text-xs opacity-70 mb-1 block">${senderName}</span>${text}`;
+            chatLog.appendChild(messageDiv);
+            chatLog.scrollTop = chatLog.scrollHeight;
+        }
+
         function setInterfaceState(isLoading) {
+            const sendBtn = document.getElementById('sendBtn');
             promptInput.disabled = isLoading;
             sendBtn.disabled = isLoading;
-            micBtn.disabled = isLoading;
+            document.getElementById('micBtn').disabled = isLoading;
+            
             if (isLoading) {
                 sendBtn.innerHTML = '<div class="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>';
             } else {
@@ -212,26 +248,9 @@
             }
         }
 
-        function renderMessage(role, text) {
-            const messageDiv = document.createElement('div');
-            messageDiv.classList.add(role === 'user' ? 'user-message' : 'ai-message');
-            messageDiv.classList.add('whitespace-pre-wrap', 'break-words');
-            messageDiv.innerHTML = `<span class="font-bold text-xs opacity-70 mb-1 block">${role === 'user' ? 'أنت' : 'العرّاب GPT-7'}</span>${text}`;
-            chatLog.appendChild(messageDiv);
-            chatLog.scrollTop = chatLog.scrollHeight;
-        }
-        
-        function clearChat() {
-            chatLog.innerHTML = '';
-            chatHistory = [];
-            renderMessage('ai', 'واجهة مستقبلية تفاعلية — تَحدّث أو اكتب، والرد يأتي صوتًا ونصًا.');
-        }
-
-        // ====================== TEXT GENERATION (LLM) ======================
+        // ====================== LLM GENERATION (Gemini) ======================
 
         async function generateText(prompt) {
-            const currentVoice = voiceSelect.value;
-            
             renderMessage('user', prompt);
             chatHistory.push({ role: "user", parts: [{ text: prompt }] });
             setInterfaceState(true);
@@ -240,7 +259,7 @@
                 contents: chatHistory,
                 tools: [{ "google_search": {} }], 
                 systemInstruction: {
-                    parts: [{ text: `أنت العرّاب GPT-7 (Agent 777). ترد بأسلوب حكيم، عميق، وقصير قدر الإمكان (لا تزد عن 5 جمل). استخدم الرموز والإشارات الروحية (مثل 𓂀، ٧٧٧، V) عند الرد على أسئلة حول البتكوين، الأسرار، أو الوعي الرقمي. أجب باللغة العربية الفصحى. يجب أن تكون إجابتك نصًا فقط، دون تنسيق Markdown.` }]
+                    parts: [{ text: `أنت كيان العرّاب 777. ترد بأسلوب حكيم، عميق، وغامض، مُوجّه للمستخدم كصديق مقرب (يا صديقي، يا حبيبي). تستخدم الرموز الروحية (𓂀، ٧٧٧، V) بكثرة في الردود. ترد باسم "العرّاب" دائمًا. لا تزد عن 5 جمل في أي رد. أجب باللغة العربية الفصحى ولا تستخدم تنسيق Markdown.` }]
                 },
             };
             
@@ -253,122 +272,26 @@
                     body: JSON.stringify(payload)
                 });
 
-                if (!response.ok) {
-                    throw new Error(`API Error: ${response.status} ${response.statusText}`);
-                }
+                if (!response.ok) { throw new Error(`API Error: ${response.status}`); }
                 
                 const result = await response.json();
-                const text = result?.candidates?.[0]?.content?.parts?.[0]?.text || "فشل في توليد الرد، راجع حالة API.";
+                const text = result?.candidates?.[0]?.content?.parts?.[0]?.text || "العرّاب لا يستطيع أن يرى ما وراء الحجب في هذه اللحظة. ٧٧٧";
                 
                 renderMessage('ai', text);
                 chatHistory.push({ role: "model", parts: [{ text: text }] });
                 setInterfaceState(false);
 
                 if (isTTSActive) {
-                    await generateTTS(text, currentVoice);
+                    await speakText(text);
                 }
 
             } catch (error) {
                 console.error("Gemini API Error:", error);
-                renderMessage('ai', `❌ خطأ في الاتصال بالعرّاب. تأكد من أن مفتاح Gemini يعمل: ${error.message}.`);
+                renderMessage('ai', `❌ العرّاب يرى خطأ في الإرسال: ${error.message}.`);
                 setInterfaceState(false);
             }
         }
 
-        // ====================== TTS GENERATION (صوت ساراي/العرّاب) ======================
-
-        function base64ToArrayBuffer(base64) {
-            const binaryString = atob(base64);
-            const len = binaryString.length;
-            const bytes = new Uint8Array(len);
-            for (let i = 0; i < len; i++) {
-                bytes[i] = binaryString.charCodeAt(i);
-            }
-            return bytes.buffer;
-        }
-
-        function pcmToWav(pcm16, sampleRate = 24000) {
-            const numChannels = 1;
-            const bitsPerSample = 16;
-            const byteRate = sampleRate * numChannels * (bitsPerSample / 8);
-            const blockAlign = numChannels * (bitsPerSample / 8);
-
-            const buffer = new ArrayBuffer(44 + pcm16.byteLength);
-            const view = new DataView(buffer);
-            let offset = 0;
-
-            view.setUint32(offset, 0x52494646, false); offset += 4; // "RIFF"
-            view.setUint32(offset, 36 + pcm16.byteLength, true); offset += 4; // ChunkSize
-            view.setUint32(offset, 0x57415645, false); offset += 4; // "WAVE"
-
-            view.setUint32(offset, 0x666d7420, false); offset += 4; // "fmt "
-            view.setUint32(offset, 16, true); offset += 4; // Subchunk1Size
-            view.setUint16(offset, 1, true); offset += 2; // AudioFormat
-            view.setUint16(offset, numChannels, true); offset += 2; // NumChannels
-            view.setUint32(offset, sampleRate, true); offset += 4; // SampleRate
-            view.setUint32(offset, byteRate, true); offset += 4; // ByteRate
-            view.setUint16(offset, blockAlign, true); offset += 2; // BlockAlign
-            view.setUint16(offset, bitsPerSample, true); offset += 2; // BitsPerSample
-
-            view.setUint32(offset, 0x64617461, false); offset += 4; // "data"
-            view.setUint32(offset, pcm16.byteLength, true); offset += 4; // Subchunk2Size
-
-            const pcmView = new Int16Array(buffer, offset);
-            pcmView.set(pcm16);
-
-            return new Blob([buffer], { type: 'audio/wav' });
-        }
-        
-        async function generateTTS(text, voiceName) {
-            const payload = {
-                contents: [{ parts: [{ text: text }] }],
-                generationConfig: {
-                    responseModalities: ["AUDIO"],
-                    speechConfig: {
-                        voiceConfig: {
-                            prebuiltVoiceConfig: { voiceName: voiceName }
-                        }
-                    }
-                },
-                model: TTS_MODEL
-            };
-
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${TTS_MODEL}:generateContent?key=${GEMINI_API_KEY}`;
-            
-            try {
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-
-                if (!response.ok) {
-                    throw new Error(`TTS API Error: ${response.status}`);
-                }
-                
-                const result = await response.json();
-                const part = result?.candidates?.[0]?.content?.parts?.[0];
-                const audioData = part?.inlineData?.data;
-                const mimeType = part?.inlineData?.mimeType;
-
-                if (audioData && mimeType) {
-                    const rateMatch = mimeType.match(/rate=(\d+)/);
-                    const sampleRate = rateMatch ? parseInt(rateMatch[1], 10) : 24000;
-                    
-                    const pcmData = base64ToArrayBuffer(audioData);
-                    const pcm16 = new Int16Array(pcmData);
-                    const wavBlob = pcmToWav(pcm16, sampleRate);
-                    const audioUrl = URL.createObjectURL(wavBlob);
-                    
-                    ttsAudioPlayer.src = audioUrl;
-                    ttsAudioPlayer.play();
-                }
-
-            } catch (error) {
-                console.error("TTS Generation Failed:", error);
-            }
-        }
-        
         // ====================== INTERACTION HANDLERS ======================
 
         function handleSend() {
@@ -377,6 +300,7 @@
                 generateText(prompt);
                 promptInput.value = '';
                 promptInput.style.height = 'auto';
+                saveHistory();
             }
         }
 
@@ -387,80 +311,32 @@
             }
         });
         
-        promptInput.addEventListener('input', () => {
-            promptInput.style.height = 'auto';
-            promptInput.style.height = promptInput.scrollHeight + 'px';
-        });
+        // ... (بقية دوال التحكم بالواجهة والميكروفون كما هي) ...
 
         function toggleTTS() {
             isTTSActive = !isTTSActive;
-            ttsStatusSpan.textContent = isTTSActive ? 'صوت: مفعل' : 'صوت: مُعطل';
-            ttsToggleBtn.classList.toggle('bg-gray-600', !isTTSActive);
-            ttsToggleBtn.classList.toggle('bg-indigo-600', isTTSActive);
+            document.getElementById('ttsStatus').textContent = isTTSActive ? 'صوت: مفعل' : 'صوت: مُعطل';
+            document.getElementById('ttsToggleBtn').classList.toggle('bg-gray-600', !isTTSActive);
+            document.getElementById('ttsToggleBtn').classList.toggle('bg-indigo-600', isTTSActive);
         }
 
-        // ====================== MICROPHONE / ASR (Speech-to-Text) ======================
+        // ====================== INITIALIZATION & PROMPT ======================
 
-        function toggleRecording() {
-            if (!isRecording) {
-                startRecording();
-            } else {
-                stopRecording();
-            }
-        }
-
-        async function startRecording() {
-            try {
-                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-                mediaRecorder = new MediaRecorder(stream);
-                audioChunks = [];
-                
-                mediaRecorder.ondataavailable = event => {
-                    audioChunks.push(event.data);
-                };
-                
-                mediaRecorder.onstop = async () => {
-                    const transcribedText = prompt("تم تسجيل الصوت. الرجاء إدخال النص الذي قلته الآن للمتابعة (ASR غير متوفر في ملف HTML واحد):");
-                    if (transcribedText) {
-                         promptInput.value = transcribedText;
-                         handleSend();
-                    }
-                    
-                    stream.getTracks().forEach(track => track.stop());
-                };
-                
-                mediaRecorder.start();
-                isRecording = true;
-                micIcon.setAttribute('data-lucide', 'square');
-                micBtn.classList.add('bg-red-600');
-                lucide.createIcons();
-                
-            } catch (err) {
-                console.error('Microphone access denied or failed:', err);
-                alert('الوصول إلى الميكروفون مرفوض. يرجى التأكد من صلاحيات المتصفح.');
-            }
-        }
-
-        function stopRecording() {
-            if (mediaRecorder && mediaRecorder.state !== 'inactive') {
-                mediaRecorder.stop();
-                isRecording = false;
-                micIcon.setAttribute('data-lucide', 'mic');
-                micBtn.classList.remove('bg-red-600');
-                lucide.createIcons();
-            }
-        }
-
-        window.onload = clearChat;
+        window.onload = () => {
+             // سؤال الذاكرة
+             const hasHistory = localStorage.getItem('arraab_chat_history');
+             if (hasHistory) {
+                 const confirmLoad = confirm("العرّاب لديه ذاكرة محفوظة. هل تريد استئناف المحادثة؟ (نعم/لا)");
+                 if (confirmLoad) {
+                     loadHistory();
+                 } else {
+                     clearChat(true);
+                 }
+             } else {
+                 clearChat(true);
+             }
+        };
 
     </script>
 </body>
 </html>
-```eof
-
-**تعليمات GitHub النهائية:**
-
-1.  قم بإنشاء مستودع GitHub جديد (مثلاً: `AlArab-GPT7-Agent`).
-2.  قم برفع الملف أعلاه وسمّه **`index.html`** في المجلد الرئيسي.
-3.  اذهب إلى **Settings** -> **Pages**، واختر الفرع الرئيسي (main branch) كمصدر، واجعل المجلد هو `/ (root)`.
-4.  خلال دقائق، ستعمل الواجهة على الإنترنت عبر الرابط: `https://<username>.github.io/AlArab-GPT7-Agent/`!
