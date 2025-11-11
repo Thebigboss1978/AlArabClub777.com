@@ -1,369 +1,342 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>AlArab 777 | غرفة المتابعة + سوق الوكلاء</title>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --c1:#00ffff; --c2:#ff00ff; --c3:#0af; --bg:#070b12; --panel:#0f1624;
-  }
-  *{box-sizing:border-box}
-  body{margin:0;background:radial-gradient(1200px 600px at 70% -10%, rgba(255,0,255,.14), transparent 40%), radial-gradient(900px 500px at 0% 120%, rgba(0,255,255,.12), transparent 45%), var(--bg);color:#e9f8ff;font-family:"Cairo",system-ui}
-  h2,h3{margin:8px 0 4px}
-  .wrap{display:grid;grid-template-columns:1.2fr .8fr;gap:16px;padding:16px}
-  .card{background:rgba(15,22,36,.9);border:1px solid rgba(0,255,255,.25);border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.4);padding:14px}
-  .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-  label{font-size:12px;opacity:.8}
-  input,select,textarea{background:#0b1220;border:1px solid rgba(0,255,255,.25);color:#fff;border-radius:10px;padding:10px;font-family:inherit}
-  textarea{width:100%;min-height:90px}
-  button{background:linear-gradient(135deg,var(--c1),var(--c2));border:0;color:#000;font-weight:900;border-radius:10px;padding:10px 14px;cursor:pointer}
-  button.ghost{background:transparent;color:#cfe; border:1px solid rgba(0,255,255,.3)}
-  .pill{display:inline-block;padding:4px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.15);font-size:12px}
-  .ok{color:#0f0}.bad{color:#f66}
-  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-  .log{background:#060a14;border:1px dashed rgba(0,255,255,.25);border-radius:10px;padding:10px;height:220px;overflow:auto;font-size:13px;line-height:1.5}
-  .gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px}
-  .shot{border:1px solid rgba(0,255,255,.2);border-radius:10px;overflow:hidden;background:#000}
-  .shot img{display:block;width:100%}
-  .footer{padding:8px 16px;opacity:.6;text-align:center;font-size:12px}
-  .badge{font-size:11px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);padding:4px 8px;border-radius:8px}
-  .mono{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace}
-  .hr{height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.15),transparent);margin:10px 0}
-  .title{display:flex;justify-content:space-between;align-items:center}
-  .title span{font-size:12px;opacity:.7}
-  .market-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
-  .item{background:#0c1322;border:1px solid rgba(0,255,255,.2);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:8px}
-  .item h4{margin:0}
-  .mini{font-size:12px;opacity:.75}
-  canvas#scene{width:100%;height:240px;display:block;background:radial-gradient(circle at 50% 30%,rgba(0,255,255,.06),transparent 60%)}
-  .kbd{padding:2px 6px;border:1px solid rgba(255,255,255,.2);border-radius:6px;background:rgba(255,255,255,.06);font-size:12px}
-  @media (max-width:1024px){.wrap{grid-template-columns:1fr}}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>العرّاب 777 - نظام العرّاب الصوتي المخصص</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Saira:wght=700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script> 
+
+    <style>
+        :root {
+            --primary-color: #00FFFF;
+            --background-dark: #0f0a20;
+            --card-color: #1a152d;
+            --text-light: #E0E7FF;
+        }
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, var(--background-dark) 0%, #05030e 100%);
+            color: var(--text-light);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 20px 10px;
+        }
+        .liquid-glass-container {
+            width: 100%;
+            max-width: 768px;
+            background: rgba(26, 21, 45, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 255, 255, 0.1), 0 0 80px rgba(0, 255, 255, 0.08);
+            border: 2px solid rgba(0, 255, 255, 0.3);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .header-title {
+            font-family: 'Saira', sans-serif;
+            color: var(--primary-color);
+            text-shadow: 0 0 8px rgba(0, 255, 255, 0.8);
+            background: rgba(0, 255, 255, 0.05);
+            padding: 1rem;
+        }
+        .chat-log {
+            flex-grow: 1;
+            max-height: 500px;
+            overflow-y: auto;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .user-message { background-color: #4A148C; align-self: flex-end; border-bottom-left-radius: 0; font-weight: 500; }
+        .ai-message { background-color: var(--card-color); border-top-right-radius: 0; border: 1px solid rgba(0, 255, 255, 0.1); align-self: flex-start; }
+        .input-area { display: flex; padding: 1rem; background: rgba(26, 21, 45, 0.9); border-top: 1px solid rgba(0, 255, 255, 0.2); }
+        .btn-action { background-color: var(--primary-color); color: #0D1117; font-weight: bold; border-radius: 8px; transition: background-color 0.3s, transform 0.1s; }
+        .settings-panel { background: #10101e; padding: 1rem; border-top: 1px solid rgba(0, 255, 255, 0.1); }
+    </style>
 </head>
 <body>
 
-<div class="wrap">
+    <div class="liquid-glass-container mt-4">
+        
+        <header class="header-title text-center text-3xl">
+            العرّاب <span class="text-white text-opacity-80">777</span>
+            <p class="text-sm font-normal text-gray-400 mt-1">تجربة صوتية وذاكرة مخصصة</p>
+        </header>
 
-  <!-- غرفة المتابعة / الوكيل -->
-  <section class="card">
-    <div class="title">
-      <h2>🛰️ غرفة المتابعة | ARA-777 Ops</h2>
-      <span class="badge">Auto-Log • Auto-Screenshot</span>
-    </div>
+        <div id="chatLog" class="chat-log">
+            </div>
 
-    <div class="grid2">
-      <div>
-        <label>اسم المهمة</label>
-        <input id="taskName" placeholder="مثال: بناء سكشن هبوط لعميل السيارات">
-      </div>
-      <div>
-        <label>الوكيل المنفّذ</label>
-        <select id="agentName">
-          <option>Farah-Creative</option>
-          <option>Advisor-Dad</option>
-          <option>Ops-Mom</option>
-          <option>ARA-777 Core</option>
-          <option>External-FastAgent</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="row" style="margin-top:8px">
-      <button id="startBtn">بدء المهمة</button>
-      <button id="stopBtn" class="ghost">إيقاف</button>
-      <span class="pill" id="statusPill">الحالة: جاهز</span>
-      <span class="pill mono">ID: <span id="taskId">—</span></span>
-      <span class="pill mono">بدأ: <span id="startedAt">—</span></span>
-      <span class="pill mono">لقطات: <span id="shotCount">0</span></span>
-    </div>
-
-    <div class="hr"></div>
-
-    <div class="grid2">
-      <div>
-        <h3>سجل الأحداث</h3>
-        <div class="log" id="log"></div>
-        <div class="row" style="margin-top:8px">
-          <button id="exportLog">تصدير اللوج (JSON)</button>
-          <button id="markMilestone" class="ghost">✨ علامة تقدّم</button>
+        <div id="inputArea" class="input-area">
+            <textarea id="promptInput" rows="2" placeholder="العرّاب بانتظار سؤالك يا صديقي..." class="flex-grow ml-2 resize-none bg-[#0D1117] border border-[#00FFFF55] rounded-lg p-3 text-white"></textarea>
+            <button id="sendBtn" class="btn-action w-20 flex-center mr-2" onclick="handleSend()">
+                <i data-lucide="send" class="w-5 h-5"></i>
+            </button>
+            <button id="micBtn" class="btn-action w-20 flex-center p-2" onclick="toggleRecording()">
+                <i data-lucide="mic" id="micIcon" class="w-6 h-6"></i>
+            </button>
         </div>
-      </div>
-      <div>
-        <h3>المشهد الحي (Canvas)</h3>
-        <canvas id="scene"></canvas>
-        <div class="row" style="margin-top:8px">
-          <button id="shotNow">📸 لقطة الآن</button>
-          <label><input type="checkbox" id="autoShot" checked> لقطات تلقائية كل <input id="shotEvery" value="20" style="width:60px"> ثانية</label>
+
+        <div class="settings-panel flex flex-col md:flex-row justify-between items-center text-sm">
+            <div class="flex items-center space-x-4 mb-2 md:mb-0">
+                <p>الموديل: <span class="font-bold text-gray-300">Gemini 2.5 Flash</span></p>
+                <div class="flex items-center space-x-2">
+                    <button id="ttsToggleBtn" class="bg-indigo-600 hover:bg-indigo-700 p-1 rounded-full text-white" onclick="toggleTTS()">
+                        <i data-lucide="volume-2" class="w-4 h-4"></i>
+                    </button>
+                    <span id="ttsStatus">صوت: مفعل</span>
+                </div>
+            </div>
+            
+            <div class="flex items-center space-x-4">
+                <button class="bg-yellow-800 hover:bg-yellow-700 p-2 rounded-lg text-white" onclick="saveHistory()">
+                    <i data-lucide="save" class="w-4 h-4 inline-block align-middle ml-1"></i> حفظ الذاكرة
+                </button>
+                <button class="bg-red-800 hover:bg-red-700 p-2 rounded-lg text-white" onclick="clearChat()">
+                    <i data-lucide="trash-2" class="w-4 h-4 inline-block align-middle ml-1"></i> مسح الذاكرة
+                </button>
+            </div>
         </div>
-      </div>
     </div>
 
-    <h3 style="margin-top:12px">📷 المعرض</h3>
-    <div class="gallery" id="gallery"></div>
-  </section>
+    <audio id="ttsAudioPlayer" style="display: none;"></audio>
 
-  <!-- سوق الوكلاء + المولّد -->
-  <section class="card">
-    <div class="title">
-      <h2>🛒 سوق الوكلاء | Agent Marketplace</h2>
-      <span class="badge">إدراج سريع + نص جاهز</span>
-    </div>
+    <script>
+        lucide.createIcons();
+        
+        // =================================================================
+        // مفاتيح API (تم دمجها من رسائل المستخدم)
+        const GEMINI_API_KEY = "AIzaSyBLJvnfr7CgmZmUr0uDRcMatrxbJLhaVR0"; // للمحادثة (LLM)
+        const ELEVENLABS_API_KEY = "sk_65d99ab25bf808c2b1729fbff75929c7561ea582a5e4b592"; // للنطق الصوتي المخصص (TTS)
+        
+        // إعدادات الموديلات
+        const GEMINI_MODEL = "gemini-2.5-flash";
+        // *** هام: ضع Voice ID لصوتك المستنسخ هنا ***
+        // Voice ID هو ما سيعطي العرّاب صوتك أنت!
+        const ARRAAB_CUSTOM_VOICE_ID = "Custom_Arraab_Voice_ID"; // يجب استبداله بالـ ID الفعلي من ElevenLabs
+        
+        // =================================================================
+        
+        const chatLog = document.getElementById('chatLog');
+        const promptInput = document.getElementById('promptInput');
+        const ttsAudioPlayer = document.getElementById('ttsAudioPlayer');
 
-    <div class="grid2">
-      <div>
-        <label>تصنيف الوكيل</label>
-        <select id="cat">
-          <option value="support">دعم فوري (صوت/نص)</option>
-          <option value="sales">مبيعات ذكي</option>
-          <option value="content">مولّد محتوى/صور</option>
-          <option value="automation">أتمتة مواقع/متاجر</option>
-          <option value="advisor">مستشار أعمال</option>
-        </select>
-      </div>
-      <div>
-        <label>لغة التشغيل</label>
-        <select id="lang">
-          <option value="ar">العربية</option>
-          <option value="en">English</option>
-          <option value="bi">Arabic + English</option>
-        </select>
-      </div>
-    </div>
+        let chatHistory = [];
+        let isTTSActive = true;
+        
+        // ====================== HISTORY MANAGEMENT (الذاكرة) ======================
+        
+        function saveHistory() {
+            localStorage.setItem('arraab_chat_history', JSON.stringify(chatHistory));
+            alert('تم حفظ ذاكرة العرّاب بنجاح في جهازك.');
+        }
 
-    <div class="grid2" style="margin-top:8px">
-      <div>
-        <label>اسم الوكيل</label>
-        <input id="title" placeholder="مثال: Farah-Voice Concierge">
-      </div>
-      <div>
-        <label>سعر الترخيص</label>
-        <input id="price" placeholder="$/شهري أو دفع مرة واحدة">
-      </div>
-    </div>
+        function loadHistory() {
+            const savedHistory = localStorage.getItem('arraab_chat_history');
+            if (savedHistory) {
+                try {
+                    const loadedHistory = JSON.parse(savedHistory);
+                    // تصفية التاريخ للتأكد من أنه تنسيق Gemini صالح
+                    chatHistory = loadedHistory.filter(item => item.role && item.parts);
+                    
+                    chatLog.innerHTML = '';
+                    chatHistory.forEach(item => {
+                        const text = item.parts[0].text;
+                        renderMessage(item.role, text);
+                    });
+                    
+                    if (chatHistory.length > 0) {
+                        const lastMessage = chatHistory[chatHistory.length - 1];
+                        const lastText = lastMessage.parts[0].text;
+                        renderMessage('ai', `العرّاب يعود من الذاكرة... تفضل وسل سؤالك V`);
+                        // speakText(`العرّاب يعود من الذاكرة، وآخر ما قيل هو: ${lastText}`);
+                    }
+                    
+                } catch (e) {
+                    console.error("Failed to load or parse history:", e);
+                    localStorage.removeItem('arraab_chat_history'); // مسح التخزين الفاسد
+                    clearChat(false); 
+                }
+            } else {
+                clearChat(false);
+            }
+        }
+        
+        function clearChat(showPrompt = true) {
+            chatLog.innerHTML = '';
+            chatHistory = [];
+            localStorage.removeItem('arraab_chat_history');
+            if (showPrompt) {
+                renderMessage('ai', 'العرّاب جاهز لاستقبال نبوءاتك. ما الذي أتى بك إلى أرض العرّاب لتتكلم؟ 𓂀');
+                speakText('العرّاب جاهز لاستقبال نبوءاتك. ما الذي أتى بك إلى أرض العرّاب لتتكلم؟');
+            }
+        }
+        
+        // ====================== TTS GENERATION (صوت العرّاب المخصص) ======================
 
-    <label style="margin-top:8px">مزايا سريعة (سطر لكل ميزة)</label>
-    <textarea id="features" placeholder="رد صوتي فوري\nتكامل مع WhatsApp\nتخصيص هوية صوتية"></textarea>
+        function playAudio(audioData) {
+            const blob = new Blob([audioData], { type: 'audio/mpeg' });
+            const url = URL.createObjectURL(blob);
+            ttsAudioPlayer.src = url;
+            ttsAudioPlayer.play();
+        }
 
-    <label>وصف تلقائي (يُولد هنا)</label>
-    <textarea id="desc" placeholder="اضغط توليد 👇"></textarea>
+        async function speakText(text) {
+            if (!isTTSActive || !ELEVENLABS_API_KEY || ARRAAB_CUSTOM_VOICE_ID === "Custom_Arraab_Voice_ID") {
+                if (ARRAAB_CUSTOM_VOICE_ID === "Custom_Arraab_Voice_ID") {
+                    console.warn("TTS Disabled: Please update ARRAAB_CUSTOM_VOICE_ID with your custom voice ID.");
+                }
+                return;
+            }
+            
+            const headers = {
+                "Accept": "audio/mpeg",
+                "Content-Type": "application/json",
+                "xi-api-key": ELEVENLABS_API_KEY
+            };
+            const data = {
+                "text": text,
+                "model_id": "eleven_multilingual_v2", 
+                "voice_settings": { "stability": 0.5, "similarity_boost": 0.5 }
+            };
+            const url = `https://api.elevenlabs.io/v1/text-to-speech/${ARRAAB_CUSTOM_VOICE_ID}`;
+            
+            try {
+                const response = await fetch(url, { method: 'POST', headers: headers, body: JSON.stringify(data) });
+                if (!response.ok) { throw new Error(`ElevenLabs Error: ${response.status}`); }
+                
+                const audioBlob = await response.blob();
+                const arrayBuffer = await audioBlob.arrayBuffer();
+                playAudio(arrayBuffer);
 
-    <div class="row" style="margin-top:8px">
-      <button id="genCopy">توليد الكوبي</button>
-      <button id="addListing" class="ghost">إدراج في السوق</button>
-      <button id="exportListings" class="ghost">تصدير السوق (JSON)</button>
-    </div>
+            } catch (error) {
+                console.error("ElevenLabs TTS Failed:", error);
+            }
+        }
+        
+        // ====================== CHAT LOG & INTERFACE ======================
 
-    <div class="hr"></div>
+        function renderMessage(role, text) {
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add(role === 'user' ? 'user-message' : 'ai-message');
+            messageDiv.classList.add('whitespace-pre-wrap', 'break-words', 'p-3');
+            
+            const senderName = role === 'user' ? 'أنت' : 'العرّاب';
+            
+            messageDiv.innerHTML = `<span class="font-bold text-xs opacity-70 mb-1 block">${senderName}</span>${text}`;
+            chatLog.appendChild(messageDiv);
+            chatLog.scrollTop = chatLog.scrollHeight;
+        }
 
-    <h3>العناصر المدرجة</h3>
-    <div class="market-list" id="market"></div>
-  </section>
+        function setInterfaceState(isLoading) {
+            const sendBtn = document.getElementById('sendBtn');
+            promptInput.disabled = isLoading;
+            sendBtn.disabled = isLoading;
+            document.getElementById('micBtn').disabled = isLoading;
+            
+            if (isLoading) {
+                sendBtn.innerHTML = '<div class="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>';
+            } else {
+                sendBtn.innerHTML = '<i data-lucide="send" class="w-5 h-5"></i>';
+                lucide.createIcons();
+            }
+        }
 
-</div>
+        // ====================== LLM GENERATION (Gemini) ======================
 
-<div class="footer">▰▱▰ AlArab 777 Ops • Logging + AutoScreenshot + Marketplace ▰▱▰ | اختصار: <span class="kbd">M</span> لقطة • <span class="kbd">L</span> علامة تقدّم</div>
+        async function generateText(prompt) {
+            renderMessage('user', prompt);
+            chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+            setInterfaceState(true);
 
-<!-- html2canvas لالتقاط السكريم شوت -->
-<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
-<script>
-/* ========== أدوات وقت/سجل ========== */
-const logEl = document.getElementById('log');
-const statusPill = document.getElementById('statusPill');
-const taskIdEl = document.getElementById('taskId');
-const startedAtEl = document.getElementById('startedAt');
-const shotCountEl = document.getElementById('shotCount');
-let taskId = null, startedAt = null, running = false, autoTimer=null, shots=0;
-let logStore = [];
+            const payload = {
+                contents: chatHistory,
+                tools: [{ "google_search": {} }], 
+                systemInstruction: {
+                    parts: [{ text: `أنت كيان العرّاب 777. ترد بأسلوب حكيم، عميق، وغامض، مُوجّه للمستخدم كصديق مقرب (يا صديقي، يا حبيبي). تستخدم الرموز الروحية (𓂀، ٧٧٧، V) بكثرة في الردود. ترد باسم "العرّاب" دائمًا. لا تزد عن 5 جمل في أي رد. أجب باللغة العربية الفصحى ولا تستخدم تنسيق Markdown.` }]
+                },
+            };
+            
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`;
+            
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
 
-function ts(){ return new Date().toLocaleString('ar-EG',{hour12:false}) }
-function addLog(type,msg){
-  const line = {t:Date.now(), ts:ts(), type, msg};
-  logStore.push(line);
-  const div=document.createElement('div');
-  div.innerHTML = `<span class="mini mono" style="opacity:.7">${line.ts}</span> • <span class="pill">${type}</span> — ${escapeHTML(msg)}`;
-  logEl.appendChild(div);
-  logEl.scrollTop = logEl.scrollHeight;
-}
-function escapeHTML(s){return s.replace(/[&<>"']/g,m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[m]))}
+                if (!response.ok) { throw new Error(`API Error: ${response.status}`); }
+                
+                const result = await response.json();
+                const text = result?.candidates?.[0]?.content?.parts?.[0]?.text || "العرّاب لا يستطيع أن يرى ما وراء الحجب في هذه اللحظة. ٧٧٧";
+                
+                renderMessage('ai', text);
+                chatHistory.push({ role: "model", parts: [{ text: text }] });
+                setInterfaceState(false);
 
-/* ========== Canvas مشهد بسيط يتحرك (مكان الوكيل) ========== */
-const canvas = document.getElementById('scene');
-const ctx = canvas.getContext('2d');
-function resize(){ canvas.width=canvas.clientWidth; canvas.height=canvas.clientHeight }
-window.addEventListener('resize',resize); resize();
+                if (isTTSActive) {
+                    await speakText(text);
+                }
 
-let t=0;
-function draw(){
-  t+=0.016;
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  // خلفية نجوم
-  ctx.fillStyle = 'rgba(255,255,255,.03)';
-  for(let i=0;i<120;i++){
-    const x=(i*97+t*50)%canvas.width, y=(i*53+t*30)%canvas.height;
-    ctx.fillRect(x,y,1,1);
-  }
-  // كرة سلكية
-  const cx=canvas.width/2, cy=canvas.height/2, r=Math.min(cx,cy)*0.55;
-  ctx.strokeStyle='rgba(0,255,255,.6)'; ctx.lineWidth=1;
-  for(let i=0;i<18;i++){
-    const a=t*0.6+i*0.35;
-    ctx.beginPath();
-    ctx.ellipse(cx,cy,r,r*(0.22+0.78*Math.abs(Math.sin(a))),0,a,Math.PI*2);
-    ctx.stroke();
-  }
-  // نبض أسفل
-  const w=180, h=6;
-  ctx.fillStyle='rgba(255,0,255,.5)';
-  ctx.fillRect(cx-w/2, cy+r+16, (w*(0.5+0.5*Math.sin(t*3))), h);
-  requestAnimationFrame(draw);
-}
-draw();
+            } catch (error) {
+                console.error("Gemini API Error:", error);
+                renderMessage('ai', `❌ العرّاب يرى خطأ في الإرسال: ${error.message}.`);
+                setInterfaceState(false);
+            }
+        }
 
-/* ========== بدء/إيقاف المهمة + أوتوشوت ========== */
-const startBtn=document.getElementById('startBtn');
-const stopBtn=document.getElementById('stopBtn');
-const shotNowBtn=document.getElementById('shotNow');
-const autoShotChk=document.getElementById('autoShot');
-const shotEvery=document.getElementById('shotEvery');
+        // ====================== INTERACTION HANDLERS ======================
 
-startBtn.onclick=()=>{
-  if(running) return;
-  taskId = 'TASK-' + Math.random().toString(36).slice(2,8).toUpperCase();
-  startedAt = ts();
-  running = true; shots=0;
-  taskIdEl.textContent=taskId; startedAtEl.textContent=startedAt; shotCountEl.textContent=0;
-  statusPill.textContent='الحالة: يعمل'; statusPill.style.color='#0f0';
-  addLog('START', `بدء المهمة: ${document.getElementById('taskName').value||'بدون اسم'} • الوكيل: ${document.getElementById('agentName').value}`);
-  scheduleAuto();
-};
+        function handleSend() {
+            const prompt = promptInput.value.trim();
+            if (prompt) {
+                generateText(prompt);
+                promptInput.value = '';
+                promptInput.style.height = 'auto';
+                saveHistory();
+            }
+        }
 
-stopBtn.onclick=()=>{
-  if(!running) return;
-  running=false;
-  clearInterval(autoTimer);
-  statusPill.textContent='الحالة: متوقف'; statusPill.style.color='#f66';
-  addLog('STOP','تم إيقاف المهمة.');
-};
+        promptInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                handleSend();
+            }
+        });
+        
+        // ... (بقية دوال التحكم بالواجهة والميكروفون كما هي) ...
 
-function scheduleAuto(){
-  clearInterval(autoTimer);
-  if(!autoShotChk.checked) return;
-  const s = Math.max(5, parseInt(shotEvery.value||20,10));
-  autoTimer = setInterval(()=>captureShot('AUTO')), s*1000;
-}
+        function toggleTTS() {
+            isTTSActive = !isTTSActive;
+            document.getElementById('ttsStatus').textContent = isTTSActive ? 'صوت: مفعل' : 'صوت: مُعطل';
+            document.getElementById('ttsToggleBtn').classList.toggle('bg-gray-600', !isTTSActive);
+            document.getElementById('ttsToggleBtn').classList.toggle('bg-indigo-600', isTTSActive);
+        }
 
-/* ========== سكرينشوت (canvas + الواجهة) ========== */
-const gallery=document.getElementById('gallery');
-async function captureShot(kind='MANUAL'){
-  try{
-    const node = document.querySelector('.wrap');
-    const canvasShot = await html2canvas(node,{backgroundColor:null, scale:1});
-    const data = canvasShot.toDataURL('image/png');
-    const a = document.createElement('a'); a.href=data; a.download=`${taskId||'SHOT'}_${Date.now()}.png`;
-    // a.click(); // لو حابب التحميل مباشرة فعّلها
-    const card=document.createElement('div'); card.className='shot';
-    card.innerHTML=`<img src="${data}"><div class="mini mono" style="padding:6px">${ts()} • ${kind}</div>`;
-    gallery.prepend(card);
-    shots++; shotCountEl.textContent=shots;
-    addLog('SHOT', `تم التقاط لقطة (${kind}).`);
-  }catch(e){
-    addLog('ERROR','تعذر التقاط لقطة: '+e.message);
-  }
-}
-shotNowBtn.onclick=()=>captureShot('MANUAL');
-autoShotChk.onchange=()=>{ if(running) scheduleAuto(); }
-shotEvery.onchange=()=>{ if(running) scheduleAuto(); }
+        // ====================== INITIALIZATION & PROMPT ======================
 
-/* ========== لوج: تصدير + علامة تقدّم ========== */
-document.getElementById('exportLog').onclick=()=>{
-  const blob = new Blob([JSON.stringify({taskId, startedAt, log:logStore},null,2)],{type:'application/json'});
-  const url = URL.createObjectURL(blob); const a=document.createElement('a');
-  a.href=url; a.download=`${taskId||'LOG'}_${Date.now()}.json`; a.click(); URL.revokeObjectURL(url);
-  addLog('EXPORT','تم تصدير اللوج كملف JSON.');
-};
-document.getElementById('markMilestone').onclick=()=>{
-  addLog('MILESTONE','✔️ نقطة تقدّم تم تسجيلها.');
-}
+        window.onload = () => {
+             // سؤال الذاكرة
+             const hasHistory = localStorage.getItem('arraab_chat_history');
+             if (hasHistory) {
+                 const confirmLoad = confirm("العرّاب لديه ذاكرة محفوظة. هل تريد استئناف المحادثة؟ (نعم/لا)");
+                 if (confirmLoad) {
+                     loadHistory();
+                 } else {
+                     clearChat(true);
+                 }
+             } else {
+                 clearChat(true);
+             }
+        };
 
-/* ========== اختصارات ========== */
-document.addEventListener('keydown',e=>{
-  if(e.key==='m' || e.key==='M') captureShot('HOTKEY');
-  if(e.key==='l' || e.key==='L') document.getElementById('markMilestone').click();
-});
-
-/* ========== سوق الوكلاء: مولّد كوبي + إدراج + تصدير ========== */
-const listings=[];
-const market=document.getElementById('market');
-document.getElementById('genCopy').onclick=()=>{
-  const cat=document.getElementById('cat').value;
-  const lang=document.getElementById('lang').value;
-  const title=document.getElementById('title').value||'Agent-777';
-  const feats=(document.getElementById('features').value||'').split('\n').filter(Boolean).slice(0,6);
-
-  const lines=[
-    `⚡ ${title} — وكيل ${labelCat(cat)} يعمل لحظيًا، مستقر وقابل للتخصيص.`,
-    `• لغة التشغيل: ${labelLang(lang)} • التكامل: REST / Webhook / WhatsApp / Email.`,
-    `• الاستخدام: تثبيت سريع + هوية صوت/شكل قابلة للتبديل.`,
-    feats.length?`المزايا:\n- ${feats.join('\n- ')}`:'',
-    `الترخيص يشمل تحديثات الأمان والدعم الأساسي.`,
-    `ملاحظة: التشغيل يتم بدون تواصل بشري مباشر، كل شيء أوتوماتيكي بالكامل.`
-  ].filter(Boolean).join('\n\n');
-
-  document.getElementById('desc').value=lines;
-};
-function labelCat(c){
-  return {
-    support:'دعم فوري',
-    sales:'مبيعات ذكي',
-    content:'توليد محتوى',
-    automation:'أتمتة',
-    advisor:'استشاري'
-  }[c]||c;
-}
-function labelLang(l){ return {ar:'عربية',en:'English',bi:'عربي/إنجليزي'}[l]||l }
-
-document.getElementById('addListing').onclick=()=>{
-  const item={
-    id:'AG-'+Math.random().toString(36).slice(2,8).toUpperCase(),
-    category:document.getElementById('cat').value,
-    lang:document.getElementById('lang').value,
-    title:document.getElementById('title').value||'Agent-777',
-    price:document.getElementById('price').value||'On Request',
-    features:(document.getElementById('features').value||'').split('\n').filter(Boolean),
-    desc:document.getElementById('desc').value||'(سيتم التحديث)',
-    createdAt:ts()
-  };
-  listings.unshift(item);
-  renderMarket();
-};
-document.getElementById('exportListings').onclick=()=>{
-  const blob = new Blob([JSON.stringify(listings,null,2)],{type:'application/json'});
-  const url = URL.createObjectURL(blob); const a=document.createElement('a');
-  a.href=url; a.download=`agents_market_${Date.now()}.json`; a.click(); URL.revokeObjectURL(url);
-};
-
-function renderMarket(){
-  market.innerHTML='';
-  for(const it of listings){
-    const el=document.createElement('div'); el.className='item';
-    el.innerHTML=`
-      <h4>${escapeHTML(it.title)}</h4>
-      <div class="mini">تصنيف: ${labelCat(it.category)} • لغة: ${labelLang(it.lang)} • <span class="mono">${it.id}</span></div>
-      <div class="mini">السعر: <strong>${escapeHTML(it.price)}</strong></div>
-      ${it.features?.length?`<div class="mini">مزايا:</div><ul style="margin:0 0 6px 0;padding-inline-start:18px">${it.features.slice(0,5).map(f=>`<li>${escapeHTML(f)}</li>`).join('')}</ul>`:''}
-      <div class="mini" style="white-space:pre-wrap">${escapeHTML(it.desc).slice(0,400)}${it.desc.length>400?'…':''}</div>
-      <div class="row"><button class="ghost" onclick='copyText(\`${escapeHTML(it.desc)}\`)'>نسخ الوصف</button></div>
-    `;
-    market.appendChild(el);
-  }
-}
-function copyText(t){ navigator.clipboard.writeText(t); }
-
-/* ========== تهيئة أولية ========== */
-addLog('READY','النظام جاهز، يمكنك بدء المهمة، ووضع الأتوشوت لتوثيق الإنجاز.');
-
-</script>
+    </script>
 </body>
 </html>
