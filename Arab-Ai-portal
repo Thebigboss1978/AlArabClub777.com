@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>بوابة وكالة AlArab AI — Unified Agent Portal</title>
+  <style>
+    /* Glass-style minimal UI */
+    :root{
+      --bg:#0b0f14;
+      --glass:#ffffff22;
+      --accent:#7ee787;
+      --muted:#cbd5e1;
+      --glass-strong:#ffffff33;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      color-scheme: dark;
+    }
+    html,body{height:100%;margin:0;background:linear-gradient(180deg,#071021 0%, #06131a 100%);color:var(--muted)}
+    .wrap{min-height:100%;display:flex;align-items:center;justify-content:center;padding:24px}
+    .card{width:100%;max-width:980px;background:linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));backdrop-filter: blur(10px) saturate(120%);border-radius:16px;padding:18px;border:1px solid var(--glass);box-shadow:0 10px 30px rgba(0,0,0,0.5)}
+    .header{display:flex;justify-content:space-between;align-items:center;padding-bottom:15px;border-bottom:1px solid var(--glass-strong)}
+    .header h1{font-size:1.5rem;color:var(--accent);margin:0}
+    .chat-container{height:60vh;overflow-y:auto;padding-right:15px;margin-bottom:15px;display:flex;flex-direction:column}
+    .msg-wrap{display:flex;margin-bottom:15px;align-items:flex-start}
+    .icon{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.8rem;margin-left:10px;flex-shrink:0}
+    .user-icon{background:#007bff;color:#fff}
+    .assistant-icon{background:var(--accent);color:#0b0f14}
+    .msg{background:var(--glass);padding:10px 15px;border-radius:12px;max-width:80%;font-size:0.9rem;line-height:1.4}
+    .user-msg .msg{margin-left:auto;background:var(--glass-strong)}
+    .input-area{display:flex;gap:10px;margin-top:15px}
+    .input-area textarea{flex-grow:1;background:var(--glass);border:1px solid var(--glass-strong);border-radius:12px;padding:10px;color:var(--muted);resize:none}
+    .input-area button{background:var(--accent);color:#0b0f14;border:none;border-radius:12px;padding:10px 20px;cursor:pointer;font-weight:600;transition:background 0.2s}
+    .input-area button:hover{background:#5cb85c}
+    .log{font-size:0.75rem;color:#ffc107;margin-top:10px;padding:5px;border-top:1px solid var(--glass);max-height:100px;overflow-y:auto}
+    .controls{display:flex;gap:10px}
+    .controls select, .controls button{background:var(--glass);border:1px solid var(--glass-strong);border-radius:12px;padding:8px 15px;color:var(--muted);cursor:pointer;font-size:0.8rem}
+    .controls button:hover{background:var(--glass-strong)}
+    @media (max-width: 600px) {
+        .card{padding:10px;margin:10px}
+        .chat-container{height:50vh}
+        .input-area{flex-direction:column}
+        .input-area button{width:100%}
+        .controls{flex-direction:column}
+    }
+    .disabled-button { opacity: 0.5; pointer-events: none; }
+    .client-id { background-color: var(--glass-strong); padding: 5px 10px; border-radius: 8px; font-size: 0.8rem; margin-left: 10px; color: var(--accent); }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <div class="header">
+      <h1>بوابة وكالة AlArab AI</h1>
+      <div class="controls">
+        <select id="model-select"></select>
+        <span class="client-id" id="client-display">Client: ...</span>
+      </div>
+    </div>
+    <div class="chat-container" id="chat-container">
+      <!-- رسائل الشات هنا -->
+    </div>
+    <div class="input-area">
+      <textarea id="user-input" placeholder="اكتب طلبك لوكيل 'المعزز الداعم' هنا..."></textarea>
+      <button id="send-button" onclick="sendMessage(document.getElementById('user-input').value)">إرسال (تنفيذ)</button>
+    </div>
+    <div class="log" id="log-container">
+      تم تهيئة النظام. يرجى التأكد من تشغيل Ollama و Docker Compose أولاً.
+    </div>
+  </div>
+</div>
+
+<script>
+// ====== إعدادات الوكالة الموحدة ======
+const CONFIG = {
+    API_GATEWAY_URL: 'http://localhost:8000', 
+    OLLAMA_BASE: 'http://localhost:11434',
+    DEFAULT_CLIENT_ID: 'AlArab_Agency_Pilot_Client_1', 
+};
+
+// === الدوال المساعدة ===
+function appendLog(message) {
+    const logContainer = document.getElementById('log-container');
+    const p = document.createElement('p');
+    p.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+    logContainer.appendChild(p);
+    logContainer.scrollTop = logContainer.scrollHeight;
+}
+
+function appendMessage(text, role) {
+    const chatContainer = document.getElementById('chat-container');
+    const wrapper = document.createElement('div');
+    wrapper.classList.add('msg-wrap', `${role}-msg`);
+
+    const icon = document.createElement('div');
+    icon.classList.add('icon', `${role}-icon`);
+    icon.textContent = role === 'user' ? 'أنت' : 'وكيل';
+
+    const msg = document.createElement('div');
+    msg.classList.add('msg');
+    msg.innerHTML = text.replace(/\n/g, '<br>'); // للحفاظ على فواصل الأسطر
+
+    if (role === 'user') {
+        wrapper.appendChild(msg);
+        wrapper.appendChild(icon);
+    } else {
+        wrapper.appendChild(icon);
+        wrapper.appendChild(msg);
+    }
+    chatContainer.appendChild(wrapper);
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+}
+
+function getConversationHistory() {
+    // يجب أن تقوم هذه الدالة بتجميع سجل المحادثة كـ [{"role": "user", "content": "..."}]
+    // لكن لغرض التبسيط الآن، سنعيد [] ونعتمد على RAG فقط للذاكرة
+    return []; 
+}
+
+// === الدوال الأساسية للنظام ===
+
+async function sendMessage(text) {
+    if (text.trim() === '') return;
+
+    const sendButton = document.getElementById('send-button');
+    const userInput = document.getElementById('user-input');
+    const modelSelect = document.getElementById('model-select');
+    const selectedModel = modelSelect.value;
+    
+    if (!selectedModel) {
+        appendLog('ERROR: الرجاء اختيار نموذج أولاً.');
+        return;
+    }
+    
+    // تعطيل الإدخال أثناء التفكير
+    sendButton.classList.add('disabled-button');
+    sendButton.textContent = 'جاري التفكير...';
+    userInput.value = '';
+
+    // 1. عرض رسالة المستخدم
+    appendMessage(text, 'user');
+
+    const payload = {
+        model_name: selectedModel,
+        prompt: text,
+        client_id: CONFIG.DEFAULT_CLIENT_ID, 
+        history: getConversationHistory()
+    };
+
+    let assistantMessage = '';
+    
+    try {
+        // 2. الاتصال بنقطة نهاية الـ Gateway
+        appendLog(`الوكيل (${selectedModel}) يبدأ التفكير...`);
+        const response = await fetch(`${CONFIG.API_GATEWAY_URL}/api/agent/query`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json().catch(() => ({ detail: response.statusText }));
+            throw new Error(`خطأ من الـ Gateway (${response.status}): ${errorData.detail}`);
+        }
+
+        const data = await response.json();
+        assistantMessage = data.response;
+        
+        appendLog(`تم استرجاع الذاكرة: ${data.context_retrieved.length > 50 ? data.context_retrieved.substring(0, 50) + '...' : data.context_retrieved}`);
+
+    } catch (error) {
+        assistantMessage = `عذراً، حدث خطأ. تأكد من تشغيل Ollama و Docker Compose. الخطأ: ${error.message}`;
+        appendLog(assistantMessage);
+    }
+
+    // 3. عرض رسالة الوكيل
+    appendMessage(assistantMessage, 'assistant');
+
+    // 4. حلقة الذاكرة: حفظ المحادثة الجديدة في Qdrant
+    // لا يتم حفظ الذاكرة إذا كان الرد هو الرفض القاطع
+    if (assistantMessage && assistantMessage.indexOf('Its_not_doable.') === -1) {
+        await saveMemory(text, assistantMessage);
+    }
+
+    // إعادة تفعيل الإدخال
+    sendButton.classList.remove('disabled-button');
+    sendButton.textContent = 'إرسال (تنفيذ)';
+}
+
+async function saveMemory(userText, assistantText) {
+    const memoryChunk = `USER: ${userText} | ASSISTANT: ${assistantText}`;
+    
+    try {
+        const response = await fetch(`${CONFIG.API_GATEWAY_URL}/api/memory/save`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                client_id: CONFIG.DEFAULT_CLIENT_ID,
+                text_chunk: memoryChunk,
+            }),
+        });
+
+        if (response.ok) {
+            appendLog('تم حفظ المحادثة في الذاكرة المتجهة (Qdrant).');
+        } else {
+            const errorData = await response.json().catch(() => ({ detail: 'Unknown error' }));
+            appendLog(`فشل حفظ الذاكرة: ${errorData.detail}`);
+        }
+    } catch (error) {
+        appendLog(`خطأ اتصال عند محاولة حفظ الذاكرة: ${error.message}`);
+    }
+}
+
+async function fetchModels() {
+    document.getElementById('client-display').textContent = `Client: ${CONFIG.DEFAULT_CLIENT_ID}`;
+    const modelSelect = document.getElementById('model-select');
+    modelSelect.innerHTML = '<option value="">جارٍ تحميل النماذج...</option>';
+    
+    try {
+        const r = await fetch(CONFIG.OLLAMA_BASE + '/api/tags'); 
+        if (!r.ok) throw new Error('فشل الاتصال بـ Ollama. تأكد من أنه قيد التشغيل على جهازك.');
+
+        const data = await r.json();
+        const models = data.models.map(m => m.name);
+
+        modelSelect.innerHTML = '<option value="">-- اختر وكيل/نموذج --</option>';
+        models.forEach(model => {
+            const option = document.createElement('option');
+            option.value = model;
+            option.textContent = model;
+            modelSelect.appendChild(option);
+        });
+        
+        appendLog(`تم تحميل ${models.length} نموذج محلي من Ollama.`);
+
+    } catch (e) {
+        modelSelect.innerHTML = '<option value="">Ollama غير متوفر</option>';
+        appendLog('ERROR: ' + e.message);
+    }
+}
+
+// === التشغيل ===
+window.onload = function() {
+    fetchModels();
+    document.getElementById('user-input').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            sendMessage(this.value);
+        }
+    });
+};
+</script>
+</body>
+</html>
