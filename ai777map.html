@@ -1,0 +1,1313 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>AlArab Portal — البوابة الكونية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #020408;
+            --gold: #ffd66b;
+            --gold-dark: #caa400;
+            --cyan: #00ffff;
+            --green: #00ff88;
+            --star-blue: #aad4ff;
+            --sand: #d4a574;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: var(--bg);
+            font-family: 'Cairo', sans-serif;
+            color: #fff;
+        }
+        
+        /* Full screen canvas */
+        canvas#scene {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+        }
+        
+        /* Floating Glyphs */
+        .glyph {
+            position: fixed;
+            font-size: 24px;
+            color: var(--gold);
+            opacity: 0;
+            pointer-events: none;
+            z-index: 50;
+            mix-blend-mode: screen;
+            text-shadow: 0 0 15px var(--gold);
+            animation: glyphFly 3s ease-out forwards;
+        }
+        
+        @keyframes glyphFly {
+            0% { opacity: 1; transform: translate(0, 0) scale(0.5) rotate(0deg); }
+            50% { opacity: 0.9; transform: translate(var(--dx), var(--dy)) scale(1.2) rotate(180deg); }
+            100% { opacity: 0; transform: translate(calc(var(--dx) * 2), calc(var(--dy) * 2)) scale(0.8) rotate(360deg); }
+        }
+        
+        /* Floating draggable panels */
+        .floating-panel {
+            position: fixed;
+            background: linear-gradient(135deg, rgba(255,214,107,0.08), rgba(2,4,8,0.95));
+            border: 1px solid rgba(255,214,107,0.2);
+            border-radius: 16px;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+            z-index: 30;
+            cursor: grab;
+            user-select: none;
+            transition: box-shadow 0.3s ease;
+        }
+        
+        .floating-panel:active { cursor: grabbing; }
+        .floating-panel:hover { box-shadow: 0 25px 80px rgba(255,214,107,0.15); }
+        
+        .panel-header {
+            padding: 12px 16px;
+            background: rgba(255,214,107,0.1);
+            border-radius: 16px 16px 0 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(255,214,107,0.1);
+        }
+        
+        .panel-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 0.85rem;
+            color: var(--gold);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .panel-minimize {
+            width: 24px;
+            height: 24px;
+            border: none;
+            background: rgba(255,255,255,0.1);
+            border-radius: 6px;
+            color: #fff;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+        
+        .panel-content {
+            padding: 12px 16px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .floating-panel.minimized .panel-content { display: none; }
+        
+        /* Data point items */
+        .data-point {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .data-point:hover {
+            background: rgba(255,214,107,0.05);
+            margin: 0 -8px;
+            padding: 10px 8px;
+            border-radius: 8px;
+        }
+        
+        .data-point:last-child { border-bottom: none; }
+        
+        .point-marker {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            box-shadow: 0 0 10px currentColor;
+        }
+        
+        .point-marker.gold { background: var(--gold); color: var(--gold); }
+        .point-marker.cyan { background: var(--cyan); color: var(--cyan); }
+        .point-marker.green { background: var(--green); color: var(--green); }
+        .point-marker.blue { background: var(--star-blue); color: var(--star-blue); }
+        .point-marker.red { background: #ff4757; color: #ff4757; }
+        
+        .point-info { flex: 1; }
+        .point-info h4 { font-size: 0.85rem; font-weight: 700; margin-bottom: 2px; }
+        .point-info .meta { font-family: 'Orbitron', monospace; font-size: 0.65rem; color: var(--cyan); }
+        .point-info span { font-size: 0.7rem; color: rgba(255,255,255,0.5); }
+        
+        /* Live data indicator */
+        .live-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.65rem;
+            color: var(--green);
+        }
+        
+        .live-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--green);
+            border-radius: 50%;
+            animation: livePulse 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes livePulse {
+            0%, 100% { opacity: 0.5; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+        
+        /* Header - fixed but minimal */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(to bottom, rgba(2,4,8,0.9), transparent);
+            z-index: 40;
+            pointer-events: none;
+        }
+        
+        .header > * { pointer-events: auto; }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo-icon {
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+            box-shadow: 0 0 20px rgba(255, 214, 107, 0.5);
+        }
+        
+        .logo-text {
+            font-family: 'Orbitron', monospace;
+            font-weight: 900;
+            font-size: 1.1rem;
+            background: linear-gradient(90deg, var(--gold), var(--cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .coords {
+            font-family: 'Orbitron', monospace;
+            font-size: 0.75rem;
+            color: var(--cyan);
+            text-shadow: 0 0 10px var(--cyan);
+        }
+        
+        /* Connection status */
+        .connection-badge {
+            position: fixed;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(2,4,8,0.9);
+            border: 1px solid rgba(0,255,136,0.3);
+            border-radius: 20px;
+            padding: 6px 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.7rem;
+            z-index: 45;
+        }
+        
+        /* Bottom controls */
+        .bottom-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            background: linear-gradient(to top, rgba(2,4,8,0.9), transparent);
+            z-index: 40;
+            pointer-events: none;
+        }
+        
+        .bottom-bar > * { pointer-events: auto; }
+        
+        .scale-info {
+            background: rgba(2,4,8,0.8);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 8px 12px;
+        }
+        
+        .scale-bar {
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--gold), var(--cyan));
+            border-radius: 2px;
+            margin-bottom: 4px;
+        }
+        
+        .scale-text {
+            font-family: 'Orbitron', monospace;
+            font-size: 0.6rem;
+            color: rgba(255,255,255,0.6);
+        }
+        
+        .controls {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .ctrl-btn {
+            width: 42px;
+            height: 42px;
+            border: 1px solid rgba(255,214,107,0.3);
+            background: rgba(2,4,8,0.8);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+        
+        .ctrl-btn:hover {
+            background: rgba(255,214,107,0.2);
+            border-color: var(--gold);
+            transform: translateY(-2px);
+        }
+        
+        .ctrl-btn.active {
+            background: rgba(255,214,107,0.3);
+            border-color: var(--gold);
+        }
+        
+        .plus-code {
+            background: rgba(2,4,8,0.8);
+            border: 1px solid var(--cyan);
+            border-radius: 8px;
+            padding: 8px 14px;
+            font-family: 'Orbitron', monospace;
+            font-size: 0.8rem;
+            color: var(--cyan);
+            text-shadow: 0 0 10px var(--cyan);
+            cursor: pointer;
+        }
+        
+        /* Compass */
+        .compass {
+            width: 55px;
+            height: 55px;
+            border: 2px solid rgba(255,214,107,0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(2,4,8,0.8);
+            position: relative;
+        }
+        
+        .compass-needle {
+            width: 3px;
+            height: 24px;
+            background: linear-gradient(to bottom, var(--gold) 50%, var(--cyan) 50%);
+            border-radius: 2px;
+        }
+        
+        .compass-label {
+            position: absolute;
+            font-family: 'Orbitron', monospace;
+            font-size: 0.45rem;
+            color: var(--gold);
+        }
+        
+        .compass-label.n { top: 3px; }
+        .compass-label.s { bottom: 3px; }
+        .compass-label.e { right: 5px; }
+        .compass-label.w { left: 5px; }
+        
+        /* Energy message */
+        .energy-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.5rem;
+            color: var(--gold);
+            text-shadow: 0 0 20px var(--gold), 0 0 40px var(--gold);
+            opacity: 0;
+            z-index: 100;
+            pointer-events: none;
+            font-weight: 900;
+        }
+        
+        .energy-message.show {
+            animation: messageShow 2s ease-out forwards;
+        }
+        
+        @keyframes messageShow {
+            0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+            20% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+            80% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+            100% { opacity: 0; transform: translate(-50%, -50%) scale(0.9); }
+        }
+        
+        /* Tooltip */
+        .tooltip {
+            position: fixed;
+            background: linear-gradient(135deg, rgba(255,214,107,0.12), rgba(2,4,8,0.98));
+            border: 1px solid var(--gold);
+            border-radius: 10px;
+            padding: 12px 16px;
+            pointer-events: none;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            z-index: 200;
+            backdrop-filter: blur(15px);
+            max-width: 250px;
+        }
+        
+        .tooltip.visible { opacity: 1; transform: translateY(0); }
+        .tooltip h3 { font-weight: 900; color: var(--gold); margin-bottom: 5px; font-size: 0.9rem; }
+        .tooltip .dims { font-family: 'Orbitron', monospace; font-size: 0.7rem; color: var(--cyan); margin-bottom: 3px; }
+        .tooltip p { font-size: 0.75rem; color: rgba(255,255,255,0.7); }
+        
+        /* Loading */
+        #loading {
+            position: fixed;
+            inset: 0;
+            background: var(--bg);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            transition: opacity 1s ease, visibility 1s ease;
+        }
+        
+        #loading.hidden { opacity: 0; visibility: hidden; }
+        
+        .loader-pyramid {
+            width: 60px;
+            height: 60px;
+            position: relative;
+            animation: float 2s ease-in-out infinite;
+        }
+        
+        .loader-pyramid::before {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-left: 30px solid transparent;
+            border-right: 30px solid transparent;
+            border-bottom: 52px solid var(--gold);
+            filter: drop-shadow(0 0 20px var(--gold));
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .loader-text {
+            margin-top: 20px;
+            font-family: 'Orbitron', monospace;
+            color: var(--cyan);
+            font-size: 11px;
+            letter-spacing: 2px;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading -->
+    <div id="loading">
+        <div class="loader-pyramid"></div>
+        <div class="loader-text">CONNECTING TO ENERGY GRID...</div>
+    </div>
+    
+    <!-- 3D Canvas - Full Screen -->
+    <canvas id="scene"></canvas>
+    
+    <!-- Header -->
+    <div class="header">
+        <div class="logo">
+            <div class="logo-icon"></div>
+            <span class="logo-text">ALARAB PORTAL</span>
+        </div>
+        <div class="coords">29.9762°N, 31.1293°E</div>
+    </div>
+    
+    <!-- Connection Badge -->
+    <div class="connection-badge">
+        <div class="live-dot"></div>
+        <span>CONNECTED — <span id="visitorLoc">Cairo, Egypt</span></span>
+    </div>
+    
+    <!-- Floating Panel: Pyramids & Stars -->
+    <div class="floating-panel" id="panelPyramids" style="top: 80px; right: 20px; width: 280px;">
+        <div class="panel-header">
+            <div class="panel-title">🏛️ الأهرامات والنجوم</div>
+            <button class="panel-minimize" onclick="togglePanel('panelPyramids')">−</button>
+        </div>
+        <div class="panel-content">
+            <div class="data-point" data-target="khufu">
+                <div class="point-marker gold"></div>
+                <div class="point-info">
+                    <h4>هرم خوفو ⟷ ألنيتاك</h4>
+                    <div class="meta">H: 146.6m | B: 230.3m</div>
+                    <span>⭐ Alnitak (ζ Ori) — Mag 1.77</span>
+                </div>
+            </div>
+            <div class="data-point" data-target="khafre">
+                <div class="point-marker gold"></div>
+                <div class="point-info">
+                    <h4>هرم خفرع ⟷ ألنيلام</h4>
+                    <div class="meta">H: 143m | B: 215.3m</div>
+                    <span>⭐ Alnilam (ε Ori) — Mag 1.69</span>
+                </div>
+            </div>
+            <div class="data-point" data-target="menkaure">
+                <div class="point-marker gold"></div>
+                <div class="point-info">
+                    <h4>هرم منقرع ⟷ مينتاكا</h4>
+                    <div class="meta">H: 65m | B: 109m</div>
+                    <span>⭐ Mintaka (δ Ori) — Mag 2.23</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Floating Panel: Energy Grid -->
+    <div class="floating-panel" id="panelEnergy" style="top: 80px; left: 20px; width: 260px;">
+        <div class="panel-header">
+            <div class="panel-title">⚡ شبكة الطاقة</div>
+            <button class="panel-minimize" onclick="togglePanel('panelEnergy')">−</button>
+        </div>
+        <div class="panel-content">
+            <div class="data-point" data-type="tower">
+                <div class="point-marker green"></div>
+                <div class="point-info">
+                    <h4>برج اتصالات الجيزة</h4>
+                    <div class="meta live-indicator"><div class="live-dot"></div> LIVE 2.4GHz</div>
+                    <span>محطة رئيسية — 15km تغطية</span>
+                </div>
+            </div>
+            <div class="data-point" data-type="solar">
+                <div class="point-marker cyan"></div>
+                <div class="point-info">
+                    <h4>محطة طاقة شمسية</h4>
+                    <div class="meta">OUTPUT: 45.2 MW</div>
+                    <span>شبكة بنبان — متصلة</span>
+                </div>
+            </div>
+            <div class="data-point" data-type="radio">
+                <div class="point-marker blue"></div>
+                <div class="point-info">
+                    <h4>تردد راديو FM</h4>
+                    <div class="meta">104.2 MHz — نايل FM</div>
+                    <span>بث مباشر — القاهرة الكبرى</span>
+                </div>
+            </div>
+            <div class="data-point" data-type="ley">
+                <div class="point-marker gold"></div>
+                <div class="point-info">
+                    <h4>خط طاقة الأرض</h4>
+                    <div class="meta">LEY LINE — GIZA NODE</div>
+                    <span>نقطة تقاطع طاقة كونية</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Floating Panel: Your Location -->
+    <div class="floating-panel" id="panelLocation" style="bottom: 100px; right: 20px; width: 240px;">
+        <div class="panel-header">
+            <div class="panel-title">📍 موقعك</div>
+            <button class="panel-minimize" onclick="togglePanel('panelLocation')">−</button>
+        </div>
+        <div class="panel-content">
+            <div class="data-point" data-target="alarab">
+                <div class="point-marker red"></div>
+                <div class="point-info">
+                    <h4>أنت هنا</h4>
+                    <div class="meta">X4GW+6GV</div>
+                    <span>جهازك متصل بالشبكة</span>
+                </div>
+            </div>
+            <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.1);">
+                <div style="font-size: 0.7rem; color: rgba(255,255,255,0.5); margin-bottom: 5px;">اتصالات نشطة</div>
+                <div id="activeConnections" style="font-family: 'Orbitron', monospace; font-size: 1.2rem; color: var(--green);">3</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Bottom Bar -->
+    <div class="bottom-bar">
+        <div style="display: flex; align-items: flex-end; gap: 15px;">
+            <div class="scale-info">
+                <div class="scale-bar"></div>
+                <div class="scale-text">100m | 1:1 SCALE</div>
+            </div>
+            <div class="plus-code">X4GW+6GV</div>
+        </div>
+        
+        <div class="controls">
+            <div class="ctrl-btn" id="zoomIn" title="تكبير">➕</div>
+            <div class="ctrl-btn" id="zoomOut" title="تصغير">➖</div>
+            <div class="ctrl-btn" id="rotate" title="دوران">🔄</div>
+            <div class="ctrl-btn" id="sendBeam" title="إرسال شعاع">⚡</div>
+            <div class="ctrl-btn" id="reset" title="إعادة">🏠</div>
+        </div>
+        
+        <div class="compass">
+            <div class="compass-needle" id="compassNeedle"></div>
+            <span class="compass-label n">N</span>
+            <span class="compass-label s">S</span>
+            <span class="compass-label e">E</span>
+            <span class="compass-label w">W</span>
+        </div>
+    </div>
+    
+    <!-- Tooltip -->
+    <div class="tooltip" id="tooltip">
+        <h3></h3>
+        <div class="dims"></div>
+        <p></p>
+    </div>
+    
+    <!-- Energy Message -->
+    <div class="energy-message" id="energyMessage">𓁹 البوابة فُتحت 𓁹</div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script>
+        // ====== REAL DATA POINTS ======
+        const REAL_DATA = {
+            khufu: { name: 'هرم خوفو الأكبر', height: 146.6, base: 230.3, x: 0, z: 0, star: 'Alnitak', starMag: 1.77 },
+            khafre: { name: 'هرم خفرع', height: 143, base: 215.3, x: -350, z: 350, star: 'Alnilam', starMag: 1.69 },
+            menkaure: { name: 'هرم منقرع', height: 65, base: 109, x: -700, z: 700, star: 'Mintaka', starMag: 2.23 },
+            sphinx: { name: 'أبو الهول', length: 73, height: 20, x: 150, z: 300 },
+            alarab: { name: 'موقعك', x: 800, z: -200 },
+            // Energy grid points (real infrastructure)
+            tower1: { name: 'برج اتصالات', x: 400, z: 100, type: 'tower', freq: '2.4GHz' },
+            solar1: { name: 'محطة شمسية', x: -200, z: -400, type: 'solar', output: '45.2MW' },
+            radio1: { name: 'تردد FM', x: 600, z: 400, type: 'radio', freq: '104.2MHz' }
+        };
+
+        // ====== GLYPH SYSTEM ======
+        const GLYPHS = ['𓂀', '𓆣', '𓋹', '𓊽', '𓇳', '𓏏', '𓉐', '𓁹', '☥', '✦'];
+        const MESSAGES = ['𓁹 البوابة فُتحت 𓁹', 'عين حورس تنظر إليك', 'الطاقة تنبض', 'الاتصال نشط', '⚡ شعاع مُرسَل'];
+
+        function spawnGlyph(x, y, scale = 1) {
+            const g = document.createElement('div');
+            g.className = 'glyph';
+            g.textContent = GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+            
+            const angle = Math.random() * Math.PI * 2;
+            const dist = 80 + Math.random() * 60;
+            g.style.setProperty('--dx', Math.cos(angle) * dist + 'px');
+            g.style.setProperty('--dy', Math.sin(angle) * dist + 'px');
+            g.style.left = x + 'px';
+            g.style.top = y + 'px';
+            g.style.fontSize = (18 + Math.random() * 12) * scale + 'px';
+            
+            document.body.appendChild(g);
+            setTimeout(() => g.remove(), 3000);
+        }
+
+        function showMessage(text) {
+            const msg = document.getElementById('energyMessage');
+            msg.textContent = text || MESSAGES[Math.floor(Math.random() * MESSAGES.length)];
+            msg.classList.remove('show');
+            void msg.offsetWidth;
+            msg.classList.add('show');
+        }
+
+        // ====== DRAGGABLE PANELS ======
+        function makeDraggable(panel) {
+            const header = panel.querySelector('.panel-header');
+            let isDragging = false;
+            let startX, startY, startLeft, startTop;
+
+            header.addEventListener('mousedown', (e) => {
+                if (e.target.classList.contains('panel-minimize')) return;
+                isDragging = true;
+                startX = e.clientX;
+                startY = e.clientY;
+                startLeft = panel.offsetLeft;
+                startTop = panel.offsetTop;
+                panel.style.transition = 'none';
+            });
+
+            document.addEventListener('mousemove', (e) => {
+                if (!isDragging) return;
+                const dx = e.clientX - startX;
+                const dy = e.clientY - startY;
+                panel.style.left = startLeft + dx + 'px';
+                panel.style.top = startTop + dy + 'px';
+                panel.style.right = 'auto';
+                panel.style.bottom = 'auto';
+            });
+
+            document.addEventListener('mouseup', () => {
+                isDragging = false;
+                panel.style.transition = '';
+            });
+
+            // Touch support
+            header.addEventListener('touchstart', (e) => {
+                if (e.target.classList.contains('panel-minimize')) return;
+                isDragging = true;
+                startX = e.touches[0].clientX;
+                startY = e.touches[0].clientY;
+                startLeft = panel.offsetLeft;
+                startTop = panel.offsetTop;
+            });
+
+            document.addEventListener('touchmove', (e) => {
+                if (!isDragging) return;
+                const dx = e.touches[0].clientX - startX;
+                const dy = e.touches[0].clientY - startY;
+                panel.style.left = startLeft + dx + 'px';
+                panel.style.top = startTop + dy + 'px';
+                panel.style.right = 'auto';
+                panel.style.bottom = 'auto';
+            });
+
+            document.addEventListener('touchend', () => { isDragging = false; });
+        }
+
+        function togglePanel(id) {
+            document.getElementById(id).classList.toggle('minimized');
+        }
+
+        // Initialize draggable panels
+        document.querySelectorAll('.floating-panel').forEach(makeDraggable);
+
+        // ====== THREE.JS ======
+        let scene, camera, renderer, clock;
+        let pyramids = {}, orionStars = {}, energyPoints = {};
+        let locationMarker, particlesMesh, backgroundStars;
+        let energyPulses = [], connectionBeams = [], starConnections = [];
+        
+        let autoRotate = false;
+        let cameraAngleX = -0.3, cameraAngleY = 0.4, cameraDistance = 800;
+        let isMouseDown = false, prevMouseX = 0, prevMouseY = 0;
+        let raycaster, mouse;
+        let hoveredObject = null;
+
+        init();
+        animate();
+
+        function init() {
+            setTimeout(() => document.getElementById('loading').classList.add('hidden'), 2000);
+
+            scene = new THREE.Scene();
+            scene.fog = new THREE.FogExp2(0x020408, 0.00012);
+            
+            camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 1, 8000);
+            camera.position.set(0, 400, 800);
+            
+            renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('scene'), antialias: true, alpha: true });
+            renderer.setPixelRatio(Math.min(2, window.devicePixelRatio));
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setClearColor(0x020408);
+            renderer.shadowMap.enabled = true;
+            
+            clock = new THREE.Clock();
+            raycaster = new THREE.Raycaster();
+            mouse = new THREE.Vector2();
+
+            createBackgroundStars();
+            createGround();
+            createPyramids();
+            createOrionStars();
+            createStarConnections();
+            createEnergyGrid();
+            createLocationMarker();
+            createParticles();
+            setupLighting();
+            setupEventListeners();
+        }
+
+        function createBackgroundStars() {
+            const count = 2500;
+            const positions = new Float32Array(count * 3);
+            const colors = new Float32Array(count * 3);
+            
+            for (let i = 0; i < count; i++) {
+                const i3 = i * 3;
+                const theta = Math.random() * Math.PI * 2;
+                const phi = Math.acos((Math.random() * 2) - 1);
+                const radius = 3500 + Math.random() * 1000;
+                
+                positions[i3] = radius * Math.sin(phi) * Math.cos(theta);
+                positions[i3 + 1] = Math.abs(radius * Math.cos(phi)) + 100;
+                positions[i3 + 2] = radius * Math.sin(phi) * Math.sin(theta);
+                
+                const temp = Math.random();
+                if (temp > 0.85) { colors[i3] = 0.7; colors[i3+1] = 0.85; colors[i3+2] = 1; }
+                else if (temp > 0.7) { colors[i3] = 1; colors[i3+1] = 0.95; colors[i3+2] = 0.8; }
+                else { colors[i3] = 1; colors[i3+1] = 1; colors[i3+2] = 1; }
+            }
+            
+            const geometry = new THREE.BufferGeometry();
+            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+            
+            backgroundStars = new THREE.Points(geometry, new THREE.PointsMaterial({
+                size: 2,
+                vertexColors: true,
+                transparent: true,
+                opacity: 0.85,
+                blending: THREE.AdditiveBlending
+            }));
+            scene.add(backgroundStars);
+        }
+
+        function createGround() {
+            const grid = new THREE.GridHelper(2500, 50, 0x1a1a2e, 0x0d0d1a);
+            grid.position.y = -2;
+            grid.material.opacity = 0.25;
+            grid.material.transparent = true;
+            scene.add(grid);
+
+            const groundGeo = new THREE.PlaneGeometry(2500, 2500, 80, 80);
+            const groundMat = new THREE.MeshStandardMaterial({ color: 0x0a0806, roughness: 0.95, transparent: true, opacity: 0.7 });
+            const ground = new THREE.Mesh(groundGeo, groundMat);
+            ground.rotation.x = -Math.PI / 2;
+            ground.position.y = -2;
+            ground.receiveShadow = true;
+            scene.add(ground);
+        }
+
+        function createPyramids() {
+            const mat = new THREE.MeshPhongMaterial({ color: 0xd4a574, emissive: 0x1a1008, shininess: 20, flatShading: true });
+            const wire = new THREE.MeshBasicMaterial({ color: 0xffd66b, wireframe: true, transparent: true, opacity: 0.2 });
+
+            ['khufu', 'khafre', 'menkaure'].forEach(name => {
+                const d = REAL_DATA[name];
+                const geo = new THREE.ConeGeometry(d.base / 2, d.height, 4);
+                
+                const pyramid = new THREE.Mesh(geo, mat.clone());
+                pyramid.position.set(d.x, d.height / 2, d.z);
+                pyramid.rotation.y = Math.PI / 4;
+                pyramid.castShadow = true;
+                pyramid.userData = { type: 'pyramid', id: name, ...d };
+                scene.add(pyramid);
+                
+                const wireframe = new THREE.Mesh(geo, wire.clone());
+                wireframe.position.copy(pyramid.position);
+                wireframe.rotation.copy(pyramid.rotation);
+                wireframe.scale.set(1.005, 1.005, 1.005);
+                scene.add(wireframe);
+                
+                pyramids[name] = { main: pyramid, wireframe, data: d };
+            });
+        }
+
+        function createOrionStars() {
+            ['khufu', 'khafre', 'menkaure'].forEach(name => {
+                const d = REAL_DATA[name];
+                const starHeight = 550 + d.height * 1.5;
+                const size = 6 + (3 - d.starMag) * 2;
+                
+                const starGeo = new THREE.SphereGeometry(size, 16, 16);
+                const starMat = new THREE.MeshBasicMaterial({ color: 0xaad4ff, transparent: true, opacity: 0.95 });
+                const star = new THREE.Mesh(starGeo, starMat);
+                star.position.set(d.x, starHeight, d.z);
+                star.userData = { type: 'star', id: name, starName: d.star, mag: d.starMag };
+                scene.add(star);
+                
+                const glowGeo = new THREE.SphereGeometry(size * 2, 16, 16);
+                const glowMat = new THREE.MeshBasicMaterial({ color: 0xaad4ff, transparent: true, opacity: 0.15 });
+                const glow = new THREE.Mesh(glowGeo, glowMat);
+                glow.position.copy(star.position);
+                scene.add(glow);
+                
+                const light = new THREE.PointLight(0xaad4ff, 0.8, 350);
+                light.position.copy(star.position);
+                scene.add(light);
+                
+                orionStars[name] = { core: star, glow, light, baseY: starHeight };
+            });
+        }
+
+        function createStarConnections() {
+            ['khufu', 'khafre', 'menkaure'].forEach(name => {
+                const p = pyramids[name], s = orionStars[name];
+                if (!p || !s) return;
+                
+                const points = [
+                    new THREE.Vector3(p.data.x, p.data.height, p.data.z),
+                    s.core.position.clone()
+                ];
+                
+                const geo = new THREE.BufferGeometry().setFromPoints(points);
+                const mat = new THREE.LineBasicMaterial({ color: 0xaad4ff, transparent: true, opacity: 0.12, blending: THREE.AdditiveBlending });
+                const line = new THREE.Line(geo, mat);
+                scene.add(line);
+                
+                starConnections.push({ line, name });
+            });
+        }
+
+        function createEnergyGrid() {
+            // Energy towers/points - real infrastructure represented
+            const pointTypes = {
+                tower: { color: 0x00ff88, size: 8 },
+                solar: { color: 0x00ffff, size: 10 },
+                radio: { color: 0xaad4ff, size: 7 }
+            };
+            
+            ['tower1', 'solar1', 'radio1'].forEach(key => {
+                const d = REAL_DATA[key];
+                const cfg = pointTypes[d.type];
+                
+                const geo = new THREE.OctahedronGeometry(cfg.size);
+                const mat = new THREE.MeshBasicMaterial({ color: cfg.color, transparent: true, opacity: 0.85 });
+                const point = new THREE.Mesh(geo, mat);
+                point.position.set(d.x, 60, d.z);
+                point.userData = { type: 'energy', id: key, ...d };
+                scene.add(point);
+                
+                const light = new THREE.PointLight(cfg.color, 0.6, 200);
+                light.position.copy(point.position);
+                scene.add(light);
+                
+                energyPoints[key] = { mesh: point, light, data: d };
+            });
+        }
+
+        function createLocationMarker() {
+            const d = REAL_DATA.alarab;
+            
+            const markerGeo = new THREE.SphereGeometry(12, 16, 16);
+            const markerMat = new THREE.MeshBasicMaterial({ color: 0xff4757, transparent: true, opacity: 0.9 });
+            const marker = new THREE.Mesh(markerGeo, markerMat);
+            marker.position.set(d.x, 35, d.z);
+            marker.userData = { type: 'location', id: 'alarab', ...d };
+            scene.add(marker);
+            
+            const stemGeo = new THREE.CylinderGeometry(2, 2, 40, 8);
+            const stemMat = new THREE.MeshBasicMaterial({ color: 0xff4757 });
+            const stem = new THREE.Mesh(stemGeo, stemMat);
+            stem.position.set(d.x, 15, d.z);
+            scene.add(stem);
+            
+            const glow = new THREE.PointLight(0xff4757, 2, 200);
+            glow.position.copy(marker.position);
+            scene.add(glow);
+            
+            const rings = [];
+            for (let i = 0; i < 3; i++) {
+                const ringGeo = new THREE.RingGeometry(15, 18, 32);
+                const ringMat = new THREE.MeshBasicMaterial({ color: 0xff4757, transparent: true, opacity: 0.3, side: THREE.DoubleSide });
+                const ring = new THREE.Mesh(ringGeo, ringMat);
+                ring.position.set(d.x, 1, d.z);
+                ring.rotation.x = -Math.PI / 2;
+                ring.userData = { delay: i * 0.7 };
+                scene.add(ring);
+                rings.push(ring);
+            }
+            
+            locationMarker = { marker, stem, glow, rings };
+        }
+
+        function createParticles() {
+            const count = 600;
+            const positions = new Float32Array(count * 3);
+            const colors = new Float32Array(count * 3);
+            
+            for (let i = 0; i < count; i++) {
+                const i3 = i * 3;
+                positions[i3] = (Math.random() - 0.5) * 1800;
+                positions[i3 + 1] = Math.random() * 400 + 20;
+                positions[i3 + 2] = (Math.random() - 0.5) * 1800;
+                
+                const c = Math.random() > 0.5 ? new THREE.Color(0xffd66b) : new THREE.Color(0x00ffff);
+                colors[i3] = c.r; colors[i3+1] = c.g; colors[i3+2] = c.b;
+            }
+            
+            const geo = new THREE.BufferGeometry();
+            geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            geo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+            
+            particlesMesh = new THREE.Points(geo, new THREE.PointsMaterial({
+                size: 2.5, vertexColors: true, transparent: true, opacity: 0.6, blending: THREE.AdditiveBlending
+            }));
+            scene.add(particlesMesh);
+        }
+
+        function setupLighting() {
+            scene.add(new THREE.AmbientLight(0x0a1020, 0.4));
+            
+            const moon = new THREE.DirectionalLight(0xccddff, 0.35);
+            moon.position.set(400, 500, 400);
+            moon.castShadow = true;
+            scene.add(moon);
+            
+            scene.add(new THREE.PointLight(0xffd66b, 0.5, 1000));
+            scene.add(new THREE.HemisphereLight(0x0a1525, 0x1a1510, 0.3));
+        }
+
+        // ====== ENERGY PULSE ======
+        function triggerEnergyPulse(position) {
+            const light = new THREE.PointLight(0x00ffff, 5, 300);
+            light.position.copy(position);
+            light.position.y += 15;
+            scene.add(light);
+            
+            const sphereGeo = new THREE.SphereGeometry(6, 16, 16);
+            const sphereMat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 1 });
+            const sphere = new THREE.Mesh(sphereGeo, sphereMat);
+            sphere.position.copy(light.position);
+            scene.add(sphere);
+            
+            energyPulses.push({ light, sphere, life: 1.0 });
+        }
+
+        // ====== CONNECTION BEAM ======
+        function sendConnectionBeam(target) {
+            const source = locationMarker.marker.position.clone();
+            source.y = 50;
+            
+            const targetPos = target ? target.clone() : new THREE.Vector3(
+                (Math.random() - 0.5) * 1200,
+                50,
+                (Math.random() - 0.5) * 1200
+            );
+            
+            const curve = new THREE.QuadraticBezierCurve3(
+                source,
+                new THREE.Vector3((source.x + targetPos.x) / 2, Math.max(source.y, targetPos.y) + 150, (source.z + targetPos.z) / 2),
+                targetPos
+            );
+            
+            const geo = new THREE.BufferGeometry().setFromPoints(curve.getPoints(40));
+            const mat = new THREE.LineBasicMaterial({ color: 0x00ff88, transparent: true, opacity: 0.8, blending: THREE.AdditiveBlending });
+            const beam = new THREE.Line(geo, mat);
+            scene.add(beam);
+            
+            const targetMarker = new THREE.Mesh(
+                new THREE.SphereGeometry(8, 16, 16),
+                new THREE.MeshBasicMaterial({ color: 0x00ff88, transparent: true, opacity: 0.8 })
+            );
+            targetMarker.position.copy(targetPos);
+            scene.add(targetMarker);
+            
+            const targetGlow = new THREE.PointLight(0x00ff88, 2, 120);
+            targetGlow.position.copy(targetPos);
+            scene.add(targetGlow);
+            
+            connectionBeams.push({ beam, targetMarker, targetGlow, life: 1.0 });
+            
+            // Update active connections
+            const count = parseInt(document.getElementById('activeConnections').textContent) + 1;
+            document.getElementById('activeConnections').textContent = count;
+            
+            // Spawn glyphs and show message
+            for (let i = 0; i < 12; i++) {
+                setTimeout(() => {
+                    spawnGlyph(
+                        window.innerWidth / 2 + (Math.random() - 0.5) * 100,
+                        window.innerHeight / 2 + (Math.random() - 0.5) * 100,
+                        1 + Math.random() * 0.5
+                    );
+                }, i * 50);
+            }
+            showMessage('⚡ شعاع مُرسَل');
+            triggerEnergyPulse(source);
+        }
+
+        // ====== EVENT LISTENERS ======
+        function setupEventListeners() {
+            const canvas = renderer.domElement;
+            
+            canvas.addEventListener('mousedown', (e) => {
+                isMouseDown = true;
+                prevMouseX = e.clientX;
+                prevMouseY = e.clientY;
+            });
+            
+            canvas.addEventListener('mouseup', () => isMouseDown = false);
+            canvas.addEventListener('mouseleave', () => isMouseDown = false);
+            
+            canvas.addEventListener('mousemove', (e) => {
+                mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+                mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+                
+                if (isMouseDown) {
+                    cameraAngleX += (e.clientX - prevMouseX) * 0.005;
+                    cameraAngleY = Math.max(0.1, Math.min(1.4, cameraAngleY - (e.clientY - prevMouseY) * 0.005));
+                    prevMouseX = e.clientX;
+                    prevMouseY = e.clientY;
+                }
+                
+                checkHover(e);
+            });
+            
+            canvas.addEventListener('wheel', (e) => {
+                e.preventDefault();
+                cameraDistance = Math.max(250, Math.min(2000, cameraDistance + e.deltaY * 0.6));
+            }, { passive: false });
+            
+            canvas.addEventListener('click', (e) => {
+                raycaster.setFromCamera(mouse, camera);
+                const intersects = raycaster.intersectObjects(scene.children, true);
+                
+                const pos = intersects.length > 0 ? intersects[0].point : new THREE.Vector3();
+                if (intersects.length === 0) raycaster.ray.at(400, pos);
+                
+                triggerEnergyPulse(pos);
+                
+                // Spawn glyphs at click
+                for (let i = 0; i < 8; i++) {
+                    setTimeout(() => spawnGlyph(e.clientX, e.clientY, 0.8 + Math.random() * 0.4), i * 30);
+                }
+            });
+            
+            // Touch
+            canvas.addEventListener('touchstart', (e) => {
+                if (e.touches.length === 1) {
+                    isMouseDown = true;
+                    prevMouseX = e.touches[0].clientX;
+                    prevMouseY = e.touches[0].clientY;
+                }
+            });
+            canvas.addEventListener('touchend', () => isMouseDown = false);
+            canvas.addEventListener('touchmove', (e) => {
+                if (e.touches.length === 1 && isMouseDown) {
+                    cameraAngleX += (e.touches[0].clientX - prevMouseX) * 0.005;
+                    cameraAngleY = Math.max(0.1, Math.min(1.4, cameraAngleY - (e.touches[0].clientY - prevMouseY) * 0.005));
+                    prevMouseX = e.touches[0].clientX;
+                    prevMouseY = e.touches[0].clientY;
+                }
+            });
+            
+            // Controls
+            document.getElementById('zoomIn').addEventListener('click', () => cameraDistance = Math.max(250, cameraDistance - 120));
+            document.getElementById('zoomOut').addEventListener('click', () => cameraDistance = Math.min(2000, cameraDistance + 120));
+            document.getElementById('rotate').addEventListener('click', (e) => {
+                autoRotate = !autoRotate;
+                e.currentTarget.classList.toggle('active', autoRotate);
+            });
+            document.getElementById('sendBeam').addEventListener('click', () => sendConnectionBeam());
+            document.getElementById('reset').addEventListener('click', () => {
+                cameraAngleX = -0.3; cameraAngleY = 0.4; cameraDistance = 800;
+                autoRotate = false;
+                document.getElementById('rotate').classList.remove('active');
+            });
+            
+            // Data points click
+            document.querySelectorAll('.data-point').forEach(el => {
+                el.addEventListener('click', () => {
+                    const target = el.dataset.target;
+                    if (target && REAL_DATA[target]) {
+                        const d = REAL_DATA[target];
+                        cameraAngleX = Math.atan2(d.z, d.x) + Math.PI;
+                        cameraDistance = 450;
+                    }
+                });
+            });
+            
+            // Keyboard
+            document.addEventListener('keydown', (e) => {
+                if (e.code === 'Space') sendConnectionBeam();
+            });
+            
+            // Resize
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        }
+
+        function checkHover(event) {
+            raycaster.setFromCamera(mouse, camera);
+            
+            const objects = [];
+            Object.values(pyramids).forEach(p => objects.push(p.main));
+            Object.values(orionStars).forEach(s => objects.push(s.core));
+            Object.values(energyPoints).forEach(e => objects.push(e.mesh));
+            if (locationMarker) objects.push(locationMarker.marker);
+            
+            const intersects = raycaster.intersectObjects(objects);
+            const tooltip = document.getElementById('tooltip');
+            
+            if (intersects.length > 0) {
+                const obj = intersects[0].object;
+                const d = obj.userData;
+                
+                if (d && d.name) {
+                    hoveredObject = obj;
+                    
+                    tooltip.querySelector('h3').textContent = d.name;
+                    let dims = '';
+                    if (d.height && d.base) dims = `الارتفاع: ${d.height}م | القاعدة: ${d.base}م`;
+                    else if (d.freq) dims = `التردد: ${d.freq}`;
+                    else if (d.output) dims = `الإنتاج: ${d.output}`;
+                    tooltip.querySelector('.dims').textContent = dims;
+                    tooltip.querySelector('p').textContent = d.star ? `⭐ ${d.star}` : '';
+                    
+                    tooltip.style.left = (event.clientX + 15) + 'px';
+                    tooltip.style.top = (event.clientY - 10) + 'px';
+                    tooltip.classList.add('visible');
+                    document.body.style.cursor = 'pointer';
+                }
+            } else {
+                hoveredObject = null;
+                tooltip.classList.remove('visible');
+                document.body.style.cursor = 'default';
+            }
+        }
+
+        // ====== ANIMATION ======
+        function animate() {
+            requestAnimationFrame(animate);
+            render();
+        }
+
+        function render() {
+            const time = clock.getElapsedTime();
+            const delta = clock.getDelta();
+            
+            if (autoRotate) cameraAngleX += 0.002;
+            
+            camera.position.x = Math.sin(cameraAngleX) * cameraDistance;
+            camera.position.z = Math.cos(cameraAngleX) * cameraDistance;
+            camera.position.y = cameraAngleY * cameraDistance;
+            camera.lookAt(0, 60, 0);
+            
+            // Compass
+            document.getElementById('compassNeedle').style.transform = `rotate(${-cameraAngleX * 180 / Math.PI}deg)`;
+            
+            // Background stars rotation
+            if (backgroundStars) backgroundStars.rotation.y = time * 0.003;
+            
+            // Orion stars
+            Object.values(orionStars).forEach((s, i) => {
+                s.core.position.y = s.baseY + Math.sin(time * 0.1 + i) * 4;
+                s.glow.position.y = s.core.position.y;
+                s.light.position.y = s.core.position.y;
+                s.core.material.opacity = 0.8 + Math.sin(time * 3 + i * 2) * 0.2;
+                s.light.intensity = 0.6 + Math.sin(time * 3 + i * 2) * 0.3;
+            });
+            
+            // Star connections
+            starConnections.forEach(conn => {
+                const s = orionStars[conn.name];
+                if (s) {
+                    const pos = conn.line.geometry.attributes.position.array;
+                    pos[4] = s.core.position.y;
+                    conn.line.geometry.attributes.position.needsUpdate = true;
+                    conn.line.material.opacity = 0.08 + Math.sin(time) * 0.04;
+                }
+            });
+            
+            // Energy points
+            Object.values(energyPoints).forEach((e, i) => {
+                e.mesh.rotation.y = time + i;
+                e.mesh.position.y = 60 + Math.sin(time * 2 + i) * 5;
+                e.light.intensity = 0.5 + Math.sin(time * 2 + i) * 0.2;
+            });
+            
+            // Location marker
+            if (locationMarker) {
+                const pulse = 1 + Math.sin(time * 3) * 0.2;
+                locationMarker.marker.scale.setScalar(pulse);
+                locationMarker.glow.intensity = 1.5 + Math.sin(time * 3) * 0.5;
+                
+                locationMarker.rings.forEach((ring, i) => {
+                    const t = ((time + ring.userData.delay) % 2) / 2;
+                    ring.scale.setScalar(1 + t * 2);
+                    ring.material.opacity = 0.3 * (1 - t);
+                });
+            }
+            
+            // Particles
+            particlesMesh.rotation.y = time * 0.008;
+            
+            // Pyramid wireframes
+            Object.values(pyramids).forEach((p, i) => {
+                if (p.wireframe) p.wireframe.material.opacity = 0.15 + Math.sin(time + i) * 0.05;
+            });
+            
+            // Energy pulses
+            for (let i = energyPulses.length - 1; i >= 0; i--) {
+                const p = energyPulses[i];
+                p.life -= delta * 2.5;
+                
+                if (p.life <= 0) {
+                    scene.remove(p.light);
+                    scene.remove(p.sphere);
+                    energyPulses.splice(i, 1);
+                } else {
+                    p.light.intensity = p.life * 5;
+                    p.sphere.material.opacity = p.life;
+                    const s = 3 - p.life * 2;
+                    p.sphere.scale.set(s, s, s);
+                }
+            }
+            
+            // Connection beams
+            for (let i = connectionBeams.length - 1; i >= 0; i--) {
+                const c = connectionBeams[i];
+                c.life -= delta * 0.25;
+                
+                if (c.life <= 0) {
+                    scene.remove(c.beam);
+                    scene.remove(c.targetMarker);
+                    scene.remove(c.targetGlow);
+                    connectionBeams.splice(i, 1);
+                } else {
+                    c.beam.material.opacity = c.life * 0.8;
+                    c.targetMarker.material.opacity = c.life * 0.8;
+                    c.targetGlow.intensity = c.life * 2;
+                    c.targetMarker.scale.setScalar(1 + Math.sin(time * 5) * 0.15);
+                }
+            }
+            
+            // Hover effect
+            if (hoveredObject) {
+                hoveredObject.scale.setScalar(1.02 + Math.sin(time * 5) * 0.01);
+            }
+            
+            renderer.render(scene, camera);
+        }
+    </script>
+</body>
+</html>
