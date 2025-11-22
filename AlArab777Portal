@@ -1,0 +1,1589 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>AlArab Portal — بوابة الأهرامات الكونية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #030508;
+            --gold: #ffd66b;
+            --gold-dark: #caa400;
+            --cyan: #00ffff;
+            --cyan-dark: #0088aa;
+            --sand: #d4a574;
+            --night: #0a0f1a;
+            --star-blue: #aad4ff;
+            --heartbeat-scale: 1;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html, body {
+            height: 100%;
+            overflow: hidden;
+            background: var(--bg);
+            font-family: 'Cairo', 'Segoe UI', sans-serif;
+            color: #fff;
+        }
+        
+        #heartbeat-container {
+            position: fixed;
+            inset: 0;
+            transform: scale(var(--heartbeat-scale));
+            transition: transform 0.15s ease-out;
+        }
+        
+        canvas#scene {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+        }
+        
+        #pulse-overlay {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 5;
+            background: radial-gradient(circle at center, transparent 40%, rgba(255,214,107,0.02) 100%);
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        
+        /* Loading Screen */
+        #loading {
+            position: fixed;
+            inset: 0;
+            background: var(--bg);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            transition: opacity 1s ease, visibility 1s ease;
+        }
+        
+        #loading.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        .loader-pyramid {
+            width: 80px;
+            height: 80px;
+            position: relative;
+            animation: float 2s ease-in-out infinite;
+        }
+        
+        .loader-pyramid::before {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-left: 40px solid transparent;
+            border-right: 40px solid transparent;
+            border-bottom: 70px solid var(--gold);
+            filter: drop-shadow(0 0 20px var(--gold));
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+        
+        .loader-text {
+            margin-top: 30px;
+            font-family: 'Orbitron', monospace;
+            color: var(--cyan);
+            font-size: 12px;
+            letter-spacing: 2px;
+            animation: pulse 1.5s ease-in-out infinite;
+            text-align: center;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+        
+        /* UI */
+        #ui {
+            position: fixed;
+            inset: 0;
+            z-index: 10;
+            pointer-events: none;
+        }
+        
+        .header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(to bottom, rgba(3,5,8,0.95), transparent);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+            box-shadow: 0 0 25px rgba(255, 214, 107, 0.5);
+        }
+        
+        .logo-text {
+            font-family: 'Orbitron', monospace;
+            font-weight: 900;
+            font-size: 1.2rem;
+            background: linear-gradient(90deg, var(--gold), var(--cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .coords {
+            font-family: 'Orbitron', monospace;
+            font-size: 0.75rem;
+            color: var(--cyan);
+            text-shadow: 0 0 10px var(--cyan);
+        }
+        
+        /* Orion indicator */
+        .orion-indicator {
+            position: absolute;
+            top: 70px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(10,15,26,0.9);
+            border: 1px solid rgba(170,212,255,0.3);
+            border-radius: 25px;
+            padding: 8px 20px;
+            pointer-events: auto;
+        }
+        
+        .orion-stars {
+            display: flex;
+            gap: 4px;
+        }
+        
+        .orion-star {
+            width: 8px;
+            height: 8px;
+            background: var(--star-blue);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--star-blue);
+            animation: starTwinkle 2s ease-in-out infinite;
+        }
+        
+        .orion-star:nth-child(2) { animation-delay: 0.3s; }
+        .orion-star:nth-child(3) { animation-delay: 0.6s; }
+        
+        @keyframes starTwinkle {
+            0%, 100% { opacity: 0.6; transform: scale(0.9); }
+            50% { opacity: 1; transform: scale(1.1); }
+        }
+        
+        .orion-text {
+            font-family: 'Orbitron', monospace;
+            font-size: 0.8rem;
+            color: var(--star-blue);
+        }
+        
+        /* Connection status */
+        .connection-status {
+            position: absolute;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(10,15,26,0.9);
+            border: 1px solid rgba(0,255,255,0.3);
+            border-radius: 20px;
+            padding: 6px 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.75rem;
+        }
+        
+        .connection-dot {
+            width: 8px;
+            height: 8px;
+            background: #00ff88;
+            border-radius: 50%;
+            animation: connectionPulse 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes connectionPulse {
+            0%, 100% { box-shadow: 0 0 5px #00ff88; }
+            50% { box-shadow: 0 0 15px #00ff88, 0 0 25px #00ff88; }
+        }
+        
+        /* Location Panel */
+        .location-panel {
+            position: absolute;
+            top: 120px;
+            right: 20px;
+            background: linear-gradient(180deg, rgba(255,214,107,0.06), rgba(10,15,26,0.95));
+            border: 1px solid rgba(255,214,107,0.15);
+            border-radius: 14px;
+            padding: 15px;
+            width: 260px;
+            backdrop-filter: blur(10px);
+            pointer-events: auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            max-height: calc(100vh - 180px);
+            overflow-y: auto;
+        }
+        
+        .location-panel h2 {
+            font-family: 'Orbitron', monospace;
+            font-size: 0.85rem;
+            color: var(--gold);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .location-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .location-item:hover {
+            background: rgba(255,214,107,0.05);
+            margin: 0 -8px;
+            padding: 10px 8px;
+            border-radius: 8px;
+        }
+        
+        .location-item:last-child { border-bottom: none; }
+        
+        .loc-marker {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            box-shadow: 0 0 12px currentColor;
+            flex-shrink: 0;
+            margin-top: 3px;
+        }
+        
+        .loc-marker.gold { background: var(--gold); color: var(--gold); }
+        .loc-marker.cyan { background: var(--cyan); color: var(--cyan); }
+        .loc-marker.red { background: #ff4757; color: #ff4757; }
+        .loc-marker.blue { background: var(--star-blue); color: var(--star-blue); }
+        
+        .loc-info { flex: 1; }
+        .loc-info h3 { font-size: 0.85rem; font-weight: 700; margin-bottom: 2px; }
+        .loc-info .dimensions { font-size: 0.65rem; color: var(--cyan); font-family: 'Orbitron', monospace; }
+        .loc-info .star-name { font-size: 0.65rem; color: var(--star-blue); font-family: 'Orbitron', monospace; }
+        .loc-info span { font-size: 0.7rem; color: var(--sand); opacity: 0.7; }
+        
+        /* Legend */
+        .legend {
+            position: absolute;
+            top: 120px;
+            left: 20px;
+            background: rgba(10,15,26,0.85);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 12px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .legend h4 {
+            font-family: 'Orbitron', monospace;
+            font-size: 0.7rem;
+            color: var(--gold);
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.75rem;
+            margin-bottom: 5px;
+            color: rgba(255,255,255,0.7);
+        }
+        
+        .legend-icon { width: 14px; height: 14px; display: flex; align-items: center; justify-content: center; }
+        .legend-icon.pyramid { width: 0; height: 0; border-left: 7px solid transparent; border-right: 7px solid transparent; border-bottom: 12px solid var(--gold); }
+        
+        /* Controls */
+        .controls {
+            position: absolute;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            pointer-events: auto;
+        }
+        
+        .control-btn {
+            width: 45px;
+            height: 45px;
+            border: 1px solid rgba(255,214,107,0.3);
+            background: rgba(10,15,26,0.8);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            font-size: 1.1rem;
+        }
+        
+        .control-btn:hover {
+            background: rgba(255,214,107,0.2);
+            border-color: var(--gold);
+            transform: translateY(-3px);
+        }
+        
+        .control-btn.active {
+            background: rgba(255,214,107,0.3);
+            border-color: var(--gold);
+        }
+        
+        /* Compass */
+        .compass {
+            position: absolute;
+            bottom: 25px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            border: 2px solid rgba(255,214,107,0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(10,15,26,0.8);
+            backdrop-filter: blur(10px);
+        }
+        
+        .compass-needle {
+            width: 3px;
+            height: 26px;
+            background: linear-gradient(to bottom, var(--gold) 50%, var(--cyan) 50%);
+            border-radius: 2px;
+        }
+        
+        .compass-label {
+            position: absolute;
+            font-family: 'Orbitron', monospace;
+            font-size: 0.5rem;
+            color: var(--gold);
+        }
+        
+        .compass-label.n { top: 4px; }
+        .compass-label.s { bottom: 4px; }
+        .compass-label.e { right: 6px; }
+        .compass-label.w { left: 6px; }
+        
+        /* Plus Code */
+        .plus-code {
+            position: absolute;
+            bottom: 25px;
+            left: 20px;
+            background: rgba(10,15,26,0.9);
+            border: 1px solid var(--cyan);
+            border-radius: 8px;
+            padding: 8px 14px;
+            font-family: 'Orbitron', monospace;
+            font-size: 0.8rem;
+            color: var(--cyan);
+            text-shadow: 0 0 10px var(--cyan);
+            pointer-events: auto;
+            cursor: pointer;
+        }
+        
+        /* Scale */
+        .scale-indicator {
+            position: absolute;
+            bottom: 80px;
+            left: 20px;
+            background: rgba(10,15,26,0.9);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 6px;
+            padding: 8px 12px;
+        }
+        
+        .scale-bar { width: 80px; height: 3px; background: linear-gradient(90deg, var(--gold), var(--cyan)); border-radius: 2px; margin-bottom: 4px; }
+        .scale-text { font-family: 'Orbitron', monospace; font-size: 0.6rem; color: rgba(255,255,255,0.6); }
+        
+        /* Tooltip */
+        .marker-tooltip {
+            position: fixed;
+            background: linear-gradient(135deg, rgba(255,214,107,0.12), rgba(10,15,26,0.98));
+            border: 1px solid var(--gold);
+            border-radius: 10px;
+            padding: 12px 16px;
+            pointer-events: none;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            z-index: 100;
+            backdrop-filter: blur(15px);
+            max-width: 260px;
+        }
+        
+        .marker-tooltip.visible { opacity: 1; transform: translateY(0); }
+        .marker-tooltip h3 { font-weight: 900; color: var(--gold); margin-bottom: 6px; font-size: 0.95rem; }
+        .marker-tooltip .dims { font-family: 'Orbitron', monospace; font-size: 0.75rem; color: var(--cyan); margin-bottom: 4px; }
+        .marker-tooltip p { font-size: 0.8rem; color: rgba(255,255,255,0.7); }
+        
+        /* Visitor beam notification */
+        .beam-notification {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            background: linear-gradient(135deg, rgba(0,255,136,0.1), rgba(10,15,26,0.95));
+            border: 1px solid rgba(0,255,136,0.4);
+            border-radius: 12px;
+            padding: 12px 18px;
+            pointer-events: auto;
+            opacity: 0;
+            transform: translateX(100px);
+            transition: all 0.5s cubic-bezier(0.2, 0.9, 0.3, 1);
+            z-index: 50;
+        }
+        
+        .beam-notification.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .beam-notification h4 {
+            color: #00ff88;
+            font-size: 0.85rem;
+            margin-bottom: 4px;
+        }
+        
+        .beam-notification p {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.7);
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading -->
+    <div id="loading">
+        <div class="loader-pyramid"></div>
+        <div class="loader-text">
+            CONNECTING TO THE COSMOS...<br>
+            <span style="font-size:10px; opacity:0.7;">ORION'S BELT ALIGNMENT</span>
+        </div>
+    </div>
+    
+    <!-- Heartbeat Container -->
+    <div id="heartbeat-container">
+        <canvas id="scene"></canvas>
+        <div id="pulse-overlay"></div>
+    </div>
+    
+    <!-- UI -->
+    <div id="ui">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">
+                <div class="logo-icon"></div>
+                <span class="logo-text">ALARAB PORTAL</span>
+            </div>
+            <div class="coords">29.9762°N, 31.1293°E</div>
+        </div>
+        
+        <!-- Connection Status -->
+        <div class="connection-status">
+            <div class="connection-dot"></div>
+            <span>CONNECTED — <span id="visitorLocation">Cairo, Egypt</span></span>
+        </div>
+        
+        <!-- Orion Indicator -->
+        <div class="orion-indicator">
+            <div class="orion-stars">
+                <div class="orion-star"></div>
+                <div class="orion-star"></div>
+                <div class="orion-star"></div>
+            </div>
+            <span class="orion-text">ORION'S BELT</span>
+        </div>
+        
+        <!-- Location Panel -->
+        <div class="location-panel">
+            <h2>🌌 الأهرامات والنجوم</h2>
+            
+            <div class="location-item" data-target="khufu">
+                <div class="loc-marker gold"></div>
+                <div class="loc-info">
+                    <h3>هرم خوفو ⟷ ألنيتاك</h3>
+                    <div class="dimensions">H: 146.6m | B: 230.3m</div>
+                    <div class="star-name">⭐ Alnitak (ζ Orionis)</div>
+                </div>
+            </div>
+            
+            <div class="location-item" data-target="khafre">
+                <div class="loc-marker gold"></div>
+                <div class="loc-info">
+                    <h3>هرم خفرع ⟷ ألنيلام</h3>
+                    <div class="dimensions">H: 143m | B: 215.3m</div>
+                    <div class="star-name">⭐ Alnilam (ε Orionis)</div>
+                </div>
+            </div>
+            
+            <div class="location-item" data-target="menkaure">
+                <div class="loc-marker gold"></div>
+                <div class="loc-info">
+                    <h3>هرم منقرع ⟷ مينتاكا</h3>
+                    <div class="dimensions">H: 65m | B: 109m</div>
+                    <div class="star-name">⭐ Mintaka (δ Orionis)</div>
+                </div>
+            </div>
+            
+            <div class="location-item" data-target="sphinx">
+                <div class="loc-marker cyan"></div>
+                <div class="loc-info">
+                    <h3>أبو الهول</h3>
+                    <div class="dimensions">L: 73m | H: 20m</div>
+                    <span>The Great Sphinx</span>
+                </div>
+            </div>
+            
+            <div class="location-item" data-target="alarab">
+                <div class="loc-marker red"></div>
+                <div class="loc-info">
+                    <h3>📍 أنت هنا</h3>
+                    <div class="dimensions">X4GW+6GV</div>
+                    <span>جهازك الحالي متصل</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Legend -->
+        <div class="legend">
+            <h4>LEGEND</h4>
+            <div class="legend-item">
+                <div class="legend-icon pyramid"></div>
+                <span>الأهرامات</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-icon"><span style="color:var(--star-blue)">✦</span></div>
+                <span>نجوم أوريون</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-icon"><span style="color:#ff4757">●</span></div>
+                <span>موقعك</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-icon"><span style="color:#00ff88">⟿</span></div>
+                <span>شعاع الاتصال</span>
+            </div>
+        </div>
+        
+        <!-- Scale -->
+        <div class="scale-indicator">
+            <div class="scale-bar"></div>
+            <div class="scale-text">≈ 100m | 1:1 SCALE</div>
+        </div>
+        
+        <!-- Controls -->
+        <div class="controls">
+            <div class="control-btn" id="zoomIn" title="تكبير">➕</div>
+            <div class="control-btn" id="zoomOut" title="تصغير">➖</div>
+            <div class="control-btn" id="rotate" title="دوران">🔄</div>
+            <div class="control-btn" id="sendBeam" title="إرسال شعاع">⚡</div>
+            <div class="control-btn" id="reset" title="إعادة">🏠</div>
+        </div>
+        
+        <div class="plus-code">X4GW+6GV</div>
+        
+        <div class="compass">
+            <div class="compass-needle" id="compassNeedle"></div>
+            <span class="compass-label n">N</span>
+            <span class="compass-label s">S</span>
+            <span class="compass-label e">E</span>
+            <span class="compass-label w">W</span>
+        </div>
+    </div>
+    
+    <!-- Tooltip -->
+    <div class="marker-tooltip" id="tooltip">
+        <h3></h3>
+        <div class="dims"></div>
+        <p></p>
+    </div>
+    
+    <!-- Beam Notification -->
+    <div class="beam-notification" id="beamNotification">
+        <h4>⚡ شعاع مُرسَل</h4>
+        <p id="beamTarget">إلى زائر جديد...</p>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script>
+        // ====== REAL DIMENSIONS & ORION CORRELATION ======
+        // Orion's Belt stars correspond to the three Giza pyramids
+        const REAL_DIMENSIONS = {
+            khufu: {
+                name: 'هرم خوفو الأكبر',
+                nameEn: 'Great Pyramid of Khufu',
+                height: 146.6,
+                base: 230.3,
+                x: 0,
+                z: 0,
+                star: 'Alnitak',
+                starArabic: 'ألنيتاك',
+                starMagnitude: 1.77,
+                desc: 'أكبر الأهرامات — مُرتبط بنجم ألنيتاك'
+            },
+            khafre: {
+                name: 'هرم خفرع',
+                nameEn: 'Pyramid of Khafre',
+                height: 143,
+                base: 215.3,
+                x: -350,
+                z: 350,
+                star: 'Alnilam',
+                starArabic: 'ألنيلام',
+                starMagnitude: 1.69,
+                desc: 'الهرم الأوسط — مُرتبط بنجم ألنيلام'
+            },
+            menkaure: {
+                name: 'هرم منقرع',
+                nameEn: 'Pyramid of Menkaure',
+                height: 65,
+                base: 109,
+                x: -700,
+                z: 700,
+                star: 'Mintaka',
+                starArabic: 'مينتاكا',
+                starMagnitude: 2.23,
+                desc: 'أصغر الأهرامات — مُرتبط بنجم مينتاكا'
+            },
+            sphinx: {
+                name: 'أبو الهول',
+                nameEn: 'The Great Sphinx',
+                length: 73,
+                height: 20,
+                width: 19,
+                x: 150,
+                z: 300,
+                desc: 'الحارس الأبدي — ينظر نحو الشرق'
+            },
+            alarab: {
+                name: 'موقعك الحالي',
+                nameEn: 'Your Location',
+                x: 800,
+                z: -200,
+                desc: 'X4GW+6GV — جهازك متصل الآن'
+            }
+        };
+
+        // ====== THREE.JS VARIABLES ======
+        let scene, camera, renderer, clock;
+        let pyramids = {};
+        let orionStars = {};
+        let starConnections = [];
+        let sphinxMesh;
+        let locationMarker;
+        let particlesMesh;
+        let backgroundStars;
+        let energyPulses = [];
+        let connectionBeams = [];
+        
+        // Camera
+        let autoRotate = false;
+        let cameraAngleX = -0.3;
+        let cameraAngleY = 0.4;
+        let cameraDistance = 900;
+        let isMouseDown = false;
+        let prevMouseX = 0, prevMouseY = 0;
+        
+        // Interaction
+        let raycaster, mouse;
+        let hoveredObject = null;
+        
+        // Heartbeat
+        let heartbeatBPM = 60;
+        let currentScale = 1;
+        let targetScale = 1;
+        let userActivity = 0;
+        let lastActivityTime = Date.now();
+        
+        // Star rotation (simulating Earth's rotation)
+        let starRotationAngle = 0;
+        const STAR_ROTATION_SPEED = 0.00005; // Very slow rotation
+
+        init();
+        animate();
+        startHeartbeat();
+        simulateVisitorConnection();
+
+        function init() {
+            setTimeout(() => {
+                document.getElementById('loading').classList.add('hidden');
+            }, 2500);
+
+            scene = new THREE.Scene();
+            scene.fog = new THREE.FogExp2(0x030508, 0.00015);
+            
+            camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 10000);
+            camera.position.set(0, 500, 900);
+            camera.lookAt(0, 0, 0);
+            
+            renderer = new THREE.WebGLRenderer({ 
+                canvas: document.getElementById('scene'),
+                antialias: true,
+                alpha: true 
+            });
+            renderer.setPixelRatio(Math.min(2, window.devicePixelRatio));
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setClearColor(0x030508);
+            renderer.shadowMap.enabled = true;
+            
+            clock = new THREE.Clock();
+            raycaster = new THREE.Raycaster();
+            mouse = new THREE.Vector2();
+
+            createBackgroundStars();
+            createGround();
+            createPyramids();
+            createOrionStars();
+            createStarPyramidConnections();
+            createSphinx();
+            createLocationMarker();
+            createParticles();
+            setupLighting();
+            setupEventListeners();
+        }
+
+        function createBackgroundStars() {
+            const starsCount = 3000;
+            const positions = new Float32Array(starsCount * 3);
+            const sizes = new Float32Array(starsCount);
+            const colors = new Float32Array(starsCount * 3);
+            
+            for (let i = 0; i < starsCount; i++) {
+                const i3 = i * 3;
+                // Distribute on a large sphere
+                const theta = Math.random() * Math.PI * 2;
+                const phi = Math.acos((Math.random() * 2) - 1);
+                const radius = 4000 + Math.random() * 1000;
+                
+                positions[i3] = radius * Math.sin(phi) * Math.cos(theta);
+                positions[i3 + 1] = Math.abs(radius * Math.cos(phi)) + 200; // Only upper hemisphere
+                positions[i3 + 2] = radius * Math.sin(phi) * Math.sin(theta);
+                
+                sizes[i] = Math.random() * 2 + 0.5;
+                
+                // Star colors (white to blue-white)
+                const temp = Math.random();
+                if (temp > 0.8) {
+                    colors[i3] = 0.7; colors[i3+1] = 0.8; colors[i3+2] = 1; // Blue
+                } else if (temp > 0.6) {
+                    colors[i3] = 1; colors[i3+1] = 0.95; colors[i3+2] = 0.8; // Yellow-white
+                } else {
+                    colors[i3] = 1; colors[i3+1] = 1; colors[i3+2] = 1; // White
+                }
+            }
+            
+            const geometry = new THREE.BufferGeometry();
+            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+            geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+            
+            const material = new THREE.PointsMaterial({
+                size: 2,
+                vertexColors: true,
+                transparent: true,
+                opacity: 0.8,
+                blending: THREE.AdditiveBlending
+            });
+            
+            backgroundStars = new THREE.Points(geometry, material);
+            scene.add(backgroundStars);
+        }
+
+        function createGround() {
+            const gridHelper = new THREE.GridHelper(3000, 60, 0x1a1a2e, 0x0d0d1a);
+            gridHelper.position.y = -2;
+            gridHelper.material.opacity = 0.3;
+            gridHelper.material.transparent = true;
+            scene.add(gridHelper);
+
+            const groundGeo = new THREE.PlaneGeometry(3000, 3000, 100, 100);
+            const groundMat = new THREE.MeshStandardMaterial({
+                color: 0x0f0d08,
+                roughness: 0.95,
+                metalness: 0.05,
+                transparent: true,
+                opacity: 0.8
+            });
+            
+            const vertices = groundGeo.attributes.position.array;
+            for (let i = 0; i < vertices.length; i += 3) {
+                vertices[i + 2] = Math.random() * 2;
+            }
+            groundGeo.computeVertexNormals();
+            
+            const ground = new THREE.Mesh(groundGeo, groundMat);
+            ground.rotation.x = -Math.PI / 2;
+            ground.position.y = -2;
+            ground.receiveShadow = true;
+            scene.add(ground);
+        }
+
+        function createPyramids() {
+            const pyramidMaterial = new THREE.MeshPhongMaterial({
+                color: 0xd4a574,
+                emissive: 0x1a1008,
+                shininess: 20,
+                flatShading: true
+            });
+            
+            const wireframeMaterial = new THREE.MeshBasicMaterial({
+                color: 0xffd66b,
+                wireframe: true,
+                transparent: true,
+                opacity: 0.25
+            });
+
+            ['khufu', 'khafre', 'menkaure'].forEach(name => {
+                const data = REAL_DIMENSIONS[name];
+                const baseRadius = data.base / 2;
+                const height = data.height;
+                
+                const geometry = new THREE.ConeGeometry(baseRadius, height, 4);
+                
+                const pyramid = new THREE.Mesh(geometry, pyramidMaterial.clone());
+                pyramid.position.set(data.x, height / 2, data.z);
+                pyramid.rotation.y = Math.PI / 4;
+                pyramid.castShadow = true;
+                pyramid.receiveShadow = true;
+                pyramid.userData = { 
+                    type: 'pyramid', 
+                    id: name,
+                    ...data
+                };
+                scene.add(pyramid);
+                
+                const wireframe = new THREE.Mesh(geometry, wireframeMaterial.clone());
+                wireframe.position.copy(pyramid.position);
+                wireframe.rotation.copy(pyramid.rotation);
+                wireframe.scale.set(1.005, 1.005, 1.005);
+                scene.add(wireframe);
+                
+                // Glow ring
+                const ringGeo = new THREE.RingGeometry(baseRadius * 1.1, baseRadius * 1.15, 4);
+                const ringMat = new THREE.MeshBasicMaterial({
+                    color: 0xffd66b,
+                    transparent: true,
+                    opacity: 0.1,
+                    side: THREE.DoubleSide
+                });
+                const ring = new THREE.Mesh(ringGeo, ringMat);
+                ring.position.set(data.x, 1, data.z);
+                ring.rotation.x = -Math.PI / 2;
+                ring.rotation.z = Math.PI / 4;
+                scene.add(ring);
+                
+                pyramids[name] = { main: pyramid, wireframe, ring, data };
+            });
+        }
+
+        function createOrionStars() {
+            // Create glowing stars above each pyramid
+            const starMaterial = new THREE.MeshBasicMaterial({
+                color: 0xaad4ff,
+                transparent: true,
+                opacity: 0.95
+            });
+            
+            ['khufu', 'khafre', 'menkaure'].forEach(name => {
+                const data = REAL_DIMENSIONS[name];
+                const starHeight = 600 + (data.height * 2); // Stars float high above
+                
+                // Star core
+                const starGeo = new THREE.SphereGeometry(8 + (3 - data.starMagnitude) * 3, 16, 16);
+                const star = new THREE.Mesh(starGeo, starMaterial.clone());
+                star.position.set(data.x, starHeight, data.z);
+                star.userData = {
+                    type: 'star',
+                    id: name,
+                    starName: data.star,
+                    starArabic: data.starArabic,
+                    magnitude: data.starMagnitude
+                };
+                scene.add(star);
+                
+                // Star glow
+                const glowGeo = new THREE.SphereGeometry(15 + (3 - data.starMagnitude) * 5, 16, 16);
+                const glowMat = new THREE.MeshBasicMaterial({
+                    color: 0xaad4ff,
+                    transparent: true,
+                    opacity: 0.2
+                });
+                const glow = new THREE.Mesh(glowGeo, glowMat);
+                glow.position.copy(star.position);
+                scene.add(glow);
+                
+                // Point light for the star
+                const starLight = new THREE.PointLight(0xaad4ff, 1, 400);
+                starLight.position.copy(star.position);
+                scene.add(starLight);
+                
+                orionStars[name] = { core: star, glow, light: starLight, originalY: starHeight };
+            });
+        }
+
+        function createStarPyramidConnections() {
+            // Create ethereal beams connecting stars to pyramids
+            ['khufu', 'khafre', 'menkaure'].forEach(name => {
+                const pyramid = pyramids[name];
+                const star = orionStars[name];
+                
+                if (!pyramid || !star) return;
+                
+                const points = [
+                    new THREE.Vector3(pyramid.data.x, pyramid.data.height, pyramid.data.z),
+                    new THREE.Vector3(star.core.position.x, star.core.position.y, star.core.position.z)
+                ];
+                
+                const geometry = new THREE.BufferGeometry().setFromPoints(points);
+                const material = new THREE.LineBasicMaterial({
+                    color: 0xaad4ff,
+                    transparent: true,
+                    opacity: 0.15,
+                    blending: THREE.AdditiveBlending
+                });
+                
+                const line = new THREE.Line(geometry, material);
+                scene.add(line);
+                
+                starConnections.push({ line, pyramidName: name });
+            });
+        }
+
+        function createSphinx() {
+            const data = REAL_DIMENSIONS.sphinx;
+            
+            const bodyGeo = new THREE.BoxGeometry(data.length, data.height * 0.6, data.width);
+            const headGeo = new THREE.SphereGeometry(data.height * 0.4, 16, 16);
+            
+            const sphinxMat = new THREE.MeshPhongMaterial({
+                color: 0xc4956a,
+                emissive: 0x0a0805,
+                shininess: 15
+            });
+            
+            const body = new THREE.Mesh(bodyGeo, sphinxMat);
+            body.position.set(data.x, data.height * 0.3, data.z);
+            body.castShadow = true;
+            body.userData = { type: 'sphinx', id: 'sphinx', ...data };
+            scene.add(body);
+            
+            const head = new THREE.Mesh(headGeo, sphinxMat);
+            head.position.set(data.x + data.length * 0.35, data.height * 0.7, data.z);
+            head.scale.y = 1.3;
+            scene.add(head);
+            
+            const sphinxGlow = new THREE.PointLight(0x00ffff, 0.8, 200);
+            sphinxGlow.position.set(data.x, data.height + 20, data.z);
+            scene.add(sphinxGlow);
+            
+            sphinxMesh = { body, head, glow: sphinxGlow };
+        }
+
+        function createLocationMarker() {
+            const data = REAL_DIMENSIONS.alarab;
+            
+            // Pulsing sphere
+            const markerGeo = new THREE.SphereGeometry(12, 16, 16);
+            const markerMat = new THREE.MeshBasicMaterial({
+                color: 0xff4757,
+                transparent: true,
+                opacity: 0.9
+            });
+            const marker = new THREE.Mesh(markerGeo, markerMat);
+            marker.position.set(data.x, 35, data.z);
+            marker.userData = { type: 'location', id: 'alarab', ...data };
+            scene.add(marker);
+            
+            // Stem
+            const stemGeo = new THREE.CylinderGeometry(2.5, 2.5, 40, 8);
+            const stemMat = new THREE.MeshBasicMaterial({ color: 0xff4757 });
+            const stem = new THREE.Mesh(stemGeo, stemMat);
+            stem.position.set(data.x, 15, data.z);
+            scene.add(stem);
+            
+            // Glow
+            const glow = new THREE.PointLight(0xff4757, 2, 250);
+            glow.position.copy(marker.position);
+            scene.add(glow);
+            
+            // Expanding rings
+            const rings = [];
+            for (let i = 0; i < 3; i++) {
+                const ringGeo = new THREE.RingGeometry(15, 18, 32);
+                const ringMat = new THREE.MeshBasicMaterial({
+                    color: 0xff4757,
+                    transparent: true,
+                    opacity: 0.3,
+                    side: THREE.DoubleSide
+                });
+                const ring = new THREE.Mesh(ringGeo, ringMat);
+                ring.position.set(data.x, 1, data.z);
+                ring.rotation.x = -Math.PI / 2;
+                ring.userData = { delay: i * 0.7 };
+                scene.add(ring);
+                rings.push(ring);
+            }
+            
+            locationMarker = { marker, stem, glow, rings };
+        }
+
+        function createParticles() {
+            const count = 800;
+            const positions = new Float32Array(count * 3);
+            const colors = new Float32Array(count * 3);
+            
+            const goldColor = new THREE.Color(0xffd66b);
+            const cyanColor = new THREE.Color(0x00ffff);
+            const blueColor = new THREE.Color(0xaad4ff);
+            
+            for (let i = 0; i < count; i++) {
+                const i3 = i * 3;
+                positions[i3] = (Math.random() - 0.5) * 2000;
+                positions[i3 + 1] = Math.random() * 500 + 30;
+                positions[i3 + 2] = (Math.random() - 0.5) * 2000;
+                
+                const r = Math.random();
+                let color;
+                if (r < 0.33) color = goldColor;
+                else if (r < 0.66) color = cyanColor;
+                else color = blueColor;
+                
+                colors[i3] = color.r;
+                colors[i3 + 1] = color.g;
+                colors[i3 + 2] = color.b;
+            }
+            
+            const geometry = new THREE.BufferGeometry();
+            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+            
+            const material = new THREE.PointsMaterial({
+                size: 2.5,
+                vertexColors: true,
+                transparent: true,
+                opacity: 0.6,
+                blending: THREE.AdditiveBlending
+            });
+            
+            particlesMesh = new THREE.Points(geometry, material);
+            scene.add(particlesMesh);
+        }
+
+        function setupLighting() {
+            const ambient = new THREE.AmbientLight(0x0a1020, 0.4);
+            scene.add(ambient);
+            
+            const moonLight = new THREE.DirectionalLight(0xccddff, 0.35);
+            moonLight.position.set(500, 600, 500);
+            moonLight.castShadow = true;
+            moonLight.shadow.mapSize.width = 2048;
+            moonLight.shadow.mapSize.height = 2048;
+            scene.add(moonLight);
+            
+            const goldLight = new THREE.PointLight(0xffd66b, 0.6, 1200);
+            goldLight.position.set(0, 200, 0);
+            scene.add(goldLight);
+            
+            const hemiLight = new THREE.HemisphereLight(0x0a1525, 0x1a1510, 0.3);
+            scene.add(hemiLight);
+        }
+
+        // ====== ENERGY PULSE (from your code) ======
+        function triggerEnergyPulse(position) {
+            // Create light pulse
+            const pulseLight = new THREE.PointLight(0x00ffff, 5, 300);
+            pulseLight.position.copy(position);
+            pulseLight.position.y += 20;
+            scene.add(pulseLight);
+            
+            // Create glowing sphere
+            const sphereGeo = new THREE.SphereGeometry(8, 16, 16);
+            const sphereMat = new THREE.MeshBasicMaterial({ 
+                color: 0xffffff, 
+                transparent: true, 
+                opacity: 1 
+            });
+            const pulseSphere = new THREE.Mesh(sphereGeo, sphereMat);
+            pulseSphere.position.copy(pulseLight.position);
+            scene.add(pulseSphere);
+            
+            energyPulses.push({ light: pulseLight, sphere: pulseSphere, life: 1.0 });
+        }
+
+        // ====== CONNECTION BEAM ======
+        function sendConnectionBeam(targetPosition) {
+            const sourcePos = locationMarker.marker.position.clone();
+            sourcePos.y = 50;
+            
+            const targetPos = targetPosition ? targetPosition.clone() : new THREE.Vector3(
+                (Math.random() - 0.5) * 1500,
+                50,
+                (Math.random() - 0.5) * 1500
+            );
+            
+            // Create beam
+            const curve = new THREE.QuadraticBezierCurve3(
+                sourcePos,
+                new THREE.Vector3(
+                    (sourcePos.x + targetPos.x) / 2,
+                    Math.max(sourcePos.y, targetPos.y) + 200,
+                    (sourcePos.z + targetPos.z) / 2
+                ),
+                targetPos
+            );
+            
+            const points = curve.getPoints(50);
+            const geometry = new THREE.BufferGeometry().setFromPoints(points);
+            const material = new THREE.LineBasicMaterial({
+                color: 0x00ff88,
+                transparent: true,
+                opacity: 0.8,
+                blending: THREE.AdditiveBlending
+            });
+            
+            const beam = new THREE.Line(geometry, material);
+            scene.add(beam);
+            
+            // Target marker
+            const targetMarkerGeo = new THREE.SphereGeometry(10, 16, 16);
+            const targetMarkerMat = new THREE.MeshBasicMaterial({
+                color: 0x00ff88,
+                transparent: true,
+                opacity: 0.8
+            });
+            const targetMarker = new THREE.Mesh(targetMarkerGeo, targetMarkerMat);
+            targetMarker.position.copy(targetPos);
+            scene.add(targetMarker);
+            
+            // Target glow
+            const targetGlow = new THREE.PointLight(0x00ff88, 2, 150);
+            targetGlow.position.copy(targetPos);
+            scene.add(targetGlow);
+            
+            connectionBeams.push({
+                beam,
+                targetMarker,
+                targetGlow,
+                life: 1.0,
+                progress: 0
+            });
+            
+            // Show notification
+            showBeamNotification();
+            
+            // Energy pulse at source
+            triggerEnergyPulse(sourcePos);
+        }
+
+        function showBeamNotification() {
+            const notification = document.getElementById('beamNotification');
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        function simulateVisitorConnection() {
+            // Simulate a new visitor connecting every 30-60 seconds
+            setInterval(() => {
+                if (Math.random() > 0.7) {
+                    sendConnectionBeam();
+                }
+            }, 30000);
+        }
+
+        // ====== EVENT LISTENERS ======
+        function setupEventListeners() {
+            const canvas = renderer.domElement;
+            
+            canvas.addEventListener('mousedown', (e) => {
+                isMouseDown = true;
+                prevMouseX = e.clientX;
+                prevMouseY = e.clientY;
+                recordActivity('click');
+            });
+            
+            canvas.addEventListener('mouseup', () => isMouseDown = false);
+            canvas.addEventListener('mouseleave', () => isMouseDown = false);
+            
+            canvas.addEventListener('mousemove', (e) => {
+                mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+                mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+                
+                recordActivity('move');
+                
+                if (isMouseDown) {
+                    const deltaX = e.clientX - prevMouseX;
+                    const deltaY = e.clientY - prevMouseY;
+                    
+                    cameraAngleX += deltaX * 0.005;
+                    cameraAngleY = Math.max(0.1, Math.min(1.4, cameraAngleY - deltaY * 0.005));
+                    
+                    prevMouseX = e.clientX;
+                    prevMouseY = e.clientY;
+                }
+                
+                checkHover(e);
+            });
+            
+            canvas.addEventListener('wheel', (e) => {
+                e.preventDefault();
+                cameraDistance = Math.max(300, Math.min(2500, cameraDistance + e.deltaY * 0.8));
+                recordActivity('scroll');
+            }, { passive: false });
+            
+            canvas.addEventListener('click', (e) => {
+                // Trigger energy pulse on click
+                raycaster.setFromCamera(mouse, camera);
+                const intersects = raycaster.intersectObjects(scene.children, true);
+                
+                if (intersects.length > 0) {
+                    triggerEnergyPulse(intersects[0].point);
+                } else {
+                    const pos = new THREE.Vector3();
+                    raycaster.ray.at(500, pos);
+                    triggerEnergyPulse(pos);
+                }
+            });
+            
+            // Touch
+            canvas.addEventListener('touchstart', (e) => {
+                if (e.touches.length === 1) {
+                    isMouseDown = true;
+                    prevMouseX = e.touches[0].clientX;
+                    prevMouseY = e.touches[0].clientY;
+                    recordActivity('touch');
+                }
+            });
+            
+            canvas.addEventListener('touchend', () => isMouseDown = false);
+            
+            canvas.addEventListener('touchmove', (e) => {
+                recordActivity('touch');
+                if (e.touches.length === 1 && isMouseDown) {
+                    const deltaX = e.touches[0].clientX - prevMouseX;
+                    const deltaY = e.touches[0].clientY - prevMouseY;
+                    
+                    cameraAngleX += deltaX * 0.005;
+                    cameraAngleY = Math.max(0.1, Math.min(1.4, cameraAngleY - deltaY * 0.005));
+                    
+                    prevMouseX = e.touches[0].clientX;
+                    prevMouseY = e.touches[0].clientY;
+                }
+            });
+            
+            // Controls
+            document.getElementById('zoomIn').addEventListener('click', () => {
+                cameraDistance = Math.max(300, cameraDistance - 150);
+                recordActivity('click');
+            });
+            
+            document.getElementById('zoomOut').addEventListener('click', () => {
+                cameraDistance = Math.min(2500, cameraDistance + 150);
+                recordActivity('click');
+            });
+            
+            document.getElementById('rotate').addEventListener('click', (e) => {
+                autoRotate = !autoRotate;
+                e.currentTarget.classList.toggle('active', autoRotate);
+                recordActivity('click');
+            });
+            
+            document.getElementById('sendBeam').addEventListener('click', () => {
+                sendConnectionBeam();
+                recordActivity('click');
+            });
+            
+            document.getElementById('reset').addEventListener('click', () => {
+                cameraAngleX = -0.3;
+                cameraAngleY = 0.4;
+                cameraDistance = 900;
+                autoRotate = false;
+                document.getElementById('rotate').classList.remove('active');
+                recordActivity('click');
+            });
+            
+            // Location panel
+            document.querySelectorAll('.location-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    const target = item.dataset.target;
+                    const data = REAL_DIMENSIONS[target];
+                    if (data) {
+                        cameraAngleX = Math.atan2(data.z, data.x) + Math.PI;
+                        cameraDistance = 500;
+                        recordActivity('click');
+                    }
+                });
+            });
+            
+            // Keyboard
+            document.addEventListener('keydown', (e) => {
+                if (e.code === 'Space') {
+                    sendConnectionBeam();
+                }
+                recordActivity('key');
+            });
+            
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        }
+
+        function checkHover(event) {
+            raycaster.setFromCamera(mouse, camera);
+            
+            const interactiveObjects = [];
+            Object.values(pyramids).forEach(p => interactiveObjects.push(p.main));
+            Object.values(orionStars).forEach(s => interactiveObjects.push(s.core));
+            if (sphinxMesh) interactiveObjects.push(sphinxMesh.body);
+            if (locationMarker) interactiveObjects.push(locationMarker.marker);
+            
+            const intersects = raycaster.intersectObjects(interactiveObjects);
+            const tooltip = document.getElementById('tooltip');
+            
+            if (intersects.length > 0) {
+                const obj = intersects[0].object;
+                const data = obj.userData;
+                
+                if (data && (data.name || data.starName)) {
+                    hoveredObject = obj;
+                    
+                    if (data.type === 'star') {
+                        tooltip.querySelector('h3').textContent = `⭐ ${data.starName} (${data.starArabic})`;
+                        tooltip.querySelector('.dims').textContent = `Magnitude: ${data.magnitude}`;
+                        tooltip.querySelector('p').textContent = 'جزء من حزام أوريون';
+                    } else {
+                        tooltip.querySelector('h3').textContent = data.name || data.nameEn;
+                        let dims = '';
+                        if (data.height && data.base) {
+                            dims = `الارتفاع: ${data.height}م | القاعدة: ${data.base}م`;
+                        } else if (data.length && data.height) {
+                            dims = `الطول: ${data.length}م | الارتفاع: ${data.height}م`;
+                        }
+                        tooltip.querySelector('.dims').textContent = dims;
+                        tooltip.querySelector('p').textContent = data.desc || '';
+                    }
+                    
+                    tooltip.style.left = (event.clientX + 15) + 'px';
+                    tooltip.style.top = (event.clientY - 15) + 'px';
+                    tooltip.classList.add('visible');
+                    document.body.style.cursor = 'pointer';
+                }
+            } else {
+                hoveredObject = null;
+                tooltip.classList.remove('visible');
+                document.body.style.cursor = 'default';
+            }
+        }
+
+        // ====== HEARTBEAT ======
+        function recordActivity(type) {
+            const now = Date.now();
+            let boost = 0;
+            switch(type) {
+                case 'move': boost = 0.3; break;
+                case 'click': boost = 5; break;
+                case 'scroll': boost = 2; break;
+                case 'touch': boost = 2; break;
+                case 'key': boost = 4; break;
+            }
+            if (now - lastActivityTime < 100) boost *= 1.5;
+            userActivity = Math.min(100, userActivity + boost);
+            lastActivityTime = now;
+        }
+
+        function startHeartbeat() {
+            setInterval(() => {
+                heartbeatBPM = Math.round(60 + (userActivity * 0.6));
+                triggerHeartbeat();
+                userActivity = Math.max(0, userActivity - 2);
+            }, 60000 / heartbeatBPM);
+        }
+
+        function triggerHeartbeat() {
+            const overlay = document.getElementById('pulse-overlay');
+            
+            targetScale = 1.006 + (userActivity * 0.00015);
+            setTimeout(() => { targetScale = 1; }, 100);
+            setTimeout(() => { targetScale = 1.004 + (userActivity * 0.0001); }, 200);
+            setTimeout(() => { targetScale = 1; }, 300);
+            
+            overlay.style.opacity = 0.2 + (userActivity * 0.002);
+            setTimeout(() => { overlay.style.opacity = 0; }, 300);
+        }
+
+        // ====== ANIMATION ======
+        function animate() {
+            requestAnimationFrame(animate);
+            render();
+        }
+
+        function render() {
+            const time = clock.getElapsedTime();
+            const delta = clock.getDelta();
+            
+            // Heartbeat scale
+            currentScale += (targetScale - currentScale) * 0.15;
+            document.documentElement.style.setProperty('--heartbeat-scale', currentScale);
+            
+            // Camera
+            if (autoRotate) cameraAngleX += 0.002;
+            
+            camera.position.x = Math.sin(cameraAngleX) * cameraDistance;
+            camera.position.z = Math.cos(cameraAngleX) * cameraDistance;
+            camera.position.y = cameraAngleY * cameraDistance;
+            camera.lookAt(0, 80, 0);
+            
+            // Compass
+            const compassAngle = -cameraAngleX * (180 / Math.PI);
+            document.getElementById('compassNeedle').style.transform = `rotate(${compassAngle}deg)`;
+            
+            // Rotate stars (simulating Earth rotation)
+            starRotationAngle += STAR_ROTATION_SPEED;
+            if (backgroundStars) {
+                backgroundStars.rotation.y = starRotationAngle;
+            }
+            
+            // Animate Orion stars
+            Object.values(orionStars).forEach((star, i) => {
+                // Orbital movement (subtle)
+                const orbitOffset = Math.sin(time * 0.1 + i) * 5;
+                star.core.position.y = star.originalY + orbitOffset;
+                star.glow.position.y = star.originalY + orbitOffset;
+                star.light.position.y = star.originalY + orbitOffset;
+                
+                // Twinkle
+                const twinkle = 0.8 + Math.sin(time * 3 + i * 2) * 0.2;
+                star.core.material.opacity = twinkle;
+                star.light.intensity = 0.8 + Math.sin(time * 3 + i * 2) * 0.4;
+            });
+            
+            // Update star-pyramid connections
+            starConnections.forEach(conn => {
+                const pyramid = pyramids[conn.pyramidName];
+                const star = orionStars[conn.pyramidName];
+                
+                if (pyramid && star) {
+                    const positions = conn.line.geometry.attributes.position.array;
+                    positions[4] = star.core.position.y;
+                    conn.line.geometry.attributes.position.needsUpdate = true;
+                    
+                    // Pulse opacity
+                    conn.line.material.opacity = 0.1 + Math.sin(time + conn.pyramidName.length) * 0.05;
+                }
+            });
+            
+            // Particles
+            particlesMesh.rotation.y = time * 0.01;
+            
+            // Location marker
+            if (locationMarker) {
+                const pulseScale = 1 + Math.sin(time * 3) * 0.2;
+                locationMarker.marker.scale.setScalar(pulseScale);
+                locationMarker.glow.intensity = 1.5 + Math.sin(time * 3) * 0.5;
+                
+                // Expanding rings
+                locationMarker.rings.forEach((ring, i) => {
+                    const t = ((time + ring.userData.delay) % 2) / 2;
+                    ring.scale.setScalar(1 + t * 2);
+                    ring.material.opacity = 0.3 * (1 - t);
+                });
+            }
+            
+            // Pyramid animations
+            Object.values(pyramids).forEach((p, i) => {
+                if (p.wireframe) {
+                    p.wireframe.material.opacity = 0.2 + Math.sin(time + i) * 0.05;
+                }
+                if (p.ring) {
+                    p.ring.rotation.z = time * 0.03;
+                }
+            });
+            
+            // Energy pulses
+            for (let i = energyPulses.length - 1; i >= 0; i--) {
+                const pulse = energyPulses[i];
+                pulse.life -= delta * 2;
+                
+                if (pulse.life <= 0) {
+                    scene.remove(pulse.light);
+                    scene.remove(pulse.sphere);
+                    energyPulses.splice(i, 1);
+                } else {
+                    pulse.light.intensity = pulse.life * 5;
+                    pulse.sphere.material.opacity = pulse.life;
+                    const s = 3 - pulse.life * 2;
+                    pulse.sphere.scale.set(s, s, s);
+                }
+            }
+            
+            // Connection beams
+            for (let i = connectionBeams.length - 1; i >= 0; i--) {
+                const conn = connectionBeams[i];
+                conn.life -= delta * 0.3;
+                
+                if (conn.life <= 0) {
+                    scene.remove(conn.beam);
+                    scene.remove(conn.targetMarker);
+                    scene.remove(conn.targetGlow);
+                    connectionBeams.splice(i, 1);
+                } else {
+                    conn.beam.material.opacity = conn.life * 0.8;
+                    conn.targetMarker.material.opacity = conn.life * 0.8;
+                    conn.targetGlow.intensity = conn.life * 2;
+                    conn.targetMarker.scale.setScalar(1 + Math.sin(time * 5) * 0.2);
+                }
+            }
+            
+            // Hover effect
+            if (hoveredObject) {
+                hoveredObject.scale.setScalar(1.02 + Math.sin(time * 5) * 0.01);
+            }
+            
+            renderer.render(scene, camera);
+        }
+    </script>
+</body>
+</html>
