@@ -119,7 +119,7 @@
         const GEMINI_MODEL = "gemini-2.5-flash";
         // *** هام: ضع Voice ID لصوتك المستنسخ هنا ***
         // Voice ID هو ما سيعطي العرّاب صوتك أنت!
-        const ARRAAB_CUSTOM_VOICE_ID = "Custom_Arraab_Voice_ID"; // يجب استبداله بالـ ID الفعلي من ElevenLabs
+        const AlArab_CUSTOM_VOICE_ID = "Custom_AlArab_Voice_ID"; // يجب استبداله بالـ ID الفعلي من ElevenLabs
         
         // =================================================================
         
@@ -133,12 +133,12 @@
         // ====================== HISTORY MANAGEMENT (الذاكرة) ======================
         
         function saveHistory() {
-            localStorage.setItem('arraab_chat_history', JSON.stringify(chatHistory));
+            localStorage.setItem('AlArab_chat_history', JSON.stringify(chatHistory));
             alert('تم حفظ ذاكرة العرّاب بنجاح في جهازك.');
         }
 
         function loadHistory() {
-            const savedHistory = localStorage.getItem('arraab_chat_history');
+            const savedHistory = localStorage.getItem('AlArab_chat_history');
             if (savedHistory) {
                 try {
                     const loadedHistory = JSON.parse(savedHistory);
@@ -160,7 +160,7 @@
                     
                 } catch (e) {
                     console.error("Failed to load or parse history:", e);
-                    localStorage.removeItem('arraab_chat_history'); // مسح التخزين الفاسد
+                    localStorage.removeItem('AlArab_chat_history'); // مسح التخزين الفاسد
                     clearChat(false); 
                 }
             } else {
@@ -171,7 +171,7 @@
         function clearChat(showPrompt = true) {
             chatLog.innerHTML = '';
             chatHistory = [];
-            localStorage.removeItem('arraab_chat_history');
+            localStorage.removeItem('AlArab_chat_history');
             if (showPrompt) {
                 renderMessage('ai', 'العرّاب جاهز لاستقبال نبوءاتك. ما الذي أتى بك إلى أرض العرّاب لتتكلم؟ 𓂀');
                 speakText('العرّاب جاهز لاستقبال نبوءاتك. ما الذي أتى بك إلى أرض العرّاب لتتكلم؟');
@@ -188,9 +188,9 @@
         }
 
         async function speakText(text) {
-            if (!isTTSActive || !ELEVENLABS_API_KEY || ARRAAB_CUSTOM_VOICE_ID === "Custom_Arraab_Voice_ID") {
-                if (ARRAAB_CUSTOM_VOICE_ID === "Custom_Arraab_Voice_ID") {
-                    console.warn("TTS Disabled: Please update ARRAAB_CUSTOM_VOICE_ID with your custom voice ID.");
+            if (!isTTSActive || !ELEVENLABS_API_KEY || AlArab_CUSTOM_VOICE_ID === "Custom_AlArab_Voice_ID") {
+                if (AlArab_CUSTOM_VOICE_ID === "Custom_AlArab_Voice_ID") {
+                    console.warn("TTS Disabled: Please update AlArab_CUSTOM_VOICE_ID with your custom voice ID.");
                 }
                 return;
             }
@@ -205,7 +205,7 @@
                 "model_id": "eleven_multilingual_v2", 
                 "voice_settings": { "stability": 0.5, "similarity_boost": 0.5 }
             };
-            const url = `https://api.elevenlabs.io/v1/text-to-speech/${ARRAAB_CUSTOM_VOICE_ID}`;
+            const url = `https://api.elevenlabs.io/v1/text-to-speech/${AlArab_CUSTOM_VOICE_ID}`;
             
             try {
                 const response = await fetch(url, { method: 'POST', headers: headers, body: JSON.stringify(data) });
@@ -324,7 +324,7 @@
 
         window.onload = () => {
              // سؤال الذاكرة
-             const hasHistory = localStorage.getItem('arraab_chat_history');
+             const hasHistory = localStorage.getItem('AlArab_chat_history');
              if (hasHistory) {
                  const confirmLoad = confirm("العرّاب لديه ذاكرة محفوظة. هل تريد استئناف المحادثة؟ (نعم/لا)");
                  if (confirmLoad) {
