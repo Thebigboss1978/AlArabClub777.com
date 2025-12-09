@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Al Arab Club 777 Portal — Gateway to Ancient Wonders</title>
+<meta name="description" content="Book luxury hotel rooms, desert adventures, and complete Egypt tours from airport to pyramids. Interactive booking portal for Al Arab Club 777 Pyramids View Hotels." />
+<link rel=xa"icon" type="image/x-icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
+<link rel="apple-touch-icon" sizes="192x192" href="/favicon-192.png">
+<style>
+  :root{
+    --bg:#05060a; --gold:#ffd66b; --muted:#9aa3b2; --accent:#4aa3ff;
+    --pyramid-gold: #d4af37; --desert-sand: #f4e4a6; --night-blue: #1a1d3a;
+  }
+  html,body{height:100%;margin:0;font-family: "Trebuchet MS", "Arial", sans-serif;background:var(--bg);color:var(--gold);overflow-x:hidden;scroll-behavior:smooth}
+
+/* === LAYERED BACKGROUNDS === */
+  .cosmic-bg{position:fixed;inset:0;z-index:0;background:
+    radial-gradient(ellipse 1400px 700px at 15% 25%, rgba(212,175,55,.08), transparent 50%),
+    radial-gradient(ellipse 1200px 600px at 85% 75%, rgba(26,29,58,.12), transparent 50%),
+    linear-gradient(145deg, rgba(5,6,10,.95), rgba(10,12,20,.98));
+  }
+  .stars{position:fixed;inset:0;z-index:1;pointer-events:none;
+    background-image: 
+      radial-gradient(2px 2px at 20% 30%, rgba(255,214,107,0.8), transparent),
+      radial-gradient(2px 2px at 40% 70%, rgba(255,255,255,0.6), transparent),
+      radial-gradient(1px 1px at 90% 40%, rgba(255,214,107,0.9), transparent),
+      radial-gradient(1px 1px at 60% 90%, rgba(255,255,255,0.7), transparent);
+    background-size: 550px 550px, 350px 350px, 250px 250px, 450px 450px;
+    animation: twinkleStars 20s linear infinite;
+  }
+  @keyframes twinkleStars{0%{opacity:.7;transform:rotate(0deg)}50%{opacity:1;transform:rotate(180deg)}100%{opacity:.7;transform:rotate(360deg)}}
+
+  .particle-layer{position:fixed;inset:0;z-index:2;pointer-events:none;}
+
+/* === MAIN CANVAS === */
+  canvas#mainCanvas{position:fixed;inset:0;z-index:3;display:block;}
+
+/* === UI OVERLAY === */
+  .ui-overlay{position:fixed;inset:0;z-index:10;pointer-events:none;display:flex;flex-direction:column;}
+
+/* === HEADER === */
+  .main-header{pointer-events:auto;padding:20px;text-align:center;background:rgba(0,0,0,0.4);backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,214,107,0.1);}
+  .main-header h1{margin:0;font-size:clamp(1.8rem, 4vw, 3.2rem);color:var(--gold);text-shadow:0 0 20px rgba(255,214,107,0.6);letter-spacing:2px;}
+  .main-header .subtitle{margin:10px 0;color:var(--muted);font-size:clamp(0.9rem, 2vw, 1.2rem);opacity:0.9;}
+
+/* === NAVIGATION MENU === */
+  .nav-menu{pointer-events:auto;position:fixed;top:20px;right:20px;z-index:15;display:flex;gap:15px;flex-wrap:wrap;}
+  .nav-btn{padding:12px 20px;background:rgba(255,214,107,0.1);color:var(--gold);border:1px solid rgba(255,214,107,0.3);border-radius:25px;text-decoration:none;font-weight:600;backdrop-filter:blur(10px);transition:all 0.3s ease;font-size:14px;}
+  .nav-btn:hover{background:rgba(255,214,107,0.2);border-color:rgba(255,214,107,0.6);transform:translateY(-2px);box-shadow:0 5px 15px rgba(255,214,107,0.3);}
+
+/* === PORTAL ORB === */
+  .portal-orb{pointer-events:auto;position:fixed;top:50%;left:50%;transform:translate(-50%, -50%);z-index:12;width:120px;height:120px;border-radius:50%;background:
+    linear-gradient(145deg, rgba(212,175,55,0.1), rgba(255,214,107,0.3)),
+    radial-gradient(circle at 30% 30%, rgba(255,255,255,0.2), transparent 50%);
+  border:2px solid rgba(255,214,107,0.4);box-shadow:
+    0 0 40px rgba(255,214,107,0.4),
+    inset 0 0 20px rgba(255,214,107,0.1);
+  cursor:pointer;transition:all 0.3s ease;display:grid;place-items:center;}
+  .portal-orb:hover{transform:translate(-50%, -50%) scale(1.1);box-shadow:0 0 60px rgba(255,214,107,0.6);}
+  .portal-orb.active{animation:orbPulse 2s infinite ease-in-out;}
+  @keyframes orbPulse{0%{transform:translate(-50%, -50%) scale(1)}50%{transform:translate(-50%, -50%) scale(1.15)}100%{transform:translate(-50%, -50%) scale(1)}}
+  .portal-orb .inner{width:80px;height:80px;border-radius:50%;background:radial-gradient(circle, rgba(255,214,107,0.3), rgba(212,175,55,0.1));display:grid;place-items:center;font-size:24px;}
+
+/* === SERVICE PANELS === */
+  .service-panels{pointer-events:auto;position:fixed;bottom:0;left:0;right:0;z-index:11;transform:translateY(100%);transition:transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);background:linear-gradient(180deg, transparent, rgba(0,0,0,0.9));padding:40px 20px 20px;}
+  .service-panels.visible{transform:translateY(0);}
+  .services-grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:20px;max-width:1400px;margin:0 auto;}
+
+  .service-card{background:linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));border:1px solid rgba(255,214,107,0.2);border-radius:16px;padding:24px;backdrop-filter:blur(15px);transition:all 0.3s ease;position:relative;overflow:hidden;}
+  .service-card:hover{transform:translateY(-5px);border-color:rgba(255,214,107,0.5);box-shadow:0 10px 30px rgba(255,214,107,0.2);}
+  .service-card::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:linear-gradient(45deg, transparent, rgba(255,214,107,0.05), transparent);transform:rotate(45deg);transition:all 0.5s ease;opacity:0;}
+  .service-card:hover::before{opacity:1;animation:shimmer 2s ease-in-out infinite;}
+  @keyframes shimmer{0%{transform:translateX(-100%) translateY(-100%) rotate(45deg)}100%{transform:translateX(100%) translateY(100%) rotate(45deg)}}
+
+  .service-card h3{margin:0 0 12px;color:var(--gold);font-size:1.3rem;font-weight:700;}
+  .service-card .price{color:var(--accent);font-weight:800;font-size:1.1rem;margin:10px 0;}
+  .service-card p{color:var(--muted);margin:0 0 15px;line-height:1.6;}
+  .service-card .features{list-style:none;padding:0;margin:15px 0;color:var(--muted);font-size:0.9rem;}
+  .service-card .features li{margin:5px 0;padding-left:15px;position:relative;}
+  .service-card .features li::before{content:'✦';position:absolute;left:0;color:var(--gold);}
+
+  .book-btn{display:block;width:100%;padding:14px;background:linear-gradient(90deg, var(--gold), #ffb84d);color:#000;text-decoration:none;border-radius:10px;font-weight:700;text-align:center;margin-top:15px;border:none;cursor:pointer;transition:all 0.3s ease;font-size:16px;}
+  .book-btn:hover{background:linear-gradient(90deg, #ffb84d, var(--gold));transform:translateY(-2px);box-shadow:0 5px 15px rgba(255,214,107,0.4);}
+
+/* === BOOKING MODAL === */
+  .booking-modal{position:fixed;inset:0;z-index:20;background:rgba(0,0,0,0.8);display:none;align-items:center;justify-content:center;backdrop-filter:blur(10px);}
+  .booking-modal.visible{display:flex;}
+  .modal-content{background:linear-gradient(145deg, rgba(26,29,58,0.95), rgba(5,6,10,0.95));border:1px solid rgba(255,214,107,0.3);border-radius:20px;padding:40px;max-width:500px;width:90vw;max-height:80vh;overflow-y:auto;position:relative;}
+  .modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:30px;}
+  .modal-header h2{margin:0;color:var(--gold);font-size:1.8rem;}
+  .close-modal{background:none;border:none;color:var(--gold);font-size:24px;cursor:pointer;padding:5px;}
+
+  .booking-form{display:flex;flex-direction:column;gap:20px;}
+  .form-group{display:flex;flex-direction:column;gap:8px;}
+  .form-group label{color:var(--gold);font-weight:600;}
+  .form-group input, .form-group select, .form-group textarea{padding:12px;border:1px solid rgba(255,214,107,0.3);border-radius:8px;background:rgba(255,255,255,0.05);color:white;font-family:inherit;}
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus{outline:none;border-color:var(--gold);box-shadow:0 0 10px rgba(255,214,107,0.3);}
+
+  .qr-section{text-align:center;margin-top:30px;padding:20px;background:rgba(255,255,255,0.05);border-radius:12px;display:none;}
+  .qr-section.visible{display:block;}
+  .qr-code{width:200px;height:200px;margin:20px auto;background:white;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:12px;color:#000;}
+
+/* === CHAT SYSTEM === */
+  .chat-toggle{position:fixed;bottom:30px;right:30px;z-index:15;width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg, var(--gold), #ffb84d);display:grid;place-items:center;cursor:pointer;box-shadow:0 5px 20px rgba(255,214,107,0.4);border:2px solid rgba(255,255,255,0.1);font-size:24px;color:#000;}
+  .chat-toggle:hover{transform:scale(1.1);box-shadow:0 8px 30px rgba(255,214,107,0.6);}
+
+  .chat-window{position:fixed;bottom:100px;right:30px;width:360px;max-width:90vw;height:500px;background:rgba(5,6,10,0.98);border:1px solid rgba(255,214,107,0.3);border-radius:16px;display:none;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,0.8);backdrop-filter:blur(20px);}
+  .chat-window.visible{display:flex;}
+  .chat-header{padding:20px;border-bottom:1px solid rgba(255,214,107,0.2);color:var(--gold);font-weight:700;text-align:center;}
+  .chat-body{flex:1;padding:20px;overflow-y:auto;display:flex;flex-direction:column;gap:15px;}
+  .chat-input-area{padding:20px;border-top:1px solid rgba(255,214,107,0.2);display:flex;gap:10px;}
+  .chat-input{flex:1;padding:12px;border:1px solid rgba(255,214,107,0.3);border-radius:8px;background:rgba(255,255,255,0.05);color:white;}
+  .chat-send{padding:12px 20px;background:var(--gold);color:#000;border:none;border-radius:8px;font-weight:700;cursor:pointer;}
+
+  .message{max-width:80%;padding:12px 16px;border-radius:12px;font-size:14px;line-height:1.4;}
+  .message.agent{background:rgba(255,214,107,0.1);color:var(--gold);align-self:flex-start;}
+  .message.user{background:rgba(255,255,255,0.1);color:white;align-self:flex-end;}
+
+/* === RESPONSIVE === */
+  @media (max-width: 768px) {
+    .services-grid{grid-template-columns:1fr;}
+    .nav-menu{position:static;justify-content:center;margin-top:20px;}
+    .portal-orb{width:100px;height:100px;}
+    .portal-orb .inner{width:70px;height:70px;font-size:20px;}
+    .main-header{padding:15px;}
+    .service-panels{padding:30px 15px 15px;}
+  }
+
+/* === MOUSE TRAIL === */
+  .mouse-trail{position:fixed;width:8px;height:8px;border-radius:50%;background:radial-gradient(circle, var(--gold), transparent);pointer-events:none;z-index:8;opacity:0.7;transition:opacity 0.3s ease;}
+
+/* === LOADING SCREEN === */
+  .loading-screen{position:fixed;inset:0;z-index:100;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity 0.5s ease;}
+  .loading-screen.hidden{opacity:0;pointer-events:none;}
+  .loading-pyramid{width:80px;height:80px;border:2px solid rgba(255,214,107,0.3);border-top:2px solid var(--gold);border-radius:50%;animation:loadingSpin 1s linear infinite;}
+  @keyframes loadingSpin{100%{transform:rotate(360deg)}}
+  .loading-text{margin-top:30px;color:var(--gold);font-size:1.2rem;opacity:0.8;}
+</style>
+</head>
+<body>
+
+<!-- Loading Screen -->
+<div class="loading-screen" id="loadingScreen">
+  <div class="loading-pyramid"></div>
+  <div class="loading-text">Opening the Portal...</div>
+</div>
+
+<!-- Background Layers -->
+<div class="cosmic-bg"></div>
+<div class="stars"></div>
+<div class="particle-layer"></div>
+
+<!-- Main Canvas for Interactive Effects -->
+<canvas id="mainCanvas"></canvas>
+
+<!-- UI Overlay -->
+<div class="ui-overlay">
+  <!-- Header -->
+  <header class="main-header">
+    <h1>Al Arab Club 777 Portal</h1>
+    <p class="subtitle">Gateway to Ancient Wonders • فندق سيتي بلازا</p>
+    
+    <!-- Navigation -->
+    <nav class="nav-menu">
+      <a href="#rooms" class="nav-btn">Hotel Rooms</a>
+      <a href="#tours" class="nav-btn">Desert Tours</a>
+      <a href="#packages" class="nav-btn">Full Packages</a>
+      <a href="#contact" class="nav-btn">Contact</a>
+    </nav>
+  </header>
+</div>
+
+<!-- Portal Orb -->
+<div class="portal-orb active" id="portalOrb">
+  <div class="inner">🔮</div>
+</div>
+
+<!-- Service Panels -->
+<div class="service-panels" id="servicePanels">
+  <div class="services-grid">
+    <!-- Hotel Rooms -->
+    <div class="service-card" data-service="rooms">
+      <h3>🏨 Luxury Hotel Rooms</h3>
+      <div class="price">$60 - $120 / night</div>
+      <p>Experience luxury with pyramid views in the heart of Giza</p>
+      <ul class="features">
+        <li>Standard Room - Modern comfort ($60/night)</li>
+        <li>Deluxe Room - Spacious family suite ($85/night)</li>
+        <li>Balcony Suite - Pyramid views ($120/night)</li>
+        <li>Free WiFi & Breakfast</li>
+        <li>Airport Transfer Available</li>
+      </ul>
+      <button class="book-btn" onclick="openBooking('rooms')">Book Hotel Stay</button>
+    </div>
+
+    <!-- Desert Tours -->
+    <div class="service-card" data-service="tours">
+      <h3>🐪 Desert Adventures</h3>
+      <div class="price">$20 - $75 per tour</div>
+      <p>Authentic desert experiences with professional guides</p>
+      <ul class="features">
+        <li>Camel Ride - Pharaohs' Journey ($20-35)</li>
+        <li>Horse Ride - Desert Knight ($25-40)</li>
+        <li>Buggy Safari - Modern Chariot ($50-75)</li>
+        <li>Sunset & Sunrise Options</li>
+        <li>Professional Photography</li>
+      </ul>
+      <button class="book-btn" onclick="openBooking('tours')">Book Adventure</button>
+    </div>
+
+    <!-- Airport Packages -->
+    <div class="service-card" data-service="packages">
+      <h3>✈️ Complete Packages</h3>
+      <div class="price">$1500 Full Experience</div>
+      <p>From airport to pyramids - complete tourism package</p>
+      <ul class="features">
+        <li>3 Nights Hotel Accommodation</li>
+        <li>All Desert Tours Included</li>
+        <li>Airport Pickup & Dropoff</li>
+        <li>Professional Tour Guide</li>
+        <li>Meals & Transportation</li>
+      </ul>
+      <button class="book-btn" onclick="openBooking('packages')">Book Complete Package</button>
+    </div>
+
+    <!-- AlArab Club Services -->
+    <div class="service-card" data-service="alarab">
+      <h3>👑 AlArab Club 777</h3>
+      <div class="price">Premium Partnership</div>
+      <p>Exclusive services through our premium partner</p>
+      <ul class="features">
+        <li>VIP Treatment & Concierge</li>
+        <li>Exclusive Discounts</li>
+        <li>Private Tour Options</li>
+        <li>Luxury Transportation</li>
+        <li>24/7 Support Service</li>
+      </ul>
+      <button class="book-btn" onclick="window.open('https://alarabclub777ai.vercel.app/', '_blank')">Visit AlArab Portal</button>
+    </div>
+  </div>
+</div>
+
+<!-- Booking Modal -->
+<div class="booking-modal" id="bookingModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2 id="modalTitle">Complete Your Booking</h2>
+      <button class="close-modal" onclick="closeBooking()">&times;</button>
+    </div>
+    
+    <form class="booking-form" id="bookingForm">
+      <div class="form-group">
+        <label for="customerName">Full Name *</label>
+        <input type="text" id="customerName" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="customerEmail">Email *</label>
+        <input type="email" id="customerEmail" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="customerPhone">WhatsApp Number *</label>
+        <input type="tel" id="customerPhone" placeholder="+20 100 XXX XXXX" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="checkIn">Check-in Date</label>
+        <input type="date" id="checkIn">
+      </div>
+      
+      <div class="form-group">
+        <label for="guests">Number of Guests</label>
+        <select id="guests">
+          <option value="1">1 Guest</option>
+          <option value="2">2 Guests</option>
+          <option value="3">3 Guests</option>
+          <option value="4">4 Guests</option>
+          <option value="5+">5+ Guests</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label for="specialRequests">Special Requests</label>
+        <textarea id="specialRequests" rows="3" placeholder="Any special requests or questions..."></textarea>
+      </div>
+      
+      <button type="submit" class="book-btn">Complete Booking via WhatsApp</button>
+    </form>
+    
+    <div class="qr-section" id="qrSection">
+      <h3>Scan to Complete Booking</h3>
+      <div class="qr-code" id="qrCode">QR Code will appear here</div>
+      <p>Scan with your phone to continue booking via WhatsApp</p>
+    </div>
+  </div>
+</div>
+
+<!-- Chat System -->
+<div class="chat-toggle" id="chatToggle" onclick="toggleChat()">💬</div>
+<div class="chat-window" id="chatWindow">
+  <div class="chat-header">Al Arab Club 777 Assistant</div>
+  <div class="chat-body" id="chatBody">
+    <div class="message agent">Welcome! I'm here to help you book the perfect Egyptian adventure. What interests you most?</div>
+  </div>
+  <div class="chat-input-area">
+    <input type="text" class="chat-input" id="chatInput" placeholder="Ask about rooms, tours, or packages...">
+    <button class="chat-send" onclick="sendMessage()">Send</button>
+  </div>
+</div>
+
+<!-- Mouse Trail Elements -->
+<div class="mouse-trail" id="mouseTrail"></div>
+
+<script>
+// === CANVAS INTERACTIVE EFFECTS ===
+(function() {
+  const canvas = document.getElementById('mainCanvas');
+  const ctx = canvas.getContext('2d');
+  let particles = [];
+  let pyramidParticles = [];
+  let mouse = { x: 0, y: 0 };
+  
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    initParticles();
+  }
+  
+  function initParticles() {
+    particles = [];
+    pyramidParticles = [];
+    
+    // Background particles
+    for (let i = 0; i < 100; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        vx: (Math.random() - 0.5) * 0.5,
+        vy: (Math.random() - 0.5) * 0.5,
+        opacity: Math.random() * 0.5 + 0.2,
+        size: Math.random() * 2 + 1
+      });
+    }
+    
+    // Pyramid formation particles
+    const centerX = canvas.width / 2;
+    const centerY = canvas.height / 2;
+    for (let layer = 0; layer < 8; layer++) {
+      const radius = layer * 30 + 50;
+      const count = Math.max(4, layer * 2);
+      for (let i = 0; i < count; i++) {
+        const angle = (i / count) * Math.PI * 2;
+        pyramidParticles.push({
+          x: centerX + Math.cos(angle) * radius,
+          y: centerY + Math.sin(angle) * radius,
+          baseX: centerX + Math.cos(angle) * radius,
+          baseY: centerY + Math.sin(angle) * radius,
+          vx: 0,
+          vy: 0,
+          opacity: 0.8 - layer * 0.1,
+          size: 3 - layer * 0.2,
+          layer: layer
+        });
+      }
+    }
+  }
+  
+  function updateParticles() {
+    // Update background particles
+    particles.forEach(particle => {
+      particle.x += particle.vx;
+      particle.y += particle.vy;
+      
+      if (particle.x < 0 || particle.x > canvas.width) particle.vx *= -1;
+      if (particle.y < 0 || particle.y > canvas.height) particle.vy *= -1;
+    });
+    
+    // Update pyramid particles
+    pyramidParticles.forEach(particle => {
+      const dx = mouse.x - particle.x;
+      const dy = mouse.y - particle.y;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+      
+      if (distance < 150) {
+        const force = (150 - distance) / 150 * 0.02;
+        particle.vx -= dx * force;
+        particle.vy -= dy * force;
+      }
+      
+      // Spring back to base position
+      particle.vx += (particle.baseX - particle.x) * 0.01;
+      particle.vy += (particle.baseY - particle.y) * 0.01;
+      
+      // Damping
+      particle.vx *= 0.98;
+      particle.vy *= 0.98;
+      
+      particle.x += particle.vx;
+      particle.y += particle.vy;
+    });
+  }
+  
+  function drawParticles() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    // Draw background particles
+    particles.forEach(particle => {
+      ctx.save();
+      ctx.globalAlpha = particle.opacity;
+      ctx.fillStyle = '#ffd66b';
+      ctx.beginPath();
+      ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    });
+    
+    // Draw pyramid particles
+    pyramidParticles.forEach(particle => {
+      ctx.save();
+      ctx.globalAlpha = particle.opacity;
+      ctx.fillStyle = `hsl(${45 + particle.layer * 5}, 100%, ${70 - particle.layer * 5}%)`;
+      ctx.beginPath();
+      ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    });
+    
+    // Connect nearby pyramid particles
+    ctx.save();
+    ctx.globalAlpha = 0.3;
+    ctx.strokeStyle = '#ffd66b';
+    ctx.lineWidth = 0.5;
+    pyramidParticles.forEach((p1, i) => {
+      pyramidParticles.slice(i + 1).forEach(p2 => {
+        const distance = Math.sqrt((p1.x - p2.x) ** 2 + (p1.y - p2.y) ** 2);
+        if (distance < 60) {
+          ctx.beginPath();
+          ctx.moveTo(p1.x, p1.y);
+          ctx.lineTo(p2.x, p2.y);
+          ctx.stroke();
+        }
+      });
+    });
+    ctx.restore();
+  }
+  
+  function animate() {
+    updateParticles();
+    drawParticles();
+    requestAnimationFrame(animate);
+  }
+  
+  // Mouse tracking
+  window.addEventListener('mousemove', (e) => {
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
+    
+    // Update mouse trail
+    const trail = document.getElementById('mouseTrail');
+    trail.style.left = e.clientX + 'px';
+    trail.style.top = e.clientY + 'px';
+  });
+  
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
+  animate();
+})();
+
+// === UI INTERACTIONS ===
+let currentService = '';
+
+// Portal activation
+document.getElementById('portalOrb').addEventListener('click', () => {
+  const panels = document.getElementById('servicePanels');
+  panels.classList.add('visible');
+  
+  // Add explosion effect
+  const orb = document.getElementById('portalOrb');
+  orb.style.transform = 'translate(-50%, -50%) scale(1.3)';
+  orb.style.boxShadow = '0 0 100px rgba(255,214,107,0.8)';
+  
+  setTimeout(() => {
+    orb.style.transform = 'translate(-50%, -50%) scale(1)';
+    orb.style.boxShadow = '0 0 40px rgba(255,214,107,0.4)';
+  }, 300);
+});
+
+// Booking functions
+function openBooking(service) {
+  currentService = service;
+  const modal = document.getElementById('bookingModal');
+  const title = document.getElementById('modalTitle');
+  
+  const titles = {
+    rooms: 'Book Your Hotel Stay',
+    tours: 'Book Desert Adventure',
+    packages: 'Book Complete Package',
+    alarab: 'AlArab Club 777 Services'
+  };
+  
+  title.textContent = titles[service] || 'Complete Your Booking';
+  modal.classList.add('visible');
+  
+  // Set minimum date to today
+  const checkIn = document.getElementById('checkIn');
+  const today = new Date().toISOString().split('T')[0];
+  checkIn.setAttribute('min', today);
+}
+
+function closeBooking() {
+  const modal = document.getElementById('bookingModal');
+  modal.classList.remove('visible');
+  document.getElementById('qrSection').classList.remove('visible');
+}
+
+// Form submission
+document.getElementById('bookingForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  
+  const formData = {
+    service: currentService,
+    name: document.getElementById('customerName').value,
+    email: document.getElementById('customerEmail').value,
+    phone: document.getElementById('customerPhone').value,
+    checkIn: document.getElementById('checkIn').value,
+    guests: document.getElementById('guests').value,
+    requests: document.getElementById('specialRequests').value
+  };
+  
+  // Generate WhatsApp message
+  const message = generateWhatsAppMessage(formData);
+  const whatsappUrl = `https://wa.me/201002446123?text=${encodeURIComponent(message)}`;
+  
+  // Generate QR code (simplified version)
+  generateQRCode(whatsappUrl);
+  
+  // Show QR section
+  document.getElementById('qrSection').classList.add('visible');
+  
+  // Also open WhatsApp directly
+  setTimeout(() => {
+    window.open(whatsappUrl, '_blank');
+  }, 1000);
+});
+
+function generateWhatsAppMessage(data) {
+  const services = {
+    rooms: 'Hotel Room Booking',
+    tours: 'Desert Tour Booking',
+    packages: 'Complete Package Booking',
+    alarab: 'AlArab Club Premium Services'
+  };
+  
+  return `🏨 ${services[data.service]}
+
+👤 Name: ${data.name}
+📧 Email: ${data.email}
+📱 Phone: ${data.phone}
+📅 Check-in: ${data.checkIn}
+👥 Guests: ${data.guests}
+
+💬 Special Requests:
+${data.requests}
+
+🔗 Booked via: Al Arab Club 777 Portal
+⏰ Time: ${new Date().toLocaleString()}`;
+}
+
+function generateQRCode(url) {
+  // Simplified QR code generation
+  // In production, use a proper QR code library
+  const qrCode = document.getElementById('qrCode');
+  qrCode.innerHTML = `
+    <div style="background: white; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; flex-direction: column;">
+      <div style="font-size: 48px; margin-bottom: 10px;">📱</div>
+      <div style="font-size: 12px; text-align: center;">Scan to open<br>WhatsApp booking</div>
+    </div>
+  `;
+  
+  // You can integrate a real QR code library here like qrcode.js
+  // For now, this creates a clickable element
+  qrCode.onclick = () => window.open(url, '_blank');
+}
+
+// Chat system
+let chatVisible = false;
+
+function toggleChat() {
+  const chatWindow = document.getElementById('chatWindow');
+  chatVisible = !chatVisible;
+  
+  if (chatVisible) {
+    chatWindow.classList.add('visible');
+  } else {
+    chatWindow.classList.remove('visible');
+  }
+}
+
+function sendMessage() {
+  const input = document.getElementById('chatInput');
+  const message = input.value.trim();
+  
+  if (!message) return;
+  
+  const chatBody = document.getElementById('chatBody');
+  
+  // Add user message
+  const userMsg = document.createElement('div');
+  userMsg.className = 'message user';
+  userMsg.textContent = message;
+  chatBody.appendChild(userMsg);
+  
+  // Clear input
+  input.value = '';
+  
+  // Simulate agent response
+  setTimeout(() => {
+    const agentMsg = document.createElement('div');
+    agentMsg.className = 'message agent';
+    agentMsg.textContent = generateAgentResponse(message);
+    chatBody.appendChild(agentMsg);
+    chatBody.scrollTop = chatBody.scrollHeight;
+  }, 1000);
+  
+  chatBody.scrollTop = chatBody.scrollHeight;
+}
+
+function generateAgentResponse(message) {
+  const msg = message.toLowerCase();
+  
+  if (msg.includes('room') || msg.includes('hotel')) {
+    return "We have luxury rooms with pyramid views! Standard ($60), Deluxe ($85), and Balcony Suite ($120). Which interests you most?";
+  } else if (msg.includes('tour') || msg.includes('camel') || msg.includes('horse') || msg.includes('buggy')) {
+    return "Our desert adventures are amazing! Camel rides ($20-35), Horse rides ($25-40), and Buggy safari ($50-75). All include professional guides!";
+  } else if (msg.includes('package') || msg.includes('full')) {
+    return "Our complete package ($1500) includes 3 nights hotel + all tours + airport transfers. Everything you need for the perfect Egypt experience!";
+  } else if (msg.includes('price') || msg.includes('cost')) {
+    return "Rooms: $60-120/night | Tours: $20-75 | Complete Package: $1500. All prices include taxes and professional service!";
+  } else {
+    return "I'd love to help you plan your perfect Egyptian adventure! Ask me about our hotel rooms, desert tours, or complete packages.";
+  }
+}
+
+// Chat input enter key
+document.getElementById('chatInput').addEventListener('keypress', (e) => {
+  if (e.key === 'Enter') {
+    sendMessage();
+  }
+});
+
+// Loading screen
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.getElementById('loadingScreen').classList.add('hidden');
+  }, 1500);
+});
+
+// Smooth scrolling for navigation
+document.querySelectorAll('.nav-btn').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    e.preventDefault();
+    const target = e.target.getAttribute('href');
+    if (target === '#contact') {
+      toggleChat();
+    } else {
+      // Show service panels if not visible
+      const panels = document.getElementById('servicePanels');
+      if (!panels.classList.contains('visible')) {
+        panels.classList.add('visible');
+      }
+    }
+  });
+});
+</script>
+
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="timeless">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>بوابة التاريخ — Cyber-Pyramid Tourist | AlArab Neo-Club (2125)</title>
+<meta name="description" content="نسخة مستقبلية 2125 — بوابة سفر زمني رقمية — تصميم من المستقبل إلى الأمام 100 سنة." />
+<style>
+  /* -------------------------
+     FUTURE CORE — Year 2125
+     Minimal external deps — single file.
+     Visual intent: ذهبية ماتريكس + بوابة زمنية عابرة للأبعاد
+     ------------------------- */
+
+  :root{
+    --bg-1:#02021a;
+    --bg-2:#0b0626;
+    --neon-a:#00ffd5;
+    --neon-b:#ffd966;
+    --muted:#b8b0a5;
+    --glass: rgba(255,255,255,0.04);
+    --accent-glow: 0 10px 40px rgba(255,217,102,0.08), inset 0 -8px 24px rgba(0,0,0,0.35);
+    --gold-matrix: #ffd966;
+    --ui-radius:16px;
+    --year: '2125';
+  }
+
+  /* Reset + base */
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    font-family:"Inter var", "Noto Kufi Arabic", "Segoe UI", system-ui, Arial, sans-serif;
+    background:
+      radial-gradient(800px 400px at 12% 10%, rgba(0,30,40,0.22), transparent),
+      linear-gradient(180deg,var(--bg-1),var(--bg-2));
+    color:var(--neon-a);
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-sm
