@@ -2034,11 +2034,28 @@ my mac mic not response i will shift to galaxy tab,
 
 <img width="1440" height="900" alt="image" src="https://github.com/user-attachments/assets/99a1aa45-ae87-4483-a13a-54b85f143f1b" />
 
+اثبت خضور وغياب [
+](https://docs.google.com/spreadsheets/d/e/2PACX-1vTJTjrc2XpvaRgS9B11fP4vqYGRUh2umAvZOko79A17Vdc8xlyHr4mJ_QIUQsLFYKvV0E46mg-ChJvf/pub?output=csv)
+
+https://docs.google.com/spreadsheets/d/e/2PACX-1vTJTjrc2XpvaRgS9B11fP4vqYGRUh2umAvZOko79A17Vdc8xlyHr4mJ_QIUQsLFYKvV0E46mg-ChJvf
+
+
 refuse to write my speech.
 
+i opened a first portal for 777therunner ,`:
+https://drive.google.com/drive/folders/1xMNWGN6K9A0ZuNNug3OEoQXEYLuv4_Wn?usp=sharing
+https://drive.google.com/drive/folders/1xMNWGN6K9A0ZuNNug3OEoQXEYLuv4_Wn
+
+for files uploading 
+
+
 ayway,
+
+
 html interactve page enogh to handle and organise therunner i need to foucs on what next "after appling the certifecat here underthislines 
 	domthiong 100% real working probaply somyhing like this :
+
+
 	
 
 	
