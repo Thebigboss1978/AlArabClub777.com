@@ -1578,52 +1578,60 @@ This section enforces continuity without limiting growth.
 
 
 ### محتوى الملف (Copy & Paste)
+## FILE_LIMITS & STRUCTURAL RULES
+(Added: 2025-12-16)
 
-```markdown
-# 777TheKey (formerly TheRunner)
-## ⟁ CIVILIZATION METADATA
-- **System Name:** AlArab Club 777
-- **Core Identity:** The Key / The Runner
-- **Civilization:** Hybrid (Pharaonic × Maya × Digital)
-- **Status:** ACTIVE
-- **Owner:** The Godfather (العرّاب)
+### Purpose
+This section defines how large the main record can grow and how content must be structured to preserve integrity, readability, and future automation.
 
-## ⚖️ THE LAW (APPEND-ONLY)
-> 1. This file is a living record.
-> 2. NEVER delete past entries.
-> 3. ALWAYS append new updates to the "Dynamic Arena" section.
-> 4. Voice Identity is SINGLE and FIXED.
+### File Capacity
+- The main record (777TheRunner.md) is designed to grow continuously.
+- Recommended soft limit: ~5 MB for comfortable GitHub editing.
+- No hard limit is enforced at the system level.
 
----
+### Structural Model
+The file is divided conceptually into three immutable zones:
 
-## 🔊 VOICE IDENTITY (SINGLE SOURCE)
-- **Status:** LOCKED 🔒
-- **Source:** `alarab_voice_original.wav` (Human Original)
-- **Rule:** No other voices permitted. All TTS flows from this source.
-- **Location:** `/audio/voice/alarab_voice_original.wav`
+1. HEAD (Fixed)
+   - Identity
+   - Law (Append-Only)
+   - Voice Identity
+   - Never edited after initial definition.
 
-## 📂 LEGACY ASSETS REGISTRY
-- **Unified Portal:** `Allin.html` (The Body)
-- **Logic Brain:** `indexALL.md` (The Mind)
-- **Live View:** `indexALL.html` (The Interface)
-- **Visuals:** `IMG_0482.HEIC` (Environment Snapshot)
+2. CORE / ARENA (Dynamic)
+   - This is the ONLY area where new content is added.
+   - Ideas, stories, logs, legacy registrations, embeds.
+   - Content is appended sequentially with dates.
 
-## 🧱 AUTOMATION HOOKS (API/EMBEDS)
-- [ ] *Waiting for new input...*
-- [ ] *Waiting for 777TheRunner.json binding...*
+3. TAIL (Fixed)
+   - System state
+   - Status indicators
+   - Visual signatures / seals
+   - Not modified, only extended if explicitly declared.
 
----
+### Append Rules
+- ❌ No deletion
+- ❌ No rewriting past entries
+- ✅ Only append at the end of the CORE / ARENA
+- Every new block should include:
+  - Date
+  - Type (STORY / LEGACY_SOURCE / NOTE / VOICE / SYSTEM)
 
-## ⟁ SYSTEM STATUS
-- **Current Line:** 492+
-- **Runner State:** Idle / Listening
-- **Next Action:** Await content injection
+### Overflow Strategy (Future-Proof)
+When the CORE grows large:
+- Create external files:
+  - `777TheRunner_part_002.md`
+  - `777TheRunner_story_arc_A.md`
+- Register them inside this file using LEGACY_SOURCE entries.
+- The main file remains the index and authority.
 
-## 🖌️ VISUAL SIGNATURE
-░▒▓█𓁹█▓▒░  A l A r a b  P o r t a l  ░▒▓█𓁹█▓▒░
-▁▂▃▄▅▆▇█𓁹█▇▆▅▄▃▂▁
-█◉█◈█◉█◈█◉█◈█◉█◈█
+### Conversion Safety
+This structure allows safe future conversion into:
+- HTML (visual portal)
+- JSON (state machine)
+- HIM / EXEC / AI memory formats
 
+This section enforces continuity without limiting growth.
 7777777
 ‏لماذا في نهاية الصفحة ما هي الفائدة منه أصلا إذا لم يكن له فائدة ومكان لا نريده أريد تعاون عندما سألت سألت وكيل Jin بدون ذاكرة يعني دخلت عليه جديد سوف اهد له الآن
 ‏‏الآن نريد ترتيب لهذا الملف لانه بالنهاية أنا لأخذ إلا كلام أريد أن يصبح واجهة استطيع التكلم معها وضع بها المعلومات تخزن نفسها إذا رميت الملف لأي أحد له دلوقتي لا تعملي لي قصة كل المعلومات موجودة دلوقتي مش عايز الملف تضخم في مرحلة كنا نقدر أنا وياك نعديها من خمسة Step back  وإذا مش أكثر 
