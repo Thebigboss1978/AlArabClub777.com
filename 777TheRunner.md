@@ -2031,4 +2031,15 @@ I'm solidifying the final acceptance of the user's work, ensuring it aligns perf
 7777777
 my mac mic not response i will shift to galaxy tab,
 	i feel andrion ios and windows maybe will be helpfull this times with considering the APPLE machines, my ipad lessuse now i didnt use too much need servicese screen protect change no shops around men, 
+
+<img width="1440" height="900" alt="image" src="https://github.com/user-attachments/assets/99a1aa45-ae87-4483-a13a-54b85f143f1b" />
+
+refuse to write my speech.
+
+ayway,
+html interactve page enogh to handle and organise therunner i need to foucs on what next "after appling the certifecat here underthislines 
+	domthiong 100% real working probaply somyhing like this :
+	
+
+	
 eof
