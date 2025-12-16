@@ -1256,6 +1256,8 @@ EOF
 ‏‏هناك شيء اسمه Emb embed embdding ‏حاجة زي كده يعني لما بيجي الواحد ياخذ الرابط بيحط ايه في مكان المكان بيعرض المحتوى في المربع المخصص له بس هي دي ‏وفي دردشة السابقة أنت كنت أخبرتني أنها سهلة تتم عن طريق api عودة ايه بسيطة
 send recive display here 
 send to one, send to all 
+<img width="1440" height="900" alt="image" src="https://github.com/user-attachments/assets/3832e706-3c88-48e1-b433-b31d87b5e88a" />
+
 IMG_0482.HEIC
 
 
