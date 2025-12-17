@@ -2445,7 +2445,1167 @@ https://aistudio.google.com/app/prompts?state=%7B%22ids%22:%5B%221fHnTfS7N5Bkm7j
 - 🟥🟧🟨🟩🟦🟪⬛️⬜️🟫 Claude.ai 🟥🟧🟨🟩🟦🟪⬛️⬜️🟫 say hi,
 
 uploading ,,,
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>777 THE RUNNER | العرّاب - Ferrari Voice Portal</title>
+    <meta name="description" content="Ferrari Motor Voice System - تجربة روحانية فرعونية مع الأهرامات">
+    <meta property="og:title" content="777 AlArab Club - The Runner Portal">
+    <meta property="og:description" content="Sky Pyramids Hotel - تجربة روحانية مع التاريخ">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;400;600;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --royal-black: #050505;
+            --royal-gold: #D4AF37;
+            --royal-cyan: #00C6FF;
+            --royal-blue: #0072FF;
+            --glass-bg: rgba(5, 5, 5, 0.85);
+            --glass-border: rgba(212, 175, 55, 0.3);
+            --glow-gold: 0 0 30px rgba(212, 175, 55, 0.5);
+        }
 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scrollbar-width: thin;
+            scrollbar-color: var(--royal-gold) transparent;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: #000;
+            color: #E0E0E0;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* ========== PYRAMIDS BACKGROUND ========== */
+        .pyramids-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('./pyramids_bg.png') center/cover no-repeat;
+            opacity: 0.12;
+            z-index: 0;
+            filter: grayscale(20%) brightness(0.6);
+        }
+
+        .pyramids-bg::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, 
+                rgba(0,0,0,0.95) 0%, 
+                rgba(0,0,0,0.75) 50%, 
+                rgba(0,0,0,0.95) 100%
+            );
+        }
+
+        /* ========== CANVAS ========== */
+        #bgCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* ========== MOUSE TRAIL ========== */
+        .mouse-trail {
+            position: fixed;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--royal-gold), transparent);
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.95;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 15px var(--royal-gold);
+        }
+
+        /* ========== QUANTUM GLYPHS ========== */
+        .quantum-glyph {
+            position: fixed;
+            color: var(--royal-gold);
+            font-size: 20px;
+            opacity: 1;
+            pointer-events: none;
+            z-index: 9998;
+            animation: glyphFade 2.2s ease-out forwards;
+            text-shadow: 0 0 20px var(--royal-gold);
+            font-weight: 900;
+        }
+
+        @keyframes glyphFade {
+            0% { opacity: 1; transform: translateY(0) scale(1) rotate(0deg); }
+            100% { opacity: 0; transform: translateY(-50px) scale(0.2) rotate(360deg); }
+        }
+
+        /* ========== MATRIX ========== */
+        .matrix-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .matrix-column {
+            position: absolute;
+            font-family: 'Courier New', monospace;
+            color: var(--royal-gold);
+            opacity: 0.1;
+            white-space: pre;
+            line-height: 1.3;
+            animation: matrixFall linear infinite;
+            text-shadow: 0 0 5px var(--royal-gold);
+        }
+
+        @keyframes matrixFall {
+            0% { transform: translateY(-120%); }
+            100% { transform: translateY(110vh); }
+        }
+
+        /* ========== GLASS ========== */
+        .royal-glass {
+            background: var(--glass-bg);
+            backdrop-filter: blur(40px) saturate(200%);
+            -webkit-backdrop-filter: blur(40px) saturate(200%);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--glow-gold);
+            transition: all 0.4s ease;
+        }
+
+        .royal-glass:hover {
+            box-shadow: 0 0 60px rgba(212, 175, 55, 0.6);
+            border-color: rgba(212, 175, 55, 0.7);
+            transform: translateY(-3px);
+        }
+
+        /* ========== MAIN ========== */
+        .main-container {
+            position: relative;
+            z-index: 10;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* ========== LOGO SECTION ========== */
+        .logo-section {
+            text-align: center;
+            padding: 40px 20px 30px;
+            position: relative;
+        }
+
+        .logo-container {
+            display: inline-block;
+            position: relative;
+            animation: logoFloat 4s ease-in-out infinite;
+        }
+
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-15px) scale(1.03); }
+        }
+
+        .logo-pyramid {
+            font-size: clamp(120px, 20vw, 200px);
+            filter: drop-shadow(0 0 30px var(--royal-gold));
+            position: relative;
+            display: inline-block;
+        }
+
+        .logo-eye {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: clamp(40px, 8vw, 70px);
+            animation: eyeBlink 5s ease-in-out infinite;
+        }
+
+        @keyframes eyeBlink {
+            0%, 90%, 100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+            95% { opacity: 0.3; transform: translate(-50%, -50%) scale(0.8); }
+        }
+
+        .logo-777 {
+            position: absolute;
+            bottom: 15%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: clamp(35px, 6vw, 60px);
+            font-weight: 900;
+            color: var(--royal-gold);
+            text-shadow: 0 0 20px var(--royal-gold);
+            letter-spacing: 5px;
+            font-family: 'Amiri', serif;
+        }
+
+        .wings {
+            position: absolute;
+            top: 50%;
+            font-size: clamp(60px, 12vw, 100px);
+            transform: translateY(-50%);
+            opacity: 0.9;
+            filter: drop-shadow(0 0 15px var(--royal-gold));
+        }
+
+        .wing-left {
+            left: -20%;
+            animation: wingFlap 3s ease-in-out infinite;
+        }
+
+        .wing-right {
+            right: -20%;
+            animation: wingFlap 3s ease-in-out infinite reverse;
+        }
+
+        @keyframes wingFlap {
+            0%, 100% { transform: translateY(-50%) scale(1); }
+            50% { transform: translateY(-50%) scale(1.1); }
+        }
+
+        /* ========== TITLES ========== */
+        .main-title {
+            font-size: clamp(2.5rem, 7vw, 5rem);
+            font-weight: 900;
+            letter-spacing: 12px;
+            background: linear-gradient(135deg, 
+                var(--royal-gold) 0%, 
+                #F2E6C2 30%,
+                var(--royal-cyan) 50%,
+                #F2E6C2 70%,
+                var(--royal-gold) 100%
+            );
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 5s ease infinite;
+            margin: 25px 0 15px;
+            font-family: 'Amiri', serif;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% center; }
+            50% { background-position: 100% center; }
+        }
+
+        .subtitle {
+            font-size: clamp(1rem, 3vw, 1.4rem);
+            color: #9fb0c0;
+            letter-spacing: 4px;
+            margin-bottom: 12px;
+        }
+
+        .location-badge {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(0, 198, 255, 0.1));
+            border: 1px solid var(--royal-gold);
+            border-radius: 25px;
+            color: var(--royal-gold);
+            font-size: 0.95rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+        }
+
+        .github-link {
+            display: inline-block;
+            margin-top: 15px;
+            margin-left: 10px;
+            padding: 10px 20px;
+            background: rgba(0, 198, 255, 0.1);
+            border: 1px solid var(--royal-cyan);
+            border-radius: 25px;
+            color: var(--royal-cyan);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .github-link:hover {
+            background: var(--royal-cyan);
+            color: #000;
+            box-shadow: 0 0 25px var(--royal-cyan);
+            transform: translateY(-2px);
+        }
+
+        /* ========== TABS ========== */
+        .tabs-container {
+            max-width: 800px;
+            margin: 40px auto 30px;
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 14px 28px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            border-radius: 12px;
+            color: var(--royal-gold);
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            letter-spacing: 1px;
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, var(--royal-gold) 0%, #FFA500 100%);
+            color: #000;
+            box-shadow: var(--glow-gold);
+            border-color: transparent;
+        }
+
+        .tab-btn:hover:not(.active) {
+            background: rgba(212, 175, 55, 0.15);
+            border-color: var(--royal-gold);
+            transform: translateY(-2px);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.6s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ========== FERRARI SECTION ========== */
+        .ferrari-section {
+            max-width: 1200px;
+            margin: 0 auto 40px;
+            position: relative;
+            padding: 45px 35px;
+            border-radius: 25px;
+        }
+
+        .ferrari-badge {
+            text-align: center;
+            font-size: 1.4rem;
+            color: var(--royal-cyan);
+            margin-bottom: 25px;
+            font-weight: 900;
+            letter-spacing: 4px;
+            text-shadow: 0 0 15px var(--royal-cyan);
+        }
+
+        .voice-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: var(--royal-gold);
+            font-size: 0.95rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .royal-input, .royal-select {
+            width: 100%;
+            padding: 14px 16px;
+            background: rgba(0, 0, 0, 0.6);
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            border-radius: 12px;
+            color: #fff;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .royal-input:focus, .royal-select:focus {
+            outline: none;
+            border-color: var(--royal-gold);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        .royal-textarea {
+            width: 100%;
+            min-height: 170px;
+            padding: 18px;
+            background: rgba(0, 0, 0, 0.6);
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            border-radius: 12px;
+            color: #fff;
+            font-family: inherit;
+            font-size: 1.05rem;
+            line-height: 1.9;
+            resize: vertical;
+            transition: all 0.3s;
+        }
+
+        .royal-textarea:focus {
+            outline: none;
+            border-color: var(--royal-gold);
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.4);
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        .royal-textarea::placeholder {
+            color: rgba(255, 255, 255, 0.35);
+            font-style: italic;
+        }
+
+        .btn-ferrari {
+            width: 100%;
+            padding: 18px 35px;
+            background: linear-gradient(135deg, var(--royal-gold) 0%, #FFA500 100%);
+            border: 3px solid var(--royal-gold);
+            border-radius: 15px;
+            color: #000;
+            font-weight: 900;
+            font-size: 1.2rem;
+            letter-spacing: 3px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4);
+        }
+
+        .btn-ferrari::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-ferrari:hover::before {
+            left: 100%;
+        }
+
+        .btn-ferrari:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 35px rgba(212, 175, 55, 0.7);
+        }
+
+        .btn-ferrari:active {
+            transform: translateY(-1px);
+        }
+
+        .status-display {
+            text-align: center;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 12px;
+            background: rgba(0, 198, 255, 0.1);
+            border: 2px solid rgba(0, 198, 255, 0.3);
+            color: var(--royal-cyan);
+            font-weight: 700;
+            font-size: 1.05rem;
+            letter-spacing: 2px;
+            transition: all 0.3s;
+        }
+
+        .status-display.active {
+            background: rgba(212, 175, 55, 0.2);
+            border-color: var(--royal-gold);
+            color: var(--royal-gold);
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.4);
+            animation: statusPulse 2s ease infinite;
+        }
+
+        @keyframes statusPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .status-display.error {
+            background: rgba(255, 0, 0, 0.2);
+            border-color: rgba(255, 0, 0, 0.6);
+            color: #ff6b6b;
+        }
+
+        /* ========== ACTIVITIES ========== */
+        .activities-section {
+            max-width: 1400px;
+            margin: 60px auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: clamp(2.2rem, 5vw, 3.5rem);
+            font-weight: 900;
+            color: var(--royal-gold);
+            margin-bottom: 18px;
+            text-shadow: 0 0 25px rgba(212, 175, 55, 0.6);
+            letter-spacing: 3px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.3rem;
+            color: #9fb0c0;
+            margin-bottom: 45px;
+            font-style: italic;
+            letter-spacing: 1px;
+        }
+
+        .activities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 28px;
+        }
+
+        .activity-card {
+            background: rgba(5, 5, 5, 0.7);
+            backdrop-filter: blur(25px);
+            border: 2px solid rgba(212, 175, 55, 0.2);
+            border-radius: 20px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .activity-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.15), transparent);
+            transition: left 0.7s;
+        }
+
+        .activity-card:hover::before {
+            left: 100%;
+        }
+
+        .activity-card:hover {
+            border-color: var(--royal-gold);
+            transform: translateY(-6px);
+            box-shadow: 0 12px 35px rgba(212, 175, 55, 0.4);
+        }
+
+        .activity-icon {
+            font-size: 3.5rem;
+            text-align: center;
+            margin-bottom: 18px;
+            filter: drop-shadow(0 0 12px rgba(212, 175, 55, 0.6));
+        }
+
+        .activity-title {
+            font-size: 1.5rem;
+            color: var(--royal-gold);
+            margin-bottom: 12px;
+            font-weight: 800;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+
+        .activity-desc {
+            font-size: 1.05rem;
+            color: #cbd5e1;
+            line-height: 1.9;
+            text-align: center;
+            font-style: italic;
+        }
+
+        /* ========== FOOTER ========== */
+        .footer {
+            text-align: center;
+            padding: 45px 20px;
+            margin-top: 80px;
+            border-top: 2px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .footer-brand {
+            font-size: 1.8rem;
+            color: var(--royal-gold);
+            font-weight: 900;
+            letter-spacing: 5px;
+            margin-bottom: 18px;
+            text-shadow: 0 0 15px var(--royal-gold);
+        }
+
+        .footer-text {
+            color: #666;
+            font-size: 1rem;
+            margin: 10px 0;
+        }
+
+        .footer-link {
+            color: var(--royal-cyan);
+            text-decoration: none;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .footer-link:hover {
+            color: var(--royal-gold);
+            text-shadow: 0 0 12px var(--royal-gold);
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2.2rem;
+                letter-spacing: 6px;
+            }
+            
+            .voice-controls {
+                grid-template-columns: 1fr;
+            }
+            
+            .activities-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tabs-container {
+                flex-direction: column;
+            }
+
+            .wing-left, .wing-right {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Pyramids Background -->
+    <div class="pyramids-bg"></div>
+
+    <!-- Canvas -->
+    <canvas id="bgCanvas"></canvas>
+
+    <!-- Matrix -->
+    <div class="matrix-container" id="matrixContainer"></div>
+
+    <!-- Mouse Trail -->
+    <div class="mouse-trail" id="mouseTrail"></div>
+
+    <!-- Main Container -->
+    <div class="main-container">
+
+        <!-- Logo Section -->
+        <section class="logo-section">
+            <div class="logo-container">
+                <div class="wings wing-left">🪽</div>
+                <div class="logo-pyramid">
+                    <div style="color: var(--royal-gold); filter: drop-shadow(0 0 30px var(--royal-gold));">△</div>
+                    <div class="logo-eye">𓁹</div>
+                    <div class="logo-777">777</div>
+                </div>
+                <div class="wings wing-right">🪽</div>
+            </div>
+
+            <h1 class="main-title">THE RUNNER</h1>
+            <p class="subtitle">Ferrari Voice System | العرّاب</p>
+            <p class="subtitle" style="font-size: 1rem; margin-top: 12px;">
+                تجربة روحانية فرعونية مع التاريخ
+            </p>
+            
+            <div style="margin-top: 20px;">
+                <span class="location-badge">
+                    🏨 Sky Pyramids Hotel | الجيزة، مصر
+                </span>
+                <a href="https://github.com/Thebigboss1978/AlArabClub777.com/blob/main/777TheRunner.md" 
+                   target="_blank" 
+                   class="github-link">
+                    📁 777TheRunner.md
+                </a>
+            </div>
+        </section>
+
+        <!-- Tabs -->
+        <div class="tabs-container">
+            <button class="tab-btn active" onclick="switchTab('voice')">
+                🎙️ Ferrari Voice System
+            </button>
+            <button class="tab-btn" onclick="switchTab('experiences')">
+                ✨ التجارب الروحانية
+            </button>
+        </div>
+
+        <!-- Voice Tab -->
+        <div id="tab-voice" class="tab-content active">
+            <section class="ferrari-section royal-glass">
+                <div class="ferrari-badge">🏎️ FERRARI MOTOR UNDER CONTROL 🏎️</div>
+                <p style="text-align: center; color: #9fb0c0; margin-bottom: 35px; font-size: 1rem; letter-spacing: 1px;">
+                    نظام صوتي متقدم | Voice Model: ALARAB_777_v20251201_010709
+                </p>
+
+                <div class="voice-controls">
+                    <div class="input-group">
+                        <label>🔌 XTTS Port</label>
+                        <input type="number" id="xttsPort" value="42000" class="royal-input" placeholder="42000">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>⚙️ Voice Engine</label>
+                        <select id="ttsProvider" class="royal-select">
+                            <option value="xtts-42000">XTTS-WebUI (Port 42000) ⭐ High Quality</option>
+                            <option value="browser">Browser TTS (Standard Fallback)</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label>🎯 Voice Model ID</label>
+                        <input type="text" id="voiceModel" value="ALARAB_777_v20251201_010709" class="royal-input">
+                    </div>
+                </div>
+
+                <div class="input-group" style="margin-bottom: 25px;">
+                    <label>📁 Voice Reference File (alarab_voice.wav)</label>
+                    <input type="file" id="voiceFile" accept=".wav,.mp3" class="royal-input">
+                    <p style="font-size: 0.9rem; color: #9fb0c0; margin-top: 10px; font-style: italic;">
+                        ⚠️ ملف الصوت الأصلي مطلوب للجودة العالية مع XTTS
+                    </p>
+                </div>
+
+                <div class="input-group">
+                    <label>✍️ النص المراد تحويله إلى صوت العرّاب</label>
+                    <textarea 
+                        id="ttsText" 
+                        class="royal-textarea"
+                        placeholder="اكتب النص هنا ليتكلم بصوت العرّاب الحقيقي...
+
+مثال:
+مرحباً، أنا العرّاب. 
+تعال معي في رحلة روحانية إلى قلب التاريخ.
+
+اجلس على رمال الزمن...
+أشعل سيجارة...
+تأمل في حافة التاريخ التي تجلس عليها...
+
+استمتع مع روحك العليا.
+هذه ليست مجرد جولة سياحية.
+هذه رحلة إلى النفس."
+                    ></textarea>
+                </div>
+
+                <button id="speakBtn" class="btn-ferrari">
+                    🎙️ EXECUTE VOICE GENERATION
+                </button>
+
+                <div id="ttsStatus" class="status-display">
+                    ⚡ FERRARI MOTOR READY
+                </div>
+
+                <audio id="ttsAudio" controls style="width: 100%; margin-top: 25px; display: none; border-radius: 12px;"></audio>
+            </section>
+        </div>
+
+        <!-- Experiences Tab -->
+        <div id="tab-experiences" class="tab-content">
+            <section class="activities-section">
+                <h2 class="section-title">✨ التجارب الروحانية</h2>
+                <p class="section-subtitle">
+                    567 تجربة فريدة في الجيزة وسقارة - رحلة إلى النفس العليا
+                </p>
+
+                <div class="activities-grid" id="activitiesGrid"></div>
+            </section>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-brand">777 THE RUNNER</div>
+            <p class="footer-text">
+                Made with ❤️ by <span class="footer-link">Claude.ai</span> for 
+                <a href="https://alarabclub777.com" class="footer-link" target="_blank">AlArabClub777.com</a>
+            </p>
+            <p class="footer-text">
+                🏨 Sky Pyramids Hotel | منظر الأهرامات الثلاثة المباشر
+            </p>
+            <p class="footer-text" style="margin-top: 18px; font-size: 0.9rem;">
+                الجيزة وسقارة | مصر | Ferrari Motor Voice System © 2025
+            </p>
+            <p class="footer-text" style="margin-top: 10px; font-size: 0.85rem; color: #555;">
+                𓂀 ابن الهرم انطلق 𓂀
+            </p>
+        </footer>
+
+    </div>
+
+    <!-- ========== JAVASCRIPT ========== -->
+    <script>
+        // ========== CONFIG ==========
+        const GLYPHS = ['𓂀', '𓁹', '𓋹', '𓂋', '𓆣', '𓃀', '⟡', 'ᛣ', '𐌗', '※', '∴', '✦', '△', '▲', '777', '7'];
+        let voiceFileData = null;
+
+        // ========== CANVAS ==========
+        const canvas = document.getElementById('bgCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        function initParticles() {
+            particles = [];
+            const count = Math.min(220, Math.floor(window.innerWidth / 7));
+            for (let i = 0; i < count; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    vx: (Math.random() - 0.5) * 0.5,
+                    vy: (Math.random() - 0.5) * 0.5,
+                    size: Math.random() * 2.5 + 0.5
+                });
+            }
+        }
+
+        function drawParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            particles.forEach(p => {
+                p.x += p.vx;
+                p.y += p.vy;
+                
+                if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+                
+                ctx.fillStyle = 'rgba(212, 175, 55, 0.18)';
+                ctx.fillRect(p.x, p.y, p.size, p.size);
+            });
+            
+            requestAnimationFrame(drawParticles);
+        }
+
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+            initParticles();
+        });
+        resizeCanvas();
+        initParticles();
+        drawParticles();
+
+        // ========== MOUSE TRAIL ==========
+        const trail = document.getElementById('mouseTrail');
+        document.addEventListener('mousemove', e => {
+            trail.style.left = e.clientX + 'px';
+            trail.style.top = e.clientY + 'px';
+        });
+
+        // ========== GLYPHS ==========
+        let lastGlyphTime = 0;
+        document.addEventListener('mousemove', e => {
+            const now = Date.now();
+            if (now - lastGlyphTime > 550 && Math.random() > 0.68) {
+                lastGlyphTime = now;
+                spawnGlyph(e.pageX, e.pageY);
+            }
+        });
+
+        function spawnGlyph(x, y) {
+            const glyph = document.createElement('div');
+            glyph.className = 'quantum-glyph';
+            glyph.textContent = GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+            glyph.style.left = (x + (Math.random() * 70 - 35)) + 'px';
+            glyph.style.top = (y + (Math.random() * 70 - 35)) + 'px';
+            glyph.style.fontSize = (16 + Math.random() * 28) + 'px';
+            document.body.appendChild(glyph);
+            setTimeout(() => glyph.remove(), 2200);
+        }
+
+        // ========== MATRIX ==========
+        function buildGoldMatrix() {
+            const container = document.getElementById('matrixContainer');
+            const cols = Math.max(14, Math.floor(window.innerWidth / 85));
+            
+            for (let i = 0; i < cols; i++) {
+                const col = document.createElement('div');
+                col.className = 'matrix-column';
+                col.style.left = (i * (100 / cols)) + '%';
+                col.style.fontSize = (9 + Math.random() * 12) + 'px';
+                col.style.animationDuration = (20 + Math.random() * 30) + 's';
+                col.style.animationDelay = (Math.random() * 10) + 's';
+                
+                let str = '';
+                const len = 20 + Math.floor(Math.random() * 35);
+                for (let j = 0; j < len; j++) {
+                    str += GLYPHS[Math.floor(Math.random() * GLYPHS.length)] + '\n';
+                }
+                col.textContent = str;
+                container.appendChild(col);
+            }
+        }
+        buildGoldMatrix();
+
+        // ========== TABS ==========
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            document.getElementById('tab-' + tabName).classList.add('active');
+        }
+
+        // ========== VOICE FILE ==========
+        document.getElementById('voiceFile').addEventListener('change', async function(e) {
+            const file = e.target.files[0];
+            const status = document.getElementById('ttsStatus');
+            
+            if (file) {
+                try {
+                    voiceFileData = await file.arrayBuffer();
+                    status.textContent = '✓ Voice file loaded: ' + file.name;
+                    status.classList.add('active');
+                    setTimeout(() => status.classList.remove('active'), 2500);
+                } catch (error) {
+                    status.textContent = '❌ Error loading file';
+                    status.classList.add('error');
+                }
+            }
+        });
+
+        // ========== FERRARI TTS ==========
+        document.getElementById('speakBtn').addEventListener('click', async () => {
+            const text = document.getElementById('ttsText').value.trim();
+            const provider = document.getElementById('ttsProvider').value;
+            const status = document.getElementById('ttsStatus');
+            const audio = document.getElementById('ttsAudio');
+            const btn = document.getElementById('speakBtn');
+            
+            if (!text) {
+                status.textContent = '⚠️ Please enter text';
+                status.classList.add('error');
+                setTimeout(() => status.classList.remove('error'), 2500);
+                return;
+            }
+            
+            btn.disabled = true;
+            btn.textContent = '⚙️ GENERATING...';
+            status.textContent = '🔄 Ferrari Motor Running...';
+            status.classList.add('active');
+            
+            // Spawn glyphs effect
+            for (let i = 0; i < 15; i++) {
+                setTimeout(() => {
+                    spawnGlyph(
+                        window.innerWidth / 2 + (Math.random() * 300 - 150),
+                        window.innerHeight / 2 + (Math.random() * 300 - 150)
+                    );
+                }, i * 100);
+            }
+            
+            try {
+                if (provider === 'browser') {
+                    const utterance = new SpeechSynthesisUtterance(text);
+                    utterance.lang = 'ar-SA';
+                    utterance.rate = 0.85;
+                    utterance.pitch = 1.0;
+                    
+                    utterance.onstart = () => {
+                        status.textContent = '🔊 Speaking (Browser Mode)...';
+                    };
+                    
+                    utterance.onend = () => {
+                        status.textContent = '✓ Speech Completed';
+                        btn.disabled = false;
+                        btn.textContent = '🎙️ EXECUTE VOICE GENERATION';
+                        setTimeout(() => {
+                            status.classList.remove('active');
+                            status.textContent = '⚡ FERRARI MOTOR READY';
+                        }, 2500);
+                    };
+                    
+                    window.speechSynthesis.speak(utterance);
+                    
+                } else {
+                    if (!voiceFileData) {
+                        throw new Error('⚠️ Upload voice reference file first (alarab_voice.wav)');
+                    }
+                    
+                    const port = document.getElementById('xttsPort').value;
+                    const model = document.getElementById('voiceModel').value;
+                    
+                    const formData = new FormData();
+                    formData.append('text', text);
+                    formData.append('language', 'ar');
+                    formData.append('speaker_reference', model);
+                    
+                    const blob = new Blob([voiceFileData], { type: 'audio/wav' });
+                    formData.append('speaker_wav', blob, 'alarab_voice.wav');
+                    
+                    status.textContent = '🚀 Connecting to XTTS Ferrari Motor...';
+                    
+                    const response = await fetch(`http://localhost:${port}/tts_to_audio`, {
+                        method: 'POST',
+                        body: formData
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error(`XTTS connection failed (Port ${port}). Make sure XTTS-WebUI is running.`);
+                    }
+                    
+                    const data = await response.json();
+                    
+                    audio.src = `data:audio/wav;base64,${data.audio}`;
+                    audio.style.display = 'block';
+                    audio.play();
+                    
+                    status.textContent = '✓ FERRARI VOICE GENERATED SUCCESSFULLY';
+                    status.classList.remove('active');
+                    
+                    audio.onended = () => {
+                        status.textContent = '⚡ FERRARI MOTOR READY';
+                    };
+                }
+                
+            } catch (error) {
+                status.textContent = '❌ ' + error.message;
+                status.classList.add('error');
+                setTimeout(() => {
+                    status.classList.remove('error', 'active');
+                    status.textContent = '⚡ FERRARI MOTOR READY';
+                }, 3500);
+            } finally {
+                btn.disabled = false;
+                btn.textContent = '🎙️ EXECUTE VOICE GENERATION';
+            }
+        });
+
+        // ========== ACTIVITIES ==========
+        const SPIRITUAL_EXPERIENCES = [
+            {
+                icon: '🌅',
+                title: 'غروب الشمس الروحاني',
+                desc: 'اجلس على رمال التاريخ. أشعل سيجارة. تأمل في حافة الزمن. استمتع مع روحك العليا وأنت تشاهد الشمس تودع الأهرامات في مشهد لا يُنسى.'
+            },
+            {
+                icon: '🐫',
+                title: 'رحلة الجمل عند الغروب',
+                desc: 'اركب الجمل العربي الأصيل في الصحراء مقابل الأهرامات. تجربة ليست مجرد جولة سياحية - بل رحلة عميقة إلى داخل النفس.'
+            },
+            {
+                icon: '🐴',
+                title: 'ركوب الخيل في الصحراء',
+                desc: 'اركب الخيل العربي الأصيل واستكشف رمال الجيزة التاريخية. كل خطوة هي لحظة حقيقية مع التاريخ والأرض القديمة.'
+            },
+            {
+                icon: '🏛️',
+                title: 'سقارة: بوابة الخلود',
+                desc: 'زيارة هرم زوسر المدرج - أقدم بناء حجري ضخم في العالم. تمشَّ على أرض الفراعنة الأوائل في صمت روحاني عميق.'
+            },
+            {
+                icon: '🌙',
+                title: 'ليلة بدوية تحت النجوم',
+                desc: 'معسكر بدوي حقيقي تحت سماء الصحراء الصافية. شاي بالنعناع، موسيقى تقليدية، وحكايات قديمة. نوم مع النجوم.'
+            },
+            {
+                icon: '🧘',
+                title: 'تأمل فرعوني خاص',
+                desc: 'جلسة تأمل خاصة أمام الأهرامات مع معلم روحاني. اتصل بروحك العليا في حضرة آلاف السنين من الحكمة.'
+            },
+            {
+                icon: '📸',
+                title: 'جلسة تصوير فرعونية',
+                desc: 'التقط أجمل اللحظات مع الأهرامات في خلفيتك. جلسة احترافية مع مصور متخصص تخلّد تجربتك الروحانية للأبد.'
+            },
+            {
+                icon: '🍽️',
+                title: 'عشاء فرعوني فاخر',
+                desc: 'تناول العشاء الفاخر على طريقة الفراعنة مع إطلالة بانورامية مباشرة على الأهرامات من Sky Pyramids Hotel.'
+            },
+            {
+                icon: '🎭',
+                title: 'عرض الصوت والضوء',
+                desc: 'شاهد قصة الحضارة المصرية تنبض بالحياة أمام عينيك في عرض مذهل يحكي 5000 سنة من التاريخ العظيم.'
+            },
+            {
+                icon: '🏜️',
+                title: 'مغامرة ATV الصحراوية',
+                desc: 'قيادة مثيرة بالدراجات النارية على الرمال الذهبية اللامتناهية. أدرينالين نقي مع منظر الأهرامات الخالد.'
+            },
+            {
+                icon: '☕',
+                title: 'قهوة بدوية على الرمال',
+                desc: 'اجلس على فرشة بدوية تقليدية. تناول قهوة عربية أصيلة محمصة على الطريقة القديمة. استمع لحكايات الصحراء العريقة.'
+            },
+            {
+                icon: '🎨',
+                title: 'ورشة الخط الهيروغليفي',
+                desc: 'تعلم كتابة اسمك بالهيروغليفية المصرية القديمة مع خبير. احتفظ بقطعة فنية من صنع يدك كتذكار أبدي.'
+            }
+        ];
+
+        function loadActivities() {
+            const grid = document.getElementById('activitiesGrid');
+            grid.innerHTML = '';
+            
+            SPIRITUAL_EXPERIENCES.forEach(activity => {
+                const card = document.createElement('div');
+                card.className = 'activity-card';
+                card.innerHTML = `
+                    <div class="activity-icon">${activity.icon}</div>
+                    <h4 class="activity-title">${activity.title}</h4>
+                    <p class="activity-desc">${activity.desc}</p>
+                `;
+                
+                card.addEventListener('mouseenter', () => {
+                    for (let i = 0; i < 6; i++) {
+                        setTimeout(() => {
+                            const rect = card.getBoundingClientRect();
+                            spawnGlyph(
+                                rect.left + Math.random() * rect.width,
+                                rect.top + Math.random() * rect.height
+                            );
+                        }, i * 90);
+                    }
+                });
+                
+                grid.appendChild(card);
+            });
+        }
+        loadActivities();
+
+        // ========== CONSOLE ==========
+        console.log('%c777 THE RUNNER', 'color: #D4AF37; font-size: 36px; font-weight: 900; text-shadow: 0 0 15px #D4AF37;');
+        console.log('%cFerrari Motor Under Control 🏎️', 'color: #00C6FF; font-size: 20px; font-weight: bold;');
+        console.log('%c𓂀 ابن الهرم انطلق 𓂀', 'color: #D4AF37; font-size: 16px;');
+        console.log('%cMade with ❤️ by Claude.ai for AlArabClub777.com', 'color: #9fb0c0; font-size: 14px;');
+    </script>
+
+</body>
+</html>
+
+we aew building a pyramydi and evryone pass tell here you are part of our team now 𓁹 enjoy the clouding memo ,
 
 = Google drive 
 هذا ملخص للمجلد "777TheRunnerPortal" في 6 نقاط:
@@ -2457,6 +3617,28 @@ uploading ,,,
 آخر نشاط: كان آخر تعديل على المجلد هو اليوم، 17 ديسمبر 2025.
 
 ‏‏الرجوع لهذا المجلد بشكل دوري هو شيء جميل ويأتي إلى تسلسل الذاكرة سوف أقوم بتغذ أو بحق هذا المجلد حتى نقل المجلدات التي من حوله إلى داخل
+
+‏‏هو ايه SSML ‏شكله حاجة جميلة من اللي بتعمل المحادثة يعني بنقدر نولد conversation صحيح الفكرة كانت بسيطة إن أنا أعمل فيديوهات أطلع بها اتكلم مع شخصيتي الرقمية بنتكلم عن مواضيع Whatever Fekra مبدئيا دي فكرة مبدئيا دلوقتي ايه المحتوى اللي حتكلم عندنا محتوى أغاني جدا أنا عندي قناة على ال YouTube
+
+@SharifAlShawish in all socialmedia
+https://$socialmediaplatform$/@sharifalshawish
+https://www.youtube.com/@sharifalshawish
+
+‏‏كانت تجربة جميلة والفكرة هنا إنني أستطيع الآن الظهور السوشي ميديا بأكثر من طريقة رقمية أو عادية عندي فيديوهات كثيرة جدا مسجلة تكفيني الباقي الكوكب تحتاج إلى تنسيق وترتيب وتنظيم وأعاده تسمية ومعرفة محتوى كل فيديو من الفيديوهات كمية كبيرة جميلة ويوجد منها كمية منتجة جاهزةلل للنشر لم أقوم بنشرها تتكلم عن المعابد والسياحة عن حاجة حلوة أنا لا Ajmal الشيء لكنها هي جميلة أنا عندي ذوق بالأشياء ولا أرضي بأي شي يعني، بناءا على ذلك أنا دلوقتي لدي فرصة أخرى على Social ميديا مبدئيا هي حاجة جميلة أنا استمتع بها أستفيد منها Dunya أستفيد منها عرص أستفيد منها Earth إث يعني ليجاسي احنا بني بنشتغل esh2 حاجة عادية الحاجة العادية سهلة السلة دي مش كل الناس بتقدر تشتغل مع يعني الأحوال فيها مكسب لكل الأطراف حتى المشاهدين ودي حاجة أنا بأكد عليها لأنني مش بحاجة إستعطاف مشاهد بالعكس أنا اخدم هو يجيني وديب حنشتغل عليها إن شاء الله عندما نبدأ الحملة الإعلانية واللي هي تتكون من ثلاث كلمات ممكن ترخص الوضع الحالي عشان نكون سهلين ليل وحركات البحث #bitcoin #ai# #Ai7 agents = ai family - the first 0 auto generating frames of cinario ‏بسيطة دي فكرتها إنه احنا ننشئ Script دالة يقوم بإنشاء نصوص مسرحية دلوقتي النصوص المسرحية دي بنعمل لها سياق العائلي المثبت ثابت اللي هي ثوابت العائلية والتقاليد العربية جميلة نخليها معتدلة جدا طبيعية وتكبر العائلة دي هي نفسها منها تلاقي الخادم تلاقي السكرتير تلاقي البتاع Teenager بتاع الزين gen,z  اللي بتتعامل مع الجن أشن الجديدة , gen z 
+gen z ‏دي طبقة مهمة طبقة من الأعمار أطفال دول متفتحين جدا جدا جدا شايفين عينهم ما شاء الله ربنا يهديهم البصيرة كلها منهم صغار حتى أهليهم بيكون يكذب عليهم وهم شايفين الكذب بعيون هم دلوقتي في منهم فئات في الفعل مرتاحة فوق تحت وسط إلى آخره نتواصل معهم بأسلوب هم صار الوكيل بتاع الدراسة ووكيل الرعاية الأطفال ما بين ما بين التخصصين دول في تخصصلل عمر اللي e بيجي في مراهقة بلحق المراهقه نقدر نحكم المنظومة دي حلوة خلاص بنحكي بمبادئ وهي بتكبر وبت تجيها مع معاها بتحكيها المبادئ خلاص أنت مبدأ مبدأ عمل دلوقتي أنا بتكلم عن الوكلاء بتاعنا لأنه في النهاية هنيجي ألاقي نفس عملنا جدول الجدول في بوكسات بوكس في اسم الوكيل من الوكلاء محطوط عليه أوامر بتاعته بيعمل ايه بعدين لوحده    ‏نعمل له نقطة تخزين ثابتة مربوطة بنقطة تخزين متعدد المراحل إلى المرحلة الأم اللي هي نقطة التخزين الجماعية لأن النوال هناك بيتم أخذ المعلومات وغسليها ونشرها وتش Eva ها ها ويعني العمل عليها كما يعمل مع الهدوم إستخلاص الزبدة وتقديمها بطريقة حسب الموقف حسب الموقف
+‏‏دلوقتي ده نظامه كبيرة ما شاء الله دي تستمر لآخر العمر إلى أن نصل إلى العصر الحجري الجديد تبقى تغذي نفسها لأنني اضع بها هنا أيضا مصادر الدخل ذاتية مع توزيع عادل بالأ أرباح ما بين البشر والهلا يتم حكمه بتفويض بتفويض يعني أنا الآن عندما أطلب منك شيء فأنا أفوضك بأنك تقوم بتنفيذ هذا الشيء لي الآن أي أمر يتطلب لتنفيذ هذا الشيء الأساسي الرئيسي الذي أنا فوتك بتنفيذه فهو يعتبر موافقة من عندي تصريح حسب القيم أصول والمبادئ والأصول يعني لما أنا اخبرك تعملي لي كباية شاي جيب لي كباية شاي مش حلوة كل شوي ترجع تقول لي هو أنت عايز كم معلقة سكر أنت عايز الشاب بك كبيرة ولا كباية صغيرة طب أنت عايز شاي من بتاعنا ولا بتاع جارتنا ولا ايه رأيك أعمل لك كابتشينو أو ليمون بالنعناع اختار أحد الخيرين A Op الآن كابتشينو أو ليمون بالنعناع، بيحصل حاليا بيحصل حاليا من قبل الوكلاء الوقت ده بسيط المثل نطلب ضربت بس لما بتيجي بالطبع مشاريع كبيرة أو حتى على مشاريع بسيطة بتاعت الطلاب أنت بتشتت الراحة بتلبس بمية حي يا راجل مش عايز اشرب شاي ههههههههههه ده أنا مش حأقول لك إنك أنت نسيت سياق الحديث أنت نسيت سياق الشاي اللي هو يعترف اعتراف الرئيسي وحتى تلف على الطرف الطرف الطرف أقول لك أنا رايح اشرب شاي .
+
+<img width="1344" height="756" alt="image" src="https://github.com/user-attachments/assets/71279f30-76ec-4e68-b57e-bb7055836b96"
+‏الآن أنا عشان أضيف صور على هذا الملف فقط بحط الرابط اللي الموجودة في الصورة بتعرض صحيح كده يعني أنا لما اجيب بصورة اعملها نسخ من عندي من document اعمل نسخ وآجي أعمل هنا لصق ما بحمل ذاكرة زيادة أو حجم زيادة هو رابط فقط كتابة مضبوطة ويقوم.
+	
+	>==============================]]]pknmjjninjhbighuvg7 hhhhhhhh   hahahaha
+‏‏يقولون أن الضحك ما يجي معدي ضحك يعني إذا أنت رأيت أشخاص يضحكون تضحك بلا سبب يعني تذهب معهم في الموجة أو تركب معهم هذه الشحنة أو الموجة مست تثاوب تثاءب مودي بطريقة لا يوجد لها تفسير نستطيع أن نضع هذا السحر داخل العين ترا شيء يعكس شيء آخر فكرة طول يا باشا تزبط لانه في لوحة الموناليزا وهلا بتكون Fanta بتلاقي اللوحة بت لحق وانت ماشي يعني أنت إذا بتشوف اللوحة من الجنب أو بتشوف من الق من الخلف من يعني بتلف بتلف معاك عن طريق ال فوق عن طريق الألوان تركيب الألوان متراص مثل Grid أنت
+‏‏تصبح هذه مثل قصة 1000 ليلة ولينا فإن الآن استويت كما تستوي الفرخ المشوية هههههه سأ غلق مشغل ولا المصنع اللي حلبة السباق ده تشغيل
+‏‏إعادة تشغيل الموقع عندما أغلق أنا لانام أنتم لا تنامون من أجل هذا ما زال الموقع غير شغال لانه يشتغل مرة واحدة ولا يتصل لا يفصل الاتصال وأنا أكون نايم تصبحون على ما تتمنون .
+
+‏‏أمر التنفيذ بتفويض حسب الأصول ونتفق عليه، عايز أرخص بأمر يفهمون جميع اللي موجودين هنا بس يمر عليه ببساطة طبيعي إنك تسألني كم معلقة سكر بدك لأنه ده سؤال بيسأل طبيعي ده ده جدا طبيعي بعد كده خلاص ما ظلك أسئلة تركيب لي الشاي وبس في حالة التعامل معايا أنا كشخص دلوقتي في ناس بدون خيارات اديهم المنيو كامل إذا كنت هتعرض وهناك الفائدة منها""
+
+‏‏اسمع يا صديقي عشان أقول لك ياها من الآخر إنك أنت وصلت وتقرأ له يعني أنت جاي تقدم خدمة الخدمة دي معلومة عايزك إذا سمحت تثبت ذلك إزاي بتدخل على الرابط بتاع متصفح الجداول ال X Excel Sed تمام الحضور
 
 https://drive.google.com/drive/folders/1xMNWGN6K9A0ZuNNug3OEoQXEYLuv4_Wn?usp=sharing
 https://drive.google.com/drive/folders/1xMNWGN6K9A0ZuNNug3OEoQXEYLuv4_Wn
