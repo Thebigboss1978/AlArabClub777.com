@@ -3647,33 +3647,3 @@ https://github.com/copilot/share/822003be-40c0-8827-b810-2000a0fb40b5
 https://drive.google.com/drive/folders/1xMNWGN6K9A0ZuNNug3OEoQXEYLuv4_Wn?usp=sharing
 https://drive.google.com/drive/folders/1xMNWGN6K9A0ZuNNug3OEoQXEYLuv4_Wn
 eof
-## ARENA_INPUT (OFFICIAL ENTRY POINT)
-
-Purpose:
-This block is the ONLY place where new text is introduced.
-Anything written here is considered an intentional input to The Runner.
-
-### INPUT
-Write directly below this line:
-
-> [TEXT STARTS HERE]
-
----
-
-### AUTO-RECORD
-- Date: YYYY-MM-DD HH:MM
-- Source: Human | Agent | External
-- Mode: TALK | NOTE | COMMAND
-- Linked Files: (optional)
-- Status: STORED
-
-Content:
-> [THE SAME TEXT IS COPIED HERE WHEN SAVED]
-
----
-
-## STATE (LOCKED)
-
-- Last Update: YYYY-MM-DD HH:MM
-- Total Entries: ###
-- System Status: LISTENING
