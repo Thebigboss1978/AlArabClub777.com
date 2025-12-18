@@ -1,0 +1,49 @@
+{
+  "pages": [
+    {
+      "id": 1,
+      "name": "Home",
+      "path": "/",
+      "title": "Al Arab Club - Home",
+      "description": "Welcome to Al Arab Club"
+    },
+    {
+      "id": 2,
+      "name": "About",
+      "path": "/about",
+      "title": "About Us",
+      "description": "Learn more about Al Arab Club"
+    },
+    {
+      "id": 3,
+      "name": "Services",
+      "path": "/services",
+      "title": "Our Services",
+      "description": "Explore our services"
+    },
+    {
+      "id": 4,
+      "name": "Contact",
+      "path": "/contact",
+      "title": "Contact Us",
+      "description": "Get in touch with us"
+    },
+    {
+      "id": 5,
+      "name": "News",
+      "path": "/news",
+      "title": "Latest News",
+      "description": "Stay updated with our latest news"
+    }
+  ],
+  "navigation": {
+    "primary": [1, 2, 3, 4, 5],
+    "footer": [1, 2, 4],
+    "header": [1, 2, 3, 4]
+  },
+  "metadata": {
+    "created": "2025-12-18T02:21:48Z",
+    "version": "1.0",
+    "author": "Thebigboss1978"
+  }
+}
