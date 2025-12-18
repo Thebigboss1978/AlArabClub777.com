@@ -3646,4 +3646,11 @@ https://github.com/copilot/share/822003be-40c0-8827-b810-2000a0fb40b5
 
 https://drive.google.com/drive/folders/1xMNWGN6K9A0ZuNNug3OEoQXEYLuv4_Wn?usp=sharing
 https://drive.google.com/drive/folders/1xMNWGN6K9A0ZuNNug3OEoQXEYLuv4_Wn
+
+
+7777777
+
+‏‏يعني ده أنت لو صرت إذا وصلت قرأت لحد هنا بتفهم إنه دلوقتي أنا لما بقول عايز أعمل واجهة في ذكاء اصطناعي لا أعرف frontend فقط ‏أعرف أنها ضخمة ضخمة مضخمة أي أنه تم تضخها اسمها Backend ‏عايز شوية أكواد تكون معمولة بطريقة صحيحة تت زلت في أي حاجة محترمة كم مرة عايزين نقطعها لألف قطعة Front Backo وسط مش عارف أي لعبة كرة من المفروض أن يقوم هذا الملف بتولي كامل المشروع. 
+
+
 eof
