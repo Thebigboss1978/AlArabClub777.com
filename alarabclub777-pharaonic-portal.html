@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⟁ AlArab Club 777 | بوابة الروح الفرعونية</title>
+    
+    <!-- Meta Tags -->
+    <meta name="description" content="نادي العرّاب 777 - رحلات سفاري صحراوية، جولات الأهرامات، بوابة الروح السباعية">
+    <meta property="og:title" content="⟁ AlArab Club 777 | The Pharaonic Spirit">
+    <meta property="og:description" content="Desert Adventures • Pyramid Tours • Spirit Portal">
+    <meta property="og:type" content="website">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;400;600;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --pharaoh-gold: #D4AF37;
+            --desert-sand: #EDC967;
+            --night-sky: #0a0a0a;
+            --spirit-cyan: #00FF99;
+            --portal-blue: #00DDFF;
+            --energy-purple: #9D4EDD;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: #000;
+            color: var(--spirit-cyan);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated Background */
+        .cosmic-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(157, 78, 221, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(0, 255, 153, 0.1) 0%, transparent 50%),
+                #0a0a0a;
+        }
+
+        .hieroglyph-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0.05;
+            font-family: monospace;
+            font-size: 20px;
+            color: var(--pharaoh-gold);
+            overflow: hidden;
+        }
+
+        .glyph {
+            position: absolute;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(180deg); }
+        }
+
+        /* Main Container */
+        .container {
+            position: relative;
+            z-index: 10;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            padding: 3rem 0;
+            position: relative;
+        }
+
+        .logo-symbol {
+            font-size: 5rem;
+            color: var(--spirit-cyan);
+            animation: pulse 3s infinite;
+            text-shadow: 0 0 30px var(--spirit-cyan);
+        }
+
+        @keyframes pulse {
+            0%, 100% { color: var(--spirit-cyan); transform: scale(1); }
+            50% { color: var(--portal-blue); transform: scale(1.05); }
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin: 1rem 0;
+            background: linear-gradient(135deg, var(--pharaoh-gold), var(--desert-sand), var(--pharaoh-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            color: var(--spirit-cyan);
+            opacity: 0.8;
+            margin-top: 0.5rem;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .nav-btn {
+            padding: 0.8rem 1.5rem;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid var(--pharaoh-gold);
+            color: var(--pharaoh-gold);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .nav-btn:hover {
+            background: var(--pharaoh-gold);
+            color: #000;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
+        }
+
+        /* Section Cards */
+        .sections-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .section-card {
+            background: rgba(0, 255, 153, 0.05);
+            border: 1px solid rgba(0, 255, 153, 0.2);
+            border-radius: 15px;
+            padding: 2rem;
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 153, 0.1), transparent);
+            transition: 0.5s;
+        }
+
+        .section-card:hover::before {
+            left: 100%;
+        }
+
+        .section-card:hover {
+            border-color: var(--spirit-cyan);
+            box-shadow: 0 0 30px rgba(0, 255, 153, 0.3);
+            transform: translateY(-10px);
+        }
+
+        .section-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            filter: drop-shadow(0 0 10px currentColor);
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: var(--pharaoh-gold);
+            margin-bottom: 0.8rem;
+            font-weight: 700;
+        }
+
+        .section-desc {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .section-items {
+            list-style: none;
+            padding: 0;
+        }
+
+        .section-items li {
+            padding: 0.5rem 0;
+            color: var(--spirit-cyan);
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+
+        .section-items li::before {
+            content: '𓂀 ';
+            margin-right: 0.5rem;
+        }
+
+        /* Spirit Portal Section (Special) */
+        .spirit-portal {
+            background: rgba(157, 78, 221, 0.1);
+            border: 2px solid var(--energy-purple);
+            position: relative;
+        }
+
+        .spirit-portal::after {
+            content: '🦇';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 2rem;
+            opacity: 0.3;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            text-align: center;
+            padding: 4rem 2rem;
+            margin-top: 3rem;
+            background: rgba(212, 175, 55, 0.05);
+            border-radius: 20px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .contact-title {
+            font-size: 2.5rem;
+            color: var(--pharaoh-gold);
+            margin-bottom: 1.5rem;
+        }
+
+        .whatsapp-btn {
+            display: inline-block;
+            padding: 1.2rem 2.5rem;
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            color: white;
+            font-size: 1.3rem;
+            font-weight: 700;
+            border-radius: 15px;
+            text-decoration: none;
+            transition: all 0.3s;
+            margin-top: 1rem;
+        }
+
+        .whatsapp-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 40px rgba(37, 211, 102, 0.5);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(0, 255, 153, 0.2);
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            .logo-symbol { font-size: 3.5rem; }
+            .sections-grid { grid-template-columns: 1fr; }
+        }
+
+        /* Loading Animation */
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            color: var(--spirit-cyan);
+            font-size: 1.2rem;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(0, 255, 153, 0.3);
+            border-top-color: var(--spirit-cyan);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Cosmic Background -->
+    <div class="cosmic-bg"></div>
+    
+    <!-- Hieroglyph Layer -->
+    <div class="hieroglyph-layer" id="hieroglyphLayer"></div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="logo-symbol">⟁</div>
+            <h1>AlArab Club 777</h1>
+            <p class="tagline">بوابة الروح الفرعونية | The Pharaonic Spirit Portal</p>
+        </header>
+
+        <!-- Navigation -->
+        <nav>
+            <a href="#safari" class="nav-btn">🐫 Safari</a>
+            <a href="#pyramids" class="nav-btn">𓂀 Pyramids</a>
+            <a href="#spirit" class="nav-btn">𓋹 Spirit Portal</a>
+            <a href="#booking" class="nav-btn">📲 Booking</a>
+            <a href="#partners" class="nav-btn">🏺 Partners</a>
+        </nav>
+
+        <!-- Sections Grid -->
+        <div class="sections-grid">
+            <!-- 01 Safari -->
+            <div class="section-card" id="safari">
+                <div class="section-icon">𓃰</div>
+                <h2 class="section-title">Desert Adventures</h2>
+                <p class="section-desc">
+                    اكتشف الصحراء الساحرة مع مغامراتنا الفريدة
+                </p>
+                <ul class="section-items">
+                    <li>Desert Safari ⛰️ - رحلة في الرمال</li>
+                    <li>Camel Ride 🐫 - ركوب مع الأقدمين</li>
+                    <li>Quad Bike 🏍️ - سرعة الفراعنة</li>
+                </ul>
+            </div>
+
+            <!-- 02 Pyramids -->
+            <div class="section-card" id="pyramids">
+                <div class="section-icon">𓂀</div>
+                <h2 class="section-title">Timeless Wonders</h2>
+                <p class="section-desc">
+                    عجائب الأهرامات الخالدة بين النهار والليل
+                </p>
+                <ul class="section-items">
+                    <li>Day Tour ☀️ - نور رع</li>
+                    <li>Night Experience 🌙 - أسرار النجوم</li>
+                    <li>Hidden Spots 🧿 - زوايا الطاقة</li>
+                </ul>
+            </div>
+
+            <!-- 03 Spirit Portal (Special) -->
+            <div class="section-card spirit-portal" id="spirit">
+                <div class="section-icon">𓋹</div>
+                <h2 class="section-title">بوابة الروح السباعية</h2>
+                <p class="section-desc">
+                    البوابة المقدسة - دخول مشروط للأرواح المستعدة
+                </p>
+                <ul class="section-items">
+                    <li>Dendera Temple 🏛️ - معبد + بوابات 3D</li>
+                    <li>Sound Healing 🔊 - تردد 777Hz</li>
+                    <li>Energy Gates 🌌 - بوابات الطاقة</li>
+                    <li>Soul Scripts 📜 - نصوص الطقوس</li>
+                    <li>Guardian Gate 🦇 - البوابة المخفية</li>
+                </ul>
+            </div>
+
+            <!-- 04 Booking -->
+            <div class="section-card" id="booking">
+                <div class="section-icon">𓃠</div>
+                <h2 class="section-title">Offers & Gate Access</h2>
+                <p class="section-desc">
+                    احجز الآن واحصل على بركة الفراعنة 777
+                </p>
+                <ul class="section-items">
+                    <li>Pharaoh's 777 Blessing 🏷️</li>
+                    <li>WhatsApp Contact 📲</li>
+                    <li>Special Discounts ✨</li>
+                </ul>
+            </div>
+
+            <!-- 05 Partners -->
+            <div class="section-card" id="partners">
+                <div class="section-icon">𓎛</div>
+                <h2 class="section-title">Community Grid</h2>
+                <p class="section-desc">
+                    شبكة نزلة السمان - شركاء الحارس
+                </p>
+                <ul class="section-items">
+                    <li>Bazaars 🏺 - أسواق نزلة السمان</li>
+                    <li>Restaurants 🍽️ - نكهات الهرم</li>
+                    <li>Guest Houses 🛏️ - حراس الراحة</li>
+                </ul>
+            </div>
+
+            <!-- 06 Media Center -->
+            <div class="section-card">
+                <div class="section-icon">𓊽</div>
+                <h2 class="section-title">Memory Scrolls</h2>
+                <p class="section-desc">
+                    لفائف الذاكرة المقدسة
+                </p>
+                <ul class="section-items">
+                    <li>HD Photos 📸 - لقطات مقدسة</li>
+                    <li>Videos 🎞️ - لفائف سينمائية</li>
+                    <li>Voiceovers 🎤 - دعوات منطوقة</li>
+                </ul>
+            </div>
+
+            <!-- 07 Family Portal -->
+            <div class="section-card">
+                <div class="section-icon">𓇌</div>
+                <h2 class="section-title">Layered Realms</h2>
+                <p class="section-desc">
+                    عوالم متعددة الطبقات
+                </p>
+                <ul class="section-items">
+                    <li>Layer 1 👶 - المنطقة الملائكية</li>
+                    <li>Layer 2 🌠 - بوابة Soul GPT</li>
+                    <li>Audio Journey 🎧 - رحلة صوتية</li>
+                </ul>
+            </div>
+
+            <!-- 08 AI Network -->
+            <div class="section-card">
+                <div class="section-icon">𓆃</div>
+                <h2 class="section-title">Awakening Systems</h2>
+                <p class="section-desc">
+                    أنظمة الصحوة الرقمية
+                </p>
+                <ul class="section-items">
+                    <li>Strategy Docs 📚 - لفائف الرؤية</li>
+                    <li>Trend Tracking 📈 - خريطة النجوم</li>
+                    <li>Press Kits 🗞️ - أرشيف 777</li>
+                </ul>
+            </div>
+
+            <!-- 09 Moral AI -->
+            <div class="section-card">
+                <div class="section-icon">𓆑</div>
+                <h2 class="section-title">Conscious Codes</h2>
+                <p class="section-desc">
+                    أكواد الوعي الجماعي
+                </p>
+                <ul class="section-items">
+                    <li>Awareness Design 🧠 - UX الروح</li>
+                    <li>AI for Justice 🫱 - الذكاء للعدالة</li>
+                    <li>Ethical Protocols ⚖️ - الامتثال الروحي</li>
+                </ul>
+            </div>
+
+            <!-- 10 Matrix 777 -->
+            <div class="section-card spirit-portal">
+                <div class="section-icon">𓊉</div>
+                <h2 class="section-title">The Inner Temple</h2>
+                <p class="section-desc">
+                    المعبد الداخلي - المستوى الأعمق
+                </p>
+                <ul class="section-items">
+                    <li>Inner Portals 🔑 - مفاتيح الأبعاد</li>
+                    <li>Sacred HTML 💾 - HTML المقدس</li>
+                    <li>Guardian Signs 🛡️ - رموز الحراسة</li>
+                    <li>Prophecies 🔮 - أختام النبوءة</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Contact Section -->
+        <div class="contact-section">
+            <h2 class="contact-title">🔮 تواصل مع الحارس 🔮</h2>
+            <p style="color: rgba(255, 255, 255, 0.8); font-size: 1.2rem; margin-bottom: 1.5rem;">
+                للحجز والاستفسارات - متاح 24/7
+            </p>
+            <a href="https://wa.me/201002446123?text=مرحباً، أريد الاستفسار عن AlArab Club 777" 
+               class="whatsapp-btn" target="_blank">
+                📱 WhatsApp: +20 100 244 6123
+            </a>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <p>⟁ AlArab Club 777 | The Pharaonic Spirit Portal</p>
+            <p style="margin-top: 0.5rem; opacity: 0.6;">
+                نزلة السمان • الجيزة • مصر
+            </p>
+            <p style="margin-top: 1rem; font-size: 0.9rem;">
+                Version 7.0 | By بيبا ✨
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // Generate floating hieroglyphs
+        const hieroglyphs = ['𓂀', '𓆣', '𓋹', '𓁹', '𓃰', '𓎛', '𓊽', '𓇌', '𓆃', '𓆑', '𓊉', '⟁'];
+        const layer = document.getElementById('hieroglyphLayer');
+        
+        for (let i = 0; i < 30; i++) {
+            const glyph = document.createElement('div');
+            glyph.className = 'glyph';
+            glyph.textContent = hieroglyphs[Math.floor(Math.random() * hieroglyphs.length)];
+            glyph.style.left = Math.random() * 100 + '%';
+            glyph.style.top = Math.random() * 100 + '%';
+            glyph.style.animationDelay = Math.random() * 20 + 's';
+            glyph.style.animationDuration = (15 + Math.random() * 10) + 's';
+            layer.appendChild(glyph);
+        }
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            });
+        });
+
+        // Console message
+        console.log('%c⟁ AlArab Club 777', 'color: #00FF99; font-size: 32px; font-weight: bold;');
+        console.log('%cThe Pharaonic Spirit Portal | By بيبا ✨', 'color: #D4AF37; font-size: 16px;');
+    </script>
+</body>
+</html>

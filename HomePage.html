@@ -1,0 +1,177 @@
+<! DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>النادي العربي 777 - الرئيسية</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Cairo', Arial, sans-serif;
+            background:  linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 50px;
+            padding: 40px 20px;
+        }
+        
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .pages-grid {
+            display: grid;
+            grid-template-columns:  repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+        
+        .page-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow:  0 10px 30px rgba(0,0,0,0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .page-card:hover {
+            transform: translateY(-10px);
+            box-shadow:  0 20px 40px rgba(0,0,0,0.3);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .page-icon {
+            font-size: 3.5em;
+            margin-bottom: 15px;
+        }
+        
+        .page-name {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .page-description {
+            font-size: 0.95em;
+            opacity: 0.7;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            background: white;
+            border-radius: 15px;
+            color: #666;
+        }
+        
+        .empty-state h2 {
+            font-size: 1.8em;
+            margin-bottom: 10px;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: white;
+            font-size: 1.2em;
+        }
+        
+        .footer {
+            text-align: center;
+            color: white;
+            padding: 20px;
+            opacity: 0.8;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🌟 النادي العربي 777</h1>
+        <p>مرحباً بك في عالم من التجارب الفريدة</p>
+    </div>
+
+    <div class="container">
+        <div id="pagesContainer" class="pages-grid">
+            <div class="loading">جاري تحميل الصفحات...</div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>© 2025 النادي العربي 777 - جميع الحقوق محفوظة</p>
+    </div>
+
+    <script>
+        async function loadPages() {
+            try {
+                const response = await fetch('pages.json');
+                const data = await response.json();
+                const container = document.getElementById('pagesContainer');
+                
+                if (! data.pages || data.pages. length === 0) {
+                    container.innerHTML = `
+                        <div class="empty-state" style="grid-column: 1 / -1;">
+                            <h2>❌ لا توجد صفحات متاحة</h2>
+                            <p>سيتم إضافة المزيد من الصفحات قريباً</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                container.innerHTML = '';
+                data.pages.forEach(page => {
+                    const card = document.createElement('a');
+                    card.href = page.file;
+                    card.className = 'page-card';
+                    card.innerHTML = `
+                        <div class="page-icon">${page.icon || '📄'}</div>
+                        <div class="page-name">${page.name}</div>
+                        <div class="page-description">${page.description || ''}</div>
+                    `;
+                    container.appendChild(card);
+                });
+            } catch (error) {
+                console. error('خطأ في تحميل الصفحات:', error);
+                document.getElementById('pagesContainer').innerHTML = `
+                    <div class="empty-state" style="grid-column: 1 / -1;">
+                        <h2>⚠️ حدث خطأ</h2>
+                        <p>لم نتمكن من تحميل الصفحات</p>
+                    </div>
+                `;
+            }
+        }
+        
+        window.addEventListener('load', loadPages);
+    </script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+{
+  "pages": [
+    {
+      "name": "نافذة سيناء",
+      "file": "nazlet-Elsaman. html",
+      "icon": "🏜️",
+      "description": "تجربة سيناء الخلابة"
+    },
+    {
+      "name": "أهرام الجيزة",
+      "file": "pyramids expiriance . html",
+      "icon": "🔺",
+      "description": "اكتشف عظمة الأهرام"
+    },
+    {
+      "name": "بوابة NFT",
+      "file": "NFTgate.html",
+      "icon":  "🎨",
+      "description": "عالم الفن الرقمي"
+    },
+    {
+      "name": "المعرض",
+      "file": "gallery.html",
+      "icon":  "📸",
+      "description": "صور رائعة"
+    },
+    {
+      "name": "الحجز",
+      "file": "booking.html",
+      "icon":  "🎫",
+      "description": "احجز رحلتك الآن"
+    },
+    {
+      "name": "الدردشة",
+      "file":  "chat.html",
+      "icon": "💬",
+      "description": "تحدث معنا"
+    }
+  ]
+}
