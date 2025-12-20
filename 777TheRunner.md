@@ -5564,6 +5564,9 @@ Noise جانبي إنساني
 
 ٠٠٠٠
 
+https://raw.githubusercontent.com/Thebigboss1978/AlArabClub777.com/refs/heads/main/Ai7%20%F0%9F%91%81%EF%B8%8F%E2%80%8D%F0%9F%97%A8%EF%B8%8F%20%7C%20The%20Runner.md
+
+https://github.com/Thebigboss1978/AlArabClub777.com/blob/main/777TheRunner.md
 
 ‏تم وضع Cod الوكيل برابط خاص عندما يعتمد الوكيل النهائي ممكن أن نرجع هنا إذا أردنا يعني تفضية مساحة أنا بالنسبة لي لا تفرق عندي لا أريد تحذف شيء لكن هذا يسمح لي بإضافة المزيد يعني إذا في طريقة استطيع إضافة المزيد بدون أثر على هذا الملف الذي وصل الآن 5568 سطر حبيبي
 
