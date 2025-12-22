@@ -687,5 +687,146 @@ const ARRAAB_CUSTOM_VOICE_ID = null;
 
         lucide.createIcons();
     </script>
+    <script>
+/* ======================================================
+   🧠 ALARAB 777 — AGENT CORE (MERGED / NO UI CHANGE)
+   ====================================================== */
+
+/* ---------- NAMESPACE ISOLATION ---------- */
+window.ALARAB777 = window.ALARAB777 || {};
+
+/* ---------- CONFIG ---------- */
+ALARAB777.GEMINI_MODEL = "gemini-2.5-flash";
+
+/* placeholders فقط — المفاتيح من .env */
+ALARAB777.GEMINI_API_KEY = "";
+ALARAB777.ELEVENLABS_API_KEY = "";
+ALARAB777.VOICE_ID = "Custom_AlArab_Voice_ID";
+
+/* ---------- MEMORY (NO CONFLICT) ---------- */
+ALARAB777.MEMORY_KEY = "AlArab_777_Memory";
+
+ALARAB777.Memory = {
+    load() {
+        try {
+            return JSON.parse(localStorage.getItem(ALARAB777.MEMORY_KEY)) || [];
+        } catch {
+            return [];
+        }
+    },
+    save(data) {
+        localStorage.setItem(ALARAB777.MEMORY_KEY, JSON.stringify(data));
+    },
+    clear() {
+        localStorage.removeItem(ALARAB777.MEMORY_KEY);
+    }
+};
+
+/* ---------- STATE ---------- */
+ALARAB777.chatHistory = ALARAB777.Memory.load();
+
+/* ---------- AGENT BRAIN ---------- */
+ALARAB777.Agent = {
+    async ask(prompt) {
+        ALARAB777.chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+
+        const payload = {
+            contents: ALARAB777.chatHistory,
+            systemInstruction: {
+                parts: [{
+                    text: "أنت كيان العرّاب 777. حكيم، مختصر، عميق. حد أقصى 5 جمل. تخاطب المستخدم كصديق."
+                }]
+            }
+        };
+
+        const res = await fetch(
+            `https://generativelanguage.googleapis.com/v1beta/models/${ALARAB777.GEMINI_MODEL}:generateContent?key=${ALARAB777.GEMINI_API_KEY}`,
+            {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            }
+        );
+
+        const data = await res.json();
+        const reply =
+            data?.candidates?.[0]?.content?.parts?.[0]?.text ||
+            "العرّاب يرى الضباب الآن… ٧٧٧";
+
+        ALARAB777.chatHistory.push({ role: "model", parts: [{ text: reply }] });
+        ALARAB777.Memory.save(ALARAB777.chatHistory);
+
+        return reply;
+    }
+};
+
+/* ---------- VOICE (HOOKED TO EXISTING PLAYER) ---------- */
+ALARAB777.speak = async function (text) {
+    if (
+        !window.isTTSActive ||
+        !ALARAB777.ELEVENLABS_API_KEY ||
+        ALARAB777.VOICE_ID === "Custom_AlArab_Voice_ID"
+    ) return;
+
+    const res = await fetch(
+        `https://api.elevenlabs.io/v1/text-to-speech/${ALARAB777.VOICE_ID}`,
+        {
+            method: "POST",
+            headers: {
+                "Accept": "audio/mpeg",
+                "Content-Type": "application/json",
+                "xi-api-key": ALARAB777.ELEVENLABS_API_KEY
+            },
+            body: JSON.stringify({
+                text,
+                model_id: "eleven_multilingual_v2"
+            })
+        }
+    );
+
+    const audio = await res.blob();
+    ttsAudioPlayer.src = URL.createObjectURL(audio);
+    ttsAudioPlayer.play();
+};
+
+/* ---------- BRIDGE WITH EXISTING UI ---------- */
+/* نركّب الوكيل الجديد بدون كسر handleSend القديم */
+
+window._handleSend_original = window.handleSend;
+
+window.handleSend = async function () {
+    if (window.isSending) return;
+
+    const prompt = userInput.value.trim();
+    if (!prompt) return;
+
+    addMessage(prompt, 'user');
+    userInput.value = '';
+    userInput.style.height = 'auto';
+
+    setInterfaceState(true);
+
+    try {
+        const reply = await ALARAB777.Agent.ask(prompt);
+        addMessage(reply, 'model');
+        if (window.isTTSActive) {
+            await ALARAB777.speak(reply);
+        }
+    } catch (e) {
+        addMessage("خطأ في نواة العرّاب 777.", 'system');
+        console.error(e);
+    }
+
+    setInterfaceState(false);
+};
+
+/* ---------- INIT MEMORY RENDER ---------- */
+window.addEventListener("load", () => {
+    if (ALARAB777.chatHistory.length === 0) return;
+    ALARAB777.chatHistory.forEach(m => {
+        addMessage(m.parts[0].text, m.role === "user" ? "user" : "model");
+    });
+});
+</script>
 </body>
 </html>
