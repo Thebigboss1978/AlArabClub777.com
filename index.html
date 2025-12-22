@@ -198,7 +198,7 @@
         
         <div class="p-6 text-center border-b border-cyan-500/20 header-layer">
             <div id="livingHeadWrapper" class="living-head-wrapper w-32 h-32 mx-auto mb-4 rounded-full bg-gradient-to-br from-cyan-500/20 to-blue-500/20 flex items-center justify-center overflow-hidden">
-                <img id="arraabImage" src="https://placehold.co/128x128/000/fff?text=Arraab" alt="العرّاب" class="w-full h-full object-cover"/>
+                <img id="AlArabImage" src="https://placehold.co/128x128/000/fff?text=AlArab" alt="العرّاب" class="w-full h-full object-cover"/>
             </div>
             <h1 class="text-3xl font-bold cyan-glow mb-2">العرّاب 777</h1>
             <p class="text-cyan-300/70 text-sm">AlArab GPT-7 Liquid Glass</p>
@@ -294,7 +294,7 @@
 
 const GEMINI_API_KEY = null;
 const ELEVENLABS_API_KEY = null;
-const ARRAAB_CUSTOM_VOICE_ID = null;
+const AlArab_CUSTOM_VOICE_ID = null;
 
         // =================================================================
         
@@ -311,12 +311,12 @@ const ARRAAB_CUSTOM_VOICE_ID = null;
         // ====================== HISTORY MANAGEMENT (الذاكرة) ======================
         
         function saveHistory() {
-            localStorage.setItem('arraab_chat_history', JSON.stringify(chatHistory));
+            localStorage.setItem('AlArab_chat_history', JSON.stringify(chatHistory));
             addMessage('تم حفظ الذاكرة (سجل الدردشة) بنجاح. 💾', 'system');
         }
 
         function loadHistory() {
-            const savedHistory = localStorage.getItem('arraab_chat_history');
+            const savedHistory = localStorage.getItem('AlArab_chat_history');
             if (savedHistory) {
                 try {
                     const loadedHistory = JSON.parse(savedHistory);
@@ -335,7 +335,7 @@ const ARRAAB_CUSTOM_VOICE_ID = null;
                     
                 } catch (e) {
                     console.error("Failed to load or parse history:", e);
-                    localStorage.removeItem('arraab_chat_history'); 
+                    localStorage.removeItem('AlArab_chat_history'); 
                     clearChat(false, false); 
                 }
             } else {
@@ -351,7 +351,7 @@ const ARRAAB_CUSTOM_VOICE_ID = null;
             chatHistory = [];
             
             if (deleteStored) { 
-                localStorage.removeItem('arraab_chat_history');
+                localStorage.removeItem('AlArab_chat_history');
                 if (showPrompt) {
                     addMessage('تم صدفة اللقا. 🗑️ ابدأ صفحة جديدة.', 'system');
                 }
@@ -383,9 +383,9 @@ const ARRAAB_CUSTOM_VOICE_ID = null;
         }
 
         async function speakText(text) {
-            if (!isTTSActive || !ELEVENLABS_API_KEY || ARRAAB_CUSTOM_VOICE_ID === "Custom_Arraab_Voice_ID") {
-                if (ARRAAB_CUSTOM_VOICE_ID === "Custom_Arraab_Voice_ID") {
-                    console.warn("TTS Disabled: Please update ARRAAB_CUSTOM_VOICE_ID with your custom voice ID.");
+            if (!isTTSActive || !ELEVENLABS_API_KEY || AlArab_CUSTOM_VOICE_ID === "Custom_AlArab_Voice_ID") {
+                if (AlArab_CUSTOM_VOICE_ID === "Custom_AlArab_Voice_ID") {
+                    console.warn("TTS Disabled: Please update AlArab_CUSTOM_VOICE_ID with your custom voice ID.");
                 }
                 return;
             }
@@ -402,7 +402,7 @@ const ARRAAB_CUSTOM_VOICE_ID = null;
                 "model_id": "eleven_multilingual_v2", 
                 "voice_settings": { "stability": 0.5, "similarity_boost": 0.5 }
             };
-            const url = `https://api.elevenlabs.io/v1/text-to-speech/${ARRAAB_CUSTOM_VOICE_ID}`;
+            const url = `https://api.elevenlabs.io/v1/text-to-speech/${AlArab_CUSTOM_VOICE_ID}`;
             
             try {
                 const response = await fetch(url, { method: 'POST', headers: headers, body: JSON.stringify(data) });
@@ -644,7 +644,7 @@ const ARRAAB_CUSTOM_VOICE_ID = null;
                  mainAppContainer.style.transform = 'translateZ(50px)';
              }
              
-             const hasHistory = localStorage.getItem('arraab_chat_history');
+             const hasHistory = localStorage.getItem('AlArab_chat_history');
              if (hasHistory) {
                  // Using custom modal instead of prompt/confirm
                  showCustomModal("العرّاب لديه ذاكرة محفوظة. هل تريد استئناف المحادثة؟", () => {
