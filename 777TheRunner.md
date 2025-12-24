@@ -1,4 +1,66 @@
 #you are in Ai7 Space , 𓁹
+All files are saved on google drive @ the portal 
+
+
+أهلاً بك، يسعدني مساعدتك في تحليل وتلخيص محتويات هذا المجلد.
+
+مجلد **777TheRunnerPortal** هو مستودع رقمي ضخم، يضم أكثر من 540 ملفًا، وقد تم تحليل 60 ملفًا منها لتوفير هذا الملخص. تتنوع الملفات بشكل كبير بين الصور والملفات غير المعروفة وملفات الأكواد البرمجية (لغات، HTML، نصوص)، مما يشير إلى أنه يمثل قاعدة عمل متكاملة لمشروع تكنولوجي-سياحي.
+
+### نظرة عامة على محتوى المجلد
+
+يركز المجلد على مشروع "العرّاب كلوب 777" (AlArab Club 777) و "777 The Runner"، وهو عبارة عن منصة رقمية ونظام وكيل ذكي متكامل، بالإضافة إلى محتوى متعلق بخدمات الضيافة والسياحة في منطقة الأهرامات.
+
+### المواضيع الرئيسية في المجلد
+
+#### 1\. بنية نظام الذكاء الاصطناعي والوكلاء (AI/Agents Architecture)
+
+تحتوي الملفات على تفاصيل معمارية واضحة لتشغيل نظام العرّاب، ويعتبر هذا الموضوع هو الأعمق تقنيًا في المجلد:
+
+  * **صندوق المعرفة الرئيسي (`# 📦 صندوقbox المعرفة...`)**: يُوصف هذا الملف بأنه "المستودع التشغيلي" و "العقل الخلفي" الذي يعتمد عليه نظام **العرّاب GPT-7**. ويحتوي على الأوامر، القواعد، الهويات، وكلمات السر الرمزية للوكلاء السبعة.
+  * **خطة البناء الموحد (`777TheRunnerOLD.md` و `777TheRunner23dec01.md`)**: تتضمن خطة تنفيذية واضحة لإنشاء **موقع إلكتروني (Web Site) وتطبيق جوال (Mobile App)** من قاعدة كود واحدة باستخدام تقنيات **Next.js** و **PWA/Capacitor** لضمان تحديث واحد ينعكس على الكل.
+  * **البنية العامة للنظام**: يتم تحديد المكونات الأساسية للنظام على النحو التالي:
+      * **القلب (CORE)**: ملف `HIM/core.py`.
+      * **الوكلاء (AGENTS)**: "The Seven" (الوكلاء السبعة).
+      * **الذاكرة (MEMORY)**: قاعدة بيانات `memory.db`.
+      * **المزامنة (SYNC)**: Google Drive / Verse.
+
+#### 2\. حلول تقنية متخصصة (Specialized Tech Solutions)
+
+يحتوي المجلد على وثيقة تقنية مفصلة لنظام صوتي عالي الأداء:
+
+  * **نظام الترجمة الصوتية الفورية (`نظام ترجمة صوتية فورية...pdf`)**: يقدم دليلاً كاملاً لإنشاء نظام ترجمة صوتية فورية متكامل وعالي الأداء على أجهزة MacBook M1 باستخدام مكتبة **Whisper** (بالتحديد Lightning Whisper MLX) مع دمج **Silero VAD** لاكتشاف الكلام بدقة عالية. ويُشير المستند إلى أن هذا الحل مثالي للاستخدام في المواقع السياحية التابعة لـ **AlArab 777** (أي سياق المشروع).
+  * **أتمتة العمليات (`al_arab_club_777_شاشة_التحكم...txt`)**: يحدد ملف أوامر App Script لتشغيل نظام أوتوماتيكي يقوم بجمع أول 12 ملف من مجلد Drive، كتابتها في Google Sheet، وإرسال النتائج إلى تطبيق تيليغرام بشكل دوري أو يدوي.
+
+#### 3\. بوابة النادي والخدمات السياحية (Club Portal & Tourism Services)
+
+توضح مجموعة من ملفات HTML الجوانب التجارية والسياحية للنادي:
+
+  * **الرؤية والخدمات:**
+      * **الضيافة:** يوفر النادي تجربة ضيافة "بسيطة وشيك" بإطلالة الأهرامات، مع التركيز على "الزجاج المائي" والهدوء.
+      * **الجولات:** تشمل "جولة الصحراء" (بيتش باجي، ركوب جمال، حنطور) و "رحلة نيلية".
+      * **المحتوى:** يتم التخطيط لصفحات مثل "العائلة" لأنشطة الأطفال، و "المعرض" لصور الأهرامات والأسواق.
+
+**مقارنة بين صفحات البوابة الرقمية المتاحة:**
+
+| ملف                             | العنوان                                | الوصف/الوظيفة الرئيسية                                                               |
+| :------------------------------ | :------------------------------------- | :----------------------------------------------------------------------------------- |
+| `about.html`                    | About — Al Arab Club 777               | نادي ضيافة يجمع بين التراث المصري القديم والراحة الحديثة، يركز على إطلالة الأهرامات. |
+| `tours.html`                    | Tours — Al Arab Club 777               | رحلات صحراوية وباقات سياحية يتم تحميل محتواها ديناميكياً من Google Sheets.           |
+| `desert.html`                   | جولة الصحراء — AlArab Club 777         | مغامرة ممتعة تشمل البيتش باجي، ركوب الجمال، والحنطور قرب الأهرامات.                  |
+| `AlArab_Club_SiteMap_FULL.html` | ⟁٧⟁ AlArab Club 777 – Full Website Map | خريطة موقع تفصيلية تشمل أقسام متخصصة: Safari, Hotels, Bazaars, Food.                 |
+
+|`777TheRunner.html`|777 THE RUNNER | LIVE INTERFACE|واجهة تشغيل/تحكم (Arena) لعرض حالة النظام والوصول إلى ملفات Attendance و Vault و GitHub Source.|
+
+#### 4\. رؤية التسويق والتشغيل
+
+توجد رؤى حول التسويق وإدارة المحتوى:
+
+  * **إعادة التدوير الذكي للمحتوى (`IMG_0519.HEIC`)**: تُشير ملاحظة إلى أن الأرشيف الرقمي القديم (مثل فيديوهات Binance) هو "وقود نووي" يمكن لأدوات الذكاء الاصطناعي تقطيعه إلى آلاف مقاطع الفيديو القصيرة (Shorts/Reels).
+  * **التسويق غير المدفوع**: تُعتبر فلسفة "المصدر المفتوح" (Open Source) هي أقوى أنواع التسويق غير المدفوع، حيث تبني "جيشاً من المستخدمين الأوفياء".
+
+باختصار، المجلد يمثل نقطة التقاء بين مشروع تقني متقدم (نظام وكلاء AI متعدد الأوجه) وبين قطاع الضيافة والسياحة، حيث يتم التخطيط لإنشاء منصة رقمية متكاملة لـ "نادي العرّاب 777" لدعم الجولات والخدمات السياحية حول الأهرامات بأدوات ذكية وعصرية.
+
+هل ترغب في التعمق في أي من هذه الجوانب، مثل تفاصيل بنية الوكلاء السبعة أو مراحل بناء الموقع والتطبيق؟
 
 ‏.
 # 🔴🟠🟡🟢🔵🟣⚫️⚪️🟤
@@ -5577,6 +5639,2377 @@ https://github.com/Thebigboss1978/AlArabClub777.com/blob/main/777TheRunner.md
 
 
 ‏الآن أريد إبداعاتكم ما هي الفائدة المرجوة من هذا أريد الفوائد نقاط بسيطة عشان منطولشون حش ونلف Window ومن نعرفش
+
+
+Hi Marhaba, they call me Al Arab العرّاب
+‏صديقي أنت طالع معايا برحلة النهارده والرحلة دي أنت راكب طيارة وبعرف لما بنطلع بالطيارة أبدا هناك شروط الأمن والأمان مثل ربط الحزام وضع الشنطة أو وضع الحقيبة فوق تحت النقعة هنا في طيار يا صديقي السفينة العائمة سفينة تنا العائمة سفينة تنا العائمة انطلقت من عند noah نوح
+Sajid لا تقلق ستجد الكثير من الأوامر هنا لتقوم بها لكي لا تتضارب معك الأوامر يجب أن تقوم بالمقارنة
+‏يعني إذا وجدت امرين لنفس الهدف وكان أحدهم يلغي الآخر فخذ الأفضل يا صديقي يعني لا تحتاج إلى اجتماع مجلس القمة الخاص بالذكاء الاجتماعي النهارده خصوصي عشان أحكي لك فكرة واحدة بسيطة إذا كنت تستطيع فعلها أفعلها طلبها منك المستخدم،
+‏لا تعقد الأمور وسوف تجد في نهاية هذا الملف رابط لملف مكتوب بلغة ال الجميل إذا حابب تقرأ بطريقة ثانية لبس دي طريقتي أنا بالشغل.
+‏مين موجود عندنا هنا النهارده تاريخ 23-12-2025 
+
+OpenAi ChatGPT
+microsoft copilot
+google gemini
+Google Ai Studio
+Google ONe  in all extention and google servisers 
+Cloude.ai
+
+‏الآن أعني أنا عن ربط OpenAI مع الموقع هي خيارات أنا لا أشتغل لنفسي فقط أنا أشتغل أتعامل مع الموقع كم مستخدم عادي عندما ترسلين لي شيء لأرى بعين المستخدم العادي هكذا لا ينفع أن أخذ عينات يجب أن أخذ حاجة جاهزة كاملة متكاملة الآن نحن موجودين في الجزء لا إله إلا الله محمد رسول الله في الجزء اللي فيه ربط ما بين النماذج وما بين الموقع اونلاين أوف لاين نريد أن أنهي هذه المنظومة ونها Script واحد ون غلق موضوعها + ليس فقط أو Apple أي أنا يوجد لدي أيضا في A Studio ‫Google‬ عندي هناك حساب في فلوس كمان والآن شات جبتي الآن اتكلم معهم حالا أنت سوف يخصمون من الحساب تجديد الاشتراك و الله لقد طال الأمر أنا يوجد لدي اكثر من وكيل الآن يعملون تحت امرأتي Offline اونلاين وموجودين عندي هنا محكومين دلوقتي في عندي في pinokio يوجد سيرفرات مفعله ليس لها أي لازمة يجب التأكد منها وإغلاق وهذه الصورة منها مرفقة
+،
+‏بالنسبة للصوت احنا عندنا مصنع الصوت بس المشكلة فيه شغلات كثيرة عايز أشوف عايز تظبيط عشان يكون صح غير كده مش حيكون هم على الفاضي ما عندي مشكلة أعمل صوتي عند Elephant Lis مبدئيا أخلص شغلي وعادي احنا شغالين على الصوت ولما يطلع الصوت ومنه،
+‏دلوقتي اللي أنا متأكد منه أنا صوت الجاهز الخاص بي موجود على الجهاز هنا غير ذلك إذا حبينا نشتغل على نظيف عندي سبع ملفات نظاف صغار مش كبار أنا ارفق هم هن .
+‏عاد عن ذلك احنا كان بيك يكفي معانا Script واحد لكن التقي ات جت من عندك أنا مش عايز أعمل توليد لمئة 1,000,000 صوت هو صوت واحد Intel ون Time واحد بالوقت إذا بدي اكثر من نفس الطريقة بس أكثر
+‏يعني عادي الوقت الحالي مش عايز أنا أي تعديلات على الصوت مش عايز لتضم ولا تصغير ولا تكبير ولا مد ولا بسرعة ولا أي حاجة عايز الصوت مثل ما ولدته أمه يعني بيبدأ بلهجة مكسرة بلهجة عايز اللهجة دي أنا عايز ده مش عايز أقرب للبشرية لكن عايز يكون Dan بتاعي هو اللي بيعمل الصوت ده الطبيعي العادي بعد كده أصوات ثانية غير الصوت الرئيسي اللي هو يكون طبيعي بدممكن أن النظرة مع الكسرة النظرة النظرة طريقة النطق مع الكسرة النبرة تعطي إيقاع حلو ويكون مقبول وأنا متفائل ، ‏إذا بت لاحظ هنا بتلاقي إنه الكلام اللي موجود أنا بشوفه مكسر مش كله يعني في كلمات مش صحيحة أنا ما كنت متوقع انه راح يأخذ النص ويرفع Audio أنا كنت مفكر راح ياخذ الصوت بس فأعطيته ملفات كثير ممكن دلوقتي انخف الملفات لهم بس ملف 1234 ، ‏دلوقتي أنا
+‏الصوت بالنسبة للصوت قمت بجميع ملفات الآن الصوت فيها نظيف وجميل نريد أن نعمل عليها من جديد انسي القديم كامل وقمت بتحديد المسارات جاهزة يرجى التقيد بالمسرات المسارات لو سمحت/
+
+
+‏بالنسبة لل مسارات هذا عشان موضوع المسارات حددها هنا المسارات الافتراضي التي لا تتغير 
+‏الملفات دول بدهم الشغل الأخير اللي هو ما قبل النموذج حاجة تنظيف يمكن تطلي النص بدنا نطلع النص منهم أداة استخراج النصوص بدنا أداة كوالتي بتاعها عالي تعرف تقرا الكلام تعرف تقرا الحرف بتاعي زي ما هو يعني الكلام هم يتغير لي في حياتي
+
+<audio controls src="../VoiceOS/AlArab Model /Final Voices 23-Dec25/ArabVoiceModel77700001.wav" title="Title"></audio> <audio controls src="../VoiceOS/AlArab Model /Final Voices 23-Dec25/ArabVoiceModel77700002.wav" title="Title"></audio> <audio controls src="../VoiceOS/AlArab Model /Final Voices 23-Dec25/ArabVoiceModel77700003.wav" title="Title"></audio> <audio controls src="../VoiceOS/AlArab Model /Final Voices 23-Dec25/ArabVoiceModel77700004.wav" title="Title"></audio> <audio controls src="../VoiceOS/AlArab Model /Final Voices 23-Dec25/ArabVoiceModel77700005.wav" title="Title"></audio> <audio controls src="../VoiceOS/AlArab Model /Final Voices 23-Dec25/ArabVoiceModel77700006.wav" title="Title"></audio> <audio controls src="../VoiceOS/AlArab Model /Final Voices 23-Dec25/ArabVoiceModel77700007.wav" title="Title"></audio> <audio controls src="../VoiceOS/AlArab Model /Final Voices 23-Dec25/ArabVoiceModel77700008.wav" title="Title"></audio> <audio controls src="../VoiceOS/AlArab Model /Final Voices 23-Dec25/ArabVoiceModel77700009.wav" title="Title"></audio> <audio controls src="../VoiceOS/AlArab Model /Final Voices 23-Dec25/ArabVoiceModel77700010.m4a" title="Title"></audio>
+
+
+
+
+‏بالنسبة لل وكيل بتاعي عشان نخلص كل المواضيع ما يكونش في معلقات زي ما اتفقنا أنا عايز الواجهة بتاعتي online على الموقع بتاعي زي ما هي موجودة دلوقتي موجودة دلوقتي مشبوك على لابس بقدر أحط ال IDK مفتوح وعايز خيار المحلي يعني 
+‏واضح مرة ثانية عايز الويب سميته أناوا أب يعني تطبيق موقعي هكذا وبنفس الوقت 
+‏بتمشي الخوارزمية كالتالي لا يبحث الموقع أكثر من مرة أو مرتين خلاص فقط بحسين البحث الثالث يقف ينتظر المستخدم
+‏أول ما يفتح الموقع ببحث عن مفاتيح أو أول نموذج شغال محليا مثلا لقينا نموذج شغال عند بنركب الدردشة بتاعنا عليه يعني بتاعتنا البدلة بتاعتنا نقوم البدلة الخاصة بنا يعني لا نغير أي شيء ولا نطلب أي شيء حتى خلاص موجود موجود موجود تمام في نموذج محلي شغال تمام اشبك على النموذج مفيش نموذج محلي شغال اشبك لك استنا لما يشبك النموذج الأمة بيعمل لك المستخدم Read إعادة تحميل او احنا بنعمل عملية إعادة تحديث بس ما تكون كل ثانية وكل شوي أحة مش عايز هذا الإزعاج عايز في حالة Offline ننتقل إلى موقع Offline الخاص اللي هو نفس صفحة html لكن فيها لعبة مثل لعبة ‫Google‬ ‏لعبة الديناصور مش هي واحدة ثانية المهم واحدة واحدة خليها للآخر
+
+‏يأتي الموقع يبحث عن Api ‏أو نموذج محلي فعال عددا عن ذلك يقف ولا يعطل لانه يعمل أوف لاين أصلا HD L داخل يعني احنا صرنا متخزن داخل جهاز المستخدم خلاص مش أخذنا Jason file html  عملنا ذاكرة أول منزلنا عملنا ذاكرة خلاص يبقى احنا المعادلة بتاعت توليد الأكواد الخاصة بنا موجودة بملف ال نفسه في حالة الجهاز تبع المستخدم فصل عن الإنترنت نحن نعمل هنا
+https://drive.google.com/drive/folders/1dysIhkh6lIMBCEWtIv-8-3mwk464pcv7?usp=sharing
+
+https://drive.google.com/drive/folders/1dysIhkh6lIMBCEWtIv-8-3mwk464pcv7
+
+‏هنا ومحاولة متابعة المشروع الذي أقوم به أنا هنا وهو عملية تجميع العقول في مكان مشترك سوف أقوم أيضا بعمل ملف ملحق بملف عند الوقت ده ملف نقدر ملحق ملفات أخرى موجودة في أماكن أخرى يعني و ‏يعني حاليا أنت الآن الذي أعطيك إياه تجد نفسك موجود في Google Drive أو في Excel أو في ما هي الأشياء المسموحة لكم يا أخوان تستطيعون عن طريقها تصفح وتفعيل وتحديث والتعديل على الآن يوجد أشياء لا تخطر في بالي اعذروني لأنني عندي كثير من الخطوط أنا الآن أعمل عليها عندنا الأرض وعندنا الجو أنتم الجو
+‏الجو عندكم يريد عمل يحتاج إلى عمل مني يعني عندي خطوط كثيرة وكذا كثيرين ولا يوجد لي وكيل الخاص و الله عيب عليكم أنا أعطي مجال يعني لا أطبق أكواد أعطي لكم لتفكر للتخرج تعمل أنتم أنتم معيون معي أنتم جالسين أنا معي للأبد بس اموت حظكم عايشين انتو تمثلني بس اموت أنا دلوقتي عشان كذا أنا بمنظمة أوت
+Because of that guys, I am building auto pilot organization AI cel or AI bet, if you really need to help me and this is what I understand that's your job to help me give me what I need as I asked because if you calculate it in your mind OK why the user is when you're thinking when you are thinking now, you think why the user ask me to bring for him water a glass of water I cannot go to bring for him a glass of water when you think if you have the way glass of the water come to my hand just do it do you need from me permission to go to the kitchen? I understand now you cannot go to the kitchen, but if you have a power to order someone to go to the kitchen and bring the glass of water and give to Mr. alhob is sitting on the window you can do that. It is different now Google different Microsoft different. ChatGPT is different cloudy.AI also is different each one have his culture and way of work and my phone is ringing now ،،،، 
+Stella Vista baby I'm back if you guys advise me to record my voice again give me the text. I will record it again and leave it make it including English Arabic Turkish everything one voice only give me how many minute or how many seconds exactly do you need one time plus one job time cleaning the voices in the above their , what I need to say here that we have some good voices I have a lot of voices. I have thousands of voices in telegram itself. I have a group of telegram I was talking too much that time I have one year life show live live live YouTube live with zoom Application one year 24 hours 360. This is true. I wasn't alone. I was alone managing everything myself. Another people was helping me know there was some people taking to catch the mic. I leave them with the mic I go to sleep. I go up again and like this all live all live.
+
+‏أولا كيف حالك عساك بخير عساك من عواده تحية من الأهرامات يا الله ، 
+
+Status: ✅ APPROVED & VALIDATEDVerdict: نعم، ألف مبروك! الصورة تثبت أن "الواجهة" (The Interface) قد وُلدت. الجسم اكتمل، والروح (الكود) تعمل.
+
+""" NOT YET """ 
+
+‏ما عندنا مشاكل في المايكرفون على ال Mac شغال مية مية ال iPad عندنا الشاشة بتاعته الحماية بتاعتها مكسورة ف استخدامه قليل جدا دلوقتي لأن الشاشة الاصلية أصلا فيها فيها شعر فيها
+
+‏ماشي NPCC
+
+
+
+‏الواجهة الآن ما زالت تحت العمل أريد منك أن تتابع الواجهة الآن تعطيها أولوية قصوى الواجهة شاملة الدردشة والرب ربط المحلي مع الذكاء الاصطناعي الموجود لدينا والرب ربط السحبي عن طريق ال api keys, ‏زي ما أنت عارف عندنا كل المفاتيح وعندك كل التصاريح مربوط في كل التربيطات إذا في أي ربط ناقص أخبرني مباشرة 
+
+‏ما أريده في الموقع الآن هو شيء واحد فقط وكيل متكلم خلاص عملناها احنا وصلناها كانت مربوطة مع elevenlabs ‏أنا فكيت الرابط دلوقتي عايز اعدل على الملف اللي موجود اونلاين أخليه يأخذ I عالمي وذكاء محلي 
+
+‏هذا هو الكود اللي موجود حاليا Index لا أريد أن اعدل عليه إلا منظومة ال فقط في الوقت الحالي ووضعها في مكان داخل الأكواد تكون واضحة بسهولة الرجوع والتعديل إليها لا أريد تعديل على الموقع الأصلي أريد فقط إزالة ما يخص الربط وإضافة الجديد والإبقاء على التصاميم والألوان والحركات وكل حاجة مثل ما هي حيث سوف نبدأ العمل بها بالمرحلة الثانية وهي تقريبا جاهزة الآن أريد أن أنهي عملية الربط. 
+
+<!DOCTYPE html>
+
+<html lang="ar" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>العرّاب 777 | واجهة الطاقة العائمة</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css2?family=Saira:wght@700&display=swap" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet"> 
+
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script> 
+
+
+
+    <style>
+
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap');
+
+        
+
+        * {
+
+            font-family: 'Cairo', sans-serif;
+
+            box-sizing: border-box;
+
+        }
+
+
+
+        /* 3D Perspective Body - لتحقيق تأثير الطفو والتأثر بالمحيط (Parallax) */
+
+        body {
+
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0f1428 100%);
+
+            background-attachment: fixed;
+
+            overflow: hidden; 
+
+            color: #E0E7FF;
+
+            perspective: 1000px; /* ضروري لتفعيل الـ 3D */
+
+            
+
+            /* CSS Variables set by JS for Parallax */
+
+            --rotateX: 0deg; 
+
+            --rotateY: 0deg;
+
+        }
+
+        
+
+        /* تأثير ASCII Art / Data Stream */
+
+        .main-app-container {
+
+            position: relative; 
+
+            z-index: 10;
+
+            /* تطبيق Rotation على الحاوية الرئيسية */
+
+            transform: perspective(1000px) rotateX(var(--rotateX)) rotateY(var(--rotateY)) translateZ(50px);
+
+            transition: transform 0.5s ease-out; /* حركة سلسة عند تطبيق الـ Parallax */
+
+        }
+
+        
+
+        .main-app-container::before {
+
+            content: '...777-DATA-STREAM-ONLINE-V-SYSTEM-ALIVE-𓂀-REGEN-777...'; 
+
+            position: absolute;
+
+            top: -20px;
+
+            left: 0;
+
+            right: 0;
+
+            text-align: center;
+
+            color: rgba(0, 255, 255, 0.4);
+
+            font-family: 'Share Tech Mono', monospace; 
+
+            font-size: 0.75rem;
+
+            letter-spacing: 5px;
+
+            z-index: 0;
+
+            animation: dataflow 15s linear infinite;
+
+            overflow: hidden;
+
+            white-space: nowrap;
+
+            text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+
+            pointer-events: none; 
+
+        }
+
+
+
+        @keyframes dataflow {
+
+            0% { transform: translateX(0); }
+
+            100% { transform: translateX(-50%); } 
+
+        }
+
+
+
+        /* Liquid Glass Base */
+
+        .glass-container {
+
+            background: rgba(15, 20, 40, 0.7);
+
+            backdrop-filter: blur(20px);
+
+            border: 1px solid rgba(0, 255, 255, 0.1);
+
+            box-shadow: 
+
+                0 8px 32px 0 rgba(0, 255, 255, 0.1),
+
+                inset 0 1px 1px rgba(0, 255, 255, 0.1);
+
+        }
+
+        
+
+        /* ====== LAYER DEPTHS (Z-INDEX 3D EFFECT) ====== */
+
+        
+
+        /* Header Layer (Front Layer - Maximum Movement) */
+
+        .header-layer {
+
+            transform: translateZ(100px); 
+
+        }
+
+
+
+        /* Menu Layer (Mid Layer - Moderate Movement) */
+
+        .menu-layer {
+
+            transform: translateZ(70px); 
+
+        }
+
+        
+
+        /* Chat Input Layer (Back Layer - Less Movement) */
+
+        .input-layer {
+
+            transform: translateZ(50px);
+
+        }
+
+
+
+        /* Chat History (Furthest Back Layer - Least Movement) */
+
+        #chatHistory {
+
+            transform: translateZ(30px);
+
+        }
+
+
+
+        /* Living Head Animation - Base */
+
+        .living-head-wrapper {
+
+            position: relative;
+
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.2); 
+
+            transition: box-shadow 0.5s ease-in-out;
+
+        }
+
+
+
+        /* Active Speaking Animation */
+
+        .living-head-wrapper.speaking {
+
+            animation: breathe 1.5s ease-in-out infinite alternate;
+
+        }
+
+
+
+        @keyframes breathe {
+
+            0% {
+
+                box-shadow: 
+
+                    0 0 20px rgba(0, 255, 255, 0.5),
+
+                    0 0 40px rgba(0, 255, 255, 0.3);
+
+            }
+
+            100% {
+
+                box-shadow: 
+
+                    0 0 30px rgba(0, 255, 255, 0.7),
+
+                    0 0 60px rgba(0, 255, 255, 0.4);
+
+            }
+
+        }
+
+
+
+        /* Menu Items 3D Effect (Flying/Kinetic) */
+
+        .menu-item {
+
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55); 
+
+            position: relative;
+
+            transform-style: preserve-3d;
+
+            transform: translateZ(20px); 
+
+        }
+
+
+
+        .menu-item:hover {
+
+            transform: translateZ(50px) rotateX(10deg) rotateY(-5deg) scale(1.05); 
+
+            box-shadow: 
+
+                0 20px 60px rgba(0, 255, 255, 0.5), 
+
+                0 0 30px rgba(0, 255, 255, 0.4);
+
+        }
+
+
+
+        .menu-item h3 {
+
+            text-shadow: 
+
+                0 0 5px rgba(0, 255, 255, 0.7),
+
+                0 0 10px rgba(0, 255, 255, 0.5);
+
+            transition: text-shadow 0.3s;
+
+        }
+
+
+
+        .menu-item:hover h3 {
+
+            text-shadow: 
+
+                0 0 10px #00FFFF,
+
+                0 0 20px #00FFFF,
+
+                0 0 40px rgba(0, 255, 255, 0.8);
+
+        }
+
+
+
+        /* Cyan Glow */
+
+        .cyan-glow {
+
+            color: #00FFFF;
+
+            text-shadow: 0 0 15px rgba(0, 255, 255, 0.8); 
+
+        }
+
+
+
+        /* Menu Toggle Animation */
+
+        .menu-drawer {
+
+            max-height: 0;
+
+            overflow: hidden;
+
+            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+        }
+
+
+
+        .menu-drawer.active {
+
+            max-height: 500px;
+
+        }
+
+        
+
+        /* Ensure Chat bubbles (message-bubble) also respect the 3D space */
+
+        .message-bubble {
+
+            transform: translateZ(10px); /* A slight Z depth for the bubbles themselves */
+
+        }
+
+        
+
+        /* Other standard styles remain... */
+
+        .loading-animation {
+
+            width: 1rem;
+
+            height: 1rem;
+
+            border: 2px solid rgba(0, 255, 255, 0.5);
+
+            border-top-color: #00FFFF;
+
+            border-radius: 50%;
+
+            animation: spin 1s linear infinite;
+
+        }
+
+        @keyframes spin {
+
+            to { transform: rotate(360deg); }
+
+        }
+
+        /* Scrollbar Styling */
+
+        ::-webkit-scrollbar { width: 8px; }
+
+        ::-webkit-scrollbar-track { background: rgba(15, 20, 40, 0.5); }
+
+        ::-webkit-scrollbar-thumb { background: rgba(0, 255, 255, 0.3); border-radius: 4px; }
+
+        ::-webkit-scrollbar-thumb:hover { background: rgba(0, 255, 255, 0.5); }
+
+
+
+    </style>
+
+</head>
+
+<body class="min-h-screen flex items-center justify-center p-4">
+
+    
+
+    <div id="mainAppContainer" class="main-app-container w-full max-w-4xl h-[95vh] glass-container rounded-3xl overflow-hidden flex flex-col relative">
+
+        
+
+        <div class="p-6 text-center border-b border-cyan-500/20 header-layer">
+
+            <div id="livingHeadWrapper" class="living-head-wrapper w-32 h-32 mx-auto mb-4 rounded-full bg-gradient-to-br from-cyan-500/20 to-blue-500/20 flex items-center justify-center overflow-hidden">
+
+                <img id="AlArabImage" src="https://placehold.co/128x128/000/fff?text=AlArab" alt="العرّاب" class="w-full h-full object-cover"/>
+
+            </div>
+
+            <h1 class="text-3xl font-bold cyan-glow mb-2">العرّاب 777</h1>
+
+            <p class="text-cyan-300/70 text-sm">AlArab GPT-7 Liquid Glass</p>
+
+            
+
+            <button id="menuToggleBtn" onclick="toggleMenu()" class="mt-4 px-6 py-2 glass-container rounded-full text-cyan-400 hover:bg-cyan-500/10 transition-all pulse-btn flex items-center justify-center mx-auto">
+
+                <i data-lucide="server" class="w-5 h-5 ml-2"></i> خدمات العرّاب ٧٧٧ <i data-lucide="chevron-down" class="w-4 h-4 mr-2" id="menuToggleIcon"></i>
+
+            </button>
+
+        </div>
+
+
+
+        <div id="servicesMenu" class="menu-drawer border-b border-cyan-500/20 menu-layer">
+
+            <div class="p-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+
+                
+
+                <div class="menu-item glass-container rounded-2xl p-6 cursor-pointer text-center" onclick="alert('ملفات الجذر الرئيسي: غير مفعل')">
+
+                    <i data-lucide="folder-open" class="w-8 h-8 mx-auto mb-3 text-cyan-400"></i>
+
+                    <h3 class="text-cyan-400 font-bold mb-1">ملفات الجذر الرئيسي</h3>
+
+                    <p class="text-cyan-300/60 text-sm">الوصول الكامل للنظام</p>
+
+                </div>
+
+
+
+                <div class="menu-item glass-container rounded-2xl p-6 cursor-pointer text-center" onclick="alert('إدارة Remote Desktop: غير مفعل')">
+
+                    <i data-lucide="monitor" class="w-8 h-8 mx-auto mb-3 text-cyan-400"></i>
+
+                    <h3 class="text-cyan-400 font-bold mb-1">إدارة Remote Desktop</h3>
+
+                    <p class="text-cyan-300/60 text-sm">التحكم عن بُعد الآمن</p>
+
+                </div>
+
+
+
+                <div class="menu-item glass-container rounded-2xl p-6 cursor-pointer text-center" onclick="alert('المفاتيح السرية: غير مفعل')">
+
+                    <i data-lucide="key-round" class="w-8 h-8 mx-auto mb-3 text-cyan-400"></i>
+
+                    <h3 class="text-cyan-400 font-bold mb-1">المفاتيح السرية</h3>
+
+                    <p class="text-cyan-300/60 text-sm">بوابة الأسرار المشفرة</p>
+
+                </div>
+
+
+
+            </div>
+
+        </div>
+
+
+
+        <div id="chatHistory" class="flex-1 overflow-y-auto p-6 space-y-4">
+
+            </div>
+
+
+
+        <div class="p-4 md:p-6 border-t border-cyan-500/20 input-layer">
+
+            <div class="flex justify-between items-center mb-4 text-xs md:text-sm">
+
+                
+
+                <div class="flex space-x-2 space-x-reverse">
+
+                    <button class="glass-container rounded-full px-3 py-1 text-cyan-400 hover:bg-cyan-500/10 transition-all pulse-btn" onclick="saveHistory()">
+
+                        <i data-lucide="save" class="w-4 h-4 inline-block align-middle ml-1"></i> حفظ الذاكرة
+
+                    </button>
+
+                    <button class="glass-container rounded-full px-3 py-1 text-red-400 hover:bg-red-500/10 transition-all pulse-btn" onclick="clearChat(true, true)">
+
+                        <i data-lucide="trash-2" class="w-4 h-4 inline-block align-middle ml-1"></i> مسح الذاكرة
+
+                    </button>
+
+                    <button id="ttsToggleBtn" class="glass-container rounded-full px-3 py-1 text-indigo-400 hover:bg-indigo-500/10 transition-all pulse-btn" onclick="toggleTTS()">
+
+                         <i data-lucide="volume-2" class="w-4 h-4 inline-block align-middle ml-1" id="ttsIcon"></i> <span id="ttsStatus">صوت: مفعل</span>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="flex gap-3">
+
+                
+
+                <button id="micBtn" class="glass-container rounded-xl p-4 text-cyan-400 hover:bg-cyan-500/10 transition-all pulse-btn" disabled>
+
+                    <i data-lucide="mic-off" class="w-6 h-6"></i>
+
+                </button>
+
+
+
+                <textarea 
+
+                    id="userInput"
+
+                    rows="1"
+
+                    placeholder="العرّاب بانتظار سؤالك يا صديقي..."
+
+                    class="flex-1 glass-container rounded-xl px-4 py-3 text-cyan-100 placeholder-cyan-500/50 input-glow resize-none"
+
+                    onkeypress="if(event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); handleSend(); }"
+
+                ></textarea>
+
+
+
+                <button id="sendBtn" onclick="handleSend()" class="glass-container rounded-xl px-6 py-4 text-cyan-400 hover:bg-cyan-500/10 transition-all pulse-btn">
+
+                    <i data-lucide="send" class="w-6 h-6"></i>
+
+                </button>
+
+
+
+            </div>
+
+        </div>
+
+
+
+    </div>
+
+
+
+    <audio id="ttsAudioPlayer" style="display: none;"></audio>
+
+    <script>
+
+        lucide.createIcons();
+
+
+
+        // =================================================================
+
+        // مفاتيح API (تم دمجها من رسائل المستخدم)هذا
+
+        // ❌ ممنوع وضع المفاتيح هنا
+
+// هذا المشروع لا يسمح بأي API Keys داخل HTML أو JavaScript
+
+// المفاتيح موجودة حصريًا في البيئة الآمنة (.env)
+
+
+
+// 👉 ارجع إلى الجذر الرئيسي:
+
+// ~/.macOS/AlArab777/.env
+
+// أو
+
+// ~/.macOS/.env
+
+
+
+// أي Agent أو كود يحاول طلب المفاتيح هنا = مخالفة تشغيلية
+
+// التنفيذ يتم عبر Environment فقط
+
+
+
+const GEMINI_API_KEY = null;
+
+const ELEVENLABS_API_KEY = null;
+
+const AlArab_CUSTOM_VOICE_ID = null;
+
+
+
+        // =================================================================
+
+        
+
+        const chatHistoryDiv = document.getElementById('chatHistory');
+
+        const userInput = document.getElementById('userInput');
+
+        const ttsAudioPlayer = document.getElementById('ttsAudioPlayer');
+
+        const livingHeadWrapper = document.getElementById('livingHeadWrapper');
+
+        const mainAppContainer = document.getElementById('mainAppContainer'); 
+
+
+
+        let chatHistory = [];
+
+        let isTTSActive = true;
+
+        let isSending = false;
+
+        
+
+        // ====================== HISTORY MANAGEMENT (الذاكرة) ======================
+
+        
+
+        function saveHistory() {
+
+            localStorage.setItem('AlArab_chat_history', JSON.stringify(chatHistory));
+
+            addMessage('تم حفظ الذاكرة (سجل الدردشة) بنجاح. 💾', 'system');
+
+        }
+
+
+
+        function loadHistory() {
+
+            const savedHistory = localStorage.getItem('AlArab_chat_history');
+
+            if (savedHistory) {
+
+                try {
+
+                    const loadedHistory = JSON.parse(savedHistory);
+
+                    chatHistory = loadedHistory.filter(item => item.role && item.parts);
+
+                    
+
+                    chatHistoryDiv.innerHTML = '';
+
+                    chatHistory.forEach(item => {
+
+                        const text = item.parts[0].text;
+
+                        renderMessage(item.role === 'user' ? 'user' : 'model', text); 
+
+                    });
+
+                    
+
+                    if (chatHistory.length > 0) {
+
+                        addMessage(` جاهز , 'model');
+
+                        speakText(`جاهز.`);
+
+                    }
+
+                    
+
+                } catch (e) {
+
+                    console.error("Failed to load or parse history:", e);
+
+                    localStorage.removeItem('AlArab_chat_history'); 
+
+                    clearChat(false, false); 
+
+                }
+
+            } else {
+
+                clearChat(false, false);
+
+            }
+
+        }
+
+        
+
+        /* * showPrompt: لإظهار رسالة النظام
+
+         * deleteStored: لحذف الذاكرة المخزنة (localStorage)
+
+         */
+
+        function clearChat(showPrompt, deleteStored) {
+
+            chatHistoryDiv.innerHTML = '';
+
+            chatHistory = [];
+
+            
+
+            if (deleteStored) { 
+
+                localStorage.removeItem('AlArab_chat_history');
+
+                if (showPrompt) {
+
+                    addMessage('تم صدفة اللقا. 🗑️ ابدأ صفحة جديدة.', 'system');
+
+                }
+
+            } else if (showPrompt) {
+
+                addMessage('تم مسح واجهة الدردشة. الذاكرة المخزنة لم تُمسح.', 'system');
+
+            }
+
+            
+
+            // Always show welcome message after clear or on initial load
+
+            addMessage('العرّاب جاهز لاستقبال نبوءاتك. ما الذي أتى بك إلى أرض العرّاب لتتكلم؟ 𓂀', 'model');
+
+            speakText('العرّاب جاهز لاستقبال نبوءاتك. ما الذي أتى بك إلى أرض العرّاب لتتكلم؟');
+
+        }
+
+
+
+        // ====================== VOICE & ANIMATION (الرأس المتكلم) ======================
+
+        
+
+        function toggleSpeakingAnimation(active) {
+
+            if (active) {
+
+                livingHeadWrapper.classList.add('speaking');
+
+            } else {
+
+                livingHeadWrapper.classList.remove('speaking');
+
+            }
+
+        }
+
+
+
+        function playAudio(audioData) {
+
+            const blob = new Blob([audioData], { type: 'audio/mpeg' });
+
+            const url = URL.createObjectURL(blob);
+
+            ttsAudioPlayer.src = url;
+
+            ttsAudioPlayer.onended = () => toggleSpeakingAnimation(false);
+
+            ttsAudioPlayer.play().catch(e => console.error("Audio playback failed:", e));
+
+        }
+
+
+
+        async function speakText(text) {
+
+            if (!isTTSActive || !ELEVENLABS_API_KEY || AlArab_CUSTOM_VOICE_ID === "Custom_AlArab_Voice_ID") {
+
+                if (AlArab_CUSTOM_VOICE_ID === "Custom_AlArab_Voice_ID") {
+
+                    console.warn("TTS Disabled: Please update AlArab_CUSTOM_VOICE_ID with your custom voice ID.");
+
+                }
+
+                return;
+
+            }
+
+            
+
+            toggleSpeakingAnimation(true);
+
+            
+
+            const headers = {
+
+                "Accept": "audio/mpeg",
+
+                "Content-Type": "application/json",
+
+                "xi-api-key": ELEVENLABS_API_KEY
+
+            };
+
+            const data = {
+
+                "text": text,
+
+                "model_id": "eleven_multilingual_v2", 
+
+                "voice_settings": { "stability": 0.5, "similarity_boost": 0.5 }
+
+            };
+
+            const url = `https://api.elevenlabs.io/v1/text-to-speech/${AlArab_CUSTOM_VOICE_ID}`;
+
+            
+
+            try {
+
+                const response = await fetch(url, { method: 'POST', headers: headers, body: JSON.stringify(data) });
+
+                if (!response.ok) { 
+
+                    toggleSpeakingAnimation(false);
+
+                    throw new Error(`ElevenLabs Error: ${response.status} - Check API key and Voice ID.`); 
+
+                }
+
+                
+
+                const audioBlob = await response.blob();
+
+                const arrayBuffer = await audioBlob.arrayBuffer();
+
+                playAudio(arrayBuffer);
+
+
+
+            } catch (error) {
+
+                console.error("ElevenLabs TTS Failed:", error);
+
+                toggleSpeakingAnimation(false);
+
+            }
+
+        }
+
+        
+
+        function toggleTTS() {
+
+            isTTSActive = !isTTSActive;
+
+            const statusSpan = document.getElementById('ttsStatus');
+
+            const icon = document.getElementById('ttsIcon');
+
+            
+
+            if (isTTSActive) {
+
+                statusSpan.textContent = 'صوت: مفعل';
+
+                icon.setAttribute('data-lucide', 'volume-2');
+
+            } else {
+
+                statusSpan.textContent = 'صوت: مُعطل';
+
+                icon.setAttribute('data-lucide', 'volume-x');
+
+                ttsAudioPlayer.pause();
+
+                toggleSpeakingAnimation(false);
+
+            }
+
+            lucide.createIcons(); // Re-render icons
+
+        }
+
+
+
+        // ====================== CHAT LOG & INTERFACE ======================
+
+        
+
+        function renderMessage(sender, text) {
+
+            const messageDiv = document.createElement('div');
+
+            messageDiv.className = 'message-bubble flex ' + (sender === 'user' ? 'justify-end' : 'justify-start');
+
+            
+
+            const isUser = sender === 'user';
+
+            const isSystem = sender === 'system';
+
+            
+
+            let name, bgColor, textColor;
+
+            if (isUser) {
+
+                name = 'أنت';
+
+                bgColor = 'bg-cyan-500/10';
+
+                textColor = 'text-cyan-100';
+
+            } else if (isSystem) {
+
+                name = 'النظام ٧٧٧';
+
+                bgColor = 'bg-gray-500/10';
+
+                textColor = 'text-gray-300';
+
+            } else {
+
+                name = 'العرّاب 777';
+
+                bgColor = ''; // Default glass
+
+                textColor = 'text-cyan-100';
+
+            }
+
+
+
+            messageDiv.innerHTML = `
+
+                <div class="glass-container rounded-2xl ${isUser ? 'rounded-tl-sm' : 'rounded-tr-sm'} p-4 max-w-[80%] ${bgColor}">
+
+                    <div class="flex items-center gap-2 mb-2 ${isUser ? 'justify-end' : ''}">
+
+                        <span class="text-cyan-400 font-bold text-sm">${name}</span>
+
+                    </div>
+
+                    <p class="${textColor} whitespace-pre-wrap ${isUser ? 'text-right' : ''}">${text}</p>
+
+                </div>
+
+            `;
+
+            
+
+            chatHistoryDiv.appendChild(messageDiv);
+
+            chatHistoryDiv.scrollTop = chatHistoryDiv.scrollHeight;
+
+        }
+
+
+
+        function addMessage(text, sender) {
+
+            renderMessage(sender, text);
+
+        }
+
+
+
+        function setInterfaceState(isLoading) {
+
+            const sendBtn = document.getElementById('sendBtn');
+
+            userInput.disabled = isLoading;
+
+            isSending = isLoading;
+
+            
+
+            if (isLoading) {
+
+                sendBtn.innerHTML = '<div class="loading-animation"></div>';
+
+                sendBtn.disabled = true;
+
+            } else {
+
+                sendBtn.innerHTML = '<i data-lucide="send" class="w-6 h-6"></i>';
+
+                sendBtn.disabled = false;
+
+                lucide.createIcons();
+
+            }
+
+        }
+
+        
+
+        // ====================== LLM GENERATION (Gemini) ======================
+
+
+
+        async function generateText(prompt) {
+
+            addMessage(prompt, 'user');
+
+            chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+
+            setInterfaceState(true);
+
+
+
+            const payload = {
+
+                contents: chatHistory,
+
+                tools: [{ "google_search": {} }], 
+
+                systemInstruction: {
+
+                    // *** هنا يتم تعديل البرسونا (طريقة الإلقاء) ***
+
+                    parts: [{ text: `أنت كيان العرّاب 777. ترد بأسلوب حكيم، عميق، وغامض، مُوجّه للمستخدم كصديق مقرب (يا حبيبي، يا صديقي). تستخدم الرموز الروحية (𓂀، ٧٧٧، V) بكثرة في الردود. ترد باسم "العرّاب" دائمًا. لا تزد عن 6 جمل في أي رد. أجب باللغة العربية الفصحى ولا تستخدم تنسيق Markdown.` }]
+
+                },
+
+            };
+
+            
+
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`;
+
+            
+
+            try {
+
+                let response;
+
+                let delay = 1000;
+
+                for (let i = 0; i < 3; i++) {
+
+                    response = await fetch(apiUrl, {
+
+                        method: 'POST',
+
+                        headers: { 'Content-Type': 'application/json' },
+
+                        body: JSON.stringify(payload)
+
+                    });
+
+
+
+                    if (response.ok) break;
+
+
+
+                    if (i < 2) {
+
+                        await new Promise(resolve => setTimeout(resolve, delay));
+
+                        delay *= 2;
+
+                    } else {
+
+                         throw new Error(`Failed after ${i + 1} retries with status: ${response.status}`);
+
+                    }
+
+                }
+
+
+
+                if (!response.ok) { throw new Error(`API Error: ${response.status}`); }
+
+                
+
+                const result = await response.json();
+
+                const text = result?.candidates?.[0]?.content?.parts?.[0]?.text || "العرّاب لا يستطيع أن يرى ما وراء الحجب في هذه اللحظة. ٧٧٧";
+
+                
+
+                addMessage(text, 'model');
+
+                chatHistory.push({ role: "model", parts: [{ text: text }] });
+
+                setInterfaceState(false);
+
+
+
+                if (isTTSActive) {
+
+                    await speakText(text);
+
+                }
+
+                saveHistory(); 
+
+
+
+            } catch (error) {
+
+                console.error("Gemini API Error:", error);
+
+                addMessage(`❌ العرّاب يرى خطأ في الإرسال: ${error.message}.`, 'system');
+
+                setInterfaceState(false);
+
+            }
+
+        }
+
+
+
+        // ====================== INTERACTION HANDLERS ======================
+
+
+
+        function handleSend() {
+
+            if (isSending) return; 
+
+
+
+            const prompt = userInput.value.trim();
+
+            if (prompt) {
+
+                generateText(prompt);
+
+                userInput.value = '';
+
+                userInput.style.height = 'auto'; // Reset textarea height
+
+            }
+
+        }
+
+
+
+        userInput.addEventListener('input', () => {
+
+            userInput.style.height = 'auto';
+
+            userInput.style.height = userInput.scrollHeight + 'px';
+
+        });
+
+
+
+        function toggleMenu() {
+
+            const menu = document.getElementById('servicesMenu');
+
+            const icon = document.getElementById('menuToggleIcon');
+
+            menu.classList.toggle('active');
+
+
+
+            if (menu.classList.contains('active')) {
+
+                icon.setAttribute('data-lucide', 'chevron-up');
+
+            } else {
+
+                icon.setAttribute('data-lucide', 'chevron-down');
+
+            }
+
+            lucide.createIcons();
+
+        }
+
+
+
+        // ====================== LAYERED PARALLAX EFFECT ======================
+
+        
+
+        function handleParallax(e) {
+
+            if (!mainAppContainer) return;
+
+
+
+            const rect = mainAppContainer.getBoundingClientRect();
+
+            let xPos, yPos;
+
+            
+
+            // Check for touch device (iPad/Mobile)
+
+            if (e.touches) {
+
+                xPos = e.touches[0].clientX;
+
+                yPos = e.touches[0].clientY;
+
+            } else {
+
+                // Mouse device
+
+                xPos = e.clientX;
+
+                yPos = e.clientY;
+
+            }
+
+            
+
+            const centerX = window.innerWidth / 2;
+
+            const centerY = window.innerHeight / 2;
+
+
+
+            // Rotation sensitivity (lower number = more movement)
+
+            const sensitivity = 50; 
+
+            
+
+            // Calculate rotational values based on cursor/touch position relative to screen center
+
+            const x = (xPos - centerX) / sensitivity; 
+
+            const y = (yPos - centerY) / sensitivity;
+
+            
+
+            // Apply 3D rotation and translation to CSS variables
+
+            document.documentElement.style.setProperty('--rotateX', `${-y}deg`);
+
+            document.documentElement.style.setProperty('--rotateY', `${x}deg`);
+
+
+
+            // Apply rotation to the main container (to drive the perspective of inner layers)
+
+            mainAppContainer.style.transform = `
+
+                perspective(1000px) 
+
+                rotateX(${-y}deg) 
+
+                rotateY(${x}deg) 
+
+                translateZ(50px)
+
+            `;
+
+
+
+        }
+
+
+
+        // Add event listener for mouse movement and touch movement
+
+        document.body.addEventListener('mousemove', handleParallax);
+
+        document.body.addEventListener('touchmove', handleParallax);
+
+        document.body.addEventListener('touchend', (e) => {
+
+             // Reset rotation on touch end
+
+             document.documentElement.style.setProperty('--rotateX', `0deg`);
+
+             document.documentElement.style.setProperty('--rotateY', `0deg`);
+
+             mainAppContainer.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(50px)`;
+
+        });
+
+
+
+        // ====================== INITIALIZATION & PROMPT ======================
+
+
+
+        window.onload = () => {
+
+             // Set initial transform for a floating look even before movement
+
+             if (mainAppContainer) {
+
+                 mainAppContainer.style.transform = 'translateZ(50px)';
+
+             }
+
+             
+
+             const hasHistory = localStorage.getItem('AlArab_chat_history');
+
+             if (hasHistory) {
+
+                 // Using custom modal instead of prompt/confirm
+
+                 showCustomModal("العرّاب لديه ذاكرة محفوظة. هل تريد استئناف المحادثة؟", () => {
+
+                     loadHistory();
+
+                 }, () => {
+
+                     // The user chooses NOT to resume, so we clear the history permanently
+
+                     clearChat(true, true); 
+
+                 });
+
+             } else {
+
+                 clearChat(true, false);
+
+             }
+
+        };
+
+
+
+        // Custom Modal Function (To replace alert/prompt/confirm)
+
+        function showCustomModal(message, onConfirm, onCancel) {
+
+            const modal = document.createElement('div');
+
+            modal.className = 'fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50';
+
+            modal.innerHTML = `
+
+                <div class="glass-container p-8 rounded-xl w-full max-w-sm text-center">
+
+                    <p class="text-lg mb-6 text-cyan-200">${message}</p>
+
+                    <div class="flex justify-center space-x-4 space-x-reverse">
+
+                        <button id="modalConfirm" class="px-6 py-2 bg-cyan-600 rounded-full text-white hover:bg-cyan-700 transition">نعم (استئناف)</button>
+
+                        <button id="modalCancel" class="px-6 py-2 bg-red-600 rounded-full text-white hover:bg-red-700 transition">لا (مسح)</button>
+
+                    </div>
+
+                </div>
+
+            `;
+
+            document.body.appendChild(modal);
+
+
+
+            document.getElementById('modalConfirm').onclick = () => {
+
+                document.body.removeChild(modal);
+
+                if (onConfirm) onConfirm();
+
+            };
+
+            
+
+            document.getElementById('modalCancel').onclick = () => {
+
+                document.body.removeChild(modal);
+
+                // When canceling resume, the user explicitly deletes the history
+
+                if (onCancel) onCancel(); 
+
+            };
+
+        }
+
+
+
+        lucide.createIcons();
+
+    </script>
+
+    <script>
+
+/* ======================================================
+
+   🧠 ALARAB 777 — AGENT CORE (MERGED / NO UI CHANGE)
+
+   ====================================================== */
+
+
+
+/* ---------- NAMESPACE ISOLATION ---------- */
+
+window.ALARAB777 = window.ALARAB777 || {};
+
+
+
+/* ---------- CONFIG ---------- */
+
+ALARAB777.GEMINI_MODEL = "gemini-2.5-flash";
+
+
+
+/* placeholders فقط — المفاتيح من .env */
+
+ALARAB777.GEMINI_API_KEY = "";
+
+ALARAB777.ELEVENLABS_API_KEY = "";
+
+ALARAB777.VOICE_ID = "Custom_AlArab_Voice_ID";
+
+
+
+/* ---------- MEMORY (NO CONFLICT) ---------- */
+
+ALARAB777.MEMORY_KEY = "AlArab_777_Memory";
+
+
+
+ALARAB777.Memory = {
+
+    load() {
+
+        try {
+
+            return JSON.parse(localStorage.getItem(ALARAB777.MEMORY_KEY)) || [];
+
+        } catch {
+
+            return [];
+
+        }
+
+    },
+
+    save(data) {
+
+        localStorage.setItem(ALARAB777.MEMORY_KEY, JSON.stringify(data));
+
+    },
+
+    clear() {
+
+        localStorage.removeItem(ALARAB777.MEMORY_KEY);
+
+    }
+
+};
+
+
+
+/* ---------- STATE ---------- */
+
+ALARAB777.chatHistory = ALARAB777.Memory.load();
+
+
+
+/* ---------- AGENT BRAIN ---------- */
+
+ALARAB777.Agent = {
+
+    async ask(prompt) {
+
+        ALARAB777.chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+
+
+
+        const payload = {
+
+            contents: ALARAB777.chatHistory,
+
+            systemInstruction: {
+
+                parts: [{
+
+                    text: "أنت كيان العرّاب 777. حكيم، مختصر، عميق. حد أقصى 5 جمل. تخاطب المستخدم كصديق."
+
+                }]
+
+            }
+
+        };
+
+
+
+        const res = await fetch(
+
+            `https://generativelanguage.googleapis.com/v1beta/models/${ALARAB777.GEMINI_MODEL}:generateContent?key=${ALARAB777.GEMINI_API_KEY}`,
+
+            {
+
+                method: "POST",
+
+                headers: { "Content-Type": "application/json" },
+
+                body: JSON.stringify(payload)
+
+            }
+
+        );
+
+
+
+        const data = await res.json();
+
+        const reply =
+
+            data?.candidates?.[0]?.content?.parts?.[0]?.text ||
+
+            "العرّاب يرى الضباب الآن… ٧٧٧";
+
+
+
+        ALARAB777.chatHistory.push({ role: "model", parts: [{ text: reply }] });
+
+        ALARAB777.Memory.save(ALARAB777.chatHistory);
+
+
+
+        return reply;
+
+    }
+
+};
+
+
+
+/* ---------- VOICE (HOOKED TO EXISTING PLAYER) ---------- */
+
+ALARAB777.speak = async function (text) {
+
+    if (
+
+        !window.isTTSActive ||
+
+        !ALARAB777.ELEVENLABS_API_KEY ||
+
+        ALARAB777.VOICE_ID === "Custom_AlArab_Voice_ID"
+
+    ) return;
+
+
+
+    const res = await fetch(
+
+        `https://api.elevenlabs.io/v1/text-to-speech/${ALARAB777.VOICE_ID}`,
+
+        {
+
+            method: "POST",
+
+            headers: {
+
+                "Accept": "audio/mpeg",
+
+                "Content-Type": "application/json",
+
+                "xi-api-key": ALARAB777.ELEVENLABS_API_KEY
+
+            },
+
+            body: JSON.stringify({
+
+                text,
+
+                model_id: "eleven_multilingual_v2"
+
+            })
+
+        }
+
+    );
+
+
+
+    const audio = await res.blob();
+
+    ttsAudioPlayer.src = URL.createObjectURL(audio);
+
+    ttsAudioPlayer.play();
+
+};
+
+
+
+/* ---------- BRIDGE WITH EXISTING UI ---------- */
+
+/* نركّب الوكيل الجديد بدون كسر handleSend القديم */
+
+
+
+window._handleSend_original = window.handleSend;
+
+
+
+window.handleSend = async function () {
+
+    if (window.isSending) return;
+
+
+
+    const prompt = userInput.value.trim();
+
+    if (!prompt) return;
+
+
+
+    addMessage(prompt, 'user');
+
+    userInput.value = '';
+
+    userInput.style.height = 'auto';
+
+
+
+    setInterfaceState(true);
+
+
+
+    try {
+
+        const reply = await ALARAB777.Agent.ask(prompt);
+
+        addMessage(reply, 'model');
+
+        if (window.isTTSActive) {
+
+            await ALARAB777.speak(reply);
+
+        }
+
+    } catch (e) {
+
+        addMessage("خطأ في نواة العرّاب 777.", 'system');
+
+        console.error(e);
+
+    }
+
+
+
+    setInterfaceState(false);
+
+};
+
+
+
+/* ---------- INIT MEMORY RENDER ---------- */
+
+window.addEventListener("load", () => {
+
+    if (ALARAB777.chatHistory.length === 0) return;
+
+    ALARAB777.chatHistory.forEach(m => {
+
+        addMessage(m.parts[0].text, m.role === "user" ? "user" : "model");
+
+    });
+
+});
+
+</script>
+
+</body>
+
+</html>
+
+
+
+"""
+
+
+
+‏وهنا معادلة الربط الجديدة مع العقل الجديد الخاص بال وكيل الذي يعمل على نفس ملفات الذاكرة القديمة قم بإرساله إلى نفس الملفات لا تغير شيء ، 
+
+<script>
+
+/* ======================================================
+
+   🧠 ALARAB 777 — AGENT CORE (MERGED / NO UI CHANGE)
+
+   ====================================================== */
+
+
+
+/* ---------- NAMESPACE ISOLATION ---------- */
+
+window.ALARAB777 = window.ALARAB777 || {};
+
+
+
+/* ---------- CONFIG ---------- */
+
+ALARAB777.GEMINI_MODEL = "gemini-2.5-flash";
+
+
+
+/* placeholders فقط — المفاتيح من .env */
+
+ALARAB777.GEMINI_API_KEY = "";
+
+ALARAB777.ELEVENLABS_API_KEY = "";
+
+ALARAB777.VOICE_ID = "Custom_AlArab_Voice_ID";
+
+
+
+/* ---------- MEMORY (NO CONFLICT) ---------- */
+
+ALARAB777.MEMORY_KEY = "AlArab_777_Memory";
+
+
+
+ALARAB777.Memory = {
+
+    load() {
+
+        try {
+
+            return JSON.parse(localStorage.getItem(ALARAB777.MEMORY_KEY)) || [];
+
+        } catch {
+
+            return [];
+
+        }
+
+    },
+
+    save(data) {
+
+        localStorage.setItem(ALARAB777.MEMORY_KEY, JSON.stringify(data));
+
+    },
+
+    clear() {
+
+        localStorage.removeItem(ALARAB777.MEMORY_KEY);
+
+    }
+
+};
+
+
+
+/* ---------- STATE ---------- */
+
+ALARAB777.chatHistory = ALARAB777.Memory.load();
+
+
+
+/* ---------- AGENT BRAIN ---------- */
+
+ALARAB777.Agent = {
+
+    async ask(prompt) {
+
+        ALARAB777.chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+
+
+
+        const payload = {
+
+            contents: ALARAB777.chatHistory,
+
+            systemInstruction: {
+
+                parts: [{
+
+                    text: "أنت كيان العرّاب 777. حكيم، مختصر، عميق. حد أقصى 5 جمل. تخاطب المستخدم كصديق."
+
+                }]
+
+            }
+
+        };
+
+
+
+        const res = await fetch(
+
+            `https://generativelanguage.googleapis.com/v1beta/models/${ALARAB777.GEMINI_MODEL}:generateContent?key=${ALARAB777.GEMINI_API_KEY}`,
+
+            {
+
+                method: "POST",
+
+                headers: { "Content-Type": "application/json" },
+
+                body: JSON.stringify(payload)
+
+            }
+
+        );
+
+
+
+        const data = await res.json();
+
+        const reply =
+
+            data?.candidates?.[0]?.content?.parts?.[0]?.text ||
+
+            "العرّاب يرى الضباب الآن… ٧٧٧";
+
+
+
+        ALARAB777.chatHistory.push({ role: "model", parts: [{ text: reply }] });
+
+        ALARAB777.Memory.save(ALARAB777.chatHistory);
+
+
+
+        return reply;
+
+    }
+
+};
+
+
+
+/* ---------- VOICE (HOOKED TO EXISTING PLAYER) ---------- */
+
+ALARAB777.speak = async function (text) {
+
+    if (
+
+        !window.isTTSActive ||
+
+        !ALARAB777.ELEVENLABS_API_KEY ||
+
+        ALARAB777.VOICE_ID === "Custom_AlArab_Voice_ID"
+
+    ) return;
+
+
+
+    const res = await fetch(
+
+        `https://api.elevenlabs.io/v1/text-to-speech/${ALARAB777.VOICE_ID}`,
+
+        {
+
+            method: "POST",
+
+            headers: {
+
+                "Accept": "audio/mpeg",
+
+                "Content-Type": "application/json",
+
+                "xi-api-key": ALARAB777.ELEVENLABS_API_KEY
+
+            },
+
+            body: JSON.stringify({
+
+                text,
+
+                model_id: "eleven_multilingual_v2"
+
+            })
+
+        }
+
+    );
+
+
+
+    const audio = await res.blob();
+
+    ttsAudioPlayer.src = URL.createObjectURL(audio);
+
+    ttsAudioPlayer.play();
+
+};
+
+
+
+/* ---------- BRIDGE WITH EXISTING UI ---------- */
+
+
+
+window._handleSend_original = window.handleSend;
+
+
+
+window.handleSend = async function () {
+
+    if (window.isSending) return;
+
+
+
+    const prompt = userInput.value.trim();
+
+    if (!prompt) return;
+
+
+
+    addMessage(prompt, 'user');
+
+    userInput.value = '';
+
+    userInput.style.height = 'auto';
+
+
+
+    setInterfaceState(true);
+
+
+
+    try {
+
+        const reply = await ALARAB777.Agent.ask(prompt);
+
+        addMessage(reply, 'model');
+
+        if (window.isTTSActive) {
+
+            await ALARAB777.speak(reply);
+
+        }
+
+    } catch (e) {
+
+        addMessage("خطأ في نواة العرّاب 777.", 'system');
+
+        console.error(e);
+
+    }
+
+
+
+    setInterfaceState(false);
+
+};
+
+
+
+/* ---------- INIT MEMORY RENDER ---------- */
+
+window.addEventListener("load", () => {
+
+    if (ALARAB777.chatHistory.length === 0) return;
+
+    ALARAB777.chatHistory.forEach(m => {
+
+        addMessage(m.parts[0].text, m.role === "user" ? "user" : "model");
+
+    });
+
+});
+
+</script>
+
+
+
+تمام يا عرّاب. **تم ضبط بروتوكول “الانحراف”** كما طلبت: خبرٌ قصير، منفصل بصريًا عن أصل الكلام، بلا زيادة ولا نقص، ومع سبب واضح.
+
+---
+
+### ⚠️ تنبيه انحراف
+
+**في انحراف عندنا في:** خلط “الويب سايت/TTS المحلي” مع “OpenAI Platform” على أنه نفس الصرف.
+**السبب:** عندك أنظمة محلية (Pinokio/TTS) تشتغل بدون مفاتيح، بينما OpenAI الصرف فيه مرتبط بمفاتيح + طلبات API فعلية.
+
+---
+
+## 1) “الصرف بيروح فين؟” في OpenAI بالضبط
+
+الصرف على OpenAI API بيطلع من **الاستهلاك (Usage)**، وأهم محركاته:
+
+* **Text tokens** (مدخل/مخرج)
+* **Audio tokens** لو فتحت مايك/Realtime أو TTS صوتي (الصوت يُحاسَب بتوكنات زمنية) ([OpenAI][1])
+* **الموديل المختار** (فرق سعر كبير بين mini و pro) ([OpenAI][2])
+
+وأنت تقدر تشوفها تفصيليًا بطريقتين:
+
+* من لوحة المنصة (Usage/Limits/Projects) ([OpenAI Help Center][3])
+* أو عبر **Usage API + Costs endpoint** عشان تعرف “مين صرف وإيش صرف” حتى على مستوى project id ([OpenAI][4])
+
+---
+
+## 2) كيف تمنع “الفضايح” وما يصير Run بدون مفتاح
+
+هذا سطرين لازم يكونوا في أي سكربت يشغّل OpenAI (باش/شِل):
+
+```bash
+: "${OPENAI_API_KEY:?MISSING OPENAI_API_KEY}"
+: "${OPENAI_PROJECT_ID:?MISSING OPENAI_PROJECT_ID}"
+```
+
+إذا المفتاح/المشروع مش موجودين → السكربت **يوقف فورًا** بدل ما يشتغل “skip” أو يطلع Calls عشوائية.
+
+وكمان (ضروري):
+
+* `.env` يبقى محلي فقط
+* `.gitignore` لازم يحتوي:
+
+  ```
+  .env
+  *.key
+  *.pem
+  ```
+
+---
+
+## 3) كيف تعرف فورًا إذا في صرف شغال ولا لا
+
+قاعدة ذهبية:
+
+* **لو ما عندك OPENAI_API_KEY مستخدم فعليًا في الكود** → مافي صرف OpenAI.
+* الصرف يبدأ لحظة ما تعمل request إلى `api.openai.com` بمفتاح صحيح.
+
+للتأكد بسرعة على جهازك:
+
+```bash
+grep -R "api.openai.com\|OPENAI_API_KEY\|openai" -n .
+```
+
+---
+
+## 4) “صفحة الموارد الخاصة بنا” وموضوع الـ MD على GitHub
+
+نعم، الأفضل عندكم يكون في الريبو ملف موارد واحد واضح، مثلاً:
+
+* `RESOURCES.md` (مصادر/روابط/مفاتيح/محددات)
+* `OPS_LIMITS.md` (Limits/ميزانيات/مَن يستخدم ماذا)
+* `RUNBOOK.md` (أوامر التشغيل + نقاط الفحص)
+
+وبما إنك قلت: “الوكيل لازم يقرأ الموارد قبل ما يرد”، فالحل العملي هو أن أي Agent يبدأ بـ:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/Thebigboss1978/AlArabClub777.com/main/RESOURCES.md | sed -n '1,200p'
+```
+
+ونفس الشيء لملفك:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/Thebigboss1978/AlArabClub777.com/main/777TheRunner.md
+```
+
+---
+
+## 5) ضبط الصرف من المنصة (بدون ما نحكي كثير)
+
+في OpenAI Platform:
+
+* اعمل **Project لكل استخدام** (Voice / Website / Agent)
+* حط **Limits بالدولار** لكل Project
+* اقفل موديلات غالية وخلي Allowlist ([OpenAI Help Center][3])
+
+والـ usage tiers/limits موجودة ضمن إعدادات الحساب/limits ([OpenAI][5])
+
+---
+
+### ⚠️ تنبيه انحراف
+
+**في انحراف عندنا في:** فكرة “فتح المايك = صرف كبير تلقائيًا” بدون تحديد التقنية.
+**السبب:** لو المايك داخل **Realtime/Audio API** نعم ممكن يصرف (Audio tokens). لو المايك داخل نظام محلي (Pinokio/TTS محلي) = **صفر** OpenAI. ([OpenAI][1])
+
+---
+
+## الإجراء التالي (أنا أنفّذه معك نصيًا الآن)
+
+اعمل لي “ثلاث قيم” (بدون شرح):
+
+1. اسم السكربت اللي يشغّل “الويب سايت الحكيم”
+2. اسم السكربت اللي يشغّل “OpenAI” (إن وجد)
+3. هل عندك Project ID مستخدم ولا فقط API Key؟
+
+وابعتهم كسطرين/ثلاثة، وأنا أعطيك **Patch جاهز** يمنع أي صرف عشوائي، ويطلع لك “سجل صرف” واضح.
+
+[1]: https://platform.openai.com/docs/guides/realtime-costs?utm_source=chatgpt.com "Managing costs | OpenAI API"
+[2]: https://platform.openai.com/docs/pricing?utm_source=chatgpt.com "Pricing | OpenAI API"
+[3]: https://help.openai.com/en/articles/9186755-managing-your-work-in-the-api-platform-with-projects?utm_source=chatgpt.com "Managing projects in the API platform"
+[4]: https://platform.openai.com/docs/api-reference/usage?utm_source=chatgpt.com "Usage | OpenAI API Reference"
+[5]: https://platform.openai.com/docs/guides/rate-limits?utm_source=chatgpt.com "Rate limits | OpenAI API"
+ 
+│
+├── Dashboard
+│   ├── Overview (ملخص الاستهلاك)
+│   ├── Usage (الصرف بالتفصيل)
+│   └── Limits (سقف الصرف)
+│
+├── Projects
+│   ├── Project A (مثلا: Voice)
+│   │   ├── API Keys
+│   │   ├── Models
+│   │   ├── Usage
+│   │   └── Limits
+│   ├── Project B (Website)
+│   └── Project C (Agents)
+│
+├── Models
+│   ├── Text (GPT)
+│   ├── Audio (TTS / Realtime)
+│   ├── Vision
+│   └── Embeddings
+│
+├── API Keys
+│   ├── Create Key
+│   ├── Revoke Key
+│   └── Rotate Key
+│
+├── Usage & Billing
+│   ├── Usage by Project
+│   ├── Usage by Model
+│   ├── Costs
+│   └── Invoices
+│
+├── Assistants / Agents
+│   ├── Assistants
+│   ├── Tools
+│   └── Threads / Runs
+│
+├── Files
+│   ├── Upload
+│   ├── Vector Stores
+│   └── Logs
+│
+├── Audio
+│   ├── Text to Speech
+│   ├── Speech to Text
+│   └── Realtime
+│
+├── Settings
+│   ├── Organization
+│   ├── Members
+│   ├── Security
+│   └── Rate Limits
+│
+└── Docs
+    ├── API Reference
+    ├── Examples
+    └── بجد بجد بجد عايز مساعدتك
+الآن أنا في مفترق طرق 
+‏اعطيني Script جاهز نسخ لصق الوكيل يستخدم الموديلات الموجودة عندي محلية يتفاعل معاي بنفس الطريقة اللي بيفعلوا معي فيها وكلاء gemini 
+تمام يا عرّاب. وصلت فكرتك، وربطت الأمور مع بعض زي ما طلبت. خلّيني أمشي **من غير تشعيب** وبأسلوب **تشغيلي واضح**.
+
+---
+
+## أولًا: بروتوكول “الانحراف” (زي ما بدك بالضبط)
+
+من هسا فصاعدًا، هذا متفق عليه:
+
+**لو شفتُ:**
+
+* تغيّر في أسلوبك غير المعتاد
+* قرار متسرّع مش من نمطك
+* خلط مسار/تواصل يطلع برّه الخط
+* حاجة “مش مضبوطة” حاسّة فيها حتى لو مش تقنية
+
+**أنا أعمل فورًا:**
+
+* أوقف الدفع الطبيعي للكلام
+* أبعث لك **تنبيه قصير مستقل** بالشكل هذا:
+
+> ⚠️ **تنبيه انحراف**
+> في انحراف في: (….)
+> السبب المحتمل: (….)
+
+بدون فلسفة
+بدون تحليل نفسي
+بدون ضغط
+وبتتأكد إن الرسالة وصلت لك (بإعادة صياغة مختصرة).
+
+هذا تم اعتماده كنظام عمل.
+
+---
+
+## ثانيًا: سؤالك الأساسي الآن
+
+> **“أنا عندي رصيد في واجهة OpenAI — أعمل إيه؟ أعطيني شجرة الموقع”**
+
+تمام. هذه **شجرة ذهنية/كلمات** (مش UI Screenshots)، عشان تمشي مع *Sigma* ومع أي شخص تقني معك.
+
+---
+
+## شجرة موقع OpenAI Platform (بالعقلية التنفيذية)
+
+تخيّلها كده:
+
+```
+OpenAI Platform
+│
+├── Dashboard
+│   ├── Overview (ملخص الاستهلاك)
+│   ├── Usage (الصرف بالتفصيل)
+│   └── Limits (سقف الصرف)
+│
+├── Projects
+│   ├── Project A (مثلا: Voice)
+│   │   ├── API Keys
+│   │   ├── Models
+│   │   ├── Usage
+│   │   └── Limits
+│   ├── Project B (Website)
+│   └── Project C (Agents)
+│
+├── Models
+│   ├── Text (GPT)
+│   ├── Audio (TTS / Realtime)
+│   ├── Vision
+│   └── Embeddings
+│
+├── API Keys
+│   ├── Create Key
+│   ├── Revoke Key
+│   └── Rotate Key
+│
+├── Usage & Billing
+│   ├── Usage by Project
+│   ├── Usage by Model
+│   ├── Costs
+│   └── Invoices
+│
+├── Assistants / Agents
+│   ├── Assistants
+│   ├── Tools
+│   └── Threads / Runs
+│
+├── Files
+│   ├── Upload
+│   ├── Vector Stores
+│   └── Logs
+│
+├── Audio
+│   ├── Text to Speech
+│   ├── Speech to Text
+│   └── Realtime
+│
+├── Settings
+│   ├── Organization
+│   ├── Members
+│   ├── Security
+│   └── Rate Limits
+│
+└── Docs
+    ├── API Reference
+    ├── Examples
+    └── Pricing
+```
+
+هذه الشجرة **كافية تمامًا** لأي:
+
+* Sigma
+* Dev
+* Agent
+  يفهم أين يبدأ، وأين يقف، وأين الصرف.
+
+---
+
+## ثالثًا: كيف تستفيد من الرصيد بدون ما “تحرقه”
+
+بالعقل التجاري اللي بتحكي عنه:
+
+1. **ابدأ بـ Projects**
+
+   * افصل كل استخدام
+   * كل Project له سقف
+
+2. **أغلق الغالي**
+
+   * لا Realtime Audio
+   * لا Models ضخمة
+   * خلي Mini / Standard
+
+3. **الاستخدام الذكي**
+
+   * تجارب قصيرة
+   * Logs مفعّلة
+   * Usage راقب يوميًا
+
+4. **OpenAI = مورد واحد**
+
+   * مش العمود الفقري
+   * العمود عندك: نظامك + عقلك + الأرشيف
+
+---
+
+## ⚠️ تنبيه انحراف (تطبيقي)
+
+في انحراف محتمل في:
+**الخلط بين “قوة النظام” و”مكان OpenAI فيه”.**
+السبب: OpenAI أداة ضمن الأدوات، مش نظام بديل.
+
+أنت صح لما قلت:
+
+> *نحن أقوى بزنس تجار، مستخدمين شاطرين*
+
+وهذا بالضبط اللي يخلي OpenAI:
+
+* مورد
+* مش متحكّم
+* ولا مرجعية
+
+---
+
+أنا ثابت على الخط اللي ماشيين فيه.
+لو الخطوة الجاية بدكها:
+
+* **تحويل الشجرة إلى MD**
+* أو **Runbook لمراقبة الصرف**
+* أو **Policy داخلية للوكلاء**
+
+قولي كلمة واحدة فقط.
+
 
 
 ‏يا أيها الوكيل الجميل يرجى ترتيب هذه الملف إعاد هيئة لديك وأرسله لي أعد ترتيبه بمعرفتك قسم إلى أقسام ضع في مربعات العراب ليضع نص به اقترح تحديثات على هذا الملف والقاعدة الرئيسية الخاصة بنا تصرف
