@@ -93,6 +93,8 @@
 </style>
 </head>
 <body>
+  <div id="backButton"></div>
+
   <header>
     <h1>🌌 Galaxy Project Manager — CLUB777</h1>
     <div class="toolbar">
@@ -548,6 +550,14 @@ window.initAndRender = initAndRender;
 
 /* Call initial resize and rendering */
 resize();
+</script>
+
+<script>
+  fetch('/back-button.html')
+    .then(response => response.text())
+    .then(html => {
+      document.getElementById('backButton').innerHTML = html;
+    });
 </script>
 </body>
 </html>

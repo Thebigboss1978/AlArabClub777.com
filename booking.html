@@ -383,8 +383,9 @@
 +    </style>
 +</head>
 +<body>
++    <div id="backButton"></div>
 +    <div class="booking-background"></div>
-+    
++
 +    <div class="container">
 +        <header class="header">
 +            <h1>𓃠 Booking</h1>
@@ -742,6 +743,14 @@
 +            }
 +        `;
 +        document.head.appendChild(style);
++    </script>
++
++    <script>
++        fetch('/back-button.html')
++            .then(response => response.text())
++            .then(html => {
++                document.getElementById('backButton').innerHTML = html;
++            });
 +    </script>
 +</body>
 +</html>
