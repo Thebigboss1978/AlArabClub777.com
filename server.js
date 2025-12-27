@@ -13,6 +13,8 @@ const app = express();
 const upload = multer({ dest: "uploads/" });
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
+app.use(express.json({ limit: "1mb" }));
+
 const MEM_FILE = "./memories.json";
 if (!fs.existsSync(MEM_FILE)) fs.writeFileSync(MEM_FILE, JSON.stringify({ projects: {} }, null, 2));
 
@@ -86,6 +88,85 @@ app.post("/upload", upload.single("video"), async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: String(err) });
+  }
+});
+
+app.post("/api/gemini", async (req, res) => {
+  try {
+    const apiKey = process.env.GEMINI_API_KEY;
+    if (!apiKey) {
+      return res.status(400).json({ error: "Missing GEMINI_API_KEY in .env" });
+    }
+
+    const model = process.env.GEMINI_MODEL || "gemini-2.5-flash";
+    const { contents = [], systemInstruction, tools = [] } = req.body || {};
+    if (!Array.isArray(contents) || contents.length === 0) {
+      return res.status(400).json({ error: "contents must be a non-empty array" });
+    }
+
+    const payload = {
+      contents,
+      systemInstruction,
+      tools,
+    };
+
+    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+    const response = await fetch(apiUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    if (!response.ok) {
+      return res.status(response.status).json({ error: await response.text() });
+    }
+
+    const data = await response.json();
+    return res.json(data);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: String(err) });
+  }
+});
+
+app.post("/api/tts", async (req, res) => {
+  try {
+    const apiKey = process.env.ELEVENLABS_API_KEY;
+    const voiceId = process.env.ALARAB_CUSTOM_VOICE_ID;
+    if (!apiKey || !voiceId) {
+      return res.status(400).json({ error: "Missing ELEVENLABS_API_KEY or ALARAB_CUSTOM_VOICE_ID in .env" });
+    }
+
+    const { text } = req.body || {};
+    if (!text) {
+      return res.status(400).json({ error: "text is required" });
+    }
+
+    const ttsUrl = `https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`;
+    const response = await fetch(ttsUrl, {
+      method: "POST",
+      headers: {
+        Accept: "audio/mpeg",
+        "Content-Type": "application/json",
+        "xi-api-key": apiKey,
+      },
+      body: JSON.stringify({
+        text,
+        model_id: "eleven_multilingual_v2",
+        voice_settings: { stability: 0.5, similarity_boost: 0.5 },
+      }),
+    });
+
+    if (!response.ok) {
+      return res.status(response.status).json({ error: await response.text() });
+    }
+
+    const audioBuffer = Buffer.from(await response.arrayBuffer());
+    res.setHeader("Content-Type", "audio/mpeg");
+    return res.send(audioBuffer);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: String(err) });
   }
 });
 
