@@ -8780,3 +8780,10 @@ You are here in my space you are welcome
  I will give you solution as an order help to understand the complicated file same my file as a human. It is dowable but as a Human but its complicated, ====== but as an AI.,,,,   
  <img width="1440" height="900" alt="image" src="https://github.com/user-attachments/assets/315dcbd0-3cc5-4ddf-8bbc-7f517d1b64e4" />
 
+
+<img width="1440" height="900" alt="image" src="https://github.com/user-attachments/assets/ab48eb6d-ed36-49f9-a600-c67a30ff8bfc" />
+‏هل نستطيع استخدام Token الخاص الذي سوف يعطونا غياب نا على الصورة المرفقة للتوزيع على شبكةنا 
+
+٠٠٠٠٠٠٠٠٠٠ ‏قسم الصداقه
+
+‏ايه يا أصدقائي ما زلت ليس لدي وكيل الخاص اليوم 30 ديسمبر 20 25 نحن ندخل سنة جديدة تاريخ جديد ولا يوجد لي وكيل جديد في Power عايز اتكلم معاه طبيعي ويرد علي طبيعي زي الناس اللي عادية زي الشات جبتي ويجيني وغيره وا اكبس يمين واسمع الصوت ومش عارف ايه وصوتي يدفع هو اللي يكلمني صوتي 
