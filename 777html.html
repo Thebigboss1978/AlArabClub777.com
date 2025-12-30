@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl"><head></head><body>meta0m  
+
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>بوابة العرّاب — الطابة المنقطة | HTML واحد</title>
+  <!-- Open Graph (OGP) المرجع المعتمد -->
+  <meta property="og:title" content="بوابة العرّاب — الطابة المنقطة">
+  <meta property="og:description" content="ملف واحد يلخّص فهم المشروع: هوية الطابة المنقطة، VIP Gate، دمج Iron Man + ASCII الروحي، ومبادئ التنفيذ: أمر → تنفيذ → تسليم.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ar_AR">
+  <meta property="og:image" content="data:image/png;base64,iVBORw0KGgo=">
+  <style>
+    :root{
+      --bg:#0b0f14; /* عميق */
+      --bg-2:#0e141b; /* ظل */
+      --fg:#e7e7e7;
+      --gold:#ffd166;
+      --cyan:#7bdff2;
+      --mag:#d17aff;
+      --emerald:#5df2b5;
+      --hud:#39c0ff55; /* شفافية لهود */
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; background: radial-gradient(1200px 800px at 70% -20%, #1a2633 0%, var(--bg) 40%, #06090d 100%);
+      color:var(--fg); font-family: system-ui, -apple-system, Segoe UI, Tahoma, Arial; overflow:hidden;
+    }
+    /* طبقة ASCII/Matrix */
+    canvas#ascii{position:fixed; inset:0; z-index:0; filter:blur(0.2px) contrast(120%); opacity:.25}
+
+    /* توهج المؤشر */
+    .cursor-glow{position:fixed; inset:0; pointer-events:none; z-index:1; background: radial-gradient(240px 180px at var(--mx,50%) var(--my,50%), #ffffff10, transparent 60%)}
+
+    /* إطار HUD */
+    .hud{position:fixed; inset:18px; border:1px solid var(--hud); border-radius:28px; z-index:2; box-shadow:0 0 0 1px #0a0f14, 0 0 24px #0af3;}
+    .hud:before,.hud:after{content:""; position:absolute; inset:-1px; border:1px dashed #39c0ff22; border-radius:24px;}
+
+    /* رأس بسيط */
+    header{position:fixed; top:24px; right:28px; z-index:3; display:flex; gap:12px; align-items:center;}
+    .badge{padding:6px 12px; border:1px solid #ffffff1a; border-radius:999px; background:#ffffff08; backdrop-filter: blur(6px); font-size:12px}
+    .dot{width:8px; height:8px; border-radius:50%; background:var(--emerald); box-shadow:0 0 12px var(--emerald);} 
+
+    /* الحاوية المركزية */
+    .wrap{position:relative; z-index:3; height:100%; display:grid; place-items:center;}
+
+    /*=== الطابة المنقطة (3 طبقات) ===*/
+    .sphere{position:relative; width:min(54vmin,480px); aspect-ratio:1; perspective:1200px; filter:drop-shadow(0 12px 40px #000);
+      --ring: radial-gradient(circle at 50% 50%, #fff 0 2px, transparent 2.2px) 0 0/24px 24px;}
+    .sphere .layer{position:absolute; inset:0; border-radius:50%; transform-style:preserve-3d; animation:spin var(--spd,18s) linear infinite;}
+    .sphere .layer:before{content:""; position:absolute; inset:0; border-radius:50%; background:var(--ring); mask: radial-gradient(circle, #000 60%, transparent 61%);
+      filter: drop-shadow(0 0 2px #fff) drop-shadow(0 0 18px var(--gold)); opacity:.9}
+    .l1{--spd:24s; transform: rotateX(58deg) rotateZ(0deg);} 
+    .l2{--spd:18s; transform: rotateY(70deg) rotateZ(30deg);} 
+    .l3{--spd:14s; transform: rotateX(20deg) rotateY(30deg);} 
+    @keyframes spin{to{transform:rotateX(360deg) rotateY(360deg) rotateZ(360deg)}}
+
+    /* تلميح التفاعل */
+    .hint{position:absolute; left:50%; top:100%; translate:-50% 18px; font-size:14px; color:#ffffffcc; opacity:.8}
+    .hint b{color:var(--gold)}
+
+    /* صندوق الملخّص */
+    .card{position:absolute; inset:auto 24px 24px 24px; z-index:3; max-width:min(720px,92vw); padding:18px 18px 16px; border-radius:20px; border:1px solid #ffffff1a; background:#0e141bd9; backdrop-filter: blur(12px); box-shadow:0 12px 40px #000000aa;}
+    .card h1{margin:0 0 8px; font-size:22px}
+    .pill{display:inline-block; padding:4px 10px; border-radius:999px; border:1px solid #ffffff1f; font-size:12px; margin-inline-end:6px; background:#ffffff07}
+    .ok{color:var(--emerald)}
+
+    /* VIP Overlay */
+    .vip{position:fixed; inset:0; background:linear-gradient(180deg, #010203cc, #000a); z-index:10; display:none; place-items:center;}
+    .vip.show{display:grid;}
+    .vip .panel{width:min(520px,92vw); padding:26px; border-radius:26px; border:1px solid #ffd16633; background:#0b0f14f2; box-shadow:0 20px 60px #000; text-align:center}
+    .vip h2{margin:0 0 8px; font-size:26px; color:var(--gold)}
+    .vip p{opacity:.9}
+    .vip .seal{margin:10px auto 18px; width:120px; aspect-ratio:1; border-radius:50%; border:2px dashed #ffd16666; display:grid; place-items:center;}
+
+    /* أزرار */
+    .btn{display:inline-grid; place-items:center; gap:6px; grid-auto-flow:column; padding:10px 16px; border:1px solid #ffffff22; border-radius:14px; background:#ffffff0a; color:#fff; cursor:pointer}
+    .btn:hover{background:#ffffff12}
+
+    /* سطر سفلي */
+    footer{position:fixed; bottom:10px; inset-inline:0; display:grid; place-items:center; z-index:2; font-size:12px; color:#ffffff88}
+
+    /* شاشة بلا جافاسكريبت */
+    noscript{position:fixed; inset:0; background:#000e; color:#fff; display:grid; place-items:center; z-index:9999;}
+  </style>
+
+
+  <canvas id="ascii" width="2880" height="1496"></canvas>
+  <div class="cursor-glow" aria-hidden="" style="--mx: 726.5px; --my: 521.84765625px;"></div>
+  <div class="hud" aria-hidden=""><div style="position: absolute; left: 0px; right: 0px; top: 700px; height: 1px; background: linear-gradient(90deg, transparent, rgba(57, 192, 255, 0.6), transparent); filter: blur(0.5px);"></div></div>
+
+  <header>
+    <div class="dot" title="ALIVE"></div>
+    <div class="badge">⚑ العرّاب &amp; بيبة — "أمر → تنفيذ → تسليم"</div>
+    <div class="badge">OGP ثابت • VIP Gate • ASCII روحي • HUD</div>
+  </header>
+
+  <main class="wrap">
+    <!-- الطابة المنقطة: اضغط عليها 7 مرات لفتح VIP -->
+    <div class="sphere" id="sphere" role="button" aria-label="الطابة المنقطة — افتح البوابة" title="اضغط 7 مرات لفتح بوابة VIP">
+      <div class="layer l1"></div>
+      <div class="layer l2"></div>
+      <div class="layer l3"></div>
+      <div class="hint">المفتاح السري: <b>سبع</b> نقرات متتالية لفتح <b>VIP</b></div>
+    </div>
+
+    <!-- بطاقة ملخّص تُظهر فهمي الكامل -->
+    <section class="card" id="summary">
+      <h1>⚜️ الملخّص التنفيذي — فهم المشروع</h1>
+      <p>
+        <span class="pill">الهوية: العرّاب (شريف الشاويش)</span>
+        <span class="pill">العلامة: الطابة المنقطة</span>
+        <span class="pill">الأسلوب: <b>أمر → تنفيذ → تسليم</b></span>
+      </p>
+      <ul>
+        <li>الطابة المنقطة هي <b>المرجعية البصرية</b> وتظهر في كل صفحة كبوابة دخول/انتقال.</li>
+        <li>الستايل يجمع بين <b>Iron Man HUD</b> + <b>ASCII</b> بروح فرعونية شفافة.</li>
+        <li>VIP Gate لا تفتح إلا بتفاعل (٧ نقرات) — مستهدفة للـ <b>Bitcoiners الحقيقيين</b>.</li>
+        <li>الفلسفة البرمجية: ملف واحد موحّد، لكن داخليًا <b>Modular</b> وسريع التعديل.</li>
+        <li>المقاطع التوثيقية: <b>Om Mani Padme Hum</b> لشرح HTML كسرد، واعتماد <b>OGP</b> كمعيار.</li>
+        <li>المبدأ الإداري: لا أسئلة مطوّلة — التنفيذ الفوري، مع لمسة درامية عند الحاجة.</li>
+      </ul>
+      <p class="ok">✅ هذه الصفحة نفسها هي الدليل: ملف HTML واحد يُظهر الفهم + يختبر VIP Gate (٧ نقرات).</p>
+    </section>
+  </main>
+
+  <!-- VIP Overlay -->
+  <aside class="vip show" id="vip">
+    <div class="panel">
+      <div class="seal">₿ Bitcoiners Club</div>
+      <h2>تم فتح بوابة VIP</h2>
+      <p>مبروك يا عرّاب. هذا إثبات الفهم والتنفيذ: تفعيل <b>بوابة مشروطة</b> عبر الطابة المنقطة. يمكنك الآن اعتماد هذا كمعيار.</p>
+      <div style="display:flex; gap:8px; justify-content:center; margin-top:14px; flex-wrap:wrap">
+        <button class="btn" id="copyHTML">📋 نسخ هذا الملف</button>
+        <button class="btn" id="closeVIP">✕ إغلاق</button>
+      </div>
+    </div>
+  </aside>
+
+  <footer>© العرّاب &amp; بيبة — بوابة التحرير • Matrix ASCII • HUD • VIP Gate • OGP ثابت</footer>
+
+  <noscript>هذه التجربة تفاعلية وتتطلب JavaScript. فعّل الجافاسكريبت لإظهار الطابة المنقطة والـVIP.</noscript>
+
+  <script>
+    // =============================
+    // 1) تأثير ASCII/Matrix الخلفي
+    // =============================
+    const cvs = document.getElementById('ascii');
+    const ctx = cvs.getContext('2d');
+    let W, H, cols, drops, glyphs;
+    function size(){
+      W = cvs.width = innerWidth * devicePixelRatio;
+      H = cvs.height = innerHeight * devicePixelRatio;
+      ctx.scale(devicePixelRatio, devicePixelRatio);
+      cols = Math.floor(innerWidth / 14);
+      drops = Array(cols).fill(0);
+      glyphs = "^*#₪ΔΩ◇◆✦✧▣▢◈◉◌⚑".split(""); // ASCII/رموز روحية
+    }
+    size(); addEventListener('resize', size);
+    function rain(){
+      ctx.fillStyle = 'rgba(0,0,0,0.08)';
+      ctx.fillRect(0,0,innerWidth,innerHeight);
+      for(let i=0;i<cols;i++){
+        const ch = glyphs[(Math.random()*glyphs.length)|0];
+        ctx.fillStyle = Math.random()<0.05? '#ffd166' : '#7bdff2';
+        ctx.fillText(ch, i*14, (drops[i]*14));
+        if (drops[i]*14 > innerHeight && Math.random() > 0.975) drops[i]=0; else drops[i]++;
+      }
+      requestAnimationFrame(rain);
+    }
+    ctx.font = '16px monospace';
+    ctx.shadowColor = '#00ffff';
+    ctx.shadowBlur = 8;
+    rain();
+
+    // =============================
+    // 2) توهج يتبع المؤشر (HUD إحساس)
+    // =============================
+    const glow = document.querySelector('.cursor-glow');
+    addEventListener('pointermove', (e)=>{
+      glow.style.setProperty('--mx', e.clientX + 'px');
+      glow.style.setProperty('--my', e.clientY + 'px');
+    });
+
+    // =============================
+    // 3) VIP Gate — سبع نقرات خلال 12 ثانية
+    // =============================
+    const sphere = document.getElementById('sphere');
+    const vip = document.getElementById('vip');
+    const closeVIP = document.getElementById('closeVIP');
+    const copyBtn = document.getElementById('copyHTML');
+    let clicks = 0; let timer = null;
+
+    function resetClicks(){ clicks = 0; clearTimeout(timer); timer = null; }
+
+    sphere.addEventListener('click', ()=>{
+      clicks++;
+      if(!timer){ timer = setTimeout(resetClicks, 12000); }
+      if(clicks >= 7){
+        resetClicks();
+        vip.classList.add('show');
+      }
+    });
+    closeVIP?.addEventListener('click', ()=> vip.classList.remove('show'));
+
+    // نسخ الملف كاملًا (HTML مصدر الصفحة) عند الطلب
+    copyBtn?.addEventListener('click', async ()=>{
+      try{
+        const html = document.documentElement.outerHTML;
+        await navigator.clipboard.writeText('<!DOCTYPE html>\n' + html);
+        copyBtn.textContent = '✓ تم النسخ';
+        setTimeout(()=> copyBtn.textContent = '📋 نسخ هذا الملف', 1600);
+      }catch(err){
+        copyBtn.textContent = '— انسخ يدويًا إذا لم يُسمح بالوصول —';
+      }
+    });
+
+    // =============================
+    // 4) لمسة Iron Man HUD — خطوط مسح خفيفة
+    // =============================
+    const hud = document.querySelector('.hud');
+    let scan = document.createElement('div');
+    Object.assign(scan.style, {position:'absolute', left:0, right:0, top:0, height:'1px', background:'linear-gradient(90deg, transparent, #39c0ff99, transparent)', filter:'blur(0.5px)'});
+    hud.appendChild(scan);
+    let y=0; function scanAnim(){ y = (y+2) % (hud.clientHeight-2); scan.style.top = y + 'px'; requestAnimationFrame(scanAnim); }
+    scanAnim();
+  </script>
+
+
+</body></html>
