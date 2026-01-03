@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>777 Tourism Hub | بوابة العرّاب السياحية</title>
+    <style>
+        :root {
+            --gold: #D4AF37;
+            --black: #050505;
+            --glass: rgba(255, 255, 255, 0.05);
+        }
+        body {
+            background-color: var(--black);
+            color: #fff;
+            font-family: 'Cairo', sans-serif;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        .header {
+            border-bottom: 2px solid var(--gold);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        h1 { color: var(--gold); margin: 0; letter-spacing: 2px; }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .card {
+            background: var(--glass);
+            border: 1px solid #333;
+            border-radius: 15px;
+            padding: 20px;
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        .card:hover { border-color: var(--gold); transform: translateY(-5px); }
+        .card h2 { color: var(--gold); margin-top: 0; }
+        .btn {
+            background: var(--gold);
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 10px;
+        }
+        .video-placeholder {
+            background: #111;
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            color: #555;
+            border: 1px dashed #333;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>🏛️ 777 TOURISM HUB</h1>
+        <p>بوابتك إلى تاريخ مصر | فنادق - بازارات - تجارب</p>
+    </div>
+
+    <div class="grid">
+        <div class="card">
+            <div class="video-placeholder">🎬 فيديو: إطلالة الأهرامات (Reel)</div>
+            <h2>🏨 Sky Pyramids Hotel</h2>
+            <p>إقامة ملكية بلمسة فرعونية وإطلالة مباشرة.</p>
+            <a href="#" class="btn">احجز الآن</a>
+        </div>
+
+        <div class="card">
+            <div class="video-placeholder">🎬 فيديو: سحر العطور (Reel)</div>
+            <h2>🏺 Sultana Bazaar</h2>
+            <p>عبق التاريخ في زجاجة. عطور وزيوت أصلية.</p>
+            <a href="#" class="btn">تصفح المنتجات</a>
+        </div>
+
+        <div class="card">
+            <div class="video-placeholder">🎬 فيديو: تحف وهدايا (Reel)</div>
+            <h2>🎁 The Little Bazaar</h2>
+            <p>كنوز صغيرة تحمل روح مصر معك.</p>
+            <a href="#" class="btn">زورونا الآن</a>
+        </div>
+
+        <div class="card" style="border-color: var(--gold);">
+            <h2>🔥 Trending Now</h2>
+            <p>شاهد أحدث قصص العرّاب من قلب الحدث.</p>
+            <div class="video-placeholder" style="height: 100px;">
+                📺 أحدث فيديو (Crypto x Tourism)
+            </div>
+            <a href="https://www.youtube.com/@sharifalshawish" target="_blank" class="btn">قناة العرّاب</a>
+        </div>
+    </div>
+
+</body>
+</html>
