@@ -15,6 +15,13 @@ const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 const MEM_FILE = "./memories.json";
 if (!fs.existsSync(MEM_FILE)) fs.writeFileSync(MEM_FILE, JSON.stringify({ projects: {} }, null, 2));
 
+function saveMemory(projectId, entry) {
+  const mem = JSON.parse(fs.readFileSync(MEM_FILE, "utf-8"));
+  mem.projects[projectId] = mem.projects[projectId] || [];
+  mem.projects[projectId].push({ ts: Date.now(), ...entry });
+  fs.writeFileSync(MEM_FILE, JSON.stringify(mem, null, 2));
+}
+
 function extractMedia(filePath, outDir) {
   fs.mkdirSync(outDir, { recursive: true });
   const audio = `${outDir}/audio.wav`;
